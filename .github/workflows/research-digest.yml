@@ -1,0 +1,33 @@
+name: AI 研究摘要推送
+
+on:
+  schedule:
+    # 每周一、四早上 9:00（北京时间）= UTC 1:00
+    # 一周推送两次，保持信息更新频率
+    - cron: '0 1 * * 1,4'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  send-research-digest:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+    
+    - name: 设置 Python 环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: 运行研究摘要推送脚本
+      env:
+        SMTP_SERVER: smtp.qq.com
+        SMTP_PORT: 465
+        FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      run: |
+        cd scripts
+        python research_digest_sender.py
