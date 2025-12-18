@@ -2,15 +2,16 @@
 # -*- coding: utf-8 -*-
 """
 arXiv 论文抓取模块
-获取大模型、广告领域的最新论文
+获取大模型、广告领域的最新论文，并支持按引用数排序
 """
 
 import urllib.request
 import urllib.parse
+import json
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 
 @dataclass
@@ -25,12 +26,17 @@ class ArxivPaper:
     pdf_url: str
     abs_url: str
     categories: List[str]
+    citation_count: int = 0  # 引用数 (来自 Semantic Scholar)
+    
+    def __str__(self):
+        return f"[{self.citation_count} cites] {self.title} ({self.published[:10]})"
 
 
 class ArxivFetcher:
     """arXiv 论文抓取器"""
     
     BASE_URL = "http://export.arxiv.org/api/query"
+    SEMANTIC_SCHOLAR_BATCH_URL = "https://api.semanticscholar.org/graph/v1/paper/batch"
     
     # 大模型相关关键词
     LLM_KEYWORDS = [
@@ -86,7 +92,10 @@ class ArxivFetcher:
     def _parse_entry(self, entry: ET.Element, ns: dict) -> ArxivPaper:
         """解析单个论文条目"""
         # 提取 arXiv ID
-        arxiv_id = entry.find('atom:id', ns).text.split('/abs/')[-1]
+        # id 格式通常为 http://arxiv.org/abs/2312.11805v1 或 2312.11805
+        full_id = entry.find('atom:id', ns).text
+        # 去掉版本号以便 Semantic Scholar 识别 (如 2312.11805v1 -> 2312.11805)
+        arxiv_id = full_id.split('/abs/')[-1].split('v')[0] 
         
         # 提取标题（去除多余空白）
         title = entry.find('atom:title', ns).text.strip().replace('\n', ' ')
@@ -137,6 +146,44 @@ class ArxivFetcher:
             categories=categories
         )
     
+    def _fetch_citation_counts(self, papers: List[ArxivPaper]) -> Dict[str, int]:
+        """从 Semantic Scholar 获取引用数"""
+        if not papers:
+            return {}
+            
+        print("🔍 正在从 Semantic Scholar 获取引用数据...")
+        
+        # 构造请求体，Semantic Scholar 支持 ARXIV:前缀
+        paper_ids = [f"ARXIV:{p.arxiv_id}" for p in papers]
+        
+        citations_map = {}
+        
+        try:
+            # 批量请求，如果数量很大应该分批，这里假设 max_results 较小 (<100)
+            req = urllib.request.Request(
+                f"{self.SEMANTIC_SCHOLAR_BATCH_URL}?fields=citationCount",
+                data=json.dumps({"ids": paper_ids}).encode('utf-8'),
+                headers={'Content-Type': 'application/json'}
+            )
+            
+            with urllib.request.urlopen(req, timeout=15) as response:
+                data = json.loads(response.read().decode('utf-8'))
+                
+            # Semantic Scholar 返回的顺序对应请求的顺序
+            # 如果没找到，返回 null
+            for i, item in enumerate(data):
+                if item and 'citationCount' in item:
+                    # 匹配回原始 paper list 的 arxiv_id
+                    original_id = papers[i].arxiv_id
+                    citations_map[original_id] = item['citationCount']
+            
+            print(f"  成功获取 {len(citations_map)} 篇论文的引用数据")
+                    
+        except Exception as e:
+            print(f"⚠️ 获取引用数失败 (可能是 API 限制或网络问题): {e}")
+            
+        return citations_map
+
     def fetch_papers(self, keywords: List[str], categories: List[str] = None) -> List[ArxivPaper]:
         """抓取论文"""
         if categories is None:
@@ -145,6 +192,7 @@ class ArxivFetcher:
         all_papers = []
         seen_ids = set()
         
+        # 1. 从 Arxiv 获取论文
         for category in categories:
             query = self._build_query(keywords, category)
             
@@ -177,6 +225,16 @@ class ArxivFetcher:
                 print(f"获取 {category} 分类论文时出错: {e}")
                 continue
         
+        # 2. 获取引用数并排序
+        if all_papers:
+            citations = self._fetch_citation_counts(all_papers)
+            for paper in all_papers:
+                paper.citation_count = citations.get(paper.arxiv_id, 0)
+            
+            # 3. 按引用数降序排序
+            # 如果引用数相同，保持原有顺序（通常是时间顺序）
+            all_papers.sort(key=lambda x: x.citation_count, reverse=True)
+            
         return all_papers
     
     def fetch_llm_papers(self) -> List[ArxivPaper]:
@@ -227,10 +285,10 @@ if __name__ == "__main__":
     print(f"\n找到 {len(papers['llm'])} 篇大模型论文")
     print(f"找到 {len(papers['advertising'])} 篇广告领域论文")
     
-    # 打印示例
+    # 打印示例 (前5篇引用最高的)
     if papers['llm']:
-        print("\n🔬 大模型论文示例:")
-        paper = papers['llm'][0]
-        print(f"  标题: {paper.title}")
-        print(f"  作者: {', '.join(paper.authors[:3])}...")
-        print(f"  链接: {paper.abs_url}")
+        print("\n🔬 大模型论文示例 (按引用数排序):")
+        for paper in papers['llm'][:5]:
+            print(f"  🔥 [{paper.citation_count} 引用] {paper.title}")
+            print(f"     发布: {paper.published[:10]}")
+            print(f"     链接: {paper.abs_url}")
