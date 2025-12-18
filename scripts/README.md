@@ -133,6 +133,41 @@ is_low_oil = total_oil < 50  # 修改油的上限
 is_low_salt = total_salt < 10  # 修改盐的上限
 ```
 
+---
+
+# 🔬 AI 研究摘要邮件推送
+
+## 功能说明
+
+自动抓取 arXiv 最新论文和 YouTube 科技领袖访谈视频，整合成精美的邮件摘要发送。
+
+## 功能特点
+
+- 📚 **arXiv 论文**: 大模型 (LLM/GPT/Transformer) 和广告领域 (CTR/推荐系统) 最新论文
+- 🎬 **YouTube 视频**: Elon Musk、Jensen Huang、Sam Altman 等科技领袖访谈
+- 📧 **精美邮件**: 现代化 HTML 模板设计
+- ⏰ **自动推送**: 每周一、四自动推送
+
+## 快速开始
+
+```bash
+# 设置环境变量
+export FROM_EMAIL="your@email.com"
+export EMAIL_PASSWORD="your_authorization_code"
+export TO_EMAIL="recipient@email.com"
+export YOUTUBE_API_KEY="your_api_key"  # 可选
+
+# 运行脚本
+cd scripts
+python research_digest_sender.py
+```
+
+## 详细文档
+
+请查看 [RESEARCH_DIGEST_GUIDE.md](./RESEARCH_DIGEST_GUIDE.md)
+
+---
+
 ## 许可证
 
 本脚本基于原项目的许可证发布。
