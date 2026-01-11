@@ -19,7 +19,7 @@ from ingredient_links import get_ingredient_link, extract_ingredients
 
 class WeeklyRecipeSender:
     def __init__(self):
-        self.base_dir = Path(__file__).parent.parent
+        self.base_dir = Path(__file__).parent.parent / "cookReminder"
         
         # 荤菜类别（含肉类、海鲜等）
         self.meat_categories = ['炒菜', '蒸菜', '炖菜']

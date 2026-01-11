@@ -19,7 +19,7 @@ import json
 
 class RecipeSender:
     def __init__(self):
-        self.base_dir = Path(__file__).parent.parent
+        self.base_dir = Path(__file__).parent.parent / "cookReminder"
         self.low_oil_categories = ['蒸菜', '烫菜', '汤', '凉拌', '早餐']
         self.prefer_dishes = []  # 优先推荐的清淡菜品
         

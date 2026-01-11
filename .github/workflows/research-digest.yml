@@ -27,7 +27,16 @@ jobs:
         FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
         EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         TO_EMAIL: ${{ secrets.TO_EMAIL }}
+        CC_EMAIL: ${{ secrets.CC_EMAIL }}
         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       run: |
         cd scripts
         python research_digest_sender.py
+    
+    - name: 提交并推送日报归档
+      run: |
+        git config --global user.name "GitHub Actions Bot"
+        git config --global user.email "actions@github.com"
+        git add archives/
+        # 只有在有变化时才 commit
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-archive Daily Report $(date +'%Y-%m-%d')" && git push)
