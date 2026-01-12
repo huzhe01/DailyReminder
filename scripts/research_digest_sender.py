@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 AI 研究摘要邮件推送
-整合 arXiv 论文、YouTube 访谈视频和 RSS 科技资讯，发送每日研究摘要
+整合 arXiv 论文、YouTube、RSS、GitHub、Reddit、HN，发送每日研究摘要
 """
 
 import os
@@ -18,6 +18,11 @@ import time
 from arxiv_fetcher import ArxivFetcher, ArxivPaper, filter_recent_papers
 from youtube_fetcher import YouTubeFetcher, YouTubeFetcherNoAPI, YouTubeVideo
 from feed_fetcher import FeedFetcher, FeedItem
+from github_fetcher import GitHubFetcher, GitHubIssue, TrendingRepo
+from reddit_fetcher import RedditFetcher, RedditPost
+from hn_fetcher import HNFetcher, HNStory
+from deduplicator import Deduplicator
+from ai_curator import AICurator
 
 class UsageTracker:
     """资源使用统计追踪器"""
@@ -46,6 +51,10 @@ class ResearchDigestSender:
     def __init__(self):
         self.arxiv_fetcher = ArxivFetcher(max_results=15)
         self.feed_fetcher = FeedFetcher(days_lookback=2)
+        self.github_fetcher = GitHubFetcher()
+        self.reddit_fetcher = RedditFetcher()
+        self.hn_fetcher = HNFetcher()
+        self.deduplicator = Deduplicator()
         self.youtube_api_key = os.getenv('YOUTUBE_API_KEY')
         self.usage_tracker = UsageTracker()
         
@@ -54,6 +63,9 @@ class ResearchDigestSender:
             base_url='https://api-inference.modelscope.cn/v1/',
             api_key='ms-f602942f-3da0-4f0e-a88b-34544784605e'
         )
+        
+        # AI Curator (shares the same client)
+        self.ai_curator = AICurator(client=self.client)
         
         if self.youtube_api_key:
             self.youtube_fetcher = YouTubeFetcher(api_key=self.youtube_api_key, max_results=5)
@@ -169,12 +181,49 @@ class ResearchDigestSender:
             recommendations = self.youtube_no_api.get_recommendations(self.selected_leaders)
             return {"type": "recommendations", "data": recommendations}
     
+    def fetch_github_data(self) -> Dict:
+        """获取 GitHub Issues 和 Trending"""
+        print("\n" + "=" * 60)
+        print("🐙 正在获取 GitHub 数据...")
+        print("=" * 60)
+        
+        issues = self.github_fetcher.fetch_all_issues(max_per_repo=5)
+        issues = self.deduplicator.filter_new('github_issue', issues, lambda x: x.unique_id)
+        
+        trending = self.github_fetcher.fetch_trending(since='daily', max_results=10)
+        trending = self.deduplicator.filter_new('github_trending', trending, lambda x: x.unique_id)
+        
+        return {"issues": issues, "trending": trending}
+    
+    def fetch_reddit_data(self) -> List[RedditPost]:
+        """获取 Reddit 帖子"""
+        print("\n" + "=" * 60)
+        print("🔴 正在获取 Reddit 数据...")
+        print("=" * 60)
+        
+        posts = self.reddit_fetcher.fetch_all(max_per_subreddit=15)
+        posts = self.deduplicator.filter_new('reddit', posts, lambda x: x.unique_id)
+        return posts
+    
+    def fetch_hn_data(self) -> List[HNStory]:
+        """获取 Hacker News 数据"""
+        print("\n" + "=" * 60)
+        print("🟠 正在获取 Hacker News 数据...")
+        print("=" * 60)
+        
+        stories = self.hn_fetcher.fetch_top_stories(min_score=50, max_results=15, filter_ai=True)
+        stories = self.deduplicator.filter_new('hn', stories, lambda x: x.unique_id)
+        return stories
+    
     def generate_html_content(
         self, 
         briefing: str,
         papers: Dict[str, List[ArxivPaper]], 
         feeds: Dict[str, List[FeedItem]],
-        youtube_data: Dict
+        youtube_data: Dict,
+        github_data: Dict = None,
+        reddit_posts: List = None,
+        hn_stories: List = None
     ) -> str:
         """生成 HTML 邮件内容"""
         today = datetime.now().strftime('%Y年%m月%d日')
@@ -413,6 +462,9 @@ class ResearchDigestSender:
             {self._generate_youtube_html(youtube_data)}
         </div>
         
+        <!-- New Sources: GitHub, Reddit, HN -->
+        {self._generate_community_section(github_data, reddit_posts, hn_stories)}
+        
         {stats_html}
         
         <div class="footer">
@@ -497,6 +549,79 @@ class ResearchDigestSender:
             html += f'<a href="{url}" style="padding:5px 15px; background:#e53e3e; color:white; border-radius:15px; text-decoration:none;">{leader}</a>'
         html += '</div>'
         return html
+    
+    def _generate_community_section(self, github_data: Dict, reddit_posts: List, hn_stories: List) -> str:
+        """生成开源社区版块 HTML (使用 AI 筛选)"""
+        if not github_data and not reddit_posts and not hn_stories:
+            return ''
+        
+        sections = []
+        
+        # GitHub Issues
+        if github_data and github_data.get('issues'):
+            print("  🤖 AI 筛选 GitHub Issues...")
+            issues_dicts = [i.to_dict() for i in github_data['issues']]
+            issues_html = self.ai_curator.curate(issues_dicts, "GitHub 热门 Issues (llama.cpp/vllm/transformers)", max_items=3)
+            sections.append(f'''
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #6366f1; padding-bottom: 10px; color: #4338ca;">🐙 开源社区动态</h3>
+                {issues_html}
+            </div>
+            ''')
+        
+        # GitHub Trending
+        if github_data and github_data.get('trending'):
+            print("  🤖 AI 筛选 GitHub Trending...")
+            trending_dicts = [t.to_dict() for t in github_data['trending']]
+            trending_html = self.ai_curator.curate(trending_dicts, "GitHub 每日趋势项目", max_items=3)
+            sections.append(f'''
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                {trending_html}
+            </div>
+            ''')
+        
+        # Reddit
+        if reddit_posts:
+            print("  🤖 AI 筛选 Reddit 帖子...")
+            reddit_dicts = [p.to_dict() for p in reddit_posts]
+            reddit_html = self.ai_curator.curate(reddit_dicts, "Reddit r/LocalLLaMA 热议", max_items=3)
+            sections.append(f'''
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #ef4444; padding-bottom: 10px; color: #dc2626;">🔴 Reddit 热议</h3>
+                {reddit_html}
+            </div>
+            ''')
+        
+        # Hacker News
+        if hn_stories:
+            print("  🤖 AI 筛选 Hacker News...")
+            hn_dicts = [s.to_dict() for s in hn_stories]
+            hn_html = self.ai_curator.curate(hn_dicts, "Hacker News AI 相关热帖", max_items=3)
+            sections.append(f'''
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                {hn_html}
+            </div>
+            ''')
+        
+        # Merge AI curator usage into main tracker
+        curator_usage = self.ai_curator.get_usage()
+        self.usage_tracker.llm_calls += curator_usage['calls']
+        self.usage_tracker.llm_input_tokens += curator_usage['input_tokens']
+        self.usage_tracker.llm_output_tokens += curator_usage['output_tokens']
+        
+        if sections:
+            return f'''
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                {''.join(sections)}
+            </div>
+            '''
+        return ''
 
     def send_email(self, to_email: str, subject: str, content: str, cc_emails: List[str] = []) -> bool:
         """发送邮件 (支持 CC)"""
@@ -578,27 +703,35 @@ class ResearchDigestSender:
         if to_email is None:
             to_email = os.getenv('TO_EMAIL', 'huzhe06@gmail.com')
         
-        # 定义抄送人 (Configurable via env or hardcoded as per request)
+        # 定义抄送人
         cc_list = ['zhuhuiqing13@163.com']
-        # Check if CC_EMAIL env exists to add more
         extra_cc = os.getenv('CC_EMAIL')
         if extra_cc:
             cc_list.extend([email.strip() for email in extra_cc.split(',')])
 
-        # 1. Fetch Data
+        # 1. Fetch all data sources
         papers = self.fetch_arxiv_papers()
         feeds = self.fetch_feeds()
         youtube_data = self.fetch_youtube_videos()
+        github_data = self.fetch_github_data()
+        reddit_posts = self.fetch_reddit_data()
+        hn_stories = self.fetch_hn_data()
         
         # 2. Generate Briefing
         briefing = self.generate_daily_briefing(papers, feeds, youtube_data)
         
         # 3. Generate Email Content
         print("\n🎨 正在生成 HTML 邮件...")
-        html_content = self.generate_html_content(briefing, papers, feeds, youtube_data)
+        html_content = self.generate_html_content(
+            briefing, papers, feeds, youtube_data,
+            github_data=github_data,
+            reddit_posts=reddit_posts,
+            hn_stories=hn_stories
+        )
         
-        # 3.1 Save to file
+        # 3.1 Save report and deduplication state
         self.save_report_to_file(html_content)
+        self.deduplicator.save()
         
         # 4. Send Email
         today = datetime.now().strftime('%m月%d日')
