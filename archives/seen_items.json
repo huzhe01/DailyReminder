@@ -1,0 +1,35 @@
+{
+  "github_issue": [
+    "llama.cpp#17389",
+    "llama.cpp#16331"
+  ],
+  "github_trending": [
+    "vercel-labs/agent-browser",
+    "jtydhr88/ComfyUI-qwenmultiangle",
+    "QwenLM/Qwen3-VL-Embedding",
+    "Yeachan-Heo/oh-my-claude-sisyphus",
+    "snarktank/ralph",
+    "z-libs/Zen-C",
+    "torvalds/AudioNoise",
+    "jarrodwatts/claude-code-config",
+    "ZhuLinsen/daily_stock_analysis",
+    "deepseek-ai/Engram"
+  ],
+  "hn": [
+    "46593395",
+    "46590280",
+    "46585947",
+    "46595419",
+    "46591100",
+    "46591708",
+    "46593022",
+    "46580326",
+    "46559065",
+    "46588905",
+    "46592344",
+    "46586766",
+    "46574276",
+    "46525271",
+    "46589675"
+  ]
+}
