@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年01月19日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>### 每日 AI 简报</p><p>**学术突破**</p><p>今日的学术界带来了几篇颇具启发性的研究论文，探讨了自然语言处理（NLP）领域的前沿进展。其中，《How Long Is a Piece of String? A Brief Empirical Analysis of Tokenizers》深入分析了不同分词器对文本处理的影响，为优化模型输入提供了实证依据。《CTest-Metric: A Unified Framework to Assess Clinical Validity of Metrics for CT Report Generation》则提出了一种评估CT报告生成度量临床有效性的统一框架，对于医疗AI应用具有重要意义。此外，《Predict the Retrieval! Test time adaptation for Retrieval Augmented Generation》探索了检索增强生成模型在测试时适应性的方法，为提高模型泛化能力提供了新思路。</p><p>**行业动态**</p><p>科技行业的风向标今日指向了多个方向。据《金融时报》报道，红杉资本计划投资于人工智能公司Anthropic，这一举动打破了风险投资界不支持竞争对手的传统。与此同时，OpenAI发布了一系列关于个人赋权和智能商业扩展的文章，强调了AI技术如何促进个人发展及商业模式的创新。在自动驾驶领域，TechCrunch Mobility指出，“物理AI”正逐渐成为新的热点，预示着AI技术将更广泛地应用于实体世界。</p><p>**值得关注**</p><p>值得注意的是，近期多位科技领袖分享了他们对AI未来的见解。特斯拉CEO埃隆·马斯克在最新的访谈中讨论了AGI的时间线、中美竞争格局以及清洁能源与人形机器人的未来；英伟达创始人黄仁勋的口述历史也揭示了GPU巨头背后的故事；而OpenAI的CEO山姆·阿尔特曼则在与马斯克的对话中谈到了两者之间的“战争”，这场对话不仅反映了两家公司在AI领域的竞争态势，也为公众提供了深入了解行业内部视角的机会。这些领袖的观点无疑为理解当前AI行业的脉络提供了宝贵资料。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.11518v1" target="_blank">How Long Is a Piece of String? A Brief Empirical Analysis of Tokenizers</a>
+                </div>
+                <div class="paper-authors">👥 Jonathan Roberts, Kai Han, Samuel Albanie</div>
+                <div class="paper-summary">前沿大语言模型在学术、社会和工业中越来越被广泛应用。通常用于比较模型、其输入和输出以及估计推理成本的单位是token。一般来说，token被视为一种稳定的货币，假定在不同的分词器和上下文中大致一致，从而可以进行直接比较。然而，分词在不同模型和文本领域之间存在显著差异，使得对token数量的简单解释变得问题重重。我们通过提供全面的经验分析来量化这种差异，探讨了不同文本数据分布下序列压缩为token的情况。我们的分析挑战了关于token长度的一些普遍持有的经验法则，发现这些经验法则是过于简化的。我们希望本研究的见解能够为当代大语言模型中的分词增加清晰度和直觉理解。
+核心贡献：本文通过全面的经验分析揭示了不同文本数据分布下token化过程的复杂性和变异性，挑战了现有的简化假设。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-16</span>
+                    <a href="https://arxiv.org/pdf/2601.11518v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.11488v1" target="_blank">CTest-Metric: A Unified Framework to Assess Clinical Validity of Metrics for CT Report Generation</a>
+                </div>
+                <div class="paper-authors">👥 Vanshali Sharma, Andrea Mia Bejar, Gorkem Durak</div>
+                <div class="paper-summary">在生成式人工智能时代，即使关键的医疗任务也越来越多地实现自动化，放射学报告生成（RRG）仍然依赖于次优的质量评估指标。因此，开发领域特定的指标一直是研究的热点，但由于缺乏统一且定义良好的框架来评估这些指标在临床环境中的稳健性和适用性，这仍然是一个挑战。为了解决这一问题，我们提出了CTest-Metric，这是第一个用于CT报告生成的度量评估统一框架，包含三个模块以确定度量在临床上的可行性。这三个模块测试：(i) 通过基于大型语言模型（LLM）的重述来测试写作风格的泛化能力（WSG）；(ii) 在不同严重程度下进行合成错误注入（SEI）；以及 (iii) 使用医生对175个“分歧”案例的评分来测试度量与专家的一致性（MvE）。我们研究了八种广泛使用的度量（BLEU、ROUGE、METEOR、BERTScore-F1、F1-RadGraph、RaTEScore、GREEN Score和CRG）在七个基于CT-CLIP编码器构建的LLM上的表现。使用我们的新框架，我们发现词汇级自然语言生成（NLG）度量对风格变化非常敏感；GREEN Score与专家判断最一致（Spearman相关系数约为0.70），而CRG显示出负相关性；BERTScore-F1对事实错误注入的敏感度最低。我们将发布该框架、代码及允许部分匿名化的评估数据（重述/错误注入的CT报告），以促进可重复的基准测试和未来的度量开发。
+
+核心贡献：本文提出了一种名为CTest-Metric的统一框架，用于评估CT报告生成中度量的临床有效性，通过三个模块测试度量在不同条件下的表现，为未来度量的开发提供了重要工具。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-16</span>
+                    <a href="https://arxiv.org/pdf/2601.11488v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.11443v1" target="_blank">Predict the Retrieval! Test time adaptation for Retrieval Augmented Generation</a>
+                </div>
+                <div class="paper-authors">👥 Xin Sun, Zhongqi Chen, Qiang Liu</div>
+                <div class="paper-summary">检索增强生成（RAG）作为一种强大的方法，通过整合外部知识来提升大型语言模型的问答能力。然而，在将RAG系统适应于特定领域时，由于分布偏移带来的挑战，导致其泛化性能不佳。在本文中，我们提出了TTARAG，一种测试时间自适应方法，该方法在推理过程中动态更新语言模型的参数，以提高RAG系统在特定领域的表现。我们的方法引入了一种简单而有效的方法，使模型能够预测检索到的内容，从而实现对目标域的自动参数调整。通过在六个特定领域的广泛实验，我们证明TTARAG相比基线RAG系统实现了显著的性能提升。
+核心贡献：提出了一种名为TTARAG的测试时间自适应方法，通过动态更新语言模型参数和预测检索内容，显著提高了RAG系统在特定领域的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-16</span>
+                    <a href="https://arxiv.org/pdf/2601.11443v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.11441v1" target="_blank">Hierarchical Orthogonal Residual Spread for Precise Massive Editing in Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Xiaojie Gu, Guangxu Chen, Yuheng Yang</div>
+                <div class="paper-summary">大型语言模型（LLMs）在各个领域表现出色，但它们面临关键的安全问题。模型编辑已成为缓解这些问题的有效方法。现有的模型编辑方法通常专注于优化信息矩阵，以融合新旧知识。虽然有效，但这些方法可能计算成本高昂并可能导致冲突。相比之下，我们将注意力转向信息矩阵的层次正交残差扩展，这从不同的角度减少了噪声梯度并实现了更稳定的编辑。我们通过与几种流行方法的明确理论比较以及在两个数据集上对多个大型语言模型进行的广泛实验，展示了我们的方法HORSE的有效性。结果表明，HORSE在各种场景中保持了精确的大规模编辑。代码可在https://github.com/XiaojieGu/HORSE 获取。
+核心贡献：本文提出了一种新的模型编辑方法HORSE，通过层次正交残差扩展减少噪声梯度，实现大规模精确编辑，有效解决了现有方法计算成本高和易产生冲突的问题。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-16</span>
+                    <a href="https://arxiv.org/pdf/2601.11441v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.11432v1" target="_blank">The unreasonable effectiveness of pattern matching</a>
+                </div>
+                <div class="paper-authors">👥 Gary Lupyan, Blaise Agüera y Arcas</div>
+                <div class="paper-summary">我们报告了大型语言模型（LLMs）在理解“ Jabberwocky”语言方面的惊人能力，这种语言中的大多数或所有内容词都被随机替换为无意义的字符串，例如将“He dwushed a ghanc zawk”翻译为“He dragged a spare chair”。这一结果解决了关于如何最好地理解LLMs正在做的事情的持续争议：它们是语言模仿者、数据库还是网络的模糊版本？LLMs从结构模式中恢复意义的能力证明了模式匹配的不合理有效性。模式匹配不是“真实”智能的替代品，而是其关键组成部分。
+核心贡献：该研究揭示了大型语言模型通过模式匹配从无意义的语言中恢复意义的能力，强调了模式匹配在实现人工智能中的重要性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-16</span>
+                    <a href="https://arxiv.org/pdf/2601.11432v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.11429v1" target="_blank">Relational Linearity is a Predictor of Hallucinations</a>
+                </div>
+                <div class="paper-authors">👥 Yuetian Lu, Yihong Liu, Hinrich Schütze</div>
+                <div class="paper-summary">Hallucination is a central failure mode in large language models (LLMs). We focus on hallucinations of answers to questions like: "Which instrument did Glenn Gould play?", but we ask these questions for synthetic entities that are unknown to the model. Surprisingly, we find that medium-size models like Gemma-7B-IT frequently hallucinate, i.e., they have difficulty recognizing that the hallucinated fact is not part of their knowledge. We hypothesize that an important factor in causing these hallucinations is the linearity of the relation: linear relations tend to be stored more abstractly, making it difficult for the LLM to assess its knowledge; the facts of nonlinear relations tend to be stored more directly, making knowledge assessment easier. To investigate this hypothesis, we create SyntHal, a dataset of 6000 synthetic entities for six relations. In our experiments with four models, we determine, for each relation, the hallucination rate on SyntHal and also measure its linearity, using $Δ\cos$. We find a strong correlation ($r \in [.78,.82]$) between relational linearity and hallucination rate, providing evidence for our hypothesis that the underlying storage of triples of a relation is a factor in how well a model can self-assess its knowledge. This finding has implications for how to manage hallucination behavior and suggests new research directions for improving the representation of factual knowledge in LLMs.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-16</span>
+                    <a href="https://arxiv.org/pdf/2601.11429v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.10019v1" target="_blank">Time Aggregation Features for XGBoost Models</a>
+                </div>
+                <div class="paper-authors">👥 Mykola Pinchuk</div>
+                <div class="paper-summary">本文研究了在点击率预测中使用XGBoost模型的时间聚合特征。实验设置基于Avazu点击率预测数据集，采用严格的时序分割和无前瞻特征约束。第H小时的特征仅使用严格早于H小时的展示记录。本文将一个强有力的时间感知目标编码基线与几种窗口设计下的实体历史时间聚合模型进行了比较。在两个滚动尾部折叠上的确定性10%样本中，相对于仅使用目标编码，拖尾窗口规范使ROC AUC提高了约0.0066至0.0082，PR AUC提高了约0.0084至0.0094。在时间聚合设计网格内，事件计数窗口是唯一能持续改进拖尾窗口的方法，但增益较小。在此数据集和协议下，间隔窗口和分桶窗口的表现不如简单的拖尾窗口。这些结果支持使用拖尾窗口作为实际默认方案，当边际ROC AUC增益重要时，可以选择加入事件计数窗口。
+核心贡献：该研究通过对比不同时间聚合窗口设计对XGBoost模型在点击率预测中的性能影响，发现拖尾窗口设计在大多数情况下表现最佳，为实际应用提供了指导建议。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-15</span>
+                    <a href="https://arxiv.org/pdf/2601.10019v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.10148v1" target="_blank">DecisionLLM: Large Language Models for Long Sequence Decision Exploration</a>
+                </div>
+                <div class="paper-authors">👥 Xiaowei Lv, Zhilin Zhang, Yijun Li</div>
+                <div class="paper-summary">长序列决策问题，通常通过强化学习（RL）解决，是优化动态环境中战略操作的关键组成部分，例如计算广告中的实时竞价。Decision Transformer（DT）通过将RL框架化为自回归序列建模问题引入了一种强大的范式。同时，大型语言模型（LLMs）在复杂的推理和规划任务中表现出显著的成功。这启发我们思考，LLMs是否可以通过其相同的Transformer基础，在更大规模上运行，从而在长时序决策问题中解锁新的性能水平。本工作研究了LLMs在离线决策任务中的应用。该领域的一个基本挑战是LLMs固有的无法解释连续值的能力，因为当数值以文本字符串表示时，它们缺乏对数值大小和顺序的原生理解。为了解决这个问题，我们提出将轨迹视为一种独特的模式。通过学习将轨迹数据与自然语言任务描述对齐，我们的模型可以在一个连贯的框架内自回归地预测未来的决策，我们称这个框架为DecisionLLM。我们建立了一套指导这一范式的缩放定律，证明性能取决于三个因素：模型规模、数据量和数据质量。在离线实验基准测试和竞价场景中，DecisionLLM表现出色。具体而言，DecisionLLM-3B在Maze2D umaze-v1上的表现优于传统的Decision Transformer（DT）69.4%，在AuctionNet上则高出0.085。它扩展了AIGB范式，并指出了在线竞价未来探索的有希望方向。
+
+核心贡献：本文提出了DecisionLLM，一种利用大规模语言模型进行长序列决策的新方法，通过将轨迹数据与自然语言任务描述对齐，显著提升了离线决策任务的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-15</span>
+                    <a href="https://arxiv.org/pdf/2601.10148v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/ai-for-human-agency" target="_blank">AI for self empowerment</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/a-business-that-scales-with-the-value-of-intelligence" target="_blank">A business that scales with the value of intelligence</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/18/sequoia-to-invest-in-anthropic-breaking-vc-taboo-on-backing-rivals-ft/" target="_blank">Sequoia to invest in Anthropic, breaking VC taboo on backing rivals: FT</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/column/864078/cosmic-horror-comedy-podcast-welcome-to-night-vale" target="_blank">You need to listen to the cosmic horror-comedy podcast Welcome to Night Vale</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/18/techcrunch-mobility-physical-ai-enters-the-hype-machine/" target="_blank">TechCrunch Mobility: ‘Physical AI’ enters the hype machine</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/18/threads-edges-out-x-in-daily-mobile-users-new-data-shows/" target="_blank">Threads edges out X in daily mobile users, new data shows</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/news/864032/microsofts-out-of-band-windows-11-update-bug" target="_blank">Microsoft’s first Windows 11 update of 2026 stopped some computers from shutting down</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/18/how-yc-backed-bucket-robotics-survived-its-first-ces/" target="_blank">How YC-backed Bucket Robotics survived its first CES</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/18/moxie-marlinspike-has-a-privacy-conscious-alternative-to-chatgpt/" target="_blank">Moxie Marlinspike has a privacy-conscious alternative to ChatGPT</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/18/moxie-marlinspike-has-a-privacy-conscious-alternative-to-chatgpt/" target="_blank">Moxie Marlinspike has a privacy-conscious alternative to ChatGPT</a></div>
+                <div class="feed-date">01-18</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=RSNuB9pj9P8" target="_blank">🎥 Elon Musk on AGI Timeline, US vs China, Job Markets, Clean Energy &amp; Humanoid Robots | 220</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Get access to metatrends 10+ years before anyone else - https://qr.diamandis.com/metatrends Elon Mus...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=bz5Hjk40FD4" target="_blank">🎥 Elon Musk on DOGE, AI, &amp; Are we in a Simulation? | KMP Ep.18</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">In this episode, I sit down with @elonmusk for a wide-ranging conversation on DOGE, AI, simulation t...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0c8i4T9BSqY" target="_blank">🎥 Oral History of Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Interviewed by Douglas Fairbairn and Hansen Hsu, on August 09, 2024 in Santa Clara, California, © Co...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=xgZOtNYxyu4" target="_blank">🎥 NVIDIA CEO Jensen Huang FULL CES 2026 Keynote 🔥 AI, GPUs &amp; Future Tech Revealed#nvidia #ai #ceo </a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA CEO Jensen Huang takes the CES 2026 stage in Las Vegas with a blockbuster keynote, unveiling ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Iiz1KgFexx4" target="_blank">🎥 Elon and OpenAI go to WAR</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">The latest AI News. Learn about LLMs, Gen AI and get ready for the rollout of AGI. Wes Roth covers t...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=L0jNrodpcBo" target="_blank">🎥 OpenAI 正在死亡？40天前我的预言成真了：硅谷正在发生一场物理学屠杀</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">OpenAI 正在死亡？这不是危言耸听。40天前我的预言正在应验：当Google把几千面镜子放进数据中心时，一场针对Sam Altman的“ ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/affaan-m/everything-claude-code" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                affaan-m/everything-claude-code
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目收集了完整的 Claude Code 配置，对于研究和开发基于 Claude 的应用非常有价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46668021" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Predicting OpenAI's ad strategy
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨OpenAI广告策略，对AI商业应用有重要启示。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46666963" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Starting from scratch: Training a 30M Topological Transformer
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 从零开始训练大规模模型的经验分享，对AI研究和开发具有参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46664540" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                How scientists are using Claude to accelerate research and discovery
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 介绍如何使用AI助手加速科研工作，展示了AI在科学研究中的实际应用。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 8<br>
+                    Input Tokens: 2343<br>
+                    Output Tokens: 2136
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年01月19日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
