@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年01月22日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>### 每日 AI 简报</p><p>**学术突破**  </p><p>今日，AI 领域的学术研究带来了几项重要进展。首先是《使用大型语言模型在对抗性情感攻击下检测虚假新闻》的研究，该研究展示了如何利用大型语言模型（LLM）提高对虚假新闻的识别能力，即使面对精心设计的情感攻击也能保持高度准确性。此外，《大型语言模型在法律应用中的评估：挑战、方法和未来方向》一文深入探讨了LLM在法律领域的应用潜力与面临的挑战，为未来的技术发展指明了方向。最后，《脚本和格式对LLM数值能力的影响》则揭示了不同输入格式对LLM处理数学问题时表现的影响，对于优化模型性能具有重要意义。</p><p>**行业动态**  </p><p>在技术新闻方面，苹果公司据传正秘密研发一款AI可穿戴设备，以应对OpenAI等竞争对手的挑战，此举或将重新定义个人智能助手市场（TechCrunch）。与此同时，美国司法体系内发生了一起涉及FBI与《华盛顿邮报》记者设备搜查权的争议案件，一名法官下令停止相关行动，引发了关于隐私权与国家安全之间界限的新一轮讨论（Ars Technica）。而在健康科技领域，Fitbit发布了最新的假期健康统计数据，旨在帮助用户规划2026年的健康目标；YouTube也公布了其未来几年的发展蓝图，包括内容创新和技术升级计划（Google The Keyword）。</p><p>**值得关注**  </p><p>今日还有一系列值得关注的访谈内容。特斯拉CEO埃隆·马斯克在最新采访中分享了他对通用人工智能(AGI)发展时间表的看法，并谈及中美两国在全球AI竞赛中的角色、就业市场变化、清洁能源转型及人形机器人技术等多个热点话题。NVIDIA创始人兼CEO黄仁勋则在世界经济论坛上发表了关于AI算力增长及其对未来全球科技格局影响的观点。此外，围绕OpenAI与马斯克之间的巨额诉讼案件，Sam Altman接受了专访，详细阐述了事件始末及双方立场。这些高层对话不仅为我们提供了行业内部视角，也为理解AI行业的现状与未来趋势提供了宝贵见解。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.15277v1" target="_blank">Robust Fake News Detection using Large Language Models under Adversarial Sentiment Attacks</a>
+                </div>
+                <div class="paper-authors">👥 Sahar Tahmasebi, Eric Müller-Budack, Ralph Ewerth</div>
+                <div class="paper-summary">虚假信息和假新闻已成为一个紧迫的社会挑战，推动了对可靠自动化检测方法的需求。先前的研究强调了情感在假新闻检测中的重要性，无论是通过分析与假新闻相关的情感，还是使用情感和情绪特征进行分类。然而，这带来了一个漏洞，因为对手可以通过操纵情感来逃避检测器，尤其是在大型语言模型（LLMs）出现之后。一些研究探讨了由LLMs生成的对抗样本，但它们主要集中在新闻出版商的写作风格等风格特征上。因此，情感操控的关键漏洞仍然很大程度上未被探索。在本文中，我们调查了最先进的假新闻检测器在情感操控下的鲁棒性。我们引入了AdSent，这是一个情感鲁棒检测框架，旨在确保原始新闻文章和情感修改后的新闻文章之间的一致性验证预测。具体来说，我们（1）提出了使用LLMs的受控情感基础对抗攻击，（2）分析了情感变化对检测性能的影响。我们发现，改变情感对假新闻检测模型的性能有重大影响，表明这些模型存在偏见，倾向于认为中立的文章是真实的，而非中立的文章则经常被归类为假内容。（3）我们介绍了一种新的情感无关训练策略，以增强对这种扰动的鲁棒性。在三个基准数据集上的广泛实验表明，AdSent在准确性和鲁棒性方面显著优于竞争基线，同时还能有效地泛化到未见过的数据集和对抗场景。
+
+核心贡献：本文提出了一种名为AdSent的情感鲁棒检测框架，通过引入受控情感基础对抗攻击、分析情感变化对检测性能的影响以及采用新的情感无关训练策略，显著提高了假新闻检测模型在对抗性情感攻击下的鲁棒性和准确性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-21</span>
+                    <a href="https://arxiv.org/pdf/2601.15277v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.15267v1" target="_blank">Evaluation of Large Language Models in Legal Applications: Challenges, Methods, and Future Directions</a>
+                </div>
+                <div class="paper-authors">👥 Yiran Hu, Huanghai Liu, Chong Wang</div>
+                <div class="paper-summary">大型语言模型（LLMs）正越来越多地被整合到法律应用中，包括司法决策支持、法律实践协助和面向公众的法律服务。尽管LLMs在处理法律知识和任务方面表现出强大的潜力，但它们在现实世界法律环境中的部署引发了超越表面准确性的关键问题，涉及法律推理过程的合理性以及公平性和可靠性等信任问题。因此，对LLMs在法律任务中的表现进行系统评估对于其负责任地采用变得至关重要。本调查确定了基于实际法律实践评估LLMs用于法律任务的关键挑战。我们分析了评估LLMs在法律领域表现的主要困难，包括结果正确性、推理可靠性和可信度。在此基础上，我们根据任务设计、数据集和评估指标审查并分类了现有的评估方法和基准。我们进一步讨论了当前方法在多大程度上解决了这些挑战，指出了它们的局限性，并概述了未来研究方向，以实现更现实、可靠和法律基础更强的LLMs在法律领域的评估框架。
+核心贡献：本文系统地识别并分析了大型语言模型在法律应用中面临的评估挑战，提出了改进的评估方法和未来研究方向，旨在建立更加可靠和合理的评估框架。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-21</span>
+                    <a href="https://arxiv.org/pdf/2601.15267v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.15251v1" target="_blank">The Effect of Scripts and Formats on LLM Numeracy</a>
+                </div>
+                <div class="paper-authors">👥 Varshini Reddy, Craig W. Schmidt, Seth Ebner</div>
+                <div class="paper-summary">大型语言模型（LLMs）在基础算术方面取得了令人印象深刻的熟练度，在标准数值任务上达到了接近人类水平的表现。然而，很少有人关注这些模型在数值表达偏离其训练语料库中普遍存在的规范时的表现。在这项工作中，我们研究了各种数字脚本和格式下的数值推理。我们发现，当数值输入以较少代表的脚本或格式呈现时，LLM的准确性会大幅下降，尽管底层的数学推理是相同的。我们进一步证明，有针对性的提示策略，如少量示例提示和显式数字映射，可以大大缩小这一差距。我们的研究揭示了多语言数值推理中一个被忽视的挑战，并为使用LLM可靠地解释、操作和生成不同数字脚本和格式风格的数字提供了可操作的见解。
+核心贡献：该研究揭示了大型语言模型在处理非主流数字脚本和格式时的性能下降问题，并提出通过特定提示策略来改善这一状况的方法。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-21</span>
+                    <a href="https://arxiv.org/pdf/2601.15251v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.15247v1" target="_blank">Taxonomy-Aligned Risk Extraction from 10-K Filings with Autonomous Improvement Using LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Rian Dolphin, Joe Dursun, Jarrett Blankenship</div>
+                <div class="paper-summary">我们提出了一种从企业10-K文件中提取结构化风险因素的方法，同时保持对预定义层次分类法的遵守。我们的三阶段管道结合了基于LLM的提取与支持引用、基于嵌入的语义映射到分类法类别，以及作为法官的LLM验证以过滤错误分配。为了评估我们的方法，我们从标准普尔500指数公司中提取了10,688个风险因素，并检查了行业集群之间的风险配置文件相似性。除了提取之外，我们还引入了自主分类法维护，其中AI代理分析评估反馈以识别问题类别、诊断失败模式并提出改进措施，在案例研究中实现了104.7%的嵌入分离改进。外部验证确认分类法捕捉到了经济上有意义的结构：同行业的公司在风险配置文件上的相似度比跨行业的公司高63%（Cohen's d=1.06, AUC 0.82, p<0.001）。该方法适用于任何需要从非结构化文本中进行分类法对齐提取的领域，自主改进使得系统在处理更多文档时能够持续维护和提高质量。
+核心贡献：本文提出了一种结合大型语言模型和自主改进机制的三阶段管道，用于从企业10-K文件中提取结构化风险因素，并保持对预定义分类法的遵守，显著提高了风险因素的提取精度和分类法的经济意义。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-21</span>
+                    <a href="https://arxiv.org/pdf/2601.15247v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.15236v1" target="_blank">Metadata Conditioned Large Language Models for Localization</a>
+                </div>
+                <div class="paper-authors">👥 Anjishnu Mukherjee, Ziwei Zhu, Antonios Anastasopoulos</div>
+                <div class="paper-summary">大型语言模型通常通过将文本视为单一的全局分布来进行训练，这往往导致地理上的同质化行为。我们研究了元数据调节作为一种轻量级的方法来实现本地化，从头开始预训练31个模型（在0.5B和1B参数规模）在大规模英语新闻数据上，这些数据带有验证的URL、国家标签和大陆标签，覆盖4个大洲和17个国家。通过四个受控实验，我们展示了元数据调节能够一致地提高区域内性能而不牺牲跨区域泛化能力，使全球模型能够恢复与特定区域模型相当的本地化效果，并提高学习效率。我们的消融研究表明，仅URL级别的元数据就能捕捉到大部分地理信号，而平衡的区域数据覆盖仍然至关重要，因为元数据无法完全补偿缺失的区域。最后，我们引入了一个包含800个本地化新闻选择题的下游基准测试，并展示经过指令调优后，元数据调节的全球模型在准确性上可与LLaMA-3.2-1B-Instruct相媲美，尽管其训练数据量显著较少。这些结果共同证明了元数据调节作为语言模型本地化的一种实用且计算高效的途径。
+核心贡献：本文提出并验证了使用元数据调节来增强大型语言模型的本地化能力，不仅提高了特定区域内的表现，还保持了跨区域的泛化能力，同时提高了学习效率。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-21</span>
+                    <a href="https://arxiv.org/pdf/2601.15236v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.15182v1" target="_blank">Supporting Humans in Evaluating AI Summaries of Legal Depositions</a>
+                </div>
+                <div class="paper-authors">👥 Naghmeh Farzi, Laura Dietz, Dave D. Lewis</div>
+                <div class="paper-summary">While large language models (LLMs) are increasingly used to summarize long documents, this trend poses significant challenges in the legal domain, where the factual accuracy of deposition summaries is crucial. Nugget-based methods have been shown to be extremely helpful for the automated evaluation of summarization approaches. In this work, we translate these methods to the user side and explore how nuggets could directly assist end users. Although prior systems have demonstrated the promise of nugget-based evaluation, its potential to support end users remains underexplored. Focusing on the legal domain, we present a prototype that leverages a factual nugget-based approach to support legal professionals in two concrete scenarios: (1) determining which of two summaries is better, and (2) manually improving an automatically generated summary.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-21</span>
+                    <a href="https://arxiv.org/pdf/2601.15182v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.12681v1" target="_blank">HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Yunwen Huang, Shiyong Hong, Xijun Xiao</div>
+                <div class="paper-summary">工业大规模推荐模型（LRMs）面临着在严格的效率约束下联合建模长距离用户行为序列和异构非顺序特征的挑战。然而，大多数现有架构采用解耦管道：首先使用基于查询令牌的序列压缩器（如LONGER）压缩长序列，然后通过像RankMixer这样的令牌混合模块与密集特征融合，这限制了表示能力和交互灵活性。本文提出了HyFormer，一种统一的混合变压器架构，将长序列建模和特征交互紧密集成到一个主干中。从序列建模的角度，我们重新审视并重新设计了LRMs中的查询令牌，并将LRMs建模任务框架化为一个交替优化过程，整合了两个核心组件：查询解码，将非顺序特征扩展为全局令牌，并对长行为序列的层间键值表示执行长序列解码；以及查询增强，通过高效的令牌混合增强跨查询和跨序列的异构交互。这两种互补机制迭代执行，以在各层中细化语义表示。在数十亿规模的工业数据集上的广泛实验表明，HyFormer在可比参数和FLOPs预算下始终优于强大的LONGER和RankMixer基线，并且随着参数和FLOPs的增加表现出更优的扩展行为。高流量生产系统中的大规模在线A/B测试进一步验证了其有效性，显示出相对于已部署的最先进模型有显著的提升。这些结果突显了HyFormer作为工业LRMs统一建模框架的实用性和可扩展性。
+
+核心贡献：HyFormer提出了一种新的统一混合变压器架构，能够高效地同时处理长序列建模和特征交互，显著提升了工业大规模推荐模型的性能和扩展能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-19</span>
+                    <a href="https://arxiv.org/pdf/2601.12681v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/devices/fitbit/holiday-health-data-new-year-goals/" target="_blank">3 Fitbit holiday health stats to help you plan for 2026 goals</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/youtube/neal-mohan-letter-2026/" target="_blank">Check out what YouTube has planned for 2026.</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/higgsfield" target="_blank">How Higgsfield turns simple ideas into cinematic social videos</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/khan-academy-partnership/" target="_blank">Collaborating with Khan Academy to build the best AI tools for learners</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/bett26-premium-ai/" target="_blank">Premium Google AI for more educators and students</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/oxford-gemini-notebooklm/" target="_blank">Google and Oxford University are collaborating to provide students and faculty with AI tools for higher education</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/practice-sat-gemini/" target="_blank">Prep for the SAT with practice tests in Gemini</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/bett-2026-gemini-classroom-updates/" target="_blank">Transform teaching and learning with updates to Gemini and Google Classroom</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/21/not-to-be-outdone-by-openai-apple-is-reportedly-developing-an-ai-wearable/" target="_blank">Not to be outdone by OpenAI, Apple is reportedly developing an AI wearable</a></div>
+                <div class="feed-date">01-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/21/not-to-be-outdone-by-openai-apple-is-reportedly-developing-an-ai-wearable/" target="_blank">Not to be outdone by OpenAI, Apple is reportedly developing an AI wearable</a></div>
+                <div class="feed-date">01-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/01/judge-orders-stop-to-fbi-search-of-devices-seized-from-washington-post-reporter/" target="_blank">Judge orders stop to FBI search of devices seized from Washington Post reporter</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/21/sources-project-sglang-spins-out-as-radixark-with-400m-valuation-as-inference-market-explodes/" target="_blank">Sources: Project SGLang spins out as RadixArk with $400M valuation as inference market explodes</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/21/sources-project-sglang-spins-out-as-radixark-with-400m-valuation-as-inference-market-explodes/" target="_blank">Sources: Project SGLang spins out as RadixArk with $400M valuation as inference market explodes</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/news/865282/blue-origin-terawave-satellite-6tb" target="_blank">Blue Origin’s Starlink rival TeraWave promises 6-terabit satellite internet</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/security/2026/01/millions-of-people-imperiled-through-sign-in-links-sent-by-sms/" target="_blank">Millions of people imperiled through sign-in links sent by SMS</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/864569/sennheiser-bluetooth-auracast-bta1-transmitter-hdr-275-wireless-headphones" target="_blank">Everyone can hear your TV in their headphones using this transmitter</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=RSNuB9pj9P8" target="_blank">🎥 Elon Musk on AGI Timeline, US vs China, Job Markets, Clean Energy &amp; Humanoid Robots | 220</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Get access to metatrends 10+ years before anyone else - https://qr.diamandis.com/metatrends Elon Mus...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=bz5Hjk40FD4" target="_blank">🎥 Elon Musk on DOGE, AI, &amp; Are we in a Simulation? | KMP Ep.18</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">In this episode, I sit down with @elonmusk for a wide-ranging conversation on DOGE, AI, simulation t...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=GgMegLZh_IM" target="_blank">🎥 WEF 2026 LIVE: NVIDIA CEO Jensen Huang At Davos 2026: NVIDIA, AI Power &amp; The Future Of Global Tech</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA President and CEO Jensen Huang takes the global stage at the 2026 World Economic Forum in Dav...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0c8i4T9BSqY" target="_blank">🎥 Oral History of Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Interviewed by Douglas Fairbairn and Hansen Hsu, on August 09, 2024 in Santa Clara, California, © Co...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Q39Wbt4HMHQ" target="_blank">🎥 Elon Musk vs. OpenAI – Der 134-Milliarden-Dollar-Prozess | AI Talk 62</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Der „Kampf der Giganten“ geht in die heiße Phase! In der 62. Folge des AI Talk diskutieren Jakob Ste...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=ZyUTPQsTjUc" target="_blank">🎥 Elon vs Sam Altman: The $134 Billion Lawsuit Could End OpenAI</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">LIMITLESS HQ: LISTEN & FOLLOW HERE ⬇️ https://limitless.bankless.com/ https://x.com/LimitlessFT ----...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/anthropics/original_performance_takehome" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                anthropics/original_performance_takehome
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 来自 Anthropic 的性能测试项目，对于研究 AI 性能评估和优化有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/op7418/Humanizer-zh" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                op7418/Humanizer-zh
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 汉化版的 Humanizer 工具，有助于研究如何减少 AI 生成文本的可识别性，提高自然度。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/ronitsingh10/FineTune" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                ronitsingh10/FineTune
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 虽然主要功能是音量控制，但其背后的多应用独立控制技术对开发复杂用户界面的应用程序有借鉴意义。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46707572" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Claude's new constitution
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Claude 的新宪法更新，对于理解 AI 的伦理和治理框架有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46696300" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Without benchmarking LLMs, you're likely overpaying
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 讨论了如何通过基准测试避免在大型语言模型上过度支付，对优化成本和性能非常实用。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46700594" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Anthropic's original take home assignment open sourced
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Anthropic 开源了其最初的带回家作业，对于研究 AI 伦理和评估方法的学者具有很高的参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2314<br>
+                    Output Tokens: 2223
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年01月22日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
