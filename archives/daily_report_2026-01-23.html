@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年01月23日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>### 每日 AI 简报</p><p>**学术突破**</p><p>今日的学术界带来了几篇值得关注的大模型研究论文。《LLM-in-Sandbox Elicits General Agentic Intelligence》探讨了通过特定环境下的交互，大型语言模型如何展现出更广泛的智能行为，为实现通用人工智能提供了新的视角。另一篇论文《Automatic Classification of Arabic Literature into Historical Eras》则展示了利用AI技术对阿拉伯文学作品进行历史时期的自动分类，不仅提升了文献处理效率，也为文化研究开辟了新路径。此外，《LLM Prompt Evaluation for Educational Applications》研究了大型语言模型在教育领域的应用潜力，特别是通过优化提示词来提高学习效果，这可能为未来的个性化教学提供有力支持。</p><p>**行业动态**</p><p>科技行业的最新动态显示，前红杉资本合伙人创立的新公司正利用AI技术帮助用户自动管理日程，这一创新解决方案有望大幅提高个人和团队的工作效率（TechCrunch）。与此同时，Anduril Industries在长滩的扩张引起了广泛关注，尤其是其战斗机项目，展示了AI在国防领域的前沿应用（TechCrunch）。谷歌也在本月推出了多项新产品特性，包括在搜索中引入个人智能模式，旨在为用户提供更加个性化的帮助（The Keyword）。而在数据库技术方面，OpenAI分享了如何通过扩展PostgreSQL来支持拥有8亿用户的ChatGPT平台，彰显了技术基础设施的重要性（OpenAI）。</p><p>**值得关注**</p><p>今日的访谈内容同样精彩纷呈，不容错过。特斯拉CEO埃隆·马斯克在最新采访中讨论了AGI的时间线、中美竞争态势、就业市场变化、清洁能源以及人形机器人等多个热点话题，展现了他对未来科技趋势的深刻见解（220）。NVIDIA CEO黄仁勋在世界经济论坛上分享了NVIDIA在AI领域的强大实力及全球技术发展的未来愿景（WEF 2026 LIVE）。此外，OpenAI CEO山姆·阿尔特曼与中东投资者会面的消息也备受瞩目，OpenAI正寻求高达83亿美元的估值，显示出市场对其技术和商业模式的高度认可（Bloomberg Tech）。这些领袖的观点无疑将对行业发展产生深远影响。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16206v1" target="_blank">LLM-in-Sandbox Elicits General Agentic Intelligence</a>
+                </div>
+                <div class="paper-authors">👥 Daixuan Cheng, Shaohan Huang, Yuxian Gu</div>
+                <div class="paper-summary">我们介绍了LLM-in-Sandbox，使大型语言模型（LLMs）能够在代码沙箱（即虚拟计算机）中探索，以在非代码领域激发通用智能。我们首先展示了强大的LLMs无需额外训练，就能展现出利用代码沙箱处理非代码任务的一般化能力。例如，LLMs会自发地访问外部资源获取新知识，利用文件系统处理长文本上下文，并执行脚本来满足格式要求。我们进一步表明，这些代理能力可以通过LLM-in-Sandbox强化学习（LLM-in-Sandbox-RL）得到增强，该方法仅使用非代理数据来训练模型进行沙箱探索。实验表明，在无训练和后训练设置下，LLM-in-Sandbox在数学、物理、化学、生物医学、长文本理解和指令遵循等多个领域都表现出稳健的泛化能力。最后，我们从计算和系统角度分析了LLM-in-Sandbox的效率，并将其作为Python包开源，以促进实际部署。
+核心贡献：本文提出了一种名为LLM-in-Sandbox的方法，使大型语言模型能够在虚拟环境中自主探索和执行任务，从而在多个非编程领域展现出了广泛的智能应用。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-22</span>
+                    <a href="https://arxiv.org/pdf/2601.16206v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16138v1" target="_blank">Automatic Classification of Arabic Literature into Historical Eras</a>
+                </div>
+                <div class="paper-authors">👥 Zainab Alhathloul, Irfan Ahmad</div>
+                <div class="paper-summary">阿拉伯语随着时间的推移经历了显著的变化，包括新词汇的出现、旧词汇的过时以及词汇使用的转变。这种演变在古典阿拉伯语和现代阿拉伯语之间的区别中尤为明显。尽管历史学家和语言学家已经将阿拉伯文学划分为多个时期，但对阿拉伯文本按时间分类的自动分类研究相对较少，尤其是在诗歌领域之外。本文通过使用神经网络和深度学习技术来自动将阿拉伯文本分类到不同的时代和时期，以填补这一空白。所提出的模型使用来自两个公开语料库的两个数据集进行评估，涵盖了从伊斯兰前时期到现代时期的文本。该研究考察了从二元到15类分类的类别设置，并考虑了预定义的历史时期和自定义时期化。结果范围从使用OpenITI和APCD数据集进行二元时代分类任务的F1分数分别为0.83和0.79，到使用OpenITI进行15个时代分类任务的0.20和使用APCD进行12个时代分类任务的0.18。
+核心贡献：本文提出并评估了使用神经网络和深度学习技术自动将阿拉伯文本分类至不同历史时期的模型，首次在诗歌以外的领域进行了广泛的实验验证。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-22</span>
+                    <a href="https://arxiv.org/pdf/2601.16138v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16134v1" target="_blank">LLM Prompt Evaluation for Educational Applications</a>
+                </div>
+                <div class="paper-authors">👥 Langdon Holmes, Adam Coscia, Scott Crossley</div>
+                <div class="paper-summary">随着大型语言模型（LLM）在教育应用中的使用越来越普遍，对基于证据的方法设计和评估产生个性化和教学对齐输出的LLM提示的需求也在增长。本研究提出了一种可推广的系统方法来评估提示，通过分析结构化对话活动中由LLM生成的后续问题来展示这种方法。设计并测试了六个提示模板，每个提示都强调不同的教学策略。通过一种可以适应其他教育应用的锦标赛式评估框架对这些提示模板进行了比较。该锦标赛采用了Glicko2评分系统，由八位评委从格式、对话支持和对学习者的适当性三个维度评估问题对。数据来自三个不同教育部署中的120次真实用户互动。结果显示，与战略阅读相关的单一提示在配对比较中胜出概率为81%至100%，优于其他模板。该提示结合了角色和情境管理模式，旨在支持自我导向等元认知学习策略。该方法展示了教育技术研究人员如何系统地评估和改进提示设计，从而超越零散的提示工程，迈向教育应用的基于证据的提示开发。
+
+核心贡献：本文提出了一种系统性的LLM提示评估方法，通过实证研究证明了特定提示设计在教育应用中的优越性，为教育技术领域的提示优化提供了新路径。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-22</span>
+                    <a href="https://arxiv.org/pdf/2601.16134v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16127v1" target="_blank">Improving Training Efficiency and Reducing Maintenance Costs via Language Specific Model Merging</a>
+                </div>
+                <div class="paper-authors">👥 Alphaeus Dmonte, Vidhi Gupta, Daniel J Perry</div>
+                <div class="paper-summary">微调特定任务的多语言大型语言模型（LLM）涉及使用包含所有所需语言示例的多语言数据集训练模型。更新一种或多种支持的语言或添加对新语言的支持需要重新训练模型，这在计算上效率低下，并且会造成严重的维护瓶颈。近期关于合并多语言多任务模型的研究显示了质量上的改进，但其计算和维护效率尚未得到研究。在这项工作中，我们首次从效率角度对这种合并策略进行了集中分析，在三个独立的任务中对其进行了评估。我们展示了显著的效率提升，同时保持了质量的平等：这种合并方法将初始训练时间减少了高达50%。我们还证明，作为模型维护的一部分，单独更新一种语言并重新合并可以将训练成本降低超过60%，与重新训练整个多语言模型相比。我们在公共和专有行业数据集上都展示了这一点，确认该方法不仅适用于之前研究中已经研究过的学术环境，也适用于工业用例。
+核心贡献：本文提出了一种通过语言特定模型合并来提高多语言大型语言模型训练效率和减少维护成本的方法，显著降低了初始训练时间和后续更新的训练成本。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-22</span>
+                    <a href="https://arxiv.org/pdf/2601.16127v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16113v1" target="_blank">synthocr-gen: A synthetic ocr dataset generator for low-resource languages- breaking the data barrier</a>
+                </div>
+                <div class="paper-authors">👥 Haq Nawaz Malik, Kh Mohmad Shafi, Tanveer Ahmad Reshi</div>
+                <div class="paper-summary">光学字符识别（OCR）在低资源语言中仍面临重大挑战，主要原因是缺乏大规模标注训练数据集。例如克什米尔语，约有700万使用者，具有复杂的波斯阿拉伯字母表和独特的变音符号，目前在Tesseract、TrOCR和PaddleOCR等主要OCR系统中均缺乏支持。对于这类语言的手动数据集创建成本高昂、耗时且容易出错，通常需要逐词转录印刷或手写文本。我们提出了SynthOCR-Gen，这是一个专门为低资源语言设计的开源合成OCR数据集生成器。我们的工具通过将数字Unicode文本语料库转换为现成的训练数据集，解决了OCR开发中的基本瓶颈。该系统实现了一个全面的管道，包括文本分段（字符、单词、n-gram、句子和行级别）、Unicode规范化及脚本纯度强制执行、多字体渲染与可配置分布，以及25种以上的数据增强技术，模拟现实世界文档退化，如旋转、模糊、噪声和扫描仪伪影。我们通过生成一个包含60万个样本的克什米尔语单词分割OCR数据集来证明我们方法的有效性，并公开发布在HuggingFace上。这项工作为将低资源语言带入视觉-语言AI模型时代提供了实用途径，该工具面向全球研究低资源书写系统的研究人员和从业者开放。
+
+核心贡献：本文提出了一种名为SynthOCR-Gen的开源合成OCR数据集生成器，专门针对低资源语言，通过生成大量高质量的合成数据集有效解决了OCR开发中的数据稀缺问题。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-22</span>
+                    <a href="https://arxiv.org/pdf/2601.16113v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16097v1" target="_blank">Adapter Fusion for Multilingual Text2Cypher with Linear and Learned Gating</a>
+                </div>
+                <div class="paper-authors">👥 Makbule Gulcin Ozsoy</div>
+                <div class="paper-summary">Large Language Models enable users to access database using natural language interfaces using tools like Text2SQL, Text2SPARQL, and Text2Cypher, which translate user questions into structured database queries. While these systems improve database accessibility, most research focuses on English with limited multilingual support. This work investigates a scalable multilingual Text2Cypher, aiming to support new languages without re-running full fine-tuning, avoiding manual hyper-parameter tuning, and maintaining performance close to joint multilingual fine-tuning. We train language-specific LoRA adapters for English, Spanish, and Turkish and combined them via uniform linear merging or learned fusion MLP with dynamic gating. Experimental results show that the fusion MLP recovers around 75\% of the accuracy gains from joint multilingual fine-tuning while requiring only a smaller subset of the data, outperforming linear merging across all three languages. This approach enables incremental language expansion to new languages by requiring only one LoRA adapter and a lightweight MLP retraining. Learned adapter fusion offers a practical alternative to expensive joint fine-tuning, balancing performance, data efficiency, and scalability for multilingual Text2Cypher task.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-22</span>
+                    <a href="https://arxiv.org/pdf/2601.16097v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.12681v1" target="_blank">HyFormer: Revisiting the Roles of Sequence Modeling and Feature Interaction in CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Yunwen Huang, Shiyong Hong, Xijun Xiao</div>
+                <div class="paper-summary">工业大规模推荐模型（LRMs）面临着在严格效率约束下同时建模长距离用户行为序列和异构非序列特征的挑战。然而，大多数现有架构采用解耦管道：首先使用基于查询令牌的序列压缩器（如LONGER）压缩长序列，然后通过令牌混合模块（如RankMixer）与密集特征融合，这限制了表示能力和交互灵活性。本文提出了HyFormer，一种统一的混合变压器架构，将长序列建模和特征交互紧密集成到一个主干中。从序列建模的角度来看，我们重新审视并重新设计了LRMs中的查询令牌，并将LRM建模任务框架化为交替优化过程，整合了两个核心组件：查询解码，将非序列特征扩展为全局令牌，并对长行为序列的层键值表示执行长序列解码；以及查询增强，通过有效的令牌混合增强跨查询和跨序列的异构交互。这两种互补机制迭代执行，以在各层中细化语义表示。在数十亿规模的工业数据集上的大量实验表明，HyFormer在可比参数和FLOPs预算下始终优于强大的LONGER和RankMixer基线，同时在参数和FLOPs增加时表现出更优的扩展行为。高流量生产系统中的大规模在线A/B测试进一步验证了其有效性，显示了相对于已部署的最先进模型的显著增益。这些结果突显了HyFormer作为工业LRMs的统一建模框架的实用性和可扩展性。
+核心贡献：HyFormer提出了一种新的混合变压器架构，通过将长序列建模和特征交互紧密集成，提高了推荐系统的性能和效率。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-19</span>
+                    <a href="https://arxiv.org/pdf/2601.12681v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/demand-gen-drop-january-2026/" target="_blank">See the newest product features in January’s Demand Gen Drop.</a></div>
+                <div class="feed-date">01-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/search/personal-intelligence-ai-mode-search/" target="_blank">Personal Intelligence in AI Mode in Search: Help that's uniquely yours</a></div>
+                <div class="feed-date">01-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/scaling-postgresql" target="_blank">Scaling PostgreSQL to power 800 million ChatGPT users</a></div>
+                <div class="feed-date">01-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/praktika" target="_blank">Inside Praktika's conversational approach to language learning</a></div>
+                <div class="feed-date">01-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/devices/fitbit/holiday-health-data-new-year-goals/" target="_blank">3 Fitbit holiday health stats to help you plan for 2026 goals</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/youtube/neal-mohan-letter-2026/" target="_blank">Check out what YouTube has planned for 2026.</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/higgsfield" target="_blank">How Higgsfield turns simple ideas into cinematic social videos</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/khan-academy-partnership/" target="_blank">Collaborating with Khan Academy to build the best AI tools for learners</a></div>
+                <div class="feed-date">01-21</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Sequoia Capital</div>
+                <div class="feed-title"><a href="https://sequoiacap.com/article/the-most-precious-resource/" target="_blank">The Most Precious Resource</a></div>
+                <div class="feed-date">01-22</div>
+            </div>
+            </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/22/former-sequoia-partners-new-startup-uses-ai-to-negotiate-your-calendar-for-you/" target="_blank">Former Sequoia partner’s new startup uses AI to negotiate your calendar for you</a></div>
+                <div class="feed-date">01-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/22/former-sequoia-partners-new-startup-uses-ai-to-negotiate-your-calendar-for-you/" target="_blank">Former Sequoia partner’s new startup uses AI to negotiate your calendar for you</a></div>
+                <div class="feed-date">01-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/22/palmer-luckey-says-the-coolest-thing-about-anduril-expanding-to-long-beach-is-the-fighter-jets/" target="_blank">Palmer Luckey says the coolest thing about Anduril expanding to Long Beach is the fighter jets</a></div>
+                <div class="feed-date">01-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/866437/tiktok-usds-bytedance-sale-oracle-mgx" target="_blank">The TikTok deal is done, finally</a></div>
+                <div class="feed-date">01-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/news/866441/ring-verify-security-camera-ai-fakes-video-verification" target="_blank">Ring can verify videos now, but that might not help you with most AI fakes</a></div>
+                <div class="feed-date">01-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/866439/beyond-good-and-evil-2-somehow-survived-the-purge-at-ubisoft" target="_blank">Beyond Good and Evil 2 somehow survived the purge at Ubisoft</a></div>
+                <div class="feed-date">01-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/22/openai-is-coming-for-those-sweet-enterprise-dollars-in-2026/" target="_blank">OpenAI is coming for those sweet enterprise dollars in 2026</a></div>
+                <div class="feed-date">01-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/22/openai-is-coming-for-those-sweet-enterprise-dollars-in-2026/" target="_blank">OpenAI is coming for those sweet enterprise dollars in 2026</a></div>
+                <div class="feed-date">01-23</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=RSNuB9pj9P8" target="_blank">🎥 Elon Musk on AGI Timeline, US vs China, Job Markets, Clean Energy &amp; Humanoid Robots | 220</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Get access to metatrends 10+ years before anyone else - https://qr.diamandis.com/metatrends Elon Mus...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=bz5Hjk40FD4" target="_blank">🎥 Elon Musk on DOGE, AI, &amp; Are we in a Simulation? | KMP Ep.18</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">In this episode, I sit down with @elonmusk for a wide-ranging conversation on DOGE, AI, simulation t...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=GgMegLZh_IM" target="_blank">🎥 WEF 2026 LIVE: NVIDIA CEO Jensen Huang At Davos 2026: NVIDIA, AI Power &amp; The Future Of Global Tech</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA President and CEO Jensen Huang takes the global stage at the 2026 World Economic Forum in Dav...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0c8i4T9BSqY" target="_blank">🎥 Oral History of Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Interviewed by Douglas Fairbairn and Hansen Hsu, on August 09, 2024 in Santa Clara, California, © Co...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Av1fSHbdnRY" target="_blank">🎥 Altman Meets with Mideast Investors as OpenAI Eyes $830 Valuation | Bloomberg Tech</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Bloomberg's Caroline Hyde and Ed Ludlow discuss Elon Musk's comments on AI costs and the future of r...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=19VbX748nlE" target="_blank">🎥 Altman Meets With Investors, OpenAI Eyes $830B Valuation | Bloomberg Tech 1/22/2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Bloomberg's Caroline Hyde and Ed Ludlow discuss Elon Musk's comments on AI costs and the future of r...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/lukilabs/craft-agents-oss" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                lukilabs/craft-agents-oss
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目使用 TypeScript 开发，对于希望在 AI 领域中使用类型安全语言的研究者和工程师来说是一个很好的资源。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46720395" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                GPTZero finds 100 new hallucinations in NeurIPS 2025 accepted papers
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 揭示了AI生成内容中的幻觉问题，对AI研究和应用有重要警示作用。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46712678" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Your brain on ChatGPT: Accumulation of cognitive debt when using an AI assistant
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨了使用AI助手对认知的影响，对于理解AI与人类交互的长期影响至关重要。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46713106" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: Sweep, Open-weights 1.5B model for next-edit autocomplete
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 展示了开源模型在代码编辑领域的应用，对于开发者工具的创新具有参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2380<br>
+                    Output Tokens: 2151
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年01月23日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
