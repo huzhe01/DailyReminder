@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年01月26日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>### 每日AI简报</p><p>**学术突破**  </p><p>今日，AI研究领域迎来了一系列重要进展。《Strategies for Span Labeling with Large Language Models》探讨了大型语言模型在跨标签任务中的策略优化，为提升模型在复杂文本处理上的准确性和效率提供了新思路。另一篇论文《Information Representation Fairness in Long-Document Embeddings: The Peculiar Interaction of Positional and Language Bias》则深入分析了长文档嵌入中位置与语言偏见的交互作用，强调了在设计AI系统时确保信息表示公平性的重要性。此外，《LLM-Based Adversarial Persuasion Attacks on Fact-Checking Systems》揭示了基于大型语言模型的对抗性说服攻击对事实核查系统的潜在威胁，为安全领域的研究者敲响了警钟。</p><p>**行业动态**  </p><p>在行业方面，TechCrunch报道了一位创始人如何通过创新技术解决消防难题，并成功转型至AI领域，构建了一个潜在的“金矿”。这一案例不仅展示了AI技术在传统行业的应用潜力，也反映了创业者如何利用技术创新开辟新的市场空间。同时，有消息称ChatGPT正在从Elon Musk创建的Grokipedia获取答案，这引发了关于AI内容来源及其影响的广泛讨论，再次将AI伦理问题推向公众视野。</p><p>**值得关注**  </p><p>今日的访谈中，多位科技领袖分享了他们对未来的见解。Elon Musk在世界经济论坛上全面回答了各种尖锐问题，展现了其对未来科技发展的独到看法。NVIDIA CEO Jensen Huang在达沃斯论坛上的直播演讲，深入探讨了NVIDIA在AI领域的战略布局及全球科技的未来趋势。而Sam Altman提出的“50亿美元计划”旨在2030年前暂停衰老，这一大胆设想不仅挑战了生命科学的边界，也为AI技术在医疗健康领域的应用开辟了新的可能性。这些领袖的观点和行动无疑将继续引领和塑造AI行业的发展方向。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16946v1" target="_blank">Strategies for Span Labeling with Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Danil Semin, Ondřej Dušek, Zdeněk Kasner</div>
+                <div class="paper-summary">大型语言模型（LLMs）越来越多地被用于文本分析任务，如命名实体识别或错误检测。然而，与基于编码器的模型不同，生成式架构缺乏明确引用输入特定部分的机制。这导致了用于跨度标注的各种临时提示策略，结果往往不一致。在本文中，我们将这些策略分为三类：对输入文本进行标记、索引跨度的数字位置以及匹配跨度内容。为了解决内容匹配的局限性，我们引入了LogitMatch，一种新的约束解码方法，该方法强制模型的输出与有效的输入跨度对齐。我们在四个不同的任务上评估了所有方法。我们发现，虽然标记仍然是一个稳健的基线，但LogitMatch通过消除跨度匹配问题，在某些设置下优于其他竞争性的匹配方法。
+核心贡献：本文提出了一种新的约束解码方法LogitMatch，有效解决了生成式模型在跨度标注任务中的匹配问题，提高了模型性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-23</span>
+                    <a href="https://arxiv.org/pdf/2601.16946v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16934v1" target="_blank">Information Representation Fairness in Long-Document Embeddings: The Peculiar Interaction of Positional and Language Bias</a>
+                </div>
+                <div class="paper-authors">👥 Elias Schuhmacher, Andrianos Michail, Juri Opitz</div>
+                <div class="paper-summary">为了在基于嵌入的搜索过程中可发现，文档的每个部分都应反映在其嵌入表示中。为了量化任何潜在的反射偏差，我们引入了一种基于排列的评估框架。通过该框架，我们观察到当文档较长且由多个部分组成时，最先进的嵌入模型表现出系统的位置和语言偏差。具体来说，早期部分和资源丰富的语言（如英语）的部分被过度代表，而后期部分和资源贫乏的语言的部分则被边缘化。在进一步分析中，我们发现位置偏差源于池化标记嵌入中的前加载注意力分布，其中早期标记受到更多关注。为了解决这一问题，我们引入了一种推理时间注意力校准方法，该方法可以更均匀地重新分配文档位置上的注意力，提高后期部分的可发现性。我们的评估框架和注意力校准可在 https://github.com/impresso/fair-sentence-transformers 获得。
+核心贡献：本文提出了一种基于排列的评估框架来量化长文档嵌入中的位置和语言偏差，并开发了一种注意力校准方法以减轻这些偏差，从而提高了文档后期部分的可发现性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-23</span>
+                    <a href="https://arxiv.org/pdf/2601.16934v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16890v1" target="_blank">LLM-Based Adversarial Persuasion Attacks on Fact-Checking Systems</a>
+                </div>
+                <div class="paper-authors">👥 João A. Leite, Olesya Razuvayevskaya, Kalina Bontcheva</div>
+                <div class="paper-summary">自动事实核查（AFC）系统容易受到对抗性攻击的影响，使得虚假声明能够逃避检测。现有的对抗框架通常依赖于注入噪声或改变语义，但没有现有框架利用说服技巧的对抗潜力，这些技巧在虚假信息活动中被广泛用于操纵受众。在本文中，我们通过使用生成式大型语言模型（LLM）重新表述使用说服技巧的声明，引入了一种新的基于说服的对抗性攻击类别。考虑到分为6类的15种技巧，我们采用解耦评估策略研究了说服对声明验证和证据检索的影响。在FEVER和FEVEROUS基准上的实验表明，说服性攻击可以显著降低验证性能和证据检索效果。我们的分析确定了说服技巧作为一种强大的对抗性攻击类别，强调了需要更强大的AFC系统。
+核心贡献：本文提出了一种新的基于大型语言模型的说服性对抗攻击方法，显著影响了自动事实核查系统的性能，揭示了说服技巧作为对抗性攻击手段的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-23</span>
+                    <a href="https://arxiv.org/pdf/2601.16890v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16853v1" target="_blank">Reasoning Promotes Robustness in Theory of Mind Tasks</a>
+                </div>
+                <div class="paper-authors">👥 Ian B. de Haan, Peter van der Putten, Max van Duijn</div>
+                <div class="paper-summary">大型语言模型（LLMs）最近在心理理论（ToM）测试中表现出色，引发了关于其底层能力的本质和真实表现的讨论。与此同时，通过带有可验证奖励的强化学习（RLVR）训练的以推理为导向的LLMs在一系列基准测试中取得了显著的进步。本文通过使用机器心理学实验的新改编版本和来自已建立基准测试的结果，研究了这些推理模型在ToM任务中的行为。我们观察到，推理模型对提示变化和任务扰动表现出更高的鲁棒性。我们的分析表明，所观察到的改进更可能是由于找到正确解决方案的鲁棒性增加，而不是因为出现了全新的ToM推理形式。我们讨论了这种解释对评估LLMs的社会认知行为的影响。
+核心贡献：该研究揭示了通过带有可验证奖励的强化学习训练的推理模型在心理理论任务中表现出更高的鲁棒性，这主要归因于寻找正确解决方案的能力增强。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-23</span>
+                    <a href="https://arxiv.org/pdf/2601.16853v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16823v1" target="_blank">Trapped in the past? Disentangling fluid and crystallized intelligence of large language models using chess</a>
+                </div>
+                <div class="paper-authors">👥 Leonard S. Pleiss, Maximilian Schiffer, Robert K. von Weizsäcker</div>
+                <div class="paper-summary">大型语言模型（LLMs）展现出惊人的能力，但这些能力在多大程度上反映了复杂的回忆（晶体智力）或推理能力（流体智力）尚不清楚。我们引入国际象棋作为区分这两种能力的受控测试平台。利用游戏的结构和可扩展的引擎评估，我们构建了一个位置分类法，这些位置在训练语料库接近度上有所不同——从可以通过记忆解决的常见状态到需要基于原则推理的新颖状态。我们系统地评估了多个GPT代际在不同推理强度下的表现。分析显示了一个明显的梯度：随着对流体智力需求的增加，性能持续下降。值得注意的是，在分布外任务中，性能降至随机水平。虽然较新的模型有所改进，但在训练分布之外的任务中，进展显著放缓。此外，尽管增强推理的推断提高了性能，但其每令牌的边际效益随分布接近度的增加而减少。这些结果表明，当前架构在系统性泛化方面仍有限制，强调了实现稳健流体智力需要超越规模的机制。
+核心贡献：通过国际象棋测试平台，本文系统地分析了大型语言模型在不同推理需求下的表现，揭示了模型在系统性泛化方面的限制，并强调了实现稳健流体智力的必要性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-23</span>
+                    <a href="https://arxiv.org/pdf/2601.16823v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.16800v1" target="_blank">Large Language Models as Automatic Annotators and Annotation Adjudicators for Fine-Grained Opinion Analysis</a>
+                </div>
+                <div class="paper-authors">👥 Gaurav Negi, MA Waskow, Paul Buitelaar</div>
+                <div class="paper-summary">Fine-grained opinion analysis of text provides a detailed understanding of expressed sentiments, including the addressed entity. Although this level of detail is sound, it requires considerable human effort and substantial cost to annotate opinions in datasets for training models, especially across diverse domains and real-world applications. We explore the feasibility of LLMs as automatic annotators for fine-grained opinion analysis, addressing the shortage of domain-specific labelled datasets. In this work, we use a declarative annotation pipeline. This approach reduces the variability of manual prompt engineering when using LLMs to identify fine-grained opinion spans in text. We also present a novel methodology for an LLM to adjudicate multiple labels and produce final annotations. After trialling the pipeline with models of different sizes for the Aspect Sentiment Triplet Extraction (ASTE) and Aspect-Category-Opinion-Sentiment (ACOS) analysis tasks, we show that LLMs can serve as automatic annotators and adjudicators, achieving high Inter-Annotator Agreement across individual LLM-based annotators. This reduces the cost and human effort needed to create these fine-grained opinion-annotated datasets.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-23</span>
+                    <a href="https://arxiv.org/pdf/2601.16800v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/25/this-founder-cracked-firefighting-now-hes-creating-an-ai-gold-mine/" target="_blank">This founder cracked firefighting — now he’s creating an AI gold mine</a></div>
+                <div class="feed-date">01-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/25/this-founder-cracked-firefighting-now-hes-creating-an-ai-gold-mine/" target="_blank">This founder cracked firefighting — now he’s creating an AI gold mine</a></div>
+                <div class="feed-date">01-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/25/chatgpt-is-pulling-answers-from-elon-musks-grokipedia/" target="_blank">ChatGPT is pulling answers from Elon Musk’s Grokipedia</a></div>
+                <div class="feed-date">01-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/25/chatgpt-is-pulling-answers-from-elon-musks-grokipedia/" target="_blank">ChatGPT is pulling answers from Elon Musk’s Grokipedia</a></div>
+                <div class="feed-date">01-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/25/humans-thinks-coordination-is-the-next-frontier-for-ai-and-theyre-building-a-model-to-prove-it/" target="_blank">Humans& thinks coordination is the next frontier for AI, and they’re building a model to prove it</a></div>
+                <div class="feed-date">01-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/25/humans-thinks-coordination-is-the-next-frontier-for-ai-and-theyre-building-a-model-to-prove-it/" target="_blank">Humans& thinks coordination is the next frontier for AI, and they’re building a model to prove it</a></div>
+                <div class="feed-date">01-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/25/science-fiction-writers-comic-con-say-goodbye-to-ai/" target="_blank">Science fiction writers, Comic-Con say goodbye to AI</a></div>
+                <div class="feed-date">01-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/01/25/science-fiction-writers-comic-con-say-goodbye-to-ai/" target="_blank">Science fiction writers, Comic-Con say goodbye to AI</a></div>
+                <div class="feed-date">01-25</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=_VoIZ-i7d3o" target="_blank">🎥 Elon Musk Faces WEF Questions | Full Uncut Appearance</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Elon Musk Full Appearance at World Economic Forum | Complete Session Elon Musk at WEF | Full Speech,...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=RSNuB9pj9P8" target="_blank">🎥 Elon Musk on AGI Timeline, US vs China, Job Markets, Clean Energy &amp; Humanoid Robots | 220</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Get access to metatrends 10+ years before anyone else - https://qr.diamandis.com/metatrends Elon Mus...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=GgMegLZh_IM" target="_blank">🎥 WEF 2026 LIVE: NVIDIA CEO Jensen Huang At Davos 2026: NVIDIA, AI Power &amp; The Future Of Global Tech</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA President and CEO Jensen Huang takes the global stage at the 2026 World Economic Forum in Dav...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0c8i4T9BSqY" target="_blank">🎥 Oral History of Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Interviewed by Douglas Fairbairn and Hansen Hsu, on August 09, 2024 in Santa Clara, California, © Co...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=1iwWMab9K7w" target="_blank">🎥 Sam Altman’s $5 Billion Plan to Pause Aging by 2030</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Sam Altman, the CEO of OpenAI, has unveiled a groundbreaking $5 billion plan to pause aging by 2030 ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=XBLW2DBKfyc" target="_blank">🎥 Empire of AI: Dreams &amp; Nightmares Inside Sam Altman’s OpenAI (39 Full Audiobook Summary)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Other Amazing Videos : https://www.youtube.com/playlist?list=PL5BB7KRH4TYOS_rc1LloU7gZwdj8ViHL1 In t...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/tldev/posturr" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                tldev/posturr
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 使用Vision框架实时检测姿势，对AI在健康监测领域的应用有启发。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/flybirdxx/ComfyUI-Qwen-TTS" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                flybirdxx/ComfyUI-Qwen-TTS
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 结合Qwen3-TTS和ComfyUI的实现，对于语音合成技术的研究和应用具有参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/yesnotrader/polymarket-copy-trading-bot-telegram-ui" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                yesnotrader/polymarket-copy-trading-bot-telegram-ui
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 尽管描述重复，但该项目涉及交易机器人和Telegram UI集成，对于金融领域AI应用的开发者来说可能有用。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46760237" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Clawdbot - open source personal AI assistant
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 开源个人AI助手项目，对于AI应用开发和个性化服务有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46710747" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                ANN v3: 200ms p99 query latency over 100B vectors
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 ANN算法的最新进展，对于处理大规模向量数据具有重要意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46750214" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Challenges and Research Directions for Large Language Model Inference Hardware
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 针对大语言模型推理硬件的研究方向，对AI硬件加速和优化有深刻影响。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 1610<br>
+                    Output Tokens: 1516
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年01月26日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
