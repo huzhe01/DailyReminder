@@ -1,0 +1,534 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年02月02日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>### 每日 AI 简报</p><p>**学术突破**  </p><p>今日，AI 领域迎来几项重要的学术进展。FOCUS 论文《DLLMs Know How to Tame Their Compute Bound》提出了一种有效管理计算资源的新方法，旨在优化大型语言模型的性能。与此同时，《UPA: Unsupervised Prompt Agent via Tree-Based Search and Selection》介绍了一种无需监督即可生成高质量提示的新型代理技术，通过树形搜索和选择机制提高效率。此外，《Deep Search with Hierarchical Meta-Cognitive Monitoring Inspired by Cognitive Neuroscience》则借鉴认知神经科学原理，开发出一种具有分层元认知监控功能的深度搜索算法，为复杂问题求解提供了新思路。</p><p>**行业动态**  </p><p>科技行业近期出现了一些值得关注的变化。TechCrunch 报道称，部分公司以“AI 裁员”为名进行人员调整，引发了关于“AI 洗白”（AI-washing）的讨论，质疑某些企业是否真正利用了 AI 技术。同时，Tether 的 CEO 因其在加密货币领域的活跃表现而备受关注，显示出区块链与 AI 结合的潜在影响。另一方面，Google 通过庆祝黑人历史、文化和创造力，展示了科技公司在促进多元文化方面的作用，强调了技术发展的人文价值。</p><p>**值得关注**  </p><p>在国际舞台上，几位科技领袖的最新访谈不容错过。Elon Musk 在世界经济论坛年会上分享了对未来科技发展的见解，特别是对 AI 和可持续能源的看法。NVIDIA CEO Jensen Huang 则在达沃斯论坛上深入探讨了 NVIDIA 在 AI 领域的布局及全球技术的未来趋势。而 Sam Altman 关于 Worldcoin 的讨论，则揭示了 AI 在金融创新中的应用潜力，为开放金融生态系统的构建提供了新的视角。这些对话不仅反映了当前 AI 技术的发展方向，也为未来的探索指明了道路。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.23278v1" target="_blank">FOCUS: DLLMs Know How to Tame Their Compute Bound</a>
+                </div>
+                <div class="paper-authors">👥 Kaihua Liang, Xin Tan, An Zhong</div>
+                <div class="paper-summary">扩散大语言模型（DLLMs）为自回归模型提供了一个有吸引力的替代方案，但其部署受到高解码成本的限制。在这项工作中，我们确定了DLLM解码中的一个关键低效问题：尽管计算在令牌块上并行化，但在每个扩散步骤中只有少量令牌是可解码的，导致大多数计算资源被浪费在不可解码的令牌上。我们进一步观察到注意力派生的令牌重要性与令牌级解码概率之间存在强烈的关联。基于这一见解，我们提出了FOCUS——一种专为DLLMs设计的推理系统。通过动态地将计算集中在可解码令牌上，并即时驱逐不可解码的令牌，FOCUS增加了有效批量大小，缓解了计算限制，实现了可扩展的吞吐量。实证评估表明，FOCUS在保持或提高多个基准上的生成质量的同时，比生产级引擎LMDeploy的吞吐量提高了最高3.52倍。FOCUS系统已在GitHub上公开：https://github.com/sands-lab/FOCUS。
+核心贡献：本文提出了一种名为FOCUS的推理系统，通过优化计算资源分配，显著提高了扩散大语言模型的解码效率和吞吐量。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-30</span>
+                    <a href="https://arxiv.org/pdf/2601.23278v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.23273v1" target="_blank">UPA: Unsupervised Prompt Agent via Tree-Based Search and Selection</a>
+                </div>
+                <div class="paper-authors">👥 Siran Peng, Weisong Zhao, Tianyu Fu</div>
+                <div class="paper-summary">提示代理最近作为一种有前景的自动化提示优化范式出现，将细化过程构架为在结构化提示空间中的序列决策问题。尽管这种公式化方法能够使用先进的规划算法，但这些方法通常假设可以访问监督奖励信号，而在实际场景中这些信号往往不可用。在这项工作中，我们提出了UPA，一种无需依赖监督反馈即可实现结构化搜索和选择的无监督提示代理。具体来说，在搜索过程中，UPA通过从大型语言模型（LLMs）获取细粒度且顺序不变的成对比较，迭代地构建一个不断演化的树状结构来导航提示空间。关键在于，由于这些局部比较本身并不提供一致的全局尺度，我们解耦了系统的提示探索与最终的选择，引入了一个基于Bradley-Terry-Luce (BTL) 模型的两阶段框架。该框架首先执行路径导向的贝叶斯聚合局部比较以在不确定性下筛选候选者，然后进行全局锦标赛式的比较以推断潜在的提示质量并确定最佳提示。多个任务上的实验表明，UPA始终优于现有的提示优化方法，证明即使在完全无监督的环境中，代理风格的优化仍然非常有效。
+核心贡献：本文提出了一种无监督的提示代理（UPA），通过树形搜索和基于BTL模型的两阶段选择框架，在无需监督反馈的情况下实现了高效的提示优化。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-30</span>
+                    <a href="https://arxiv.org/pdf/2601.23273v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.23188v1" target="_blank">Deep Search with Hierarchical Meta-Cognitive Monitoring Inspired by Cognitive Neuroscience</a>
+                </div>
+                <div class="paper-authors">👥 Zhongxiang Sun, Qipeng Wang, Weijie Yu</div>
+                <div class="paper-summary">由大型语言模型驱动的深度搜索代理在多步骤检索、推理和长期任务执行方面展示了强大的能力。然而，它们的实际失败往往源于缺乏机制来监控和调节任务在不确定性下演变时的推理和检索状态。认知神经科学的见解表明，人类的元认知是分层组织的，集成了快速异常检测与有选择地触发的经验驱动反思。在这项工作中，我们提出了带有元认知监控的深度搜索（DS-MCM），这是一种增强型深度搜索框架，配备了一个显式的分层元认知监控机制。DS-MCM整合了快速一致性监控器，该监控器对外部证据与内部推理信心的一致性进行轻量级检查，以及慢速经验驱动监控器，该监控器根据历史代理轨迹的经验记忆有选择地激活以指导纠正干预。通过将监控直接嵌入到推理-检索循环中，DS-MCM确定何时需要干预以及如何根据先前的经验来指导纠正措施。在多个深度搜索基准和骨干模型上的实验表明，DS-MCM一致地提高了性能和鲁棒性。
+核心贡献：提出了一种带有分层元认知监控机制的深度搜索框架（DS-MCM），通过整合快速一致性监控和慢速经验驱动监控，显著提升了模型在不确定任务中的性能和鲁棒性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-30</span>
+                    <a href="https://arxiv.org/pdf/2601.23188v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.23184v1" target="_blank">ReGuLaR: Variational Latent Reasoning Guided by Rendered Chain-of-Thought</a>
+                </div>
+                <div class="paper-authors">👥 Fanmeng Wang, Haotian Liu, Guojiang Zhao</div>
+                <div class="paper-summary">虽然思维链（CoT）显著提高了大型语言模型（LLMs）的性能，但显式的推理链引入了巨大的计算冗余。最近的潜在推理方法试图通过将推理过程压缩到潜在空间来缓解这一问题，但由于缺乏适当的压缩指导，通常会遭受严重的性能下降。在这项研究中，我们提出了渲染思维链引导的变分潜在推理（ReGuLaR），这是一种简单而新颖的潜在学习范式，解决了这个问题。从根本上说，我们在变分自编码器（VAE）框架内制定了潜在推理，从以前的状态条件下的后验分布中采样当前的潜在推理状态。具体来说，在学习这种变分潜在推理模型时，我们将显式的推理链渲染为图像，从中提取密集的视觉语义表示来正则化后验分布，从而实现高效压缩并最大限度地减少信息损失。广泛的实验表明，ReGuLaR在计算效率和推理效果方面显著优于现有的潜在推理方法，甚至通过多模态推理超过了CoT，为潜在推理提供了一个新的且有洞察力的解决方案。
+核心贡献：提出了一种新的潜在学习范式ReGuLaR，通过将显式推理链渲染为图像来指导潜在空间中的推理过程，实现了高效的压缩和最小的信息损失，显著提升了推理效率和效果。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-30</span>
+                    <a href="https://arxiv.org/pdf/2601.23184v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.23183v1" target="_blank">JobResQA: A Benchmark for LLM Machine Reading Comprehension on Multilingual Résumés and JDs</a>
+                </div>
+                <div class="paper-authors">👥 Casimiro Pio Carrino, Paula Estrella, Rabih Zbib</div>
+                <div class="paper-summary">我们介绍了JobResQA，这是一个多语言问答基准，用于评估大型语言模型（LLMs）在涉及简历和职位描述的人力资源特定任务上的机器阅读理解（MRC）能力。该数据集包含五种语言（英语、西班牙语、意大利语、德语和汉语）的105对合成简历-职位描述中的581个问答对，问题涵盖了从基本事实提取到复杂跨文档推理的三个复杂度级别。我们提出了一种从现实世界来源通过去识别化和数据合成生成数据的管道，以确保数据的真实性和隐私性，同时控制的人口统计学和职业属性（通过占位符实现）使得系统性的偏差和公平性研究成为可能。我们还基于TEaR方法论提出了一个成本效益高、以人为中心的翻译管道，包括MQM错误注释和选择性后期编辑，以确保高质量的多向平行基准。我们使用LLM-as-judge方法对多个开放权重LLM家族进行了基线评估，揭示了英语和西班牙语的较高性能，但其他语言的表现显著下降，突显了人力资源应用中多语言MRC能力的关键差距。JobResQA为推进公平可靠的基于LLM的人力资源系统提供了可重复使用的基准。该基准可在以下网址公开获取：https://github.com/Avature/jobresqa-benchmark
+
+核心贡献：JobResQA提供了一个多语言的问答基准，用于评估和提升大型语言模型在人力资源领域的机器阅读理解能力，特别是针对简历和职位描述的任务。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-30</span>
+                    <a href="https://arxiv.org/pdf/2601.23183v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.23166v1" target="_blank">Monotonic Reference-Free Refinement for Autoformalization</a>
+                </div>
+                <div class="paper-authors">👥 Lan Zhang, Marco Valentino, André Freitas</div>
+                <div class="paper-summary">While statement autoformalization has advanced rapidly, full-theorem autoformalization remains largely unexplored. Existing iterative refinement methods in statement autoformalization typicall improve isolated aspects of formalization, such as syntactic correctness, but struggle to jointly optimizing multiple quality dimensions, which is critical for full-theorem autoformalization. We introduce a reference-free iterative monotonic process for full-theorem autoformalization that leverages complementary feedback from theorem provers and LLM-based judges, without access to ground-truth proofs or existing formalizations at inference time. Our approach optimizes a masked composite objective over Formal Validity, Logical Preservation, Mathematical Consistency, and Formal Quality, guided by a responsiveness map that indicates how different LLMs acting as different roles preferentially improve each dimension. We further propose an acceptance policy that guarantees certified monotonic improvement, and provide conditions ensuring convergence and termination. Empirical experiments demonstrate the proposed process enables simultaneous improvement across multiple dimensions, achieving 93.44% formal validity and a 78.22% overall score on miniF2F, and 44.09% formal validity and a 29.79% overall score on ProofNet.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-30</span>
+                    <a href="https://arxiv.org/pdf/2601.23166v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.20307v1" target="_blank">Delayed Feedback Modeling for Post-Click Gross Merchandise Volume Prediction: Benchmark, Insights and Approaches</a>
+                </div>
+                <div class="paper-authors">👥 Xinyu Li, Sishuo Chen, Guipeng Xv</div>
+                <div class="paper-summary">在线广告排名模型的预测目标正在从转化率（CVR）等概率指标转向点击后商品交易总额（GMV）等数值业务指标。与CVR预测中已广泛研究的延迟反馈问题不同，GMV预测中的延迟反馈建模尚未得到探索，并且面临更大的挑战，因为GMV是一个连续的目标，单次点击可能导致多次购买，这些购买累积形成标签。为了填补这一研究空白，我们建立了TRACE，一个包含每个用户点击产生的完整交易序列的GMV预测基准，支持以在线流式方式建模延迟反馈。我们在TRACE上的分析和探索性实验揭示了两个关键见解：（1）GMV标签分布的快速演变需要在在线流式训练下建模延迟反馈；（2）重复购买样本的标签分布与单次购买样本显著不同，强调了分别建模的必要性。基于这些发现，我们提出了RepurchasE-Aware Dual-branch prEdictoR (READER)，一种新颖的GMV建模范式，该范式根据路由器生成的重复购买预测选择性地激活专家参数。此外，READER动态校准回归目标，以减轻不完整标签导致的低估。实验结果表明，READER在TRACE上的性能优于基线，在准确性方面提高了2.19%。我们相信我们的研究将为研究GMV预测的在线延迟反馈建模开辟新的途径，我们的TRACE基准及其收集到的见解将促进未来在这个有前景方向的研究和应用。我们的代码和数据集可在https://github.com/alimama-tech/OnlineGMV 获得。
+
+核心贡献：本文提出了一种新的GMV预测模型READER，通过引入重复购买意识的双分支预测器和动态校准机制，有效解决了GMV预测中的延迟反馈问题，显著提升了预测准确性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-28</span>
+                    <a href="https://arxiv.org/pdf/2601.20307v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.19965v2" target="_blank">Modeling Cascaded Delay Feedback for Online Net Conversion Rate Prediction: Benchmark, Insights and Solutions</a>
+                </div>
+                <div class="paper-authors">👥 Mingxuan Luo, Guipeng Xv, Sishuo Chen</div>
+                <div class="paper-summary">在工业推荐系统中，转化率（CVR）被广泛用于流量分配，但它未能完全反映推荐效果，因为它忽略了退款行为。为了更好地捕捉用户的真实满意度和商业价值，提出了净转化率（NetCVR），定义为点击商品后购买且不退货的概率。与CVR不同，NetCVR预测涉及更复杂的多阶段级联延迟反馈过程。从点击到转化以及从转化到退款的两个级联延迟具有相反的效果，这使得传统的CVR建模方法无法适用。此外，缺乏开源数据集和在线连续训练方案进一步阻碍了该领域的发展。为了解决这些挑战，我们引入了CASCADE（转化和延迟退款的级联序列），这是第一个从淘宝应用中提取的大规模公开数据集，用于在线连续NetCVR预测。通过对CASCADE的深入分析，我们确定了三个关键见解：(1) NetCVR表现出强烈的时间动态性，需要进行在线连续建模；(2) 级联建模CVR和退款率优于直接建模NetCVR；(3) 与CVR和退款率相关的延迟时间是NetCVR预测的重要特征。基于这些见解，我们提出了TESLA，这是一种连续NetCVR建模框架，具有CVR-退款率级联架构、分阶段去偏和延迟时间感知排名损失。广泛的实验表明，TESLA在CASCADE上的表现始终优于最先进的方法，在NetCVR预测中实现了RI-AUC绝对提高了12.41%，RI-PRAUC绝对提高了14.94%。代码和数据集可在https://github.com/alimama-tech/NetCVR公开获取。
+
+核心贡献：本文提出了一种新的NetCVR预测框架TESLA，并提供了首个大规模公开数据集CASCADE，显著提升了在线连续NetCVR预测的准确性和实用性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-27</span>
+                    <a href="https://arxiv.org/pdf/2601.19965v2" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2601.19142v1" target="_blank">Length-Adaptive Interest Network for Balancing Long and Short Sequence Modeling in CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Zhicheng Zhang, Zhaocheng Du, Jieming Zhu</div>
+                <div class="paper-summary">现代推荐系统中的用户行为序列表现出显著的长度异质性，从稀疏的短期互动到丰富的长期历史。虽然更长的序列提供了更多的上下文信息，但我们观察到，在现有的点击率（CTR）模型中增加最大输入序列长度会由于注意力极化和训练数据中的长度不平衡，反而降低短序列用户的性能。为了解决这个问题，我们提出了LAIN（长度自适应兴趣网络），这是一种即插即用的框架，通过显式地将序列长度作为条件信号来平衡长序列和短序列的建模。LAIN由三个轻量级组件组成：一个谱长度编码器，将长度映射到连续表示；长度条件提示，向长期和短期行为分支注入全局上下文线索；以及长度调制注意力，根据序列长度自适应调整注意力锐度。在三个真实世界基准上对五个强大的CTR主干进行的广泛实验表明，LAIN能够持续提高整体性能，最高可实现1.15%的AUC增益和2.25%的日志损失减少。值得注意的是，我们的方法在不牺牲长序列效果的情况下，显著提高了短序列用户的准确性。我们的工作提供了一个通用、高效且可部署的解决方案，以减轻顺序推荐中的长度引起的偏差。
+核心贡献：提出了一种长度自适应兴趣网络（LAIN），有效平衡了长短序列建模，提升了点击率预测的准确性和效率。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-01-27</span>
+                    <a href="https://arxiv.org/pdf/2601.19142v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/creating-opportunity/black-history-month-2026/" target="_blank">We're celebrating Black history, culture and creativity.</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/01/ai-layoffs-or-ai-washing/" target="_blank">AI layoffs or ‘AI-washing’?</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/01/ai-layoffs-or-ai-washing/" target="_blank">AI layoffs or ‘AI-washing’?</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/01/why-tethers-ceo-is-everywhere-right-now/" target="_blank">Why Tether’s CEO is everywhere right now</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/01/why-tethers-ceo-is-everywhere-right-now/" target="_blank">Why Tether’s CEO is everywhere right now</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/871879/bill-gates-epstein-files-absolutely-absurd" target="_blank">Bill Gates says accusations contained in Epstein files are ‘absolutely absurd’</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/01/amazons-melania-documentary-makes-7m-on-opening-weekend/" target="_blank">Amazon’s ‘Melania’ documentary makes $7M on opening weekend</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/policy/871848/iran-blackout-internet-mahsa-alimardani" target="_blank">Shedding light on Iran’s longest internet blackout</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/column/871847/m83-dead-cities-red-seas-lost-ghosts" target="_blank">You need to listen to M83’s icy post-rock record Dead Cities, Red Seas &#038; Lost Ghosts</a></div>
+                <div class="feed-date">02-01</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=IgifEgm1-e0" target="_blank">🎥 Conversation with Elon Musk | World Economic Forum Annual Meeting 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Please join us for a conversation between Elon Musk, CEO of Tesla; Chief Engineer, SpaceX; CTO, xAI;...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=UrB2tQDVLLo" target="_blank">🎥 Tesla CEO Elon Musk speaks at the World Economic Forum in Davos, Switzerland — 1/22/2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Elon Musk, CEO of Tesla; chief engineer of SpaceX; and CTO of xAI joins Laurence D. Fink, chair and ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=GgMegLZh_IM" target="_blank">🎥 WEF 2026 LIVE: NVIDIA CEO Jensen Huang At Davos 2026: NVIDIA, AI Power &amp; The Future Of Global Tech</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA President and CEO Jensen Huang takes the global stage at the 2026 World Economic Forum in Dav...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=mL2EUBgWX90" target="_blank">🎥 How Jensen Works | The Man Who Bet $10 Billion on a Future Nobody Saw Coming</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Jensen Huang built NVIDIA into the most valuable company on Earth. But this isn't a story about gett...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=rvOk6RzTBdE" target="_blank">🎥 Worldcoin WLD - Sam Altman - OpenAI</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=RivHMXijs-A" target="_blank">🎥 The INSANE Truth About OpenAI | Chat Gpt</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">The Story of OpenAI (full history of OpenAI). And the story of ChatGPT / rise of AI. OpenAI is one o...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/miaoxworld/OpenClawInstaller" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                miaoxworld/OpenClawInstaller
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提供了一键部署ClawdBot的便捷工具，对于需要快速搭建机器人的研究者来说非常实用。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/zarazhangrui/frontend-slides" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                zarazhangrui/frontend-slides
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 利用前端技术创建美观的幻灯片，虽然与AI直接相关性不强，但对于需要展示研究成果的AI工程师来说是一个不错的工具。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46850205" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: NanoClaw – “Clawdbot” in 500 lines of TS with Apple container isolation
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 展示了如何使用 TypeScript 和苹果容器隔离技术构建小型机器人，对AI和安全领域有启发意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46850588" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Two kinds of AI users are emerging
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨了AI用户的分类，对于理解用户需求和行为模式有重要价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46844822" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                What I learned building an opinionated and minimal coding agent
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 分享了构建编码代理的经验，对于开发AI辅助编程工具有很大参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 9<br>
+                    Input Tokens: 3109<br>
+                    Output Tokens: 2888
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年02月02日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
