@@ -14,9 +14,12 @@ class AICurator:
     
     def __init__(self, client: OpenAI = None):
         if client is None:
+            api_key = os.environ.get('MODELSCOPE_API_KEY')
+            if not api_key:
+                raise ValueError("请设置 MODELSCOPE_API_KEY 环境变量")
             self.client = OpenAI(
                 base_url='https://api-inference.modelscope.cn/v1/',
-                api_key='ms-f602942f-3da0-4f0e-a88b-34544784605e'
+                api_key=api_key
             )
         else:
             self.client = client

@@ -34,6 +34,7 @@ jobs:
         TO_EMAIL: ${{ secrets.TO_EMAIL }}
         CC_EMAIL: ${{ secrets.CC_EMAIL }}
         YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        MODELSCOPE_API_KEY: ${{ secrets.MODELSCOPE_API_KEY }}
       run: |
         cd scripts
         python research_digest_sender.py
