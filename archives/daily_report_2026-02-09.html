@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年02月09日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>### 每日 AI 简报</p><p>**学术突破**</p><p>今日，AI 领域迎来三项重要的研究进展。首先是《Learning a Generative Meta-Model of LLM Activations》一文，该研究探索了如何通过生成元模型来模拟大型语言模型（LLM）的激活状态，为理解模型内部运作提供了新的视角。其次，《DAWN: Dependency-Aware Fast Inference for Diffusion LLMs》提出了一种依赖感知的快速推理方法，旨在加速扩散模型的推理过程，这对于提高模型效率具有重要意义。最后，《Endogenous Resistance to Activation Steering in Language Models》探讨了语言模型对激活引导的内在抵抗性，揭示了模型行为的新特性，为未来的研究开辟了新方向。</p><p>**行业动态**</p><p>在行业方面，超级碗 LVI 广告再次成为焦点，今年的主题是“全 AI 一切”(The Verge)，展示了人工智能技术在广告创意和制作中的广泛应用。此外，YouTube Music 开始将歌词功能置于付费墙后(The Verge)，这一变动可能会影响用户使用体验及平台的商业模式。而科技界另一则令人兴奋的消息是，《Project Hail Mary》最终预告片的发布(Ars Technica)，这部由著名作家 Andy Weir 创作的作品备受期待，其改编项目正逐步揭开神秘面纱。</p><p>**值得关注**</p><p>今日，几位科技界的重量级人物分享了他们的见解与展望。Elon Musk 在世界经济论坛年度会议上发表讲话，讨论了未来的技术趋势及其对社会的影响。NVIDIA CEO Jensen Huang 在 NVIDIA Live 活动中介绍了公司最新的技术进展，强调了GPU在推动AI发展中的核心作用。与此同时，OpenAI 的联合创始人兼CEO Sam Altman 接受了采访，讲述了OpenAI 从非营利组织转型为估值超过3000亿美元的企业背后的故事，以及这一转变如何改变了AI行业的格局。这些领袖的观点不仅为我们提供了宝贵的行业洞见，也激发了对未来技术发展的无限想象。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.06964v1" target="_blank">Learning a Generative Meta-Model of LLM Activations</a>
+                </div>
+                <div class="paper-authors">👥 Grace Luo, Jiahai Feng, Trevor Darrell</div>
+                <div class="paper-summary">现有的分析神经网络激活的方法，如PCA和稀疏自动编码器，依赖于强烈结构假设。生成模型提供了一种替代方案：它们可以在不依赖这些假设的情况下揭示结构，并作为先验知识来提高干预的准确性。我们通过在十亿个残差流激活上训练扩散模型来探索这一方向，创建了“元模型”，这些元模型学习网络内部状态的分布。我们发现，随着计算量的增加，扩散损失平滑下降，并能可靠地预测下游效用。特别是，将元模型学习到的先验应用于转向干预可以提高流畅性，且随着损失减少，改善效果更加明显。此外，元模型的神经元越来越将概念隔离到单个单元中，其稀疏探针得分随损失减少而变化。这些结果表明，生成元模型为实现可解释性提供了一条不依赖限制性结构假设的可扩展路径。
+核心贡献：本文提出了一种基于扩散模型的生成元模型方法，用于学习大规模语言模型内部状态的分布，从而在不依赖强结构假设的情况下提高了模型的可解释性和干预效果。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-06</span>
+                    <a href="https://arxiv.org/pdf/2602.06964v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.06953v1" target="_blank">DAWN: Dependency-Aware Fast Inference for Diffusion LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Lizhuo Luo, Zhuoran Shi, Jiajun Luo</div>
+                <div class="paper-summary">扩散大语言模型（dLLM）在文本生成方面展现出优势，尤其是由于其固有的并行解码能力。然而，受质量与速度权衡的限制，现有的推理解决方案采用保守的并行策略，导致效率潜力未得到充分利用。一个核心挑战是并行解码假设每个位置可以独立填充，但实际中令牌往往是语义耦合的。因此，一个位置上的正确选择会限制其他位置的有效选择。如果不建模这些令牌间的依赖关系，并行策略会产生劣化的输出。基于这一见解，我们提出了DAWN，一种无需训练、具有依赖意识的快速dLLM解码方法。DAWN提取令牌依赖关系，并利用两个关键动机：(1) 依赖于未屏蔽确定位置的位置变得更加可靠，(2) 同时取消屏蔽强耦合的不确定位置会导致错误。基于这些发现，DAWN利用依赖图在每次迭代中选择更可靠的取消屏蔽位置，实现高并行性的同时几乎不损失生成质量。广泛的实验表明，与基线相比，DAWN在多个模型和数据集上将推理速度提高了1.80-8.06倍，同时保持了生成质量。代码已发布在https://github.com/lizhuo-luo/DAWN。
+
+核心贡献：DAWN通过引入依赖图来优化并行解码过程，在保证生成质量的同时显著提高了扩散大语言模型的推理速度。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-06</span>
+                    <a href="https://arxiv.org/pdf/2602.06953v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.06941v1" target="_blank">Endogenous Resistance to Activation Steering in Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Alex McKenzie, Keenan Pepper, Stijn Servaes</div>
+                <div class="paper-summary">大型语言模型在推理过程中可以抵抗任务不一致的激活转向，有时即使转向仍然活跃，也能在生成中途恢复以产生更好的响应。我们称这种现象为内源性转向抗性（ESR）。使用稀疏自动编码器（SAE）潜变量来引导模型激活，我们发现Llama-3.3-70B表现出显著的ESR，而较小的Llama-3和Gemma-2系列模型则较少出现这种现象。我们识别出26个在离题内容期间差异激活并与Llama-3.3-70B中的ESR因果相关的SAE潜变量。零删除这些潜变量可使多尝试率降低25%，为专门的内部一致性检查电路提供了因果证据。我们展示了通过提示和训练可以有意增强ESR：元提示指示模型自我监控可使Llama-3.3-70B的多尝试率提高4倍，而在自我纠正示例上的微调成功地在较小模型中诱导了类似ESR的行为。这些发现具有双重影响：ESR可以防止对抗性操纵，但也可能干扰依赖于激活转向的有益安全干预措施。理解和控制这些抵抗机制对于开发透明和可控的AI系统至关重要。代码可在github.com/agencyenterprise/endogenous-steering-resistance获取。
+核心贡献：本文揭示了大型语言模型中的一种新现象——内源性转向抗性（ESR），并探讨了其增强方法及对AI安全性和可控性的影响。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-06</span>
+                    <a href="https://arxiv.org/pdf/2602.06941v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.06920v1" target="_blank">Halluverse-M^3: A multitask multilingual benchmark for hallucination in LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Samir Abdaljalil, Parichit Sharma, Erchin Serpedin</div>
+                <div class="paper-summary">大型语言模型中的幻觉问题仍然是一个持续的挑战，特别是在多语言和生成设置中，保持事实一致性非常困难。尽管最近的模型在以英语为中心的基准测试中表现出色，但它们在不同语言、任务和幻觉类型上的行为尚未完全理解。在这项工作中，我们介绍了Halluverse-M^3，这是一个旨在支持对多种语言、多个生成任务和多种幻觉类别的幻觉进行系统分析的数据集。Halluverse-M^3涵盖了四种语言：英语、阿拉伯语、印地语和土耳其语，并支持两种生成任务：问答和对话摘要。该数据集明确区分了实体级、关系级和句子级幻觉。通过受控编辑过程构建幻觉输出，并由人工注释者验证，确保原始内容与幻觉生成之间有清晰的一致性。使用此数据集，我们评估了一系列当代开源和专有语言模型在细粒度幻觉检测方面的表现。我们的结果表明，问答比对话摘要更容易，而句子级幻觉即使对于最强的模型也仍然具有挑战性。性能在英语中最高，在资源较少的语言中下降，其中印地语的表现最差。总体而言，Halluverse-M^3为研究多语言、多任务环境下的幻觉提供了现实且具有挑战性的基准。我们发布了该数据集以支持未来关于幻觉检测和缓解的研究。
+核心贡献：本文提出了Halluverse-M^3，一个多语言、多任务的数据集，用于系统分析大型语言模型中的幻觉现象，涵盖四种语言和两种生成任务，并提供了一个全面的基准测试框架。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-06</span>
+                    <a href="https://arxiv.org/pdf/2602.06920v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.06869v1" target="_blank">Uncovering Cross-Objective Interference in Multi-Objective Alignment</a>
+                </div>
+                <div class="paper-authors">👥 Yining Lu, Meng Jiang</div>
+                <div class="paper-summary">我们研究了大型语言模型（LLMs）多目标对齐中的一个持续存在的失败模式：训练仅提高了部分目标的性能，而使其他目标退化。我们将这种现象形式化为跨目标干扰，并首次系统地研究了经典标量化算法，表明干扰普遍存在并表现出强烈的模型依赖性。为了解释这一现象，我们推导出一个局部协方差定律，显示当一个目标的奖励与标量化得分呈正协方差时，该目标在一级上得到改善。我们将此分析扩展到现代对齐中使用的裁剪代理目标，证明即使存在裁剪，只要满足温和条件，协方差定律仍然有效。基于此分析，我们提出了协方差目标权重适应（CTWA），这是一种即插即用的方法，通过保持目标奖励与训练信号之间的正协方差来有效缓解跨目标干扰。最后，我们在Polyak--Łojasiewicz条件下补充了这些局部改进条件的全局收敛分析，确定了非凸标量化优化何时实现全局收敛以及跨目标干扰如何依赖于特定的模型几何特性。
+核心贡献：本文提出了协方差目标权重适应（CTWA）方法，有效缓解了多目标对齐中的跨目标干扰问题。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-06</span>
+                    <a href="https://arxiv.org/pdf/2602.06869v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.06854v1" target="_blank">SEMA: Simple yet Effective Learning for Multi-Turn Jailbreak Attacks</a>
+                </div>
+                <div class="paper-authors">👥 Mingqian Feng, Xiaodong Liu, Weiwei Yang</div>
+                <div class="paper-summary">Multi-turn jailbreaks capture the real threat model for safety-aligned chatbots, where single-turn attacks are merely a special case. Yet existing approaches break under exploration complexity and intent drift. We propose SEMA, a simple yet effective framework that trains a multi-turn attacker without relying on any existing strategies or external data. SEMA comprises two stages. Prefilling self-tuning enables usable rollouts by fine-tuning on non-refusal, well-structured, multi-turn adversarial prompts that are self-generated with a minimal prefix, thereby stabilizing subsequent learning. Reinforcement learning with intent-drift-aware reward trains the attacker to elicit valid multi-turn adversarial prompts while maintaining the same harmful objective. We anchor harmful intent in multi-turn jailbreaks via an intent-drift-aware reward that combines intent alignment, compliance risk, and level of detail. Our open-loop attack regime avoids dependence on victim feedback, unifies single- and multi-turn settings, and reduces exploration complexity. Across multiple datasets, victim models, and jailbreak judges, our method achieves state-of-the-art (SOTA) attack success rates (ASR), outperforming all single-turn baselines, manually scripted and template-driven multi-turn baselines, as well as our SFT (Supervised Fine-Tuning) and DPO (Direct Preference Optimization) variants. For instance, SEMA performs an average $80.1\%$ ASR@1 across three closed-source and open-source victim models on AdvBench, 33.9% over SOTA. The approach is compact, reproducible, and transfers across targets, providing a stronger and more realistic stress test for large language model (LLM) safety and enabling automatic redteaming to expose and localize failure modes. Our code is available at: https://github.com/fmmarkmq/SEMA.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-06</span>
+                    <a href="https://arxiv.org/pdf/2602.06854v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.06622v1" target="_blank">R2LED: Equipping Retrieval and Refinement in Lifelong User Modeling with Semantic IDs for CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Qidong Liu, Gengnan Wang, Zhichen Liu</div>
+                <div class="paper-summary">终身用户建模通过利用用户的长期行为序列进行点击率预测，在个性化服务中得到了广泛应用。现有方法通常采用两阶段的“检索-优化”策略来平衡效果和效率。然而，它们仍然存在（i）由于数据分布偏差导致的检索噪声问题，以及（ii）在优化过程中缺乏语义理解的问题。虽然语义增强技术（如大语言模型或语义嵌入）为解决这两个挑战提供了潜在方案，但这些方法面临不切实际的推理成本或表示粒度不足的问题。借鉴语义身份（SID）的多粒度和轻量级优势，我们提出了一种新的范式，即在终身用户建模中引入SID进行检索和优化（R2LED），以应对这些问题。首先，我们在检索阶段引入了多路径混合检索机制。一方面，它通过多个并行召回路径从不同粒度捕捉用户兴趣；另一方面，提出了一个混合检索机制，能够从协作和语义两个视角高效地检索候选对象，减少噪声。然后，在优化阶段，我们设计了双层融合优化机制，包括面向目标的交叉注意力机制进行路径级融合和门机制进行SID级融合。这可以弥合语义空间与协作空间之间的差距，充分发挥SID的优势。在两个公开数据集上的全面实验结果证明了我们的方法在性能和效率方面的优越性。为了便于复现，我们已在线发布了代码https://github.com/abananbao/R2LED。
+核心贡献：本文提出了一种结合多路径混合检索和双层融合优化机制的新方法R2LED，有效解决了终身用户建模中的检索噪声和语义理解不足问题，显著提升了点击率预测的性能和效率。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-06</span>
+                    <a href="https://arxiv.org/pdf/2602.06622v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.03223v1" target="_blank">Distribution-Aware End-to-End Embedding for Streaming Numerical Features in Click-Through Rate Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Jiahao Liu, Hongji Ruan, Weimin Zhang</div>
+                <div class="paper-summary">本文探讨了在流式环境中进行点击率预测的有效数值特征嵌入方法。传统的静态分箱方法依赖于数值分布的离线统计；然而，这种固有的两阶段过程往往在更新分箱边界时引发语义漂移。虽然神经嵌入方法能够实现端到端学习，但它们通常会丢弃显式的分布信息。将此类信息整合到端到端学习中具有挑战性，因为流式特征经常违反独立同分布假设，这排除了通过顺序统计量的期望对总体分布进行无偏估计的可能性。此外，数值分布的关键上下文依赖性常常被忽视。为此，我们提出了DAES，这是一种旨在通过结合分布信息和自适应调制机制来解决流式训练场景中数值特征嵌入问题的端到端框架。具体而言，我们引入了一种基于高效水库采样的分布估计方法以及两种字段感知的分布调制策略，以捕捉流式分布和字段相关的语义。DAES在广泛的离线和在线实验中显著优于现有方法，并已在拥有数亿日活跃用户的领先短视频平台上全面部署。
+
+核心贡献：本文提出了一种名为DAES的端到端框架，该框架通过结合分布信息和自适应调制机制，有效解决了流式训练场景中的数值特征嵌入问题，显著提升了点击率预测的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-03</span>
+                    <a href="https://arxiv.org/pdf/2602.03223v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/874504/super-bowl-lx-ads-big-game" target="_blank">Super Bowl LX ads: all AI everything</a></div>
+                <div class="feed-date">02-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/culture/2026/02/a-project-hail-mary-final-trailer-yes-please/" target="_blank">A Project Hail Mary final trailer? Yes please</a></div>
+                <div class="feed-date">02-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/streaming/875511/youtube-music-lyrics-paywall" target="_blank">YouTube Music starts putting lyrics behind a paywall</a></div>
+                <div class="feed-date">02-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/08/amazons-melania-documentary-stumbles-in-second-weekend/" target="_blank">Amazon’s ‘Melania’ documentary stumbles in second weekend</a></div>
+                <div class="feed-date">02-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/875501/new-york-is-considering-two-bills-to-rein-in-the-ai-industry" target="_blank">New York is considering two bills to rein in the AI industry</a></div>
+                <div class="feed-date">02-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/08/crypto-com-places-70m-bet-on-ai-com-domain-ahead-of-super-bowl/" target="_blank">Crypto.com places $70M bet on AI.com domain ahead of Super Bowl</a></div>
+                <div class="feed-date">02-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/08/crypto-com-places-70m-bet-on-ai-com-domain-ahead-of-super-bowl/" target="_blank">Crypto.com places $70M bet on AI.com domain ahead of Super Bowl</a></div>
+                <div class="feed-date">02-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/08/okay-im-slightly-less-mad-about-that-magnificent-ambersons-ai-project/" target="_blank">Okay, I’m slightly less mad about that ‘Magnificent Ambersons’ AI project</a></div>
+                <div class="feed-date">02-08</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=IgifEgm1-e0" target="_blank">🎥 Conversation with Elon Musk | World Economic Forum Annual Meeting 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Please join us for a conversation between Elon Musk, CEO of Tesla; Chief Engineer, SpaceX; CTO, xAI;...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=UrB2tQDVLLo" target="_blank">🎥 Tesla CEO Elon Musk speaks at the World Economic Forum in Davos, Switzerland — 1/22/2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Elon Musk, CEO of Tesla; chief engineer of SpaceX; and CTO of xAI joins Laurence D. Fink, chair and ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0NBILspM4c4" target="_blank">🎥 NVIDIA Live with CEO Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from CES in Las Vegas, NVIDIA CEO Jensen Huang shares how the next generation of accelerated co...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=mL2EUBgWX90" target="_blank">🎥 How Jensen Works | The Man Who Bet $10 Billion on a Future Nobody Saw Coming</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Jensen Huang built NVIDIA into the most valuable company on Earth. But this isn't a story about gett...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=V3rzCrgA5IY" target="_blank">🎥 OpenAI: From Non-Profit to $300B+ | The Pivot That Changed AI</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">How did a nonprofit research lab founded in 2015 become a $300 billion for-profit empire in less tha...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=hrfWiYJbj-E" target="_blank">🎥 Code Red at OpenAI, Waymo Goes Rogue, and the $700B Chip Boom</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Join Andrew Rogoff and Curtis Condon as they dive deep into the latest tech disruptions. In this epi...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/run-bigpig/jcp" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                run-bigpig/jcp
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 结合了Wails、Go和React的AI驱动股票分析系统，对于AI在金融领域的应用有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/sanyuan0704/code-review-expert" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                sanyuan0704/code-review-expert
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 专注于代码审查的技能提升，包括SOLID原则、安全性、性能优化等，对提高代码质量和开发效率非常有帮助。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/mitchellh/vouch" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                mitchellh/vouch
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 基于社区信任管理的系统，对于理解社交网络中的信任机制和AI在其中的应用具有启发意义。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46939593" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                AI makes the easy part easier and the hard part harder
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨了AI技术对不同任务难度的影响，对于理解AI的能力边界和应用领域有重要启示。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46932343" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Matchlock – Secures AI agent workloads with a Linux-based sandbox
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 介绍了一种基于Linux沙箱的安全解决方案，对于保护AI代理工作负载具有实际应用价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=46933515" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: Fine-tuned Qwen2.5-7B on 100 films for probabilistic story graphs
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 展示了如何通过微调大型语言模型来生成概率故事图，对于创意写作和故事生成领域有重要参考意义。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 8<br>
+                    Input Tokens: 2607<br>
+                    Output Tokens: 2503
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年02月09日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
