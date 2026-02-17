@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年02月17日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>无法生成今日简报，请直接阅读下方详细内容。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.15029v1" target="_blank">Symmetry in language statistics shapes the geometry of model representations</a>
+                </div>
+                <div class="paper-authors">👥 Dhruva Karkada, Daniel J. Korchinski, Andres Nava</div>
+                <div class="paper-summary">Although learned representations underlie neural networks' success, their fundamental properties remain poorly understood. A striking example is the emergence of simple geometric structures in LLM representations: for example, calendar months organize into a circle, years form a smooth one-dimensional manifold, and cities' latitudes and longitudes can be decoded by a linear probe. We show that the statistics of language exhibit a translation symmetry -- e.g., the co-occurrence probability of two months depends only on the time interval between them -- and we prove that the latter governs the aforementioned geometric structures in high-dimensional word embedding models. Moreover, we find that these structures persist even when the co-occurrence statistics are strongly perturbed (for example, by removing all sentences in which two months appear together) and at moderate embedding dimension. We show that this robustness naturally emerges if the co-occurrence statistics are collectively controlled by an underlying continuous latent variable. We empirically validate this theoretical framework in word embedding models, text embedding models, and large language models.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-16</span>
+                    <a href="https://arxiv.org/pdf/2602.15029v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.15013v1" target="_blank">Text Style Transfer with Parameter-efficient LLM Finetuning and Round-trip Translation</a>
+                </div>
+                <div class="paper-authors">👥 Ruoxi Liu, Philipp Koehn</div>
+                <div class="paper-summary">This paper proposes a novel method for Text Style Transfer (TST) based on parameter-efficient fine-tuning of Large Language Models (LLMs). Addressing the scarcity of parallel corpora that map between styles, the study employs roundtrip translation to synthesize such parallel datasets from monolingual corpora. This approach creates 'neutralized' text devoid of stylistic attributes, essentially creating a shared input style at training-time and inference-time. Experimental results demonstrate consistent superiority of this method over zero-shot prompting and fewshot ICL techniques measured by BLEU scores and style accuracy scores across four investigated domains. Furthermore, the integration of retrieval-augmented generation (RAG) for terminology and name knowledge enhances robustness and stylistic consistency.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-16</span>
+                    <a href="https://arxiv.org/pdf/2602.15013v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.15005v1" target="_blank">Learning User Interests via Reasoning and Distillation for Cross-Domain News Recommendation</a>
+                </div>
+                <div class="paper-authors">👥 Mengdan Zhu, Yufan Zhao, Tao Di</div>
+                <div class="paper-summary">News recommendation plays a critical role in online news platforms by helping users discover relevant content. Cross-domain news recommendation further requires inferring user's underlying information needs from heterogeneous signals that often extend beyond direct news consumption. A key challenge lies in moving beyond surface-level behaviors to capture deeper, reusable user interests while maintaining scalability in large-scale production systems. In this paper, we present a reinforcement learning framework that trains large language models to generate high-quality lists of interest-driven news search queries from cross-domain user signals. We formulate query-list generation as a policy optimization problem and employ GRPO with multiple reward signals. We systematically study two compute dimensions: inference-time sampling and model capacity, and empirically observe consistent improvements with increased compute that exhibit scaling-like behavior. Finally, we perform on-policy distillation to transfer the learned policy from a large, compute-intensive teacher to a compact student model suitable for scalable deployment. Extensive offline experiments, ablation studies and large-scale online A/B tests in a production news recommendation system demonstrate consistent gains in both interest modeling quality and downstream recommendation performance.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-16</span>
+                    <a href="https://arxiv.org/pdf/2602.15005v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.14970v1" target="_blank">Counterfactual Fairness Evaluation of LLM-Based Contact Center Agent Quality Assurance System</a>
+                </div>
+                <div class="paper-authors">👥 Kawin Mayilvaghanan, Siddhant Gupta, Ayush Kumar</div>
+                <div class="paper-summary">Large Language Models (LLMs) are increasingly deployed in contact-center Quality Assurance (QA) to automate agent performance evaluation and coaching feedback. While LLMs offer unprecedented scalability and speed, their reliance on web-scale training data raises concerns regarding demographic and behavioral biases that may distort workforce assessment. We present a counterfactual fairness evaluation of LLM-based QA systems across 13 dimensions spanning three categories: Identity, Context, and Behavioral Style. Fairness is quantified using the Counterfactual Flip Rate (CFR), the frequency of binary judgment reversals, and the Mean Absolute Score Difference (MASD), the average shift in coaching or confidence scores across counterfactual pairs. Evaluating 18 LLMs on 3,000 real-world contact center transcripts, we find systematic disparities, with CFR ranging from 5.4% to 13.0% and consistent MASD shifts across confidence, positive, and improvement scores. Larger, more strongly aligned models show lower unfairness, though fairness does not track accuracy. Contextual priming of historical performance induces the most severe degradations (CFR up to 16.4%), while implicit linguistic identity cues remain a persistent bias source. Finally, we analyze the efficacy of fairness-aware prompting, finding that explicit instructions yield only modest improvements in evaluative consistency. Our findings underscore the need for standardized fairness auditing pipelines prior to deploying LLMs in high-stakes workforce evaluation.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-16</span>
+                    <a href="https://arxiv.org/pdf/2602.14970v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.14955v1" target="_blank">Tool-Aware Planning in Contact Center AI: Evaluating LLMs through Lineage-Guided Query Decomposition</a>
+                </div>
+                <div class="paper-authors">👥 Varun Nathan, Shreyas Guha, Ayush Kumar</div>
+                <div class="paper-summary">We present a domain-grounded framework and benchmark for tool-aware plan generation in contact centers, where answering a query for business insights, our target use case, requires decomposing it into executable steps over structured tools (Text2SQL (T2S)/Snowflake) and unstructured tools (RAG/transcripts) with explicit depends_on for parallelism. Our contributions are threefold: (i) a reference-based plan evaluation framework operating in two modes - a metric-wise evaluator spanning seven dimensions (e.g., tool-prompt alignment, query adherence) and a one-shot evaluator; (ii) a data curation methodology that iteratively refines plans via an evaluator->optimizer loop to produce high-quality plan lineages (ordered plan revisions) while reducing manual effort; and (iii) a large-scale study of 14 LLMs across sizes and families for their ability to decompose queries into step-by-step, executable, and tool-assigned plans, evaluated under prompts with and without lineage. Empirically, LLMs struggle on compound queries and on plans exceeding 4 steps (typically 5-15); the best total metric score reaches 84.8% (Claude-3-7-Sonnet), while the strongest one-shot match rate at the "A+" tier (Extremely Good, Very Good) is only 49.75% (o3-mini). Plan lineage yields mixed gains overall but benefits several top models and improves step executability for many. Our results highlight persistent gaps in tool-understanding, especially in tool-prompt alignment and tool-usage completeness, and show that shorter, simpler plans are markedly easier. The framework and findings provide a reproducible path for assessing and improving agentic planning with tools for answering data-analysis queries in contact-center settings.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-16</span>
+                    <a href="https://arxiv.org/pdf/2602.14955v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.14814v1" target="_blank">Learning State-Tracking from Code Using Linear RNNs</a>
+                </div>
+                <div class="paper-authors">👥 Julien Siems, Riccardo Grazzi, Kirill Kalinin</div>
+                <div class="paper-summary">Over the last years, state-tracking tasks, particularly permutation composition, have become a testbed to understand the limits of sequence models architectures like Transformers and RNNs (linear and non-linear). However, these are often sequence-to-sequence tasks: learning to map actions (permutations) to states, which is incompatible with the next-token prediction setting commonly used to train language models. We address this gap by converting permutation composition into code via REPL traces that interleave state-reveals through prints and variable transformations. We show that linear RNNs capable of state-tracking excel also in this setting, while Transformers still fail. Motivated by this representation, we investigate why tracking states in code is generally difficult: actions are not always fully observable. We frame this as tracking the state of a probabilistic finite-state automaton with deterministic state reveals and show that linear RNNs can be worse than non-linear RNNs at tracking states in this setup.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-16</span>
+                    <a href="https://arxiv.org/pdf/2602.14814v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.13971v1" target="_blank">DAIAN: Deep Adaptive Intent-Aware Network for CTR Prediction in Trigger-Induced Recommendation</a>
+                </div>
+                <div class="paper-authors">👥 Zhihao Lv, Longtao Zhang, Ailong He</div>
+                <div class="paper-summary">Recommendation systems are essential for personalizing e-commerce shopping experiences. Among these, Trigger-Induced Recommendation (TIR) has emerged as a key scenario, which utilizes a trigger item (explicitly represents a user's instantaneous interest), enabling precise, real-time recommendations. Although several trigger-based techniques have been proposed, most of them struggle to address the intent myopia issue, that is, a recommendation system overemphasizes the role of trigger items and narrowly focuses on suggesting commodities that are highly relevant to trigger items. Meanwhile, existing methods rely on collaborative behavior patterns between trigger and recommended items to identify the user's preferences, yet the sparsity of ID-based interaction restricts their effectiveness. To this end, we propose the Deep Adaptive Intent-Aware Network (DAIAN) that dynamically adapts to users' intent preferences. In general, we first extract the users' personalized intent representations by analyzing the correlation between a user's click and the trigger item, and accordingly retrieve the user's related historical behaviors to mine the user's diverse intent. Besides, sparse collaborative behaviors constrain the performance in capturing items associated with user intent. Hence, we reinforce similarity by leveraging a hybrid enhancer with ID and semantic information, followed by adaptive selection based on varying intents. Experimental results on public datasets and our industrial e-commerce datasets demonstrate the effectiveness of DAIAN.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-15</span>
+                    <a href="https://arxiv.org/pdf/2602.13971v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.12593v1" target="_blank">RQ-GMM: Residual Quantized Gaussian Mixture Model for Multimodal Semantic Discretization in CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Ziye Tong, Jiahao Liu, Weimin Zhang</div>
+                <div class="paper-summary">Multimodal content is crucial for click-through rate (CTR) prediction. However, directly incorporating continuous embeddings from pre-trained models into CTR models yields suboptimal results due to misaligned optimization objectives and convergence speed inconsistency during joint training. Discretizing embeddings into semantic IDs before feeding them into CTR models offers a more effective solution, yet existing methods suffer from limited codebook utilization, reconstruction accuracy, and semantic discriminability. We propose RQ-GMM (Residual Quantized Gaussian Mixture Model), which introduces probabilistic modeling to better capture the statistical structure of multimodal embedding spaces. Through Gaussian Mixture Models combined with residual quantization, RQ-GMM achieves superior codebook utilization and reconstruction accuracy. Experiments on public datasets and online A/B tests on a large-scale short-video platform serving hundreds of millions of users demonstrate substantial improvements: RQ-GMM yields a 1.502% gain in Advertiser Value over strong baselines. The method has been fully deployed, serving daily recommendations for hundreds of millions of users.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-13</span>
+                    <a href="https://arxiv.org/pdf/2602.12593v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.12041v1" target="_blank">Compress, Cross and Scale: Multi-Level Compression Cross Networks for Efficient Scaling in Recommender Systems</a>
+                </div>
+                <div class="paper-authors">👥 Heng Yu, Xiangjun Zhou, Jie Xia</div>
+                <div class="paper-summary">Modeling high-order feature interactions efficiently is a central challenge in click-through rate and conversion rate prediction. Modern industrial recommender systems are predominantly built upon deep learning recommendation models, where the interaction backbone plays a critical role in determining both predictive performance and system efficiency. However, existing interaction modules often struggle to simultaneously achieve strong interaction capacity, high computational efficiency, and good scalability, resulting in limited ROI when models are scaled under strict production constraints. In this work, we propose MLCC, a structured feature interaction architecture that organizes feature crosses through hierarchical compression and dynamic composition, which can efficiently capture high-order feature dependencies while maintaining favorable computational complexity. We further introduce MC-MLCC, a Multi-Channel extension that decomposes feature interactions into parallel subspaces, enabling efficient horizontal scaling with improved representation capacity and significantly reduced parameter growth. Extensive experiments on three public benchmarks and a large-scale industrial dataset show that our proposed models consistently outperform strong DLRM-style baselines by up to 0.52 AUC, while reducing model parameters and FLOPs by up to 26$\times$ under comparable performance. Comprehensive scaling analyses demonstrate stable and predictable scaling behavior across embedding dimension, head number, and channel count, with channel-based scaling achieving substantially better efficiency than conventional embedding inflation. Finally, online A/B testing on a real-world advertising platform validates the practical effectiveness of our approach, which has been widely adopted in Bilibili advertising system under strict latency and resource constraints.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-12</span>
+                    <a href="https://arxiv.org/pdf/2602.12041v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.10811v1" target="_blank">EST: Towards Efficient Scaling Laws in Click-Through Rate Prediction via Unified Modeling</a>
+                </div>
+                <div class="paper-authors">👥 Mingyang Liu, Yong Bai, Zhangming Chan</div>
+                <div class="paper-summary">Efficiently scaling industrial Click-Through Rate (CTR) prediction has recently attracted significant research attention. Existing approaches typically employ early aggregation of user behaviors to maintain efficiency. However, such non-unified or partially unified modeling creates an information bottleneck by discarding fine-grained, token-level signals essential for unlocking scaling gains. In this work, we revisit the fundamental distinctions between CTR prediction and Large Language Models (LLMs), identifying two critical properties: the asymmetry in information density between behavioral and non-behavioral features, and the modality-specific priors of content-rich signals. Accordingly, we propose the Efficiently Scalable Transformer (EST), which achieves fully unified modeling by processing all raw inputs in a single sequence without lossy aggregation. EST integrates two modules: Lightweight Cross-Attention (LCA), which prunes redundant self-interactions to focus on high-impact cross-feature dependencies, and Content Sparse Attention (CSA), which utilizes content similarity to dynamically select high-signal behaviors. Extensive experiments show that EST exhibits a stable and efficient power-law scaling relationship, enabling predictable performance gains with model scale. Deployed on Taobao's display advertising platform, EST significantly outperforms production baselines, delivering a 3.27\% RPM (Revenue Per Mile) increase and a 1.22\% CTR lift, establishing a practical pathway for scalable industrial CTR prediction models.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-11</span>
+                    <a href="https://arxiv.org/pdf/2602.10811v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.12972v1" target="_blank">Jointly Optimizing Debiased CTR and Uplift for Coupons Marketing: A Unified Causal Framework</a>
+                </div>
+                <div class="paper-authors">👥 Siyun Yang, Shixiao Yang, Jian Wang</div>
+                <div class="paper-summary">In online advertising, marketing interventions such as coupons introduce significant confounding bias into Click-Through Rate (CTR) prediction. Observed clicks reflect a mixture of users' intrinsic preferences and the uplift induced by these interventions. This causes conventional models to miscalibrate base CTRs, which distorts downstream ranking and billing decisions. Furthermore, marketing interventions often operate as multi-valued treatments with varying magnitudes, introducing additional complexity to CTR prediction.   To address these issues, we propose the \textbf{Uni}fied \textbf{M}ulti-\textbf{V}alued \textbf{T}reatment Network (UniMVT). Specifically, UniMVT disentangles confounding factors from treatment-sensitive representations, enabling a full-space counterfactual inference module to jointly reconstruct the debiased base CTR and intensity-response curves. To handle the complexity of multi-valued treatments, UniMVT employs an auxiliary intensity estimation task to capture treatment propensities and devise a unit uplift objective that normalizes the intervention effect. This ensures comparable estimation across the continuous coupon-value spectrum. UniMVT simultaneously achieves debiased CTR prediction for accurate system calibration and precise uplift estimation for incentive allocation. Extensive experiments on synthetic and industrial datasets demonstrate UniMVT's superiority in both predictive accuracy and calibration. Furthermore, real-world A/B tests confirm that UniMVT significantly improves business metrics through more effective coupon distribution.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-13</span>
+                    <a href="https://arxiv.org/pdf/2602.12972v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.11410v1" target="_blank">CADET: Context-Conditioned Ads CTR Prediction With a Decoder-Only Transformer</a>
+                </div>
+                <div class="paper-authors">👥 David Pardoe, Neil Daftary, Miro Furtado</div>
+                <div class="paper-summary">Click-through rate (CTR) prediction is fundamental to online advertising systems. While Deep Learning Recommendation Models (DLRMs) with explicit feature interactions have long dominated this domain, recent advances in generative recommenders have shown promising results in content recommendation. However, adapting these transformer-based architectures to ads CTR prediction still presents unique challenges, including handling post-scoring contextual signals, maintaining offline-online consistency, and scaling to industrial workloads. We present CADET (Context-Conditioned Ads Decoder-Only Transformer), an end-to-end decoder-only transformer for ads CTR prediction deployed at LinkedIn. Our approach introduces several key innovations: (1) a context-conditioned decoding architecture with multi-tower prediction heads that explicitly model post-scoring signals such as ad position, resolving the chicken-and-egg problem between predicted CTR and ranking; (2) a self-gated attention mechanism that stabilizes training by adaptively regulating information flow at both representation and interaction levels; (3) a timestamp-based variant of Rotary Position Embedding (RoPE) that captures temporal relationships across timescales from seconds to months; (4) session masking strategies that prevent the model from learning dependencies on unavailable in-session events, addressing train-serve skew; and (5) production engineering techniques including tensor packing, sequence chunking, and custom Flash Attention kernels that enable efficient training and serving at scale. In online A/B testing, CADET achieves a 11.04\% CTR lift compared to the production LiRank baseline model, a hybrid ensemble of DCNv2 and sequential encoders. The system has been successfully deployed on LinkedIn's advertising platform, serving the main traffic for homefeed sponsored updates.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-11</span>
+                    <a href="https://arxiv.org/pdf/2602.11410v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/879845/valve-steam-deck-oled-out-of-stock-memory-storage-ram-crisis" target="_blank">Valve’s Steam Deck OLED will be ‘intermittently’ out of stock because of the RAM crisis</a></div>
+                <div class="feed-date">02-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/apple/2026/02/get-ready-for-new-macs-and-ipads-apple-announces-special-experience-on-march-4/" target="_blank">Get ready for new Macs and iPads: Apple announces "Special Experience" on March 4</a></div>
+                <div class="feed-date">02-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/879792/apple-iphone-android-rcs-messages-end-to-end-encrypted" target="_blank">Apple starts testing end-to-end encrypted RCS messages on iPhone</a></div>
+                <div class="feed-date">02-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/02/best-buy-worker-used-managers-code-to-get-99-off-macbooks-cops-say/" target="_blank">Best Buy worker used manager’s code to get 99% off MacBooks, cops say</a></div>
+                <div class="feed-date">02-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/879749/apple-podcasts-video-swap-hls-live-streaming" target="_blank">Apple’s Podcasts app will let you ‘seamlessly’ switch between audio and video shows</a></div>
+                <div class="feed-date">02-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/16/have-money-will-travel-a16zs-hunt-for-the-next-european-unicorn/" target="_blank">Have money, will travel: a16z’s hunt for the next European unicorn</a></div>
+                <div class="feed-date">02-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/16/have-money-will-travel-a16zs-hunt-for-the-next-european-unicorn/" target="_blank">Have money, will travel: a16z’s hunt for the next European unicorn</a></div>
+                <div class="feed-date">02-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/02/bytedance-backpedals-after-seedance-2-0-turned-hollywood-icons-into-ai-clip-art/" target="_blank">ByteDance backpedals after Seedance 2.0 turned Hollywood icons into AI “clip art”</a></div>
+                <div class="feed-date">02-16</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=IgifEgm1-e0" target="_blank">🎥 Conversation with Elon Musk | World Economic Forum Annual Meeting 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Please join us for a conversation between Elon Musk, CEO of Tesla; Chief Engineer, SpaceX; CTO, xAI;...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=UrB2tQDVLLo" target="_blank">🎥 Tesla CEO Elon Musk speaks at the World Economic Forum in Davos, Switzerland — 1/22/2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Elon Musk, CEO of Tesla; chief engineer of SpaceX; and CTO of xAI joins Laurence D. Fink, chair and ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0NBILspM4c4" target="_blank">🎥 NVIDIA Live with CEO Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from CES in Las Vegas, NVIDIA CEO Jensen Huang shares how the next generation of accelerated co...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=feApToJAATM" target="_blank">🎥 LIVE: India AI Summit 2026: Global Tech Leaders &amp; Youth Innovators Unite in Delhi</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">India hosts the India AI Impact Summit 2026 at Bharat Mandapam, New Delhi from Feb 16–20. This 5-day...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=7PnaQzw_K8E" target="_blank">🎥 99.9% of the internet is about to be AI?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Alex Blania (CEO of Tools for Humanity, Co-Founder of World, and Co-Founder of Merge Labs) joins Sou...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/HKUDS/ClawWork" target="_blank" style="color: #2b6cb0;">
+                        HKUDS/ClawWork
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/QDenka/awesome-software-design" target="_blank" style="color: #2b6cb0;">
+                        QDenka/awesome-software-design
+                    </a>
+                </div>
+                
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=47042396" target="_blank" style="color: #2b6cb0;">
+                        Dark web agent spotted bedroom wall clue to rescue girl from abuse
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=47040430" target="_blank" style="color: #2b6cb0;">
+                        Study: Self-generated Agent Skills are useless
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=47042136" target="_blank" style="color: #2b6cb0;">
+                        AI is destroying Open Source, and it's not even good yet
+                    </a>
+                </div>
+                
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 0<br>
+                    Input Tokens: 0<br>
+                    Output Tokens: 0
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年02月17日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
