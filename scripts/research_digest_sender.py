@@ -83,11 +83,12 @@ class ResearchDigestSender:
         """使用 AI 翻译并总结论文"""
         try:
             response = self.client.chat.completions.create(
-                model="Qwen/Qwen2.5-72B-Instruct",
+                model="Qwen/Qwen3-32B",
                 messages=[
                     {"role": "system", "content": "你是一个专业的AI研究助手。请将给定的论文摘要翻译成中文，并用一句话总结这篇论文的核心贡献。格式要求：先给出中文摘要，换行后给出'核心贡献：'。"},
                     {"role": "user", "content": f"Title: {title}\nAbstract: {abstract}"}
-                ]
+                ],
+                extra_body={"enable_thinking": False}
             )
             self.usage_tracker.log_llm_usage(response.usage)
             return response.choices[0].message.content
@@ -125,11 +126,12 @@ class ResearchDigestSender:
 
         try:
             response = self.client.chat.completions.create(
-                model="Qwen/Qwen2.5-72B-Instruct",
+                model="Qwen/Qwen3-32B",
                 messages=[
                     {"role": "system", "content": "你是一位资深的科技主编，擅长从海量信息中提炼关键洞察。"},
                     {"role": "user", "content": context}
-                ]
+                ],
+                extra_body={"enable_thinking": False}
             )
             self.usage_tracker.log_llm_usage(response.usage)
             return response.choices[0].message.content

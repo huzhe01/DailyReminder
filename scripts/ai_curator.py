@@ -75,12 +75,13 @@ class AICurator:
 
         try:
             response = self.client.chat.completions.create(
-                model="Qwen/Qwen2.5-72B-Instruct",
+                model="Qwen/Qwen3-32B",
                 messages=[
                     {"role": "system", "content": "你是一位专业的 AI 技术内容筛选专家。只返回 JSON 格式的筛选结果。"},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.3
+                temperature=0.3,
+                extra_body={"enable_thinking": False}
             )
             
             # 记录 token 使用

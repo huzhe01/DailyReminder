@@ -128,7 +128,7 @@ class HNFetcher:
             )
             stories.append(story)
         
-        print(f"  🟠 HN: 检查了 {checked} 条，找到 {len(stories)} 条 AI 相关")
+        print(f"🟠 HN: 检查了 {checked} 条，找到 {len(stories)} 条 AI 相关")
         return stories
     
     def fetch_best_stories(self, min_score: int = 100, max_results: int = 10) -> List[HNStory]:
