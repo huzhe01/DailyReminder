@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年03月01日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报｜2024年3月20日**</p><p>**学术突破**  </p><p>今日三篇前沿论文聚焦于大模型的创新应用与优化策略。其中，“Exploratory Memory-Augmented LLM Agent”提出融合在线与离线策略优化的新框架，显著提升智能体的记忆与推理能力；“LLM Novice Uplift on Dual-Use Biology Tasks”则展示如何通过模拟训练提升新手在生物双用途任务中的表现；另一篇关于多模态情绪识别的混合专家模型（MoE）为对话系统的情感理解带来新思路。</p><p>**行业动态**  </p><p>Anthropic近期陷入自我设限的战略困境，TechCrunch深入剖析其挑战与应对。与此同时，Netflix放弃收购华纳兄弟引发业界关注，而OpenAI与微软发布联合声明，预示其在AI军备竞赛中的关键角色。Google亦宣布Gemini App最新更新内容，持续推动AI助手功能升级。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang与Sam Altman近期密集发声，分别围绕移民政策、AI硬件未来及国防合作展开深度讨论，三位科技巨头领袖的立场交锋，揭示AI产业走向的重要风向标。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.23008v1" target="_blank">Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization</a>
+                </div>
+                <div class="paper-authors">👥 Zeyuan Liu, Jeonghye Kim, Xufang Luo</div>
+                <div class="paper-summary">探索仍然是使用强化学习训练的大语言模型代理的关键瓶颈。虽然现有方法利用了预训练知识，但在需要发现新状态的环境中表现不佳。我们提出了探索性记忆增强型在线与离线策略优化框架（EMPO$^2$），这是一种混合强化学习框架，通过记忆来增强探索能力，并结合在线和离线策略更新，使大语言模型在具备记忆功能时表现出色，同时在没有记忆的情况下也能保持鲁棒性。在 ScienceWorld 和 WebShop 上，EMPO$^2$ 相比 GRPO 分别提升了 128.6% 和 11.3%。此外，在分布外测试中，EMPO$^2$ 展现了更强的新任务适应能力，仅需少量带记忆的试验且无需参数更新。这些结果表明，EMPO$^2$ 是构建更具探索性和泛化能力的大语言模型代理的有前景的框架。
+
+核心贡献：提出 EMPO$^2$，一种结合记忆增强和混合策略更新的强化学习框架，显著提升了大语言模型代理在探索和泛化方面的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-26</span>
+                    <a href="https://arxiv.org/pdf/2602.23008v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.23329v1" target="_blank">LLM Novice Uplift on Dual-Use, In Silico Biology Tasks</a>
+                </div>
+                <div class="paper-authors">👥 Chen Bo Calvin Zhang, Christina Q. Knight, Nicholas Kruus</div>
+                <div class="paper-summary">大型语言模型（LLMs）在生物学基准测试中表现日益优异，但尚不清楚它们是否能够提升新手用户的能力——即是否能让人类的表现优于仅依赖互联网资源。这一不确定性对于理解科学加速和双重用途风险至关重要。我们开展了一项多模型、多基准的人类能力提升研究，在八个与生物安全相关的任务集中，比较了有LLM访问权限的新手与仅有互联网访问权限的新手。参与者有充足的时间解决复杂问题（最复杂的任务最多耗时13小时）。我们发现，LLM的访问显著提升了表现：拥有LLM的新手比对照组准确率高出4.16倍（95%置信区间[2.63, 6.87]）。在四个具有专家基线（仅限互联网）的基准测试中，拥有LLM的新手在其中三个上超越了专家。也许令人惊讶的是，独立运行的LLM常常超过了使用LLM辅助的新手，表明用户未能充分激发LLM的潜力。大多数参与者（89.6%）报告称即使存在防护措施，也几乎没有困难地获取了与双重用途相关的信息。总体而言，LLM在原本需要专业训练才能完成的生物学任务中显著提升了新手的表现，这突显了除了传统基准之外，持续进行交互式能力评估的重要性。
+
+核心贡献：本研究首次系统评估了LLM对生物学任务中新手用户的能力提升效果，并揭示了其在科学加速和双重用途风险方面的深远影响。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-26</span>
+                    <a href="https://arxiv.org/pdf/2602.23329v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.23300v1" target="_blank">A Mixture-of-Experts Model for Multimodal Emotion Recognition in Conversations</a>
+                </div>
+                <div class="paper-authors">👥 Soumya Dutta, Smruthi Balaji, Sriram Ganapathy</div>
+                <div class="paper-summary">在对话中的情感识别（ERC）面临独特挑战，要求模型能够捕捉多轮对话的时间流动，并有效整合来自多种模态的线索。我们提出了用于情感识别的语音-文本专家混合模型（MiSTER-E），这是一个模块化的专家混合（MoE）框架，旨在解耦ERC中的两个核心挑战：模态特定上下文建模和多模态信息融合。MiSTER-E利用了针对语音和文本微调的大语言模型（LLMs），以提供丰富的语句级嵌入表示，并通过卷积循环上下文建模层进行增强。系统通过一个学习得到的门控机制集成三个专家——仅语音、仅文本和跨模态——的预测结果，并动态加权其输出。为了进一步鼓励不同模态之间的一致性和对齐性，我们引入了配对语音-文本表示之间的监督对比损失以及基于KL散度的专家预测正则化。重要的是，MiSTER-E在任何阶段都不依赖说话人身份。我们在IEMOCAP、MELD和MOSI这三个基准数据集上的实验表明，我们的方法分别取得了70.9%、69.5%和87.9%的加权F1分数，优于多个基线语音-文本ERC系统。我们还提供了各种消融实验来突出所提方法的贡献。
+
+核心贡献：MiSTER-E是一个无需依赖说话人身份的模块化专家混合框架，通过解耦多模态上下文建模与融合任务，在多个基准数据集上实现了领先的ERC性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-26</span>
+                    <a href="https://arxiv.org/pdf/2602.23300v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.23266v1" target="_blank">Discourse-Aware Dual-Track Streaming Response for Low-Latency Spoken Dialogue Systems</a>
+                </div>
+                <div class="paper-authors">👥 Siyuan Liu, Jiahui Xu, Feng Jiang</div>
+                <div class="paper-summary">实现类似人类的响应速度是级联系统语音对话系统中的关键且具有挑战性的目标。传统的ASR-LLM-TTS流水线遵循严格的顺序模式，要求在开始语音合成之前完成完整的转录和全部推理，这导致了较高的响应延迟。我们提出了一个低延迟架构——话语感知的双轨流式响应（DDTSR）框架，该框架能够实现在倾听的同时思考以及在说话的同时思考。DDTSR基于三个关键机制：(1) 连接词引导的小模型与大模型协同，其中辅助小模型生成最小承诺的话语连接词，而大模型则并行执行知识密集型推理；(2) 基于流式的跨模态协作，动态重叠ASR、LLM推理和TTS以提前可说话的时间点；(3) 基于课程学习的话语连贯性增强，保持早期响应与后续推理输出之间的一致性和逻辑性。在两个语音对话基准上的实验表明，DDTSR在保持话语质量的同时将响应延迟降低了19%-51%。进一步分析显示，DDTSR作为插件模块兼容多种LLM骨干网络，并在不同长度的语句中表现稳健，显示出其在实时语音交互中的实用性和可扩展性。
+
+核心贡献：本文提出了一种低延迟的双轨流式响应框架DDTSR，通过连接词引导的模型协同、跨模态流式协作和课程学习增强话语连贯性，显著降低语音对话系统的响应延迟，同时保持高质量对话输出。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-26</span>
+                    <a href="https://arxiv.org/pdf/2602.23266v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.23200v1" target="_blank">InnerQ: Hardware-aware Tuning-free Quantization of KV Cache for Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Sayed Mohammadreza Tayaranian Hosseini, Amir Ardakani, Warren J. Gross</div>
+                <div class="paper-summary">在解码过程中减少大型语言模型（LLMs）的硬件占用对于实现高效的长序列生成至关重要。一个关键瓶颈是键值（KV）缓存，其大小随序列长度扩展，并且很容易主导模型的内存占用。之前的研究提出了一些量化方法，旨在在保持信息的前提下压缩KV缓存。我们提出了InnerQ，这是一种面向硬件的KV缓存量化方案，能够在不牺牲精度的前提下降低解码延迟。InnerQ采用基于内维分组的组间量化方式，与以往基于外维分组的方法不同，InnerQ将反量化与向量-矩阵乘法对齐，并实现了GPU计算单元之间的缩放因子重用。这减少了内存访问并加速了反量化过程，在先前工作基础上最多提升了22%的速度，在半精度向量-矩阵乘法上更是达到了88%的提升。为了在高压缩率下保持保真度，InnerQ结合了以下三种机制：(i) 混合量化，根据局部统计选择每组的对称或非对称量化；(ii) 为最近的token和注意力汇点token设置高精度窗口以减轻异常值泄露的影响；(iii) 在预填充阶段一次性计算并嵌入查询中的键缓存通道归一化，避免运行时开销。我们在Llama模型上的评估实验表明，InnerQ能够维持与未量化KV缓存相当的少量样本GSM8K性能，并优于之前的KV缓存量化方法。
+
+核心贡献：InnerQ是一种面向硬件的KV缓存量化方法，通过优化分组策略和引入混合量化等机制，在高压缩率下显著降低了解码延迟，同时保持了模型性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-26</span>
+                    <a href="https://arxiv.org/pdf/2602.23200v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.23197v1" target="_blank">Fine-Tuning Without Forgetting In-Context Learning: A Theoretical Analysis of Linear Attention Models</a>
+                </div>
+                <div class="paper-authors">👥 Chungpa Lee, Jy-yong Sohn, Kangwook Lee</div>
+                <div class="paper-summary">Transformer-based large language models exhibit in-context learning, enabling adaptation to downstream tasks via few-shot prompting with demonstrations. In practice, such models are often fine-tuned to improve zero-shot performance on downstream tasks, allowing them to solve tasks without examples and thereby reducing inference costs. However, fine-tuning can degrade in-context learning, limiting the performance of fine-tuned models on tasks not seen during fine-tuning. Using linear attention models, we provide a theoretical analysis that characterizes how fine-tuning objectives modify attention parameters and identifies conditions under which this leads to degraded few-shot performance. We show that fine-tuning all attention parameters can harm in-context learning, whereas restricting updates to the value matrix improves zero-shot performance while preserving in-context learning. We further show that incorporating an auxiliary few-shot loss enhances in-context learning primarily on the target task, at the expense of degraded in-context learning ability on tasks not seen during fine-tuning. We empirically validate our theoretical results.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-26</span>
+                    <a href="https://arxiv.org/pdf/2602.23197v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.20676v1" target="_blank">PRECTR-V2:Unified Relevance-CTR Framework with Cross-User Preference Mining, Exposure Bias Correction, and LLM-Distilled Encoder Optimization</a>
+                </div>
+                <div class="paper-authors">👥 Shuzhi Cao, Rong Chen, Ailong He</div>
+                <div class="paper-summary">在搜索系统中，有效协调搜索相关性匹配和点击率（CTR）预测这两个核心目标，对于发现用户兴趣和提升平台收入至关重要。在我们之前的工作PRECTR中，我们提出了一种统一的框架来整合这两个子任务，从而消除它们之间的不一致，并实现相互促进的效果。然而，我们的先前工作仍面临三个主要挑战：首先，低活跃度用户和新用户的搜索行为数据有限，难以实现有效的个性化相关性偏好建模；其次，排序模型的训练数据主要来自高相关性的曝光，与粗排序阶段更广泛的候选空间存在分布差异，导致泛化偏差；第三，由于延迟限制，原始模型采用的是冻结BERT编码器的Emb+MLP架构，这阻碍了联合优化，并造成表示学习与CTR微调之间的错位。为了解决这些问题，我们进一步强化了方法并提出了PRECTR-V2。具体而言，我们通过挖掘特定查询下的全局相关性偏好，缓解低活跃用户稀疏行为的问题，从而在冷启动场景下实现有效的个性化相关性建模。随后，我们通过嵌入噪声注入和相关性标签重建构造硬负样本，并通过成对损失优化其相对于正样本的相对排序，从而校正曝光偏差。最后，我们在文本相关性分类任务上，通过从大语言模型（LLM）和监督微调（SFT）的知识蒸馏预训练了一个轻量级的基于Transformer的编码器。该编码器替代了冻结的BERT模块，使得更好地适应CTR微调，并超越传统的Emb+MLP范式。
+
+核心贡献：PRECTR-V2 通过引入跨用户偏好挖掘、曝光偏差校正和基于知识蒸馏的编码器优化，提升了搜索系统中相关性和CTR预测的统一建模效果。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-24</span>
+                    <a href="https://arxiv.org/pdf/2602.20676v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/our-agreement-with-the-department-of-war" target="_blank">Our agreement with the Department of War</a></div>
+                <div class="feed-date">02-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-drop-february-2026/" target="_blank">Find out what’s new in the Gemini app in February's Gemini Drop.</a></div>
+                <div class="feed-date">02-27</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/continuing-microsoft-partnership" target="_blank">Joint Statement from OpenAI and Microsoft</a></div>
+                <div class="feed-date">02-27</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/amazon-partnership" target="_blank">OpenAI and Amazon announce strategic partnership</a></div>
+                <div class="feed-date">02-27</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/scaling-ai-for-everyone" target="_blank">Scaling AI for everyone</a></div>
+                <div class="feed-date">02-27</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-the-stateful-runtime-environment-for-agents-in-amazon-bedrock" target="_blank">Introducing the Stateful Runtime Environment for Agents in Amazon Bedrock</a></div>
+                <div class="feed-date">02-27</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/28/the-trap-anthropic-built-for-itself/" target="_blank">The trap Anthropic built for itself</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/28/the-trap-anthropic-built-for-itself/" target="_blank">The trap Anthropic built for itself</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/28/why-did-netflix-back-down-from-its-deal-to-acquire-warner-bros/" target="_blank">Why did Netflix back down from its deal to acquire Warner Bros.?</a></div>
+                <div class="feed-date">02-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/28/warner-bros-netflix-paramount-acquisition-timeline-wbd/" target="_blank">What to know about the landmark Warner Bros. Discovery sale</a></div>
+                <div class="feed-date">02-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/28/anthropics-claude-rises-to-no-2-in-the-app-store-following-pentagon-dispute/" target="_blank">Anthropic’s Claude rises to No. 2 in the App Store following Pentagon dispute</a></div>
+                <div class="feed-date">02-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/28/anthropics-claude-rises-to-no-2-in-the-app-store-following-pentagon-dispute/" target="_blank">Anthropic’s Claude rises to No. 2 in the App Store following Pentagon dispute</a></div>
+                <div class="feed-date">02-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/887040/polymarket-iran-war-betting-invaluable" target="_blank">Polymarket defends its decision to allow betting on war as ‘invaluable’</a></div>
+                <div class="feed-date">02-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/02/28/billion-dollar-infrastructure-deals-ai-boom-data-centers-openai-oracle-nvidia-microsoft-google-meta/" target="_blank">The billion-dollar infrastructure deals powering the AI boom</a></div>
+                <div class="feed-date">02-28</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oQxsFi9HK78" target="_blank">🎥 2024-03-19 Don Lemon x Elon Musk Interview | Immigration Research</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Date streamed March 19th, 2024 Click▽ Follow Destiny ▻STREAM - http://www.kick.com/Destiny ▻DISCORD ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=IgifEgm1-e0" target="_blank">🎥 Conversation with Elon Musk | World Economic Forum Annual Meeting 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Please join us for a conversation between Elon Musk, CEO of Tesla; Chief Engineer, SpaceX; CTO, xAI;...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0NBILspM4c4" target="_blank">🎥 NVIDIA Live with CEO Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from CES in Las Vegas, NVIDIA CEO Jensen Huang shares how the next generation of accelerated co...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Zj35mEtwUvY" target="_blank">🎥 OpenAI Vs. Anthropic: How the Pentagon Picked Its Partner</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">On Friday, President Trump ordered federal agencies to stop using Anthropic's A.I. systems and Defen...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=z2ny-SdpF1E" target="_blank">🎥 CBC News: The National | Canada pushes OpenAI for answers after B.C. shooting</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Feb. 27, 2026 | Artificial Intelligence Minister Evan Solomon says he'll meet with OpenAI CEO Sam Al...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/agentscope-ai/CoPaw" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                agentscope-ai/CoPaw
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 CoPaw 是一个易于安装和扩展的个人 AI 助手，适合本地或云部署，具有很高的实用价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47189650" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                OpenAI agrees with Dept. of War to deploy models in their classified network
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 OpenAI与国防部合作部署模型至机密网络，涉及安全和政策层面的重要进展。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47199781" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Qwen3.5 122B and 35B models offer Sonnet 4.5 performance on local computers
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Qwen3.5大模型在本地计算机实现高性能表现，对实际应用有重要价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47193064" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                MCP server that reduces Claude Code context consumption by 98%
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 MCP服务器大幅降低Claude Code上下文消耗，可能提升效率并降低成本。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2483<br>
+                    Output Tokens: 2185
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年03月01日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
