@@ -1,0 +1,521 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年03月02日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024.03.20**</p><p>**学术突破**  </p><p>本周多篇关键论文引发关注：DARE-bench 提出全新评估框架，聚焦大模型在数据科学任务中的建模与指令保真度；另一研究探讨 LLM 是否能通过自我生成内容提升性能，挑战传统训练范式；此外，Taming Momentum 提出基于低秩近似的优化器状态重构方法，为模型训练效率带来新思路。</p><p>**行业动态**  </p><p>联想推出一系列创新桌面 AI 概念设备，包括搭载“狗狗眼睛”机械臂的交互终端，并更新 Yoga 9i 二合一笔记本与 ThinkPad Detachable 平板，强化屏幕与键盘体验。与此同时，OpenAI 与美国国防部达成合作，其战略动向持续引发业界讨论。</p><p>**值得关注**  </p><p>马斯克、黄仁勋与Altman近期密集发声，分别围绕移民政策、AI产业趋势及军方合作展开深度对话，揭示科技领袖对社会与技术交叉议题的思考。这些声音值得密切关注。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.24288v1" target="_blank">DARE-bench: Evaluating Modeling and Instruction Fidelity of LLMs in Data Science</a>
+                </div>
+                <div class="paper-authors">👥 Fan Shu, Yite Wang, Ruofan Wu</div>
+                <div class="paper-summary">随着使用大语言模型（LLMs）解决复杂多步骤数据科学任务的需求快速增长，对准确基准测试的迫切需求也日益凸显。现有的基准测试存在两个主要不足：(i) 缺乏标准化的过程感知评估方法，无法捕捉指令遵循和过程保真度；(ii) 准确标注的训练数据稀缺。为弥补这些不足，我们提出了 DARE-bench，这是一个专为机器学习建模和数据科学指令跟随设计的基准。与许多依赖人工或模型判断的现有基准不同，DARE-bench 中的所有任务都具有可验证的真实标签，确保了客观且可复现的评估。为了涵盖广泛的任务并支持代理工具，DARE-bench 包含 6,300 个来自 Kaggle 的任务，并提供了大规模的训练数据和评估集。广泛的评估表明，即使是功能强大的模型如 gpt-o4-mini 也难以取得良好表现，尤其是在机器学习建模任务中。使用 DARE-bench 的训练任务进行微调可以显著提升模型性能。例如，监督微调使 Qwen3-32B 的准确率提升了 1.83 倍，而强化学习使 Qwen3-4B 的准确率提升了超过 8 倍。这些显著的改进验证了 DARE-bench 在作为精确评估基准和关键训练数据方面的重要性。
+
+核心贡献：DARE-bench 提出了一种具有可验证真实标签的数据科学任务基准，填补了现有基准在过程感知评估和高质量训练数据方面的空白，并展示了其在提升模型性能方面的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-27</span>
+                    <a href="https://arxiv.org/pdf/2602.24288v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.24287v1" target="_blank">Do LLMs Benefit From Their Own Words?</a>
+                </div>
+                <div class="paper-authors">👥 Jenny Y. Huang, Leshem Choshen, Ramon Astudillo</div>
+                <div class="paper-summary">多轮对话中，通常会将助手自身的先前回复保留在对话历史中。在这项工作中，我们重新审视了这一设计选择，探讨大语言模型是否真的能从其自身之前的回复中受益。通过使用真实世界中的多轮对话，我们在三个开放推理模型和一个最先进的模型上，比较了标准的（全上下文）提示方法与仅包含用户回合的提示方法（即省略所有先前助手回复）。令人惊讶的是，我们发现，在大量对话回合中，移除助手之前的回复并不会影响回复质量。去除助手侧的历史信息可使累计上下文长度减少高达10倍。为了解释这一结果，我们发现多轮对话中有相当大比例（36.4%）是自包含的提示，并且许多后续提示提供了足够的指令，仅凭当前用户的回合和之前用户的回合即可回答。在分析用户回合提示明显优于全上下文的情况时，我们识别出一些“上下文污染”的实例，其中模型过度依赖于其之前的回复，导致错误、幻觉或风格化伪影跨回合传播。受这些发现的启发，我们设计了一种上下文过滤方法，可以有选择地省略助手侧的上下文。我们的研究结果表明，选择性地省略助手的历史信息可以在降低内存消耗的同时提高回复质量。
+
+核心贡献：本文发现并验证了在多轮对话中，移除部分助手历史信息可以提升响应质量并显著减少上下文长度，从而提出了一种有效的上下文过滤方法。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-27</span>
+                    <a href="https://arxiv.org/pdf/2602.24287v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.24283v1" target="_blank">Taming Momentum: Rethinking Optimizer States Through Low-Rank Approximation</a>
+                </div>
+                <div class="paper-authors">👥 Zhengbo Wang, Jian Liang, Ran He</div>
+                <div class="paper-summary">现代优化器（如Adam和Muon）在训练大型语言模型中起着核心作用，但它们对一阶和二阶动量的依赖会引入显著的内存开销，从而限制了模型的可扩展性和计算效率。在这项工作中，我们将这些动量中使用的指数移动平均（EMA）重新表述为通过在线梯度流训练线性回归器的过程。基于这一等价关系，我们提出了一种名为LoRA-Pre的新低秩优化器，专为高效的预训练任务设计。具体而言，LoRA-Pre通过将完整的动量矩阵分解为在线线性学习器中的紧凑低秩子空间，降低了优化器的内存占用，在保持优化性能的同时提高了内存效率。我们通过从Llama架构家族中预训练模型（参数规模从60M到1B）实证验证了LoRA-Pre的有效性。LoRA-Pre在所有模型规模上均表现出最高的性能。值得注意的是，LoRA-Pre展示了显著的秩效率，仅使用基线方法1/8的秩即可实现相当或更优的结果。除了预训练之外，我们还评估了LoRA-Pre在微调场景中的有效性。在相同秩的情况下，LoRA-Pre始终优于所有高效的微调基线方法。具体来说，与标准LoRA相比，LoRA-Pre在Llama-3.1-8B上提升了3.14个点，在Llama-2-7B上提升了6.17个点，验证了我们的方法在预训练和微调范式中的有效性。我们的代码已公开在https://github.com/mrflogs/LoRA-Pre。
+
+核心贡献：本文提出LoRA-Pre，一种通过低秩近似减少优化器内存开销的高效预训练优化器，并证明其在不同模型规模和任务中的优越性能和秩效率。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-27</span>
+                    <a href="https://arxiv.org/pdf/2602.24283v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.24195v1" target="_blank">Uncertainty Quantification for Multimodal Large Language Models with Incoherence-adjusted Semantic Volume</a>
+                </div>
+                <div class="paper-authors">👥 Gregory Kang Ruey Lau, Hieu Dao, Nicole Kan Hui Lin</div>
+                <div class="paper-summary">尽管多模态大语言模型（MLLMs）具有强大的能力，但它们可能会生成看似合理但错误的输出，从而阻碍其可靠部署。准确的不确定性度量可以帮助将不可靠的查询升级给人类专家或更大的模型以提高性能。然而，现有的不确定性度量存在实际限制，例如仅适用于特定模态、依赖外部工具或计算成本高昂。我们提出了UMPIRE，一种无需训练的MLLM不确定性量化框架，该框架在各种输入和输出模态上都能高效运行，且不依赖任何外部工具，仅依赖模型自身的内部模态特征。UMPIRE通过计算给定任务实例下采样响应的“不一致性调整语义体积”，有效捕捉样本的全局语义多样性和基于模型内部置信度的响应局部不一致性。我们提出了针对MLLMs的不确定性期望，并提供了支持UMPIRE设计的理论分析。大量实验表明，在图像、音频和视频-文本基准测试中，包括对抗性设置和分布外场景，UMPIRE在错误检测和不确定性校准方面始终优于基线方法。我们还展示了UMPIRE在非文本输出任务（如图像和音频生成）中的泛化能力。
+
+核心贡献：提出了一种无需训练、跨模态通用的不确定性量化框架UMPIRE，能够有效评估多模态大语言模型的输出可靠性，并在多种任务中表现出优越的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-27</span>
+                    <a href="https://arxiv.org/pdf/2602.24195v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.24174v1" target="_blank">Task-Centric Acceleration of Small-Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Dor Tsur, Sharon Adar, Ran Levy</div>
+                <div class="paper-summary">小语言模型（SLMs）已成为大型语言模型在特定任务应用中的高效替代方案。然而，它们通常被用于高吞吐量、低延迟的场景中，此时效率至关重要。我们提出了TASC（Task-Adaptive Sequence Compression），这是一个用于加速SLM的框架，包含两个应用场景：在进行SLM微调时，我们提出TASC-ft，该方法通过迭代地将高频输出n-gram添加到分词器词汇表中，并对模型进行微调以利用扩展后的词汇表。随后，我们提出了一种推理阶段的方法TASC-spec，这是一种轻量级、无需训练的推测解码方法，它从任务的输出语料库中构建一个n-gram草案模型，结合任务和上下文的n-gram信息。TASC-spec避免了额外训练，并绕过了草案与目标词汇表对齐的限制。我们在多个输出变异性较低的生成任务上验证了这两种方法的有效性，结果表明我们的方法在保持任务性能的同时显著提升了推理效率。
+
+核心贡献：本文提出了TASC框架，包括两种提升小语言模型效率的方法TASC-ft和TASC-spec，在不牺牲任务性能的前提下有效提高了模型的推理速度。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-27</span>
+                    <a href="https://arxiv.org/pdf/2602.24174v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.24172v1" target="_blank">ArgLLM-App: An Interactive System for Argumentative Reasoning with Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Adam Dejl, Deniz Gorur, Francesca Toni</div>
+                <div class="paper-summary">Argumentative LLMs (ArgLLMs) are an existing approach leveraging Large Language Models (LLMs) and computational argumentation for decision-making, with the aim of making the resulting decisions faithfully explainable to and contestable by humans. Here we propose a web-based system implementing ArgLLM-empowered agents for binary tasks. ArgLLM-App supports visualisation of the produced explanations and interaction with human users, allowing them to identify and contest any mistakes in the system's reasoning. It is highly modular and enables drawing information from trusted external sources. ArgLLM-App is publicly available at https://argllm.app, with a video demonstration at https://youtu.be/vzwlGOr0sPM.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-27</span>
+                    <a href="https://arxiv.org/pdf/2602.24172v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2602.20676v1" target="_blank">PRECTR-V2:Unified Relevance-CTR Framework with Cross-User Preference Mining, Exposure Bias Correction, and LLM-Distilled Encoder Optimization</a>
+                </div>
+                <div class="paper-authors">👥 Shuzhi Cao, Rong Chen, Ailong He</div>
+                <div class="paper-summary">在搜索系统中，有效地协调搜索相关性匹配和点击率（CTR）预测这两个核心目标对于发现用户兴趣和提升平台收入至关重要。在我们之前的工作PRECTR中，我们提出了一个统一的框架来整合这两个子任务，从而消除它们之间的不一致性并实现相互促进。然而，我们的先前工作仍然面临三个主要挑战。首先，低活跃度用户和新用户的搜索行为数据有限，难以实现有效的个性化相关性偏好建模。其次，排序模型的训练数据主要来自高相关性的曝光，与粗排序阶段更广泛候选空间之间存在分布差异，导致泛化偏差。第三，由于延迟限制，原始模型采用了带有冻结BERT编码器的Emb+MLP架构，这阻碍了联合优化，并造成了表示学习与CTR微调之间的不一致。为了解决这些问题，我们进一步强化了我们的方法，并提出了PRECTR-V2。具体来说，我们通过挖掘特定查询下的全局相关性偏好来缓解低活跃用户稀疏行为的问题，从而在冷启动场景下实现有效的个性化相关性建模。随后，我们通过嵌入噪声注入和相关性标签重构构建硬负样本，并通过成对损失优化其与正样本的相对排序，从而纠正曝光偏差。最后，我们在文本相关性分类任务上通过从大语言模型（LLM）和监督微调（SFT）进行知识蒸馏，预训练了一个轻量级的基于Transformer的编码器。该编码器取代了冻结的BERT模块，使其更好地适应CTR微调，并超越了传统的Emb+MLP范式。
+
+核心贡献：提出PRECTR-V2，通过跨用户偏好挖掘、曝光偏差修正和基于知识蒸馏的编码器优化，改进了搜索系统中的统一相关性-CTR框架。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-02-24</span>
+                    <a href="https://arxiv.org/pdf/2602.20676v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/our-agreement-with-the-department-of-war" target="_blank">Our agreement with the Department of War</a></div>
+                <div class="feed-date">02-28</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/885228/lenovo-ai-workmate-companion-work-concept-robot-arm-desktop-clock-hub" target="_blank">A robot arm with puppy dog eyes is just one of Lenovo&#8217;s new desktop AI concepts</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/885724/lenovo-yoga-9i-2-in-1-angled-canvas-mode" target="_blank">The new Yoga 9i 2-in-1 from Lenovo has an angled ‘canvas mode’ for easier note-taking</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/886134/lenovo-thinkpad-x13-detachable-tablet-t14-t14s-t16-laptops-price-specs" target="_blank">Lenovo’s redesigned ThinkPad Detachable tablet has a bigger screen and legit keyboard</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/886814/lenovo-thinkbook-modular-ai-pc-concept-mwc-2026-specs" target="_blank">Lenovo made a Framework-like laptop with modular ports — and a second screen</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/886848/lenovo-legion-go-fold-concept-windows-foldable-pc-gaming-handheld" target="_blank">This Windows gaming handheld has a screen that folds in half</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/887220/sonos-play-leak" target="_blank">Portable Sonos Play speaker leaks on Canadian Best Buy</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/01/polymarket-saw-529m-traded-on-bets-tied-to-bombing-of-iran/" target="_blank">Polymarket saw $529M traded on bets tied to bombing of Iran</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/01/best-discord-alternatives-age-verification-identity-privacy/" target="_blank">Let’s explore the best alternatives to Discord</a></div>
+                <div class="feed-date">03-01</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oQxsFi9HK78" target="_blank">🎥 2024-03-19 Don Lemon x Elon Musk Interview | Immigration Research</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Date streamed March 19th, 2024 Click▽ Follow Destiny ▻STREAM - http://www.kick.com/Destiny ▻DISCORD ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=IgifEgm1-e0" target="_blank">🎥 Conversation with Elon Musk | World Economic Forum Annual Meeting 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Please join us for a conversation between Elon Musk, CEO of Tesla; Chief Engineer, SpaceX; CTO, xAI;...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0NBILspM4c4" target="_blank">🎥 NVIDIA Live with CEO Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from CES in Las Vegas, NVIDIA CEO Jensen Huang shares how the next generation of accelerated co...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Zj35mEtwUvY" target="_blank">🎥 OpenAI Vs. Anthropic: How the Pentagon Picked Its Partner</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">On Friday, President Trump ordered federal agencies to stop using Anthropic's A.I. systems and Defen...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=z2ny-SdpF1E" target="_blank">🎥 CBC News: The National | Canada pushes OpenAI for answers after B.C. shooting</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Feb. 27, 2026 | Artificial Intelligence Minister Evan Solomon says he'll meet with OpenAI CEO Sam Al...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/ForLoopCodes/contextplus" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                ForLoopCodes/contextplus
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Context+ 结合多种先进技术，为大规模工程提供语义智能，对 AI 工程师具有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/ylytdeng/wechat-decrypt" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                ylytdeng/wechat-decrypt
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该工具实现了微信数据库的解密功能，对于研究加密通信和逆向工程有实际意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Lakr233/vphone-cli" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Lakr233/vphone-cli
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 vphone-cli 提供了虚拟手机功能，可能在自动化测试或模拟场景中为 AI 应用提供支持。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47205890" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                I built a demo of what AI chat will look like when it's "free" and ad-supported
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨了广告支持下的AI聊天界面设计，对AI产品化和商业化有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47204571" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Switch to Claude without starting over
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 讨论了从ChatGPT切换到Claude的实践方法，对模型迁移和用户习惯研究具有启发性。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47205208" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Microgpt explained interactively
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 通过交互方式解释Microgpt，有助于开发者理解轻量级模型的设计与实现。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2499<br>
+                    Output Tokens: 2192
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年03月02日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
