@@ -1,0 +1,530 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年03月16日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月20日**</p><p>**学术突破**  </p><p>今日三篇重要论文聚焦大模型训练与应用的前沿进展：《Neuron-Aware Data Selection》提出基于神经元敏感度的数据筛选方法，提升指令调优效率；《Semantic Invariance in Agentic AI》探讨智能体在复杂任务中保持语义一致性的机制；另一篇研究则展示了一个支持母婴健康的聊天机器人系统，强调AI在医疗场景中的实际价值。</p><p>**行业动态**  </p><p>科技圈迎来多个亮点：Netflix动画电影《Frankenstein》斩获三项奥斯卡奖，展现AI技术在影视创作中的潜力。同时，Google与Accel印度加速器公布的5家入选初创企业中，无一为“AI包装型”项目，反映投资界对真实创新的偏好。</p><p>**值得关注**  </p><p>马斯克、黄仁勋与萨姆·阿尔特曼近日分别就移民、算力与AI基础设施发表公开演讲，三位科技领袖的观点或将影响AI产业的未来方向，值得持续关注。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.13201v1" target="_blank">Neuron-Aware Data Selection In Instruction Tuning For Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Xin Chen, Junchao Wu, Shu Yang</div>
+                <div class="paper-summary">指令调优（Instruction Tuning, IT）已被证明是释放大语言模型（LLMs）强大能力的有效方法。最近的研究表明，过多的IT数据可能会降低LLMs的性能，而仔细选择一小部分高质量的IT数据则可以显著增强其能力。因此，从IT数据集中识别出最有效的子集以有效开发LLMs在特定或通用任务中的能力已成为一个关键挑战。为了解决这一问题，我们提出了一种新颖且高效的框架NAIT。NAIT通过分析IT数据集与目标领域能力之间的神经元激活模式相似性来评估IT数据对LLMs性能的影响。具体来说，NAIT从目标领域能力的领域内数据集中捕获神经元激活模式，以构建可重用和可迁移的神经元激活特征。然后基于候选样本与目标能力预期激活特征之间的相似性进行评估和选择最优样本。实验结果表明，在由NAIT选择的10% Alpaca-GPT4 IT数据子集上训练的表现始终优于依赖外部先进模型或不确定性特征的方法。我们的研究还揭示了神经元激活特征在LLMs不同能力之间的可迁移性。特别是，包含更多逻辑推理和编程特征的IT数据具有很强的通用迁移性，能够使模型在多个任务中发展出更强的能力，而一个稳定的核心数据子集就足以持续激活基本模型能力，并在各种任务中普遍提升性能。
+
+核心贡献：本文提出了NAIT框架，通过分析神经元激活模式的相似性来高效选择高质量的指令调优数据，从而在多种任务中提升大语言模型的性能并揭示了神经元激活特征的可迁移性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.13201v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.13173v1" target="_blank">Semantic Invariance in Agentic AI</a>
+                </div>
+                <div class="paper-authors">👥 I. de Zarzà, J. de Curtò, Jordi Cabot</div>
+                <div class="paper-summary">摘要：大型语言模型（LLMs）日益作为自主推理代理，应用于决策支持、科学问题求解以及多智能体协调系统。然而，在关键应用场景中部署LLM代理时，需要确保其在语义等价输入变化下的推理稳定性，我们称之为语义不变性。传统的基准评估方法通过固定的标准问题形式来评估准确性，无法捕捉这一关键的可靠性维度。为解决这一不足，本文提出了一种元形态测试框架，用于系统评估LLM推理代理的鲁棒性。该框架应用了八种保持语义不变的转换方式（包括身份变换、释义、事实重排序、扩展、收缩、学术背景、商业背景和对比式表述），覆盖七个基础模型，涵盖四种不同的架构家族：Hermes（70B, 405B）、Qwen3（30B-A3B, 235B-A22B）、DeepSeek-R1 和 gpt-oss（20B, 120B）。我们的评估涵盖了八个科学领域中的19个分步推理问题。结果显示，模型规模并不能预测鲁棒性：较小的 Qwen3-30B-A3B 模型表现出最高的稳定性（79.6% 的响应具有语义不变性，语义相似度为 0.91），而更大的模型则表现得更为脆弱。
+
+核心贡献：本文提出了一个元形态测试框架，用于系统评估大型语言模型在语义等价输入下推理的鲁棒性，并揭示了模型规模与鲁棒性之间并无直接关系。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.13173v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.13168v1" target="_blank">Developing and evaluating a chatbot to support maternal health care</a>
+                </div>
+                <div class="paper-authors">👥 Smriti Jha, Vidhi Jain, Jianyu Xu</div>
+                <div class="paper-summary">在资源匮乏的地区，通过基于电话的聊天机器人提供可靠的孕产妇健康信息可以产生重大影响，尤其是在用户健康素养较低且获取医疗服务有限的情况下。然而，部署此类系统在技术上具有挑战性：用户的查询通常简短、描述不充分，并可能混合使用多种语言；回答问题需要结合区域性的具体背景；而症状信息的部分缺失则使得安全的转介决策变得困难。我们介绍了一个由学术研究人员、一家健康科技公司、一个公共卫生非营利组织和一家医院合作开发的印度孕产妇健康聊天机器人。该系统结合了（1）阶段感知的初步评估机制，将高风险查询路由至专家模板；（2）对精心整理的孕产妇/新生儿指南进行混合检索；以及（3）基于大语言模型（LLM）并结合证据的生成。我们的核心贡献是提出了一种在专家监督有限情况下用于高风险部署的评估流程。针对组件级和端到端测试，我们引入了以下内容：（i）一个标注的初步评估基准（N=150），紧急情况召回率达到86.7%，明确报告了漏报与过度升级之间的权衡；（ii）一个合成的多证据检索基准（N=100），包含片段级别的证据标签；（iii）基于真实查询的LLM作为评判者的比较实验（N=781），采用临床医生共同设计的标准；以及（iv）专家验证。研究结果表明，在多语言、嘈杂环境中构建可信的医疗助手，需要多层次的防御性设计和多种方法的评估，而不是依赖单一模型或评估方法。
+
+核心贡献：本文提出了一种在专家监督有限的情况下，适用于高风险场景的多方法评估流程，展示了在多语言、嘈杂环境中构建可信医疗聊天机器人所需的设计与评估策略。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.13168v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.13154v1" target="_blank">ESG-Bench: Benchmarking Long-Context ESG Reports for Hallucination Mitigation</a>
+                </div>
+                <div class="paper-authors">👥 Siqi Sun, Ben Peng Wu, Mali Jin</div>
+                <div class="paper-summary">随着企业责任日益纳入环境、社会和治理（ESG）标准，ESG报告在许多地区正成为法律要求，并作为记录可持续发展实践和评估公司长期及道德表现的关键渠道。然而，ESG披露内容的长度和复杂性使其难以解释且难以可靠地自动化分析。为了支持可扩展且可信的分析，本文提出了ESG-Bench，这是一个用于评估大型语言模型（LLMs）在理解ESG报告和减少幻觉方面的基准数据集。ESG-Bench包含基于真实ESG报告上下文的人工标注问答对，并带有细粒度标签，表明模型输出是事实支持还是幻觉生成。将ESG报告分析框架化为具有可验证性约束的问答任务，使我们能够系统地评估LLMs在提取和推理ESG内容方面的能力，并提供了一个新用例：在社会敏感和合规关键的场景中减少幻觉。我们设计了特定任务的思维链（CoT）提示策略，并使用带有CoT注释的推理过程对多个最先进的LLMs进行了微调。实验表明，这些基于CoT的方法在减少幻觉方面显著优于标准提示和直接微调，并且这些改进可以推广到ESG领域之外的现有问答基准。
+
+核心贡献：本文提出了ESG-Bench，一个用于评估大型语言模型在处理长文本ESG报告时减少幻觉能力的基准数据集，并展示了基于思维链的方法在提升模型可靠性和泛化性能方面的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.13154v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.13045v1" target="_blank">Mending the Holes: Mitigating Reward Hacking in Reinforcement Learning for Multilingual Translation</a>
+                </div>
+                <div class="paper-authors">👥 Yifeng Liu, Siqi Ouyang, Yatish Hosmane Revanasiddappa</div>
+                <div class="paper-summary">大型语言模型（LLMs）在高资源语言对的机器翻译中表现出色，但在低资源语言上的性能仍有不足。现有的后训练方法严重依赖高质量的平行数据，而这些数据对于低资源语言通常稀缺或不可用。本文中，我们提出WALAR，一种仅使用单语文本的强化训练方法，旨在提升LLMs在大量低资源语言上的翻译能力，同时保持其在高资源语言上的表现。我们的核心洞察基于对现有基于源语言的多语言质量评估（QE）模型中失败模式（或“漏洞”）的观察。使用这些QE模型进行强化学习（RL）往往会放大这些漏洞，导致多语言LLMs性能下降。为此，我们在WALAR的强化学习奖励机制中引入了词对齐和语言对齐等技术来缓解这些问题。我们利用WALAR持续训练了一个支持101种语言翻译的LLM。实验表明，我们的新模型在Flores-101数据集的1400个语言方向上显著优于当前最强的开源多语言LLM之一LLaMAX。
+
+核心贡献：提出WALAR，一种通过词对齐和语言对齐缓解质量评估模型缺陷的强化学习方法，在不依赖平行数据的情况下大幅提升多语言LLM在低资源语言上的翻译性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.13045v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.13017v1" target="_blank">Structured Distillation for Personalized Agent Memory: 11x Token Reduction with Retrieval Preservation</a>
+                </div>
+                <div class="paper-authors">👥 Sydney Lewis</div>
+                <div class="paper-summary">Long conversations with an AI agent create a simple problem for one user: the history is useful, but carrying it verbatim is expensive. We study personalized agent memory: one user's conversation history with an agent, distilled into a compact retrieval layer for later search. Each exchange is compressed into a compound object with four fields (exchange_core, specific_context, thematic room_assignments, and regex-extracted files_touched). The searchable distilled text averages 38 tokens per exchange. Applied to 4,182 conversations (14,340 exchanges) from 6 software engineering projects, the method reduces average exchange length from 371 to 38 tokens, yielding 11x compression. We evaluate whether personalized recall survives that compression using 201 recall-oriented queries, 107 configurations spanning 5 pure and 5 cross-layer search modes, and 5 LLM graders (214,519 consensus-graded query-result pairs). The best pure distilled configuration reaches 96% of the best verbatim MRR (0.717 vs 0.745). Results are mechanism-dependent. All 20 vector search configurations remain non-significant after Bonferroni correction, while all 20 BM25 configurations degrade significantly (effect sizes |d|=0.031-0.756). The best cross-layer setup slightly exceeds the best pure verbatim baseline (MRR 0.759). Structured distillation compresses single-user agent memory without uniformly sacrificing retrieval quality. At 1/11 the context cost, thousands of exchanges fit within a single prompt while the verbatim source remains available for drill-down. We release the implementation and analysis pipeline as open-source software.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.13017v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.12586v1" target="_blank">Deferred is Better: A Framework for Multi-Granularity Deferred Interaction of Heterogeneous Features</a>
+                </div>
+                <div class="paper-authors">👥 Yi Xu, Moyu Zhang, Chaofan Fan</div>
+                <div class="paper-summary">点击率（CTR）预测模型通过建模广泛的特征空间中的交互来估计用户对物品的点击概率。一个基础但常被忽视的挑战是这些特征的内在异质性：它们的稀疏性和信息含量差异极大。例如，像物品ID这样的分类特征极其稀疏，而像物品价格这样的数值特征则相对密集。现有的CTR模型大多忽略了这种异质性，采用统一的特征交互策略，将所有特征同时输入到交互层中。这种方法效果不佳，因为低信息量特征的过早引入会带来大量噪声，并掩盖高信息量特征的信号，从而导致模型崩溃并阻碍鲁棒表示的学习。为了解决上述挑战，我们提出了一种多粒度信息感知延迟交互网络（MGDIN），该网络自适应地延迟将特征引入特征交互过程。MGDIN的核心机制分为两个阶段：首先，它采用多粒度特征分组策略，将原始特征划分为在不同粒度下具有更同质化信息密度的不同组，从而缓解极端个体特征稀疏性的影响，并使模型能够从多个角度捕捉特征之间的交互。其次，通过一种层次化的掩码策略实现延迟交互机制，该策略控制每组特征何时以及如何参与交互——在早期层中屏蔽低信息量的组，并在网络加深的过程中逐步取消屏蔽。这种延迟引入的方式使模型能够在融合其他组较稀疏的信息之前，先基于高信息量特征建立稳健的理解。
+
+核心贡献：本文提出了MGDIN，一种通过多粒度分组和延迟交互机制有效处理特征异质性的CTR预测框架，提升了模型鲁棒性和预测性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.12586v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.12578v1" target="_blank">Bridging Sequential and Contextual Features with a Dual-View of Fine-grained Core-Behaviors and Global Interest-Distribution</a>
+                </div>
+                <div class="paper-authors">👥 Yi Xu, Chaofan Fan, Moyu Zhang</div>
+                <div class="paper-summary">点击率（CTR）预测任务通常通过建模用户行为序列特征和候选物品的上下文特征，来估计用户点击该物品的概率。其中，用户行为序列尤为重要，因为它动态地反映了用户兴趣的实时变化。传统的CTR模型通常将这种动态序列聚合为一个向量后再与上下文特征进行交互。然而，这种方法不仅在聚合过程中导致行为信息的丢失，还严重限制了模型捕捉上下文特征与特定用户行为之间交互的能力，最终影响其对细粒度行为细节的建模能力并降低预测准确性。相反，直接将每个用户行为与上下文特征进行交互的方法虽然保留了更多细节，但计算成本高且引入大量与候选物品无关的行为噪声，这些噪声往往会掩盖那些与候选物品相关的行为信号。为此，我们提出了一种核心行为与分布补偿双视角交互网络（CDNet），从两个互补的角度弥合序列特征与上下文特征之间的交互差距：一是细粒度交互，聚焦于最相关的用户行为与上下文特征；二是粗粒度交互，建模用户整体兴趣分布与上下文特征的关系。通过同时捕捉关键行为细节并保留整体兴趣视角，CDNet有效建模了序列与上下文特征之间的相互作用，而不会带来显著的计算负担。最终，广泛的实验验证了CDNet的有效性。
+
+核心贡献：本文提出CDNet，通过结合细粒度的核心行为交互与粗粒度的兴趣分布建模，高效地融合了用户行为序列与上下文特征，提升了CTR预测的准确性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.12578v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/15/netflixs-frankenstein-wins-three-oscars-kpop-demon-hunters-wins-two/" target="_blank">Netflix’s ‘Frankenstein’ wins three Oscars, ‘KPop Demon Hunters’ wins two</a></div>
+                <div class="feed-date">03-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/15/google-and-accel-cut-through-wrappers-in-4000-ai-startup-pitches-to-pick-five-tied-to-india/" target="_blank">Google, Accel India accelerator chooses 5 startups and none are ‘AI wrappers’</a></div>
+                <div class="feed-date">03-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/15/google-and-accel-cut-through-wrappers-in-4000-ai-startup-pitches-to-pick-five-tied-to-india/" target="_blank">Google, Accel India accelerator chooses 5 startups and none are ‘AI wrappers’</a></div>
+                <div class="feed-date">03-16</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/15/bytedance-reportedly-pauses-global-launch-of-its-seedance-2-0-video-generator/" target="_blank">ByteDance reportedly pauses global launch of its Seedance 2.0 video generator</a></div>
+                <div class="feed-date">03-15</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/15/bytedance-reportedly-pauses-global-launch-of-its-seedance-2-0-video-generator/" target="_blank">ByteDance reportedly pauses global launch of its Seedance 2.0 video generator</a></div>
+                <div class="feed-date">03-15</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/895083/aether-os-browser-at-protocol" target="_blank">Aether OS is a computer in a browser built for the AT Protocol</a></div>
+                <div class="feed-date">03-15</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/15/lawyer-behind-ai-psychosis-cases-warns-of-mass-casualty-risks/" target="_blank">Lawyer behind AI psychosis cases warns of mass casualty risks</a></div>
+                <div class="feed-date">03-15</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/15/lawyer-behind-ai-psychosis-cases-warns-of-mass-casualty-risks/" target="_blank">Lawyer behind AI psychosis cases warns of mass casualty risks</a></div>
+                <div class="feed-date">03-15</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oQxsFi9HK78" target="_blank">🎥 2024-03-19 Don Lemon x Elon Musk Interview | Immigration Research</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Date streamed March 19th, 2024 Click▽ Follow Destiny ▻STREAM - http://www.kick.com/Destiny ▻DISCORD ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=IgifEgm1-e0" target="_blank">🎥 Conversation with Elon Musk | World Economic Forum Annual Meeting 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Please join us for a conversation between Elon Musk, CEO of Tesla; Chief Engineer, SpaceX; CTO, xAI;...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=444el0-ZVfk" target="_blank">🎥 Inside GTC - What to Expect at NVIDIA GTC 2026, Keynote Predictions, Start Ups &amp; More</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Welcome to Inside GTC Podcast - your guide to one the biggest tech events of the year NVIDIA GTC 202...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Nq_bDoPLypc" target="_blank">🎥 LIVE: OpenAI CEO Sam Altman Speaks at BlackRock US Infrastructure Summit</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Sam Altman, CEO of OpenAI, speaks at the BlackRock US Infrastructure Summit, discussing the future o...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=yrJ1PpK5BJg" target="_blank">🎥 LIVE: Sam Altman Addresses BlackRock U.S. Infrastructure Summit | March 11, 2026 | AC15</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">OpenAI CEO Sam Altman speaks at BlackRock's U.S. Infrastructure Summit in Washington, D.C., on March...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/skernelx/tavily-key-generator" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                skernelx/tavily-key-generator
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目提供自动批量注册 Tavily API 密钥的功能，对需要频繁调用 API 的 AI 工程师具有实用价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Narcooo/inkos" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Narcooo/inkos
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 这是一个多智能体小说生产系统，展示了 AI 自主创作与协作的前沿应用，适合研究者探索智能体交互机制。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/novatic14/MANPADS-System-Launcher-and-Rocket" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                novatic14/MANPADS-System-Launcher-and-Rocket
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目模拟 MANPADS 系统发射火箭，虽然非 AI 相关，但其工程实现可能为仿真建模领域提供参考。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47388676" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                LLM Architecture Gallery
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 LLM Architecture Gallery 提供了对各类大语言模型架构的可视化展示，有助于研究者快速理解不同模型的设计特点。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47388646" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Ask HN: How is AI-assisted coding going for you professionally?
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Ask HN: How is AI-assisted coding going for you professionally? 是一次关于 AI 辅助编程在实际工作中应用效果的大规模讨论，具有很高的参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47383059" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Tree Search Distillation for Language Models Using PPO
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Tree Search Distillation for Language Models Using PPO 探索了使用强化学习优化语言模型的方法，为模型训练提供了新思路。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 8<br>
+                    Input Tokens: 2906<br>
+                    Output Tokens: 2538
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年03月16日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
