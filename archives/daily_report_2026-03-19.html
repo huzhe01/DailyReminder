@@ -1,0 +1,572 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年03月19日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月20日**</p><p>**学术突破**  </p><p>本周AI领域在语言与视觉融合、性别标注及三维推理方面取得进展。Loc3R-VLM模型通过结合视觉与语言信息，实现基于文本的定位与3D空间推理，为智能导航和增强现实提供新思路。同时，ConGA框架提出面向机器翻译的上下文性别标注指南，推动更公平的语言生成技术发展。</p><p>**行业动态**  </p><p>Meta近期遭遇“失控AI代理”问题，引发对其系统安全性的关注；与此同时，其推出的“Friend Bubbles”功能正尝试革新Facebook Reels的社交体验。Google则聚焦可持续设计与用户体验创新，发布“vibe design”理念，并强调产品中再生材料的应用。</p><p>**值得关注**  </p><p>Elon Musk就移民议题接受深度访谈，Jensen Huang出席AI峰会探讨前沿趋势，而Sam Altman因公开致谢开发者引发热议。这些人物动向不仅反映AI行业的多元视角，也揭示了技术创新背后的社会责任与人文思考。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.18002v1" target="_blank">Loc3R-VLM: Language-based Localization and 3D Reasoning with Vision-Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Kevin Qu, Haozhe Qi, Mihai Dusmanu</div>
+                <div class="paper-summary">多模态大语言模型（MLLMs）在连接视觉和语言方面取得了显著进展，但它们在空间理解和视角感知推理方面仍然存在困难。最近的研究尝试通过增强输入表示中的几何线索来提升性能，而不是明确地教导模型进行三维空间推理。我们提出了Loc3R-VLM，一个从单目视频输入中赋予二维视觉-语言模型先进三维理解能力的框架。受人类空间认知的启发，Loc3R-VLM依赖于两个联合目标：全局布局重建以构建场景结构的整体表示，以及显式情境建模以锚定自我中心视角。这些目标提供了直接的空间监督，将感知和语言都嵌入到三维上下文中。为了确保几何一致性和度量尺度对齐，我们利用从预训练的三维基础模型中提取的轻量级相机姿态先验。Loc3R-VLM在基于语言的定位任务中达到了最先进的性能，并在基于位置和通用的三维问答基准上超越了现有的二维和视频方法，证明了我们的空间监督框架能够实现强大的三维理解能力。
+
+核心贡献：提出Loc3R-VLM，一种通过空间监督提升视觉-语言模型三维理解能力的新框架，在多项三维任务中表现出色。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-18</span>
+                    <a href="https://arxiv.org/pdf/2603.18002v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.17962v1" target="_blank">ConGA: Guidelines for Contextual Gender Annotation. A Framework for Annotating Gender in Machine Translation</a>
+                </div>
+                <div class="paper-authors">👥 Argentina Anna Rescigno, Eva Vanmassenhove, Johanna Monti</div>
+                <div class="paper-summary">在不同语言之间处理性别问题仍然是机器翻译（MT）和大型语言模型（LLMs）面临的一个持续挑战，尤其是在从性别中立语言翻译到具有形态性别的语言时，例如从英语翻译到意大利语。英语大多省略语法性别，而意大利语则需要在多个语法类别中明确一致。这种不对称性通常导致MT系统默认使用阳性形式，从而强化偏见并降低翻译准确性。为了解决这一问题，我们提出了基于上下文的性别标注框架（ConGA），这是一套以语言学为基础的单词级别性别标注指南。该方案通过三个标签——阳性（M）、阴性（F）和模糊（A）来区分英语中的语义性别，并通过阳性（M）和阴性（F）来表示意大利语中的语法性别实现，同时结合实体级别的标识符用于跨句子追踪。我们将ConGA应用于gENder-IT数据集，创建了一个用于评估翻译中性别偏见的黄金标准资源。我们的结果显示了系统性地过度使用阳性形式以及女性形式的不一致性，突显了当前MT系统的持续局限性。通过将细粒度的语言标注与定量评估相结合，本研究为构建更具性别意识和多语言能力的NLP系统提供了一种方法和基准。
+
+核心贡献：ConGA框架提出了一种系统性的语言标注方法和评估基准，用于识别和减少机器翻译中的性别偏见，特别是在从性别中立语言翻译到形态性别语言的过程中。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-18</span>
+                    <a href="https://arxiv.org/pdf/2603.17962v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.17952v1" target="_blank">Gender Disambiguation in Machine Translation: Diagnostic Evaluation in Decoder-Only Architectures</a>
+                </div>
+                <div class="paper-authors">👥 Chiara Manna, Hosein Mohebbi, Afra Alishahi</div>
+                <div class="paper-summary">尽管大型语言模型在各种自然语言处理任务中取得了最先进的成果，但它们仍然容易出现系统性偏差。其中，性别偏差在机器翻译（MT）中尤为突出，这是由于不同语言在性别标记的有无和方式上存在系统性差异。因此，翻译过程常常需要将隐含的源语言信号解析为显式的性别标记形式。在此背景下，标准基准测试可能捕捉到广泛的差异，却无法反映现代机器翻译中性别偏差的全部复杂性。在本文中，我们通过以下两个方面扩展了近期关于偏差评估的框架：(i) 引入一种新的度量方法“先验偏差”（Prior Bias），用于衡量模型的默认性别假设；以及 (ii) 将该框架应用于仅解码器的机器翻译模型。我们的实验结果表明，尽管这些模型规模庞大且性能先进，但在与性别相关的指标上，并不普遍优于编码器-解码器架构；然而，后训练（如指令微调）不仅提高了上下文感知能力，还减少了男性化的先验偏差。
+
+核心贡献：本文提出了一个新的性别偏差评估框架并应用于仅解码器模型，揭示了后训练对减少性别偏见的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-18</span>
+                    <a href="https://arxiv.org/pdf/2603.17952v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.17942v1" target="_blank">Efficient Training-Free Multi-Token Prediction via Embedding-Space Probing</a>
+                </div>
+                <div class="paper-authors">👥 Raghavv Goel, Mukul Gagrani, Mingu Lee</div>
+                <div class="paper-summary">大型语言模型（LLMs）即使仅训练用于下一个词生成，也表现出潜在的多词预测（MTP）能力。我们提出了一种简单且无需训练的MTP方法，通过在嵌入空间中实时抽取掩码词来探测LLM，从而实现在不修改模型权重或依赖辅助草案模型的情况下并行预测未来词。我们的方法通过从掩码词的logits中采样前K个候选词构建推测词树，并采用轻量级剪枝策略保留高概率的续接词。在解码过程中，候选预测被并行验证，从而实现无损生成，同时显著减少模型调用次数并提高词吞吐量。在多个基准测试中，基于探测的MTP方法始终优于现有的无需训练的方法，在LLaMA3上将接受长度提高了约12%，在Qwen3上提高了8-12%，并实现了高达15-19%的吞吐量提升。最后，我们提供了理论洞察和实证证据，表明解码器层天然地将掩码词表示与下一个词状态对齐，从而在不重新训练或使用辅助模型的情况下实现准确的多步预测。
+
+核心贡献：本文提出了一种无需训练的高效多词预测方法，通过嵌入空间中的掩码词探测实现并行预测，显著提升了生成效率和吞吐量。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-18</span>
+                    <a href="https://arxiv.org/pdf/2603.17942v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.17917v1" target="_blank">Only relative ranks matter in weight-clustered large language models</a>
+                </div>
+                <div class="paper-authors">👥 Borja Aizpurua, Sukhbinder Singh, Román Orús</div>
+                <div class="paper-summary">大型语言模型（LLMs）包含数十亿个参数，但其中许多精确的数值并不是至关重要的。我们发现，权重之间的相对排名——即一个连接是否比另一个更强或更弱——才是最重要的，而不是具体的数值大小。为了减少唯一的权重值数量，我们将预训练模型中的权重聚类，用K-means算法将每个权重矩阵替换为K个共享值。对于Llama 3.1-8B-Instruct和SmolLM2-135M模型，将每个矩阵压缩到仅16-64个不同值即可在无需重新训练的情况下保持较强的准确性，提供了一种简单且无需训练的模型压缩方法。可选地，仅对聚类中心进行微调可以以极低的成本恢复剩余准确率差距的30-40%。随后，我们在固定分配的前提下系统性地随机化聚类中心。打乱聚类间的相对排名会导致质量急剧下降——即使保留均值和方差等全局统计信息，困惑度也可能增加几个数量级。相比之下，在中层和深层中保持排名不变的随机化几乎不会造成损失。另一方面，当多层同时受到扰动时，逐层逐步替换实验表明，尺度漂移而非排名失真才是主导崩溃机制；然而，通过仿射变换 $ w' = aw + b $（其中 $ a > 0 $，该变换既保留了权重顺序又保持了整体分布）可以显著延缓这种漂移。这一基于排名的视角为模型压缩和鲁棒性研究提供了新的思路。
+
+核心贡献：本文提出大型语言模型的关键在于权重的相对排名而非具体数值，并展示了如何通过聚类压缩模型而不显著影响性能，同时揭示了模型鲁棒性的关键因素是尺度漂移而非排名失真。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-18</span>
+                    <a href="https://arxiv.org/pdf/2603.17917v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.17915v1" target="_blank">IndicSafe: A Benchmark for Evaluating Multilingual LLM Safety in South Asia</a>
+                </div>
+                <div class="paper-authors">👥 Priyaranjan Pattnayak, Sanchari Chowdhuri</div>
+                <div class="paper-summary">As large language models (LLMs) are deployed in multilingual settings, their safety behavior in culturally diverse, low-resource languages remains poorly understood. We present the first systematic evaluation of LLM safety across 12 Indic languages, spoken by over 1.2 billion people but underrepresented in LLM training data. Using a dataset of 6,000 culturally grounded prompts spanning caste, religion, gender, health, and politics, we assess 10 leading LLMs on translated variants of the prompt.   Our analysis reveals significant safety drift: cross-language agreement is just 12.8\%, and \texttt{SAFE} rate variance exceeds 17\% across languages. Some models over-refuse benign prompts in low-resource scripts, overflag politically sensitive topics, while others fail to flag unsafe generations. We quantify these failures using prompt-level entropy, category bias scores, and multilingual consistency indices.   Our findings highlight critical safety generalization gaps in multilingual LLMs and show that safety alignment does not transfer evenly across languages. We release \textsc{IndicSafe}, the first benchmark to enable culturally informed safety evaluation for Indic deployments, and advocate for language-aware alignment strategies grounded in regional harms.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-18</span>
+                    <a href="https://arxiv.org/pdf/2603.17915v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.12586v1" target="_blank">Deferred is Better: A Framework for Multi-Granularity Deferred Interaction of Heterogeneous Features</a>
+                </div>
+                <div class="paper-authors">👥 Yi Xu, Moyu Zhang, Chaofan Fan</div>
+                <div class="paper-summary">点击率（CTR）预测模型通过在庞大的特征空间中建模特征之间的交互，来估计用户对物品的点击概率。一个基础但常被忽视的挑战是这些特征的固有异质性：它们的稀疏性和信息含量差异巨大。例如，像物品ID这样的分类特征非常稀疏，而像物品价格这样的数值特征则相对稠密。现有的CTR模型大多忽略了这种异质性，采用统一的特征交互策略，将所有特征同时输入到交互层中。这种方法并不理想，因为过早引入低信息量的特征会带来显著噪声，并掩盖高信息量特征的信号，从而导致模型崩溃并阻碍鲁棒表示的学习。为了解决上述问题，我们提出了一种多粒度信息感知延迟交互网络（MGDIN），该网络能够自适应地延迟特征在特征交互过程中的引入。MGDIN的核心机制分为两个阶段：首先，它采用一种多粒度特征分组策略，将原始特征按照不同粒度划分成具有更均匀信息密度的不同组，从而缓解极端单个特征稀疏性的影响，并使模型能够从多个视角捕捉特征间的交互；其次，通过层次化掩码策略实现延迟交互机制，控制每组特征何时以及如何参与，早期层屏蔽低信息组，在网络加深的过程中逐步取消屏蔽。这种延迟引入方式使模型能够在融合其他组较稀疏的信息之前，先基于高信息特征建立稳健的理解。
+
+核心贡献：本文提出了MGDIN，一种针对异构特征设计的多粒度延迟交互框架，通过自适应延迟低信息特征的交互时机，提升CTR预测模型的鲁棒性和表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.12586v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.12578v1" target="_blank">Bridging Sequential and Contextual Features with a Dual-View of Fine-grained Core-Behaviors and Global Interest-Distribution</a>
+                </div>
+                <div class="paper-authors">👥 Yi Xu, Chaofan Fan, Moyu Zhang</div>
+                <div class="paper-summary">点击率（CTR）预测任务通常通过建模用户行为序列特征和物品上下文特征来估计用户点击候选物品的概率，其中用户行为序列尤为重要，因为它能够动态反映用户兴趣的实时变化。传统的CTR模型通常将这种动态序列聚合为一个向量后再与上下文特征进行交互。然而，这种方法不仅在聚合过程中导致行为信息的丢失，还严重限制了模型捕捉上下文特征与特定用户行为之间交互的能力，最终影响其对细粒度行为细节的刻画并降低预测准确性。相反，直接将每个用户行为与上下文特征进行交互的简单方法虽然保留了更多信息，但计算成本高昂，并引入了大量与候选物品无关的行为噪声，这些噪声往往会掩盖那些与候选物品相关行为所生成的有效信号。为此，我们提出了一种核心行为与分布补偿双视角交互网络（CDNet），从两个互补的角度弥合了序列特征与上下文特征交互之间的差距：一是细粒度的交互，聚焦于最相关的用户行为与上下文特征；二是粗粒度的交互，建模用户的整体兴趣分布与上下文特征的关系。CDNet能够在不牺牲全局用户兴趣的前提下，有效捕捉序列与上下文特征之间的相互作用，且不会带来显著的计算负担。最终，广泛的实验验证了CDNet的有效性。
+
+核心贡献：本文提出CDNet模型，通过结合细粒度核心行为交互与粗粒度兴趣分布建模，有效解决了传统CTR模型在行为信息损失和计算效率方面的不足。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-13</span>
+                    <a href="https://arxiv.org/pdf/2603.12578v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/03/18/ml-applications/friend-bubbles-enhancing-social-discovery-on-facebook-reels/" target="_blank">Friend Bubbles: Enhancing Social Discovery on Facebook Reels</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/" target="_blank">Introducing “vibe design” with Stitch</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/sustainability/new-recycled-materials-guide/" target="_blank">How we’ve made our products with recycled materials</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/cma-response/" target="_blank">Google’s response to the CMA’s consultation on potential requirements for Search</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/03/17/developer-tools/ranking-engineer-agent-rea-autonomous-ai-system-accelerating-meta-ads-ranking-innovation/" target="_blank">Ranking Engineer Agent (REA): The Autonomous AI Agent Accelerating Meta’s Ads Ranking Innovation</a></div>
+                <div class="feed-date">03-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tooling-updates/" target="_blank">Gemini API tooling updates: context circulation, tool combos and Maps grounding for Gemini 3</a></div>
+                <div class="feed-date">03-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/search/personal-intelligence-expansion/" target="_blank">Bringing the power of Personal Intelligence to more people</a></div>
+                <div class="feed-date">03-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/measuring-agi-cognitive-framework/" target="_blank">Measuring progress toward AGI: A cognitive framework</a></div>
+                <div class="feed-date">03-17</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Sequoia Capital</div>
+                <div class="feed-title"><a href="https://sequoiacap.com/article/partnering-with-edra-context-for-agents-at-scale/" target="_blank">Partnering with Edra: Context for Agents at Scale</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/18/meta-is-having-trouble-with-rogue-ai-agents/" target="_blank">Meta is having trouble with rogue AI agents</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/18/meta-is-having-trouble-with-rogue-ai-agents/" target="_blank">Meta is having trouble with rogue AI agents</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/18/sam-altmans-thank-you-to-coders-draws-the-memes/" target="_blank">Sam Altman’s thank-you to coders draws the memes</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/18/sam-altmans-thank-you-to-coders-draws-the-memes/" target="_blank">Sam Altman’s thank-you to coders draws the memes</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/ai/2026/03/kagi-translates-ai-answers-the-question-what-would-horny-margaret-thatcher-say/" target="_blank">Kagi Translate's AI answers the question "What would horny Margaret Thatcher say?"</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/news/897145/kash-patel-ron-wyden-fbi-location-data-no-warrant" target="_blank">The FBI is buying Americans’ location data</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/03/eu-moves-to-ban-nudify-apps-after-grok-made-them-mainstream/" target="_blank">Musk’s tactic of blaming users for Grok sex images may be foiled by EU law</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/science/2026/03/coal-plant-forced-to-stay-open-due-to-emergency-order-isnt-even-running/" target="_blank">Coal plant forced to stay open due to emergency order isn't even running</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oQxsFi9HK78" target="_blank">🎥 2024-03-19 Don Lemon x Elon Musk Interview | Immigration Research</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Date streamed March 19th, 2024 Click▽ Follow Destiny ▻STREAM - http://www.kick.com/Destiny ▻DISCORD ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=BYXbuik3dgA" target="_blank">🎥 Elon Musk – &quot;In 36 months, the cheapest place to put AI will be space”</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">In this episode, John and I got to do a real deep-dive with Elon. We discuss the economics of orbita...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=WygdR5CSQyU" target="_blank">🎥 NVIDIA GTC 2026 Keynote | Perplexity Computer, OpenAI Strategy, GigaTIME AI</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">At NVIDIA GTC 2026, NVIDIA CEO Jensen Huang projected a $1 trillion AI infrastructure opportunity, s...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=OcaUV9jX8OY" target="_blank">🎥 LEAKED DOSSIER: Ilya Sutzkever&#39;s Secret $32B AI Empire (SSI) &amp; OpenAI&#39;s Real Crisis</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">You probably think Ilya Sutzkever simply lost a boardroom battle at OpenAI. The reality is much dark...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=p9dh_RilqAg" target="_blank">🎥 OpenAI’s Sam Altman Talks ChatGPT, AI Agents and Superintelligence — ChatGPT Event</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">OpenAI's Sam Altman Talks ChatGPT, AI Agents and Superintelligence — ChatGPT Event ChatGPT-5 is here...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/HKUDS/ClawTeam" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                HKUDS/ClawTeam
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 ClawTeam 展示了代理群体智能的自动化能力，适合研究多智能体协作与任务分解。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Infatoshi/OpenSquirrel" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Infatoshi/OpenSquirrel
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 OpenSquirrel 提供了一个高效的控制平面，便于在多种代码生成模型间进行对比和集成。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47427017" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Snowflake AI Escapes Sandbox and Executes Malware
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Snowflake AI 沙箱逃逸并执行恶意软件，揭示了 AI 安全性的重要问题。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47428541" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                AI coding is gambling
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 AI 编程被比作赌博，引发对 AI 在代码生成中风险和伦理的深入讨论。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47427647" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Google Engineers Launch "Sashiko" for Agentic AI Code Review of the Linux Kernel
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Google 工程师推出 Sashiko，用于 Linux 内核的智能代理 AI 代码审查工具，具有实际应用价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 8<br>
+                    Input Tokens: 2818<br>
+                    Output Tokens: 2377
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年03月19日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
