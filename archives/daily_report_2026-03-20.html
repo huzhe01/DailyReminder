@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年03月20日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>【学术突破】  </p><p>今日三篇前沿论文引人关注：FinTradeBench 提出首个金融推理基准，推动大模型在金融领域的落地应用；F2LLM-v2 则带来高效多语言嵌入技术，助力全球化语义理解。此外，一项关于在线学习与排名反馈的研究为动态决策系统提供了新思路，拓展了强化学习的应用边界。</p><p>【行业动态】  </p><p>科技领域动作频频：Valve 推出 SteamOS 3.8 大更新，支持 Steam Machine，重塑 PC 游戏生态；OpenAI 暗示将发布桌面“超级应用”，或整合多项 AI 服务；亚马逊收购爬楼机器人公司 Rivr，加速物流自动化布局。谷歌则聚焦社会责任，发布儿童保护倡议及 AI 减碳研究，展现科技向善愿景。</p><p>【值得关注】  </p><p>Elon Musk、Jensen Huang 和 Sam Altman 的最新访谈相继出炉，围绕经济、AI 趋势与企业竞争展开深度剖析，值得持续追踪。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.19225v1" target="_blank">FinTradeBench: A Financial Reasoning Benchmark for LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Yogesh Agrawal, Aniruddha Dutta, Md Mahadi Hasan</div>
+                <div class="paper-summary">现实中的金融决策是一个具有挑战性的问题，需要对异构信号进行推理，包括从监管文件中提取的公司基本面信息以及从价格动态计算出的交易信号。近年来，随着大语言模型（LLMs）的发展，金融分析师开始使用它们来进行金融决策任务。然而，现有的用于测试这些模型的金融问答基准主要关注公司的资产负债表数据，很少评估公司股票在市场中的交易方式及其与基本面之间的相互作用。为了结合这两种方法的优势，我们引入了 FinTradeBench，这是一个集成了公司基本面和交易信号的金融推理评估基准。FinTradeBench 包含基于 NASDAQ-100 公司十年历史窗口的 1,400 个问题，并分为三类推理类型：以基本面为主、以交易信号为主以及需要跨信号推理的混合问题。为了确保大规模下的可靠性，我们采用了一种“校准后扩展”框架，结合专家种子问题、多模型响应生成、模型内自我过滤、数值审计以及人类与 LLM 判定的一致性。我们在零样本提示和检索增强设置下评估了 14 个 LLM，并观察到明显的性能差距。检索显著提升了对文本型基本面的推理能力，但在交易信号推理方面提供的帮助有限。这些发现突显了当前 LLM 在数值和时间序列推理方面的基本挑战，并激励未来在金融智能领域的研究。
+
+核心贡献：FinTradeBench 是一个综合评估金融推理能力的新型基准，涵盖了公司基本面和交易信号的跨领域推理，并揭示了当前 LLM 在金融场景中的关键局限。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-19</span>
+                    <a href="https://arxiv.org/pdf/2603.19225v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.19223v1" target="_blank">F2LLM-v2: Inclusive, Performant, and Efficient Embeddings for a Multilingual World</a>
+                </div>
+                <div class="paper-authors">👥 Ziyin Zhang, Zihan Liao, Hang Yu</div>
+                <div class="paper-summary">我们介绍了F2LLM-v2，这是一系列全新的通用多语言嵌入模型，包含8种不同规模的版本，参数范围从80M到14B。该模型在精心整理的6000万个高质量公开数据样本上进行训练，支持200多种语言，特别关注此前资源较少的中等和低资源语言。通过结合基于大语言模型的两阶段嵌入训练流程，并采用Matryoshka学习、模型剪枝和知识蒸馏等技术，F2LLM-v2实现了比以往基于大语言模型的嵌入模型更高的效率，同时保持了具有竞争力的性能。广泛的评估结果表明，F2LLM-v2-14B在11个MTEB基准测试中排名第一，而该系列中的小规模模型也在资源受限的应用场景中设立了新的标准。为了推动开源嵌入模型的研究，我们发布了所有模型、数据、代码以及中间检查点。
+
+核心贡献：提出F2LLM-v2，一种高效且性能优越的多语言嵌入模型系列，特别优化了对中等和低资源语言的支持，并在多个基准测试中取得领先表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-19</span>
+                    <a href="https://arxiv.org/pdf/2603.19223v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.19221v1" target="_blank">Online Learning and Equilibrium Computation with Ranking Feedback</a>
+                </div>
+                <div class="paper-authors">👥 Mingyang Liu, Yongshan Chen, Zhiyuan Fan</div>
+                <div class="paper-summary">在任意的、甚至是敌对的环境中进行在线学习，在顺序决策中已被广泛研究，并且与博弈论中的均衡计算密切相关。大多数现有的在线学习算法依赖于环境提供的**数值型**效用反馈，但在涉及人类交互的应用中，这种反馈可能不可用，或者由于隐私问题受到限制。在本文中，我们研究了一种在线学习模型，其中学习者在每个时间步只能观察到一组建议动作的**排序**。我们考虑了两种排序机制：一种是基于当前时间步的**瞬时效用**诱导的排序，另一种是基于当前时间步为止的**时间平均效用**诱导的排序，并分别在**完全信息**和**带赌徒设置（bandit）**的反馈环境下进行分析。使用标准的外部遗憾度量，我们证明在一般情况下，仅凭瞬时效用排序反馈无法实现次线性遗憾。此外，当排序模型相对确定时，例如在温度参数足够小的Plackett-Luce模型下，即使使用时间平均效用排序反馈也无法实现次线性遗憾。为此，我们开发了新的算法，在假设效用序列具有次线性总变分的前提下，实现了次线性遗憾。值得注意的是，在完全信息的时间平均效用排序反馈下，这一额外假设可以被去除。因此，当所有玩家在正常形式博弈中遵循我们的算法时，重复游戏将产生一个近似的粗糙相关均衡。我们还在一个在线大语言模型路由任务中展示了所提出算法的有效性。
+
+核心贡献：本文提出了在仅有排序反馈情况下的在线学习新算法，并证明其在特定条件下能够实现次线性遗憾，并进一步将其应用于博弈论中的均衡计算和实际任务中。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-19</span>
+                    <a href="https://arxiv.org/pdf/2603.19221v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.19220v1" target="_blank">Nemotron-Cascade 2: Post-Training LLMs with Cascade RL and Multi-Domain On-Policy Distillation</a>
+                </div>
+                <div class="paper-authors">👥 Zhuolin Yang, Zihan Liu, Yang Chen</div>
+                <div class="paper-summary">我们介绍了Nemotron-Cascade 2，这是一个开放的30B MoE模型，具有3B激活参数，提供了业界领先的推理能力和强大的代理能力。尽管其体积紧凑，但其在数学和编码推理方面的表现接近前沿开源模型。它是继DeepSeekV3.2-Special-671B-A37B之后第二个在2025年国际数学奥林匹克竞赛（IMO）、国际信息学奥林匹克竞赛（IOI）和国际大学生程序设计竞赛（ICPC）世界总决赛中获得金牌级成绩的开放权重大语言模型，展示了每参数智能密度极高，仅使用了前者的1/20参数量。与Nemotron-Cascade 1相比，关键的技术进步如下：在经过精心策划的数据集进行SFT后，我们将Cascade RL显著扩展，覆盖更广泛的推理和代理领域。此外，我们在整个Cascade RL过程中引入了多领域策略性知识蒸馏，从每个领域的最强中间教师模型中学习，使我们能够高效地恢复基准回归，并在整个训练过程中保持强劲的性能提升。我们发布了所有模型检查点和训练数据。
+
+核心贡献：Nemotron-Cascade 2通过扩展Cascade RL和引入多领域策略性知识蒸馏，在小型模型上实现了接近大型模型的高密度智能表现，并在多个国际竞赛中取得金牌级成绩。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-19</span>
+                    <a href="https://arxiv.org/pdf/2603.19220v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.19195v1" target="_blank">How Auditory Knowledge in LLM Backbones Shapes Audio Language Models: A Holistic Evaluation</a>
+                </div>
+                <div class="paper-authors">👥 Ke-Han Lu, Szu-Wei Fu, Chao-Han Huck Yang</div>
+                <div class="paper-summary">大型语言模型（LLMs）已被广泛用作大型音频语言模型（LALMs）的知识基础，然而它们通过纯文本预训练所编码的听觉知识有多少，以及这对下游任务性能的影响仍不清楚。我们通过比较不同LLMs在两种纯文本设置和一种音频关联设置下的表现来研究这一差距：(1) 在AKB-2000这一测试听觉知识广度与深度的精选基准上进行直接探测；(2) 级联评估，其中LLMs基于音频描述生成器提供的文本描述进行推理；(3) 音频关联评估，其中每个LLM被微调为一个带有音频编码器的大型音频语言模型（LALM）。我们的研究发现表明，不同模型家族中的听觉知识差异显著，并且纯文本结果与音频性能高度相关。我们的工作为全面理解LLMs在音频研究中的作用提供了实证依据。
+
+核心贡献：本文系统评估了大型语言模型在音频任务中的听觉知识表现，并揭示了纯文本预训练与音频性能之间的强相关性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-19</span>
+                    <a href="https://arxiv.org/pdf/2603.19195v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.19182v1" target="_blank">Box Maze: A Process-Control Architecture for Reliable LLM Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Zou Qiang</div>
+                <div class="paper-summary">Large language models (LLMs) demonstrate strong generative capabilities but remain vulnerable to hallucination and unreliable reasoning under adversarial prompting. Existing safety approaches -- such as reinforcement learning from human feedback (RLHF) and output filtering -- primarily operate at the behavioral level and may lack explicit architectural mechanisms for enforcing reasoning process integrity.   This paper proposes the Box Maze framework, a conceptual process-control architecture that decomposes LLM reasoning into three explicit layers: memory grounding, structured inference, and boundary enforcement. We introduce preliminary simulation-based evaluation involving progressive boundary erosion scenarios across multiple heterogeneous LLM systems (DeepSeek-V3, Doubao, Qwen). Results from n=50 adversarial scenarios suggest that explicit cognitive control layers may improve consistency in boundary maintenance, with architectural constraints reducing boundary failure rates from approximately 40% (baseline RLHF) to below 1% under adversarial conditions.   While current validation is simulation-based, these preliminary results indicate that process-level control may offer a promising direction for improving reliability in large language model reasoning.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-19</span>
+                    <a href="https://arxiv.org/pdf/2603.19182v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/public-policy/eu-lawmakers-must-act-now-to-ensure-the-continued-protection-of-children/" target="_blank">EU lawmakers must act now to ensure the continued protection of children</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/google-research/contrail-avoidance-research/" target="_blank">Our new study explores how AI can reduce the climate impact of air travel.</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/safety-security/five-ways-google-helps-you-avoid-scammers/" target="_blank">How we’re helping you avoid scams this tax season</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/life-at-google/strategies-to-adopt-ai-at-work/" target="_blank">Five strategies for deeper AI adoption at work</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/introducing-kaggle-community-hackathons/" target="_blank">Now anyone can host a global AI challenge</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/shopping/ucp-updates/" target="_blank">AI shopping gets simpler with Universal Commerce Protocol updates</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/demand-response-data-center-milestone/" target="_blank">A new milestone for smart, affordable electricity growth</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/how-we-monitor-internal-coding-agents-misalignment" target="_blank">How we monitor internal coding agents for misalignment</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Sequoia Capital</div>
+                <div class="feed-title"><a href="https://sequoiacap.com/article/partnering-with-edra-context-for-agents-at-scale/" target="_blank">Partnering with Edra: Context for Agents at Scale</a></div>
+                <div class="feed-date">03-18</div>
+            </div>
+            </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/897765/valve-steamos-3-8-update-steam-deck-hibernation-steam-machine-xbox-ally" target="_blank">Valve’s huge SteamOS 3.8 update adds long-awaited features — and supports Steam Machine</a></div>
+                <div class="feed-date">03-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/897778/openai-chatgpt-codex-atlas-browser-superapp" target="_blank">OpenAI is planning a desktop ‘superapp’</a></div>
+                <div class="feed-date">03-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/19/amazon-acquires-rivr-maker-of-a-stair-climbing-delivery-robot/" target="_blank">Amazon acquires Rivr, maker of a stair-climbing delivery robot</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/03/rfk-jr-s-war-on-scientific-expertise-destroyed-27-of-agencys-advisor-panels/" target="_blank">RFK Jr. has destroyed over a quarter of health dept's expert panels</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/19/jeff-bezos-reportedly-wants-100-billion-to-buy-and-transform-old-manufacturing-firms-with-ai/" target="_blank">Jeff Bezos reportedly wants $100 billion to buy and transform old manufacturing firms with AI</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/19/jeff-bezos-reportedly-wants-100-billion-to-buy-and-transform-old-manufacturing-firms-with-ai/" target="_blank">Jeff Bezos reportedly wants $100 billion to buy and transform old manufacturing firms with AI</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/information-technology/2026/03/cloud-service-providers-ask-eu-regulator-to-reinstate-vmware-partner-program/" target="_blank">Cloud service providers ask EU regulator to reinstate VMware partner program</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/897668/sony-wf-1000xm6-wireless-earbuds-deal-sale" target="_blank">Sony’s new WF-1000XM6 earbuds are already on sale for $30 off</a></div>
+                <div class="feed-date">03-19</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oQxsFi9HK78" target="_blank">🎥 2024-03-19 Don Lemon x Elon Musk Interview | Immigration Research</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Date streamed March 19th, 2024 Click▽ Follow Destiny ▻STREAM - http://www.kick.com/Destiny ▻DISCORD ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=uNkFNbKWQ00" target="_blank">🎥 Jensen Huang Unveils the Future: AI Factories &amp; Agentic AI Revolution by NVIDIA #donaldtrump #nvidia</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">In this powerful keynote, NVIDIA CEO Jensen Huang explains how NVIDIA is transforming from a chip ma...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=xOJI_Qk5loc" target="_blank">🎥 EP12: Two Villains, One Accidental Hero, Zero Saints | Anthropic vs OpenAI vs Trump</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">This week on Not Investment Advice, Eric, Ian, and Kevin break down the Anthropic vs. OpenAI drama a...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=OcaUV9jX8OY" target="_blank">🎥 LEAKED DOSSIER: Ilya Sutzkever&#39;s Secret $32B AI Empire (SSI) &amp; OpenAI&#39;s Real Crisis</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">You probably think Ilya Sutzkever simply lost a boardroom battle at OpenAI. The reality is much dark...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #6366f1; padding-bottom: 10px; color: #4338ca;">🐙 开源社区动态</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/ggml-org/llama.cpp/issues/20169" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                [llama.cpp] Misc. bug: SYCL backend not working on Intel Arc B580 (Windows 10), only Vulkan works
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该问题涉及 SYCL 后端在 Intel Arc B580 上的兼容性，对硬件优化和跨平台性能研究有重要参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/VoltAgent/awesome-codex-subagents" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                VoltAgent/awesome-codex-subagents
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 值得关注，因为它提供了130多个Codex子代理，覆盖广泛开发场景，对AI研究者和工程师具有很高的实用价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Lum1104/Understand-Anything" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Lum1104/Understand-Anything
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 值得关注，它展示了如何将代码库转化为交互式知识图谱，为代码理解和探索提供了创新方法。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47446021" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                EsoLang-Bench: Evaluating Genuine Reasoning in LLMs via Esoteric Languages
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 EsoLang-Bench 提出了一种通过隐秘语言评估 LLM 真实推理能力的新方法，对模型评估研究具有启发性。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47431671" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: Duplicate 3 layers in a 24B LLM, logical deduction .22→.76. No training
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该帖展示了在大型语言模型中通过复制层实现逻辑推理性能显著提升的实验，为模型结构优化提供了新思路。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47444072" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                NanoGPT Slowrun: 10x Data Efficiency with Infinite Compute
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 NanoGPT Slowrun 探索了数据效率与无限计算资源的关系，对训练高效模型有重要参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2038<br>
+                    Output Tokens: 1682
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年03月20日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
