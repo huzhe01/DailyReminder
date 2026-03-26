@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年03月26日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报｜2025年4月5日**</p><p>**学术突破**  </p><p>本周多篇前沿论文聚焦大模型的偏见与安全问题。《Comparing Developer and LLM Biases in Code Evaluation》揭示开发者与AI在代码评估中的系统性偏差；MARCH框架通过多智能体强化自检机制，有效降低LLM幻觉风险；而《Analysing the Safety Pitfalls of Steering Vectors》则警示了方向向量在模型控制中的潜在安全隐患。</p><p>**行业动态**  </p><p>科技圈持续震荡：Intel与LG Display联手刷新笔记本电池续航纪录，挑战苹果与高通的市场地位。Google推出新一代音乐生成模型Lyria 3 Pro，支持更长曲目创作，并集成至更多产品线。TechCrunch连续报道Manus事件最新进展，揭示技术创业背后的复杂博弈。</p><p>**值得关注**  </p><p>马斯克、黄仁勋与山姆·阿尔特曼近期密集发声，分别就AI未来、GPU生态及创业路径展开深度分享。他们的观点不仅代表技术趋势，更映射出整个行业的战略转向，值得密切关注。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.24586v1" target="_blank">Comparing Developer and LLM Biases in Code Evaluation</a>
+                </div>
+                <div class="paper-authors">👥 Aditya Mittal, Ryan Shar, Zichu Wu</div>
+                <div class="paper-summary">随着大语言模型（LLMs）在代码应用中被越来越多地用作评判者，它们应在能捕捉部分上下文和模糊意图的现实交互环境中进行评估。我们提出了 TRACE（代码评估中的评分标准分析工具），这是一个用于评估 LLM 评判者预测人类偏好能力的框架，并能自动提取评分标准项以揭示人类与模型在各项指标权重上的系统性偏差。我们在三种模式——基于聊天的编程、IDE 自动补全以及指导性代码编辑中使用 TRACE 来衡量 LLM 评判者与开发者偏好的一致性。在 13 个不同模型中，表现最佳的评判者的准确率仍比人类注释者低 12-23%。TRACE 识别出跨交互模式下人类与评判者之间 35 个显著不一致的原因，其中大部分对应现有的软件工程代码质量标准。例如，在基于聊天的编码中，评判者偏向于更长的代码解释，而人类则更喜欢较短的解释。我们发现，在大多数现有代码质量维度上存在显著的不一致，表明在现实编码应用中，LLM 评判者与人类偏好之间存在对齐差距。
+
+核心贡献：提出 TRACE 框架，揭示了 LLM 在代码评估中与人类开发者在多个质量维度上的系统性偏差，并量化了其与人类偏好的对齐差距。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-25</span>
+                    <a href="https://arxiv.org/pdf/2603.24586v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.24579v1" target="_blank">MARCH: Multi-Agent Reinforced Self-Check for LLM Hallucination</a>
+                </div>
+                <div class="paper-authors">👥 Zhuo Li, Yupeng Zhang, Pengyu Cheng</div>
+                <div class="paper-summary">幻觉仍然是大型语言模型（LLMs）面临的关键瓶颈，削弱了它们在现实世界应用中的可靠性，尤其是在检索增强生成（RAG）系统中。现有的幻觉检测方法通常使用“LLM作为评判者”来验证LLM输出与检索到的证据的一致性，但这些方法存在固有的确认偏误问题，即验证器无意中复现了原始生成的错误。为了解决这一问题，我们提出了多智能体强化自检框架——用于幻觉检测的MARCH（Multi-Agent Reinforced Self-Check for Hallucination），该框架通过刻意引入信息不对称性来强制实现严格的事实一致性。MARCH协调三个专门代理的协作流程：一个Solver生成初始的RAG响应，一个Proposer将其分解为可验证的原子命题，而Checker则在隔离环境下依据检索到的证据对这些命题进行验证，且不接触Solver的原始输出。这种精心设计的信息不对称机制打破了自我确认偏误的循环。通过多智能体强化学习（MARL）训练该流程，使各代理能够协同进化并优化事实一致性。大量实验表明，MARCH显著降低了幻觉率。值得注意的是，配备MARCH的8B参数LLM性能可与强大的闭源模型相媲美。MARCH为LLMs通过协同进化实现事实上的自我改进提供了可扩展的路径。
+
+核心贡献：MARCH通过引入信息不对称和多智能体强化学习，有效减少了大语言模型在检索增强生成中的幻觉现象，并实现了与强大闭源模型相当的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-25</span>
+                    <a href="https://arxiv.org/pdf/2603.24579v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.24543v1" target="_blank">Analysing the Safety Pitfalls of Steering Vectors</a>
+                </div>
+                <div class="paper-authors">👥 Yuxiao Li, Alina Fastowski, Efstratios Zaradoukas</div>
+                <div class="paper-summary">激活引导已成为在无需更新权重的情况下塑造大语言模型（LLM）行为的强大工具。尽管其固有的脆弱性和不可靠性已被广泛记录，但其安全影响仍鲜有研究。在这项工作中，我们对一种广泛应用的引导方法——对比激活添加（CAA）所获得的引导向量进行了系统性的安全性审查，并采用统一的评估协议进行分析。使用JailbreakBench作为基准，我们发现引导向量会持续影响越狱攻击的成功率，在基于简单模板的攻击中尤为明显。跨不同家族和规模的LLM，沿着特定方向调整模型可显著提高（最高达57%）或降低（最高达50%）其攻击成功率（ASR），具体取决于目标行为。我们将这一现象归因于引导向量与拒绝行为潜在方向之间的重叠。因此，我们为这一发现提供了可追溯的解释。综上所述，我们的研究揭示了LLM中此前未被观察到的安全差距来源，突显了可控性与安全性之间的权衡。
+
+核心贡献：本文首次系统性地揭示了激活引导向量如何通过与拒绝行为潜在方向的重叠显著影响LLM的安全性，从而暴露了模型可控性与安全性之间的根本性权衡。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-25</span>
+                    <a href="https://arxiv.org/pdf/2603.24543v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.24535v1" target="_blank">Representation Learning to Study Temporal Dynamics in Tutorial Scaffolding</a>
+                </div>
+                <div class="paper-authors">👥 Conrad Borchers, Jiayi Zhang, Ashish Gurung</div>
+                <div class="paper-summary">自适应支架教学能够增强学习效果，但目前在真实辅导对话中缺乏稳健的测量方法。随着远程人工辅导和基于大型语言模型系统的兴起，这一问题变得尤为突出。我们提出了一种基于嵌入的方法，通过对齐对话轮次、问题陈述和正确解决方案的语义来分析支架教学的动态过程。具体而言，我们通过计算导师与学生贡献内容以及任务相关内容之间的余弦相似性来操作化对齐。我们将该框架应用于Eedi Question Anchored Tutoring Dialogues数据集中的1,576条真实数学辅导对话。分析结果显示了任务对齐方面的系统性差异，以及参与者如何在问题和解决方案内容中建立关联的明显时间模式。此外，混合效应模型表明，角色特定的语义对齐比消息顺序和长度等基线特征更能预测辅导进展。早期互动中，导师的贡献更紧密地与问题内容相关；相比之下，学生与解决方案的对齐程度则与进展呈适度正相关。这些发现支持将支架教学视为一个持续且角色敏感的过程，并植根于任务语义之中。通过捕捉随时间变化的角色特定对齐情况，本方法为分析教学对话和评估会话式辅导系统提供了一种原理性的方法。
+
+核心贡献：本文提出了一种基于语义对齐的表示学习方法，用于分析辅导对话中的支架教学动态，并揭示了角色特定的语义对齐如何影响教学进展。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-25</span>
+                    <a href="https://arxiv.org/pdf/2603.24535v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.24472v1" target="_blank">Why Does Self-Distillation (Sometimes) Degrade the Reasoning Capability of LLMs?</a>
+                </div>
+                <div class="paper-authors">👥 Jeonghye Kim, Xufang Luo, Minbeom Kim</div>
+                <div class="paper-summary">自蒸馏已成为大型语言模型（LLMs）的一种有效的后训练范式，通常可以提升性能并缩短推理过程。然而，在数学推理任务中，我们发现它可能会减少响应长度，同时损害性能。我们将这种性能下降归因于对认知性言语化（epistemic verbalization）的抑制——即模型在推理过程中表达不确定性的能力。通过控制实验，调整条件上下文的丰富度和任务覆盖范围，我们发现当教师模型基于丰富的信息进行条件化时，会抑制不确定性表达，从而实现有限任务覆盖下的快速领域内优化，但却损害了领域外（OOD）性能，因为未见过的问题往往需要表达不确定性并据此调整。在Qwen3-8B、DeepSeek-Distill-Qwen-7B和Olmo3-7B-Instruct等多个模型上，我们观察到性能下降最高可达40%。我们的研究强调，适当暴露不确定性对于鲁棒的推理至关重要，并突显了超越单纯强化正确答案轨迹的推理行为优化的重要性。
+
+核心贡献：本文揭示了自蒸馏在某些情况下会削弱大语言模型的推理能力，其根本原因在于抑制了模型在推理过程中表达不确定性的能力，进而提出了在优化模型时需重视不确定性表达的观点。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-25</span>
+                    <a href="https://arxiv.org/pdf/2603.24472v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.24465v1" target="_blank">Mechanic: Sorrifier-Driven Formal Decomposition Workflow for Automated Theorem Proving</a>
+                </div>
+                <div class="paper-authors">👥 Ruichen Qiu, Yichuan Cao, Junqi Liu</div>
+                <div class="paper-summary">Recent advances in large language models (LLMs) and LLM-based agents have substantially improved the capabilities of automated theorem proving. However, for problems requiring complex mathematical reasoning, current systems rarely succeed on the first try and must repeatedly modify their proof strategies. Existing approaches for handling failed attempts typically either discard the entire proof and regenerate it from scratch or iteratively fix errors within the proof. The former is inefficient, as it may abandon mostly correct reasoning due to localized errors, while the latter, although preserving prior progress, leads to progressively longer contexts which progressively degrades the model's ability to attend to the remaining unresolved subproblems. To address this dilemma, we propose Mechanic, a novel agent system that employs a sorry-driven formal decomposition strategy. By leveraging the sorry placeholder in Lean to precisely isolate unresolved subgoals while preserving the surrounding verified proof structure, Mechanic extracts each failed subproblem into a clean, self-contained context and resolves it independently. This avoids both the waste of full regeneration and the excessive context length induced by repeated repairs. Experimental results on challenging mathematical competition benchmarks, including IMO 2025 and Putnam 2025, demonstrate that our agent achieves significant advantages in proving efficiency.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-25</span>
+                    <a href="https://arxiv.org/pdf/2603.24465v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.21209v1" target="_blank">MI-DPG: Decomposable Parameter Generation Network Based on Mutual Information for Multi-Scenario Recommendation</a>
+                </div>
+                <div class="paper-authors">👥 Wenzhuo Cheng, Ke Ding, Xin Dong</div>
+                <div class="paper-summary">转化率（CVR）预测模型在推荐和广告系统中起着至关重要的作用。最近关于多场景推荐的研究表明，学习一个统一的模型来服务多个场景有助于提升整体性能。然而，在低成本模型参数的情况下提升跨场景的预测性能仍然具有挑战性，当前的解决方案也难以稳健地建模多场景的多样性。为此，我们提出了MI-DPG，一种基于互信息的可分解参数生成网络，用于多场景下的CVR预测。该方法以更高效且有效的方式为每个场景学习条件化的动态模型参数。具体来说，我们引入了一个辅助网络来生成场景条件化的动态权重矩阵，这些矩阵通过结合场景特定和共享的低秩矩阵并兼顾参数效率来获得。对于每个场景，通过对主干模型参数进行加权，有助于使模型参数适应不同场景的需求。这不仅可以调节主干模型的完整参数空间，还能提高模型效果。此外，我们设计了一种互信息正则化方法，通过最大化场景感知输入与场景条件化动态权重矩阵之间的互信息，从而增强跨场景模型参数的多样性。三个真实世界数据集上的实验表明，MI-DPG显著优于之前的多场景推荐模型。
+
+核心贡献：本文提出MI-DPG，一种利用互信息和参数分解策略的高效多场景CVR预测模型，能够以较低参数成本提升跨场景性能并增强模型多样性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-22</span>
+                    <a href="https://arxiv.org/pdf/2603.21209v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.20014v1" target="_blank">AgenticRS-EnsNAS: Ensemble-Decoupled Self-Evolving Architecture Search</a>
+                </div>
+                <div class="paper-authors">👥 Yun Chen, Moyu Zhang, Jinxin Hu</div>
+                <div class="paper-summary">在工业生产系统中部署神经架构搜索（NAS）面临一个基本的验证瓶颈：验证单个候选架构 pi 需要评估部署的 M 个模型的集成，导致每个候选架构需要 O(M) 的计算成本。这种成本障碍严重限制了实际应用中架构迭代的频率，因为在追求鲁棒性的场景中，集成模型的数量通常为 M=50-200。本文提出了一种“集成解耦架构搜索”框架，利用集成理论从单学习器评估中预测系统级性能。我们建立了“集成解耦理论”，在同质性假设下提出了单调集成改进的充分条件：当 rho(pi) < rho(pi_old) - (M / (M - 1)) * (Delta E(pi) / sigma^2(pi)) 时，候选架构 pi 的集成误差将低于当前基线，其中 Delta E、rho 和 sigma^2 可通过轻量级双学习器训练估计得出。该方法将架构搜索与完整的集成训练解耦，使每个候选架构的搜索成本从 O(M) 降低到 O(1)，而仅对验证通过的最优架构保留 O(M) 的部署成本。我们在流水线连续性方面统一了解决策略：(1) 对于可处理的连续 pi 进行闭式优化（以 CTR 预测中的特征袋外采样为例），(2) 对于不可处理的连续 pi 使用约束微分优化，以及 (3) 利用大语言模型驱动并采用迭代单调接受机制进行离散 pi 搜索。该框架揭示了两种正交的改进机制——基础多样性增益和准确率增益——为大规模工业 NAS 提供了可操作的设计原则。所有理论推导均严谨，并附有详细证明（见附录）。全面的实证验证将在本工作的期刊扩展版本中提供。
+
+核心贡献：本文提出了一种基于集成解耦理论的高效神经架构搜索框架 Ensembled-Decoupled Architecture Search，能够通过单模型评估预测集成性能，从而大幅降低架构搜索成本，适用于工业级的大规模部署场景。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-20</span>
+                    <a href="https://arxiv.org/pdf/2603.20014v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/lyria-3-developers/" target="_blank">Build with Lyria 3, our newest music generation model</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/lyria-3-pro/" target="_blank">Lyria 3 Pro: Create longer tracks in more Google products</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/tips-to-collaborate-with-agentic-advisors/" target="_blank">5 ways to collaborate with our agentic advisors</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/" target="_blank">Quantum frontiers may be closer than they appear</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/effective-lead-gen-practices/" target="_blank">Ads Decoded episode 5 navigates the challenges and impact of effective lead gen advertising.</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/our-approach-to-the-model-spec" target="_blank">Inside our approach to the Model Spec</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/safety-bug-bounty" target="_blank">Introducing the OpenAI Safety Bug Bounty program</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/fast-company-innovative-companies/" target="_blank">Google ranks #1 on Fast Company’s Most Innovative Companies list.</a></div>
+                <div class="feed-date">03-24</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/25/the-least-surprising-chapter-of-the-manus-story-is-whats-happening-right-now/" target="_blank">The least surprising chapter of the Manus story is what’s happening right now</a></div>
+                <div class="feed-date">03-26</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/25/the-least-surprising-chapter-of-the-manus-story-is-whats-happening-right-now/" target="_blank">The least surprising chapter of the Manus story is what’s happening right now</a></div>
+                <div class="feed-date">03-26</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/901155/dell-xps-16-best-battery-lg-display-1hz-panther-lake-intel" target="_blank">Intel and LG Display may have beaten Apple and Qualcomm with the best laptop battery life ever</a></div>
+                <div class="feed-date">03-26</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/25/deccan-ai-raises-25m-as-ai-training-push-relies-on-india-based-workforce/" target="_blank">Mercor competitor Deccan AI raises $25M, sources experts from India</a></div>
+                <div class="feed-date">03-26</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/25/deccan-ai-raises-25m-as-ai-training-push-relies-on-india-based-workforce/" target="_blank">Mercor competitor Deccan AI raises $25M, sources experts from India</a></div>
+                <div class="feed-date">03-26</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/25/delve-did-the-security-compliance-on-litellm-an-ai-project-hit-by-malware/" target="_blank">Delve did the security compliance on LiteLLM, an AI project hit by malware</a></div>
+                <div class="feed-date">03-26</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/900836/sonos-ace-noise-canceling-headphones-amazon-big-spring-sale-2026-deal" target="_blank">The Sonos Ace are a hefty 25 percent for Amazon’s Big Spring Sale</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/899580/best-amazon-big-spring-sale-2026-deals" target="_blank">The best deals we’ve found from Amazon’s Big Spring Sale (so far)</a></div>
+                <div class="feed-date">03-25</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oQxsFi9HK78" target="_blank">🎥 2024-03-19 Don Lemon x Elon Musk Interview | Immigration Research</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Date streamed March 19th, 2024 Click▽ Follow Destiny ▻STREAM - http://www.kick.com/Destiny ▻DISCORD ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6H8pNLVyfnU" target="_blank">🎥 Sam Altman: From Silicon Valley Dropout to AI Visionary (2+ Hour Biography)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Experience the definitive account of the man rewriting the code of human civilization. In this featu...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Ik_zKOpTPgQ" target="_blank">🎥 From bucket hats to AI empires: Deep-Dives on Oasis and OpenAI | Follow the Rabbit S04E21</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">What connects a sea of white men in bucket hats at Oasis concerts to Sam Altman's relentless narrati...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/HKUDS/OpenSpace" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                HKUDS/OpenSpace
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 OpenSpace 提供了一种让智能代理更聪明、低成本且自我进化的框架，对 AI 研究者和工程师具有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/opa334/darksword-kexploit" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                opa334/darksword-kexploit
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 darksword-kexploit 是一个针对 iOS 内核的漏洞利用实现，对于安全研究和系统开发人员有较高的技术参考意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/GAIR-NLP/daVinci-MagiHuman" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                GAIR-NLP/daVinci-MagiHuman
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 daVinci-MagiHuman 涉及生成式 AI 技术，可能在虚拟人物生成领域带来创新应用。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47513475" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                TurboQuant: Redefining AI efficiency with extreme compression
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 TurboQuant 提出的极端压缩技术可能为 AI 模型效率带来突破性进展，值得关注。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47521157" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                90% of Claude-linked output going to GitHub repos w <2 stars
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Claude 输出在低星 GitHub 仓库中的高占比现象揭示了 AI 工具使用趋势和潜在问题。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47516650" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Ensu – Ente’s Local LLM app
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Ensu 是一个本地运行的 LLM 应用，对隐私保护和边缘计算方向具有参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 8<br>
+                    Input Tokens: 2693<br>
+                    Output Tokens: 2425
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年03月26日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
