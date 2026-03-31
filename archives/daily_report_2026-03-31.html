@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年03月31日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024.03.20**</p><p>**学术突破**  </p><p>本周AI领域涌现出多项前沿研究：Adaptive Block-Scaled Data Types 提出新型数据格式优化方法，提升大模型计算效率；SOLE-R1 则通过视频-语言推理作为唯一奖励机制，推动机器人强化学习进入新阶段；EpiScreen 探索利用大语言模型从电子健康记录中早期检测癫痫，展现AI在医疗诊断中的潜力。</p><p>**行业动态**  </p><p>科技圈动作频频：拥有1.5亿用户的Roblox竞品Rec Room宣布关闭，引发对虚拟社交平台可持续性的讨论。同时，最新调查显示，15%的美国人愿意为AI主管工作，反映职场智能化趋势加速。Google推出“AI Works for Britain”计划，助力英国用户突破职业发展瓶颈。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang与Sam Altman近期访谈内容陆续公开，涵盖移民、AI芯片与组织管理等热点话题，值得深度追踪。此外，Meta Engineering探索AI在本土水泥与混凝土生产中的应用，预示工业AI落地进一步扩展边界。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.28765v1" target="_blank">Adaptive Block-Scaled Data Types</a>
+                </div>
+                <div class="paper-authors">👥 Jack Cook, Hyemin S. Lee, Kathryn Le</div>
+                <div class="paper-summary">NVFP4 由于其硬件支持以及能够在每个参数使用较少位数的情况下保留有用信息，因此作为量化大语言模型的 4 位格式越来越受欢迎。然而，该格式也存在一定的局限性：最近的研究表明，NVFP4 受限于其误差分布，在每组 16 个值中的接近最大值时会产生大量的量化误差。在这项工作中，我们利用这一见解设计了新的自适应块缩放数据类型（Adaptive Block-Scaled Data Types），使其能够根据输入值的分布进行自适应调整。对于四比特量化，我们提出的 IF4（Int/Float 4）数据类型为每组 16 个值在 FP4 和 INT4 表示之间进行选择，并像 NVFP4 一样通过 E4M3 缩放因子进行缩放。所选数据类型通过当前在 NVFP4 中未使用的缩放因子符号位来表示，并将相同思路应用于其他位宽格式的设计，包括 IF3 和 IF6。在用于量化语言模型时，我们发现 IF4 在现有的 4 位块缩放格式中表现更优，在量化训练期间实现了更低的损失，并在训练后量化任务中实现了更高的准确性。此外，我们还设计并评估了一个 IF4 乘加单元（MAC），以证明 IF4 可以在下一代硬件加速器中高效实现。我们的代码可在 https://github.com/mit-han-lab/fouroversix 获得。
+
+核心贡献：本文提出了一种新型的自适应块缩放数据类型 IF4，它在 4 位量化中优于现有格式，并展示了其在语言模型量化中的优越性能和可扩展性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-30</span>
+                    <a href="https://arxiv.org/pdf/2603.28765v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.28730v1" target="_blank">SOLE-R1: Video-Language Reasoning as the Sole Reward for On-Robot Reinforcement Learning</a>
+                </div>
+                <div class="paper-authors">👥 Philip Schroeder, Thomas Weng, Karl Schmeckpeper</div>
+                <div class="paper-summary">视觉-语言模型（VLMs）在各种任务中展现出令人印象深刻的能力，这促使人们尝试利用这些模型来监督机器人的学习。然而，在强化学习（RL）中作为评估器使用时，当前最强的模型往往在部分可观测性和分布偏移的情况下表现不佳，导致策略倾向于利用感知错误而不是真正解决任务。为了解决这一限制，我们引入了SOLE-R1（Self-Observing LEarner），这是一个专门设计用于在线RL中的唯一奖励信号的视频-语言推理模型。给定原始视频观察和自然语言目标，SOLE-R1能够进行每时间步的空间-时间链式思维（CoT）推理，并直接生成可用于奖励的密集任务进展估计。为了训练SOLE-R1，我们开发了一个大规模的视频轨迹与推理合成流水线，该流水线生成与连续进展监督对齐的时间接地CoT轨迹。这些数据结合了基础的空间和多帧时间推理，并通过将监督微调与基于可验证奖励的强化学习相结合的混合框架进行模型训练。在四个不同的仿真环境和一个真实机器人设置中，SOLE-R1实现了从随机初始化的零样本在线强化学习：机器人无需真实的奖励、成功指标、演示或任务特定调优，即可学习之前未见过的操作任务。SOLE-R1在24个未见过的任务上取得成功，并显著优于包括GPT-5和Gemini-3-Pro在内的强大视觉-语言奖励模型，同时表现出更强的抗奖励黑客攻击能力。
+
+核心贡献：提出首个专为在线强化学习设计的视频-语言推理模型SOLE-R1，实现无需人工奖励或示范的零样本机器人任务学习。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-30</span>
+                    <a href="https://arxiv.org/pdf/2603.28730v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.28698v1" target="_blank">EpiScreen: Early Epilepsy Detection from Electronic Health Records with Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Shuang Zhou, Kai Yu, Zaifu Zhan</div>
+                <div class="paper-summary">癫痫和心因性非癫痫性发作通常表现出相似的发作样症状，但需要截然不同的管理策略。误诊现象普遍，可能导致诊断延迟、不必要的治疗和显著的患者发病率。尽管长程视频脑电图是诊断的金标准，但其高昂的成本和有限的可及性阻碍了及时诊断。在此研究中，我们开发了一种低成本且有效的方法 EpiScreen，通过利用电子健康记录中的常规临床笔记进行早期癫痫检测。通过对标注笔记微调大型语言模型，EpiScreen 在 MIMIC-IV 数据集上实现了高达 0.875 的 AUC，在明尼苏达大学的一个私人队列中达到 0.980。在医生与 AI 协作的环境中，使用 EpiScreen 辅助的神经科医生比未辅助的专家表现高出最多 10.9%。总体而言，本研究表明，EpiScreen 支持早期癫痫检测，有助于实现及时且经济高效的筛查，可能减少诊断延迟并避免不必要的干预，特别是在资源匮乏地区。
+
+核心贡献：提出了一种基于大型语言模型的低成本工具 EpiScreen，用于从电子健康记录中早期检测癫痫，并在多个数据集中展示了其高准确性以及对临床决策的积极辅助作用。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-30</span>
+                    <a href="https://arxiv.org/pdf/2603.28698v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.28643v1" target="_blank">The Ultimate Tutorial for AI-driven Scale Development in Generative Psychometrics: Releasing AIGENIE from its Bottle</a>
+                </div>
+                <div class="paper-authors">👥 Lara Russell-Lasalandra, Hudson Golino, Luis Eduardo Garrido</div>
+                <div class="paper-summary">心理量表的开发传统上需要大量专家参与、反复修订和大规模预测试，才能开始进行心理测量评估。`AIGENIE` R 包实现了 AI-GENIE 框架（网络集成评估下的自动题目生成），该框架将大语言模型（LLM）的文本生成功能与网络心理测量方法相结合，以自动化这一过程的早期阶段。该包利用 LLM 生成候选题目库，将其转化为高维嵌入表示，并应用多步骤缩减流程——探索性图分析（EGA）、唯一变量分析（UVA）和自助 EGA，从而完全在计算机内（*in silico*）生成结构验证过的题目库。本教程分为六个部分介绍该包：安装与配置、理解应用程序编程接口（API）、文本生成、题目生成、`AIGENIE` 函数和 `GENIE` 函数。两个运行示例展示了该包的使用方式：五大人格模型（一个已确立的构念）和人工智能焦虑（一个新兴构念）。该包支持多个 LLM 提供商（包括 OpenAI、Anthropic、Groq、HuggingFace 和本地模型），提供无需外部 API 调用的全离线模式，并为希望对现有题目库应用心理测量缩减流程的研究人员提供了 `GENIE()` 函数。`AIGENIE` 包可在 R-universe 上免费获取，网址为 https://laralee.r-universe.dev/AIGENIE。
+
+核心贡献：  
+该论文提出了 `AIGENIE` R 包，它通过整合大语言模型与网络心理测量方法，实现了心理量表开发中早期阶段的自动化与结构验证。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-30</span>
+                    <a href="https://arxiv.org/pdf/2603.28643v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.28610v1" target="_blank">ResAdapt: Adaptive Resolution for Efficient Multimodal Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Huanxuan Liao, Zhongtao Jiang, Yupu Hao</div>
+                <div class="paper-summary">多模态大语言模型（MLLMs）通过提高输入分辨率来实现更强的视觉理解能力，但由此带来的视觉标记数量的增长使得同时保持高空间分辨率和长时间上下文变得不可行。我们认为瓶颈不在于编码后表示的压缩方式，而在于编码器接收到的像素数量，并通过 ResAdapt 这一输入侧自适应框架进行解决，该框架学习每帧在编码前应获得多少视觉预算。ResAdapt 将一个轻量级分配器与未修改的 MLLM 主干相结合，使主干保留其原生的视觉标记接口，同时接收经过操作符转换的输入。我们将分配问题建模为上下文老虎机问题，并使用成本感知策略优化（CAPO）训练分配器，从而将稀疏的回滚反馈转化为稳定的准确率-成本学习信号。在受预算控制的视频问答、时间定位和图像推理任务中，ResAdapt 在低预算条件下表现出色，通常位于或接近效率-准确性前沿，在高压缩情况下对需要推理的任务提升尤为明显。值得注意的是，ResAdapt 在相同视觉预算下最多可处理 16 倍的帧数，同时性能提升超过 15%。
+
+核心贡献：提出 ResAdapt 框架，通过动态调整输入分辨率来平衡视觉质量与计算效率，显著提升了多模态模型在有限资源下的推理性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-30</span>
+                    <a href="https://arxiv.org/pdf/2603.28610v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.28596v1" target="_blank">Moving Beyond Review: Applying Language Models to Planning and Translation in Reflection</a>
+                </div>
+                <div class="paper-authors">👥 Seyed Parsa Neshaei, Richard Lee Davis, Tanja Käser</div>
+                <div class="paper-summary">Reflective writing is known to support the development of students' metacognitive skills, yet learners often struggle to engage in deep reflection, limiting learning gains. Although large language models (LLMs) have been shown to improve writing skills, their use as conversational agents for reflective writing has produced mixed results and has largely focused on providing feedback on reflective texts, rather than support during planning and organizing. In this paper, inspired by the Cognitive Process Theory of writing (CPT), we propose the first application of LLMs to the planning and translation steps of reflective writing. We introduce Pensée, a tool to explore the effects of explicit AI support during these stages by scaffolding structured reflection planning using a conversational agent, and supporting translation by automatically extracting key concepts. We evaluate Pensée in a controlled between-subjects experiment (N=93), manipulating AI support across writing phases. Results show significantly greater reflection depth and structural quality when learners receive support during planning and translation stages of CPT, though these effects reduce in a delayed post-test. Analyses of learner behavior and perceptions further illustrate how CPT-aligned conversational support shapes reflection processes and learner experience, contributing empirical evidence for theory-driven uses of LLMs in AI-supported reflective writing.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-30</span>
+                    <a href="https://arxiv.org/pdf/2603.28596v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2603.24963v2" target="_blank">Design Once, Deploy at Scale: Template-Driven ML Development for Large Model Ecosystems</a>
+                </div>
+                <div class="paper-authors">👥 Jiang Liu, John Martabano Landy, Yao Xuan</div>
+                <div class="paper-summary">现代计算广告平台通常依赖推荐系统来预测用户响应，例如点击率、转化率和其他优化事件。为了支持多种产品界面和广告主目标，这些平台经常维护一个庞大的机器学习（ML）模型生态系统。然而，在这种规模下运营带来了显著的开发和效率挑战。需要大量工程工作来定期刷新 ML 模型并传播新技术，这导致在生态系统中部署 ML 创新时出现较长的延迟。
+
+我们进行了一项大规模实证研究，比较了标准化建模方法与推荐系统中独立单模型优化之间的模型性能、效率以及 ML 技术传播效果。为促进这一标准化，我们提出了标准模型模板（Standard Model Template, SMT）——一种生成高性能模型的框架，该模型可适应多样的数据分布和优化事件。通过使用标准化且可组合的 ML 模型组件，SMT 将技术传播的复杂性从 $O(n \cdot 2^k)$ 降低到 $O(n + k)$，其中 $n$ 是模型数量，$k$ 是技术数量。
+
+我们在 Meta 的生产广告排序生态系统中，对多个模型进行了四轮全球开发周期的评估，结果表明：(1) 在中性服务容量下的交叉熵平均提高了 0.63%，(2) 每个模型的迭代工程时间减少了 92%，(3) 技术-模型配对采用吞吐量增加了 6.3 倍。这些发现挑战了传统观点，即多样化的优化目标必然要求多样化的 ML 模型设计。
+
+核心贡献：本文提出了一种标准化建模框架 SMT，显著提升了大规模推荐系统中模型性能、开发效率和技术传播能力，证明多样化优化目标可通过统一模型结构实现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-03-26</span>
+                    <a href="https://arxiv.org/pdf/2603.24963v2" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/united-kingdom/googles-ai-works-for-britain-aims-to-help-stuck-brits-unlock-progression/" target="_blank">Google’s ‘AI Works for Britain’ aims to help stuck Brits unlock progression</a></div>
+                <div class="feed-date">03-31</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/arts-culture/benjamin-franklin-notebooklm/" target="_blank">Explore Benjamin Franklin’s scientific discoveries on NotebookLM</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/03/30/data-center-engineering/ai-for-american-produced-cement-and-concrete/" target="_blank">AI for American-Produced Cement and Concrete</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/maps/google-maps-simplifies-battery-predictions-and-trip-planning-for-350-android-auto-ev-models/" target="_blank">Google Maps simplifies battery predictions and trip planning for 350+ Android Auto EV models.</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/safety-security/evolving-expectations-of-whats-possible/" target="_blank">Evolving expectations of what’s possible</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/helping-disaster-response-teams-asia" target="_blank">Helping disaster response teams turn AI into action across Asia</a></div>
+                <div class="feed-date">03-29</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/903885/150-million-users-later-roblox-competitor-rec-room-is-shutting-down" target="_blank">150 million users later, Roblox competitor Rec Room is shutting down</a></div>
+                <div class="feed-date">03-31</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/30/ai-work-boss-supervisor-us-quinnipiac-poll/" target="_blank">15% of Americans say they’d be willing to work for an AI boss, according to new poll</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/30/ai-work-boss-supervisor-us-quinnipiac-poll/" target="_blank">15% of Americans say they’d be willing to work for an AI boss, according to new poll</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/903543/spring-cleaning-gadgets-vacuums-tools-air-purifiers-amazon-big-spring-sale-2026-deals" target="_blank">Here are our favorite spring cleaning deals from Amazon’s Big Spring Sale</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/30/popular-ai-gateway-startup-litellm-ditches-controversial-startup-delve/" target="_blank">Popular AI gateway startup LiteLLM ditches controversial startup Delve</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/30/popular-ai-gateway-startup-litellm-ditches-controversial-startup-delve/" target="_blank">Popular AI gateway startup LiteLLM ditches controversial startup Delve</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/03/water-utility-announces-its-ditching-fluoride-then-reveals-it-did-so-years-ago/" target="_blank">Water utility announces it's ditching fluoride—then reveals it did so years ago</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/03/30/former-coatue-partner-raises-huge-65m-seed-for-enterprise-ai-agent-startup/" target="_blank">Former Coatue partner raises huge $65M seed for enterprise AI agent startup</a></div>
+                <div class="feed-date">03-30</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=kWrMPR4J1is" target="_blank">🎥 T4EP15 ¿El FIN de OpenAI? Del teléfono robot de Honor al escándalo militar de Sam Altman</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">El mes de marzo ha sido una absoluta locura en el mundo de la tecnología! En este episodio de Breaki...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=u07I19uHBWY" target="_blank">🎥 ChatGPT Vai Ter &#39;Modo Adulto&#39;: OpenAI Preocupa Seus Próprios Conselheiros</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">ChatGPT Vai Ter 'Modo Adulto': OpenAI Preocupa Seus Próprios Conselheiros. Sam Altman anunciou conve...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/openai/codex-plugin-cc" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                openai/codex-plugin-cc
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目结合 Codex 和 Claude Code，为代码审查和任务委派提供新工具，具有实际开发价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/qiuzhi2046/Qclaw" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                qiuzhi2046/Qclaw
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Qclaw 的图形化操作降低了 OpenClaw 的使用门槛，适合非技术用户快速上手。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/WecomTeam/wecom-cli" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                WecomTeam/wecom-cli
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 企业微信命令行工具支持 AI Agent 操作，是集成 AI 与企业应用的创新尝试。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47579229" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Learn Claude Code by doing, not reading
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 通过实践学习 Claude 编程，适合 AI 工程师提升实际编码能力。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47573887" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Bird brains (2023)
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 关于鸟类大脑的研究可能为 AI 提供新的神经网络启发。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47572771" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Mathematical methods and human thought in the age of AI
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨 AI 时代数学方法与人类思维的关系，对理论研究有重要参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2616<br>
+                    Output Tokens: 2232
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年03月31日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
