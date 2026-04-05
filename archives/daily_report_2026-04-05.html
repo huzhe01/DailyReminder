@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年04月05日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月20日**</p><p>**学术突破**  </p><p>今日三篇前沿论文引发关注。《Batched Contextual Reinforcement》提出任务扩展定律，提升推理效率；《No Single Best Model for Diversity》探讨模型多样性优化策略；而《go-$m$HC》则通过广义正交矩阵实现参数化约束连接，为结构学习带来新思路。</p><p>**行业动态**  </p><p>科技领域热点频现：Artemis II登月任务进展顺利，尿液冻结问题成讨论焦点；Peter Thiel押注太阳能牛项圈技术；初创公司Delve与YC分道扬镳；Google强调儿童安全承诺，回应欧盟监管不足。</p><p>**值得关注**  </p><p>马斯克、黄仁勋与Altman最新访谈陆续上线，分别聚焦移民政策、AI芯片趋势及基本收入实验。这些领袖观点不仅反映技术方向，更揭示社会议题与AI发展的深层互动，值得持续追踪。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.02322v1" target="_blank">Batched Contextual Reinforcement: A Task-Scaling Law for Efficient Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Bangji Yang, Hongbo Ma, Jiajun Fan</div>
+                <div class="paper-summary">摘要：使用链式推理（Chain-of-Thought）的大型语言模型在性能上表现强劲，但会因过多的标记消耗而导致推理成本过高。现有的效率优化方法，如显式的长度惩罚、难度估计器或多阶段课程学习，要么降低了推理质量，要么需要复杂的训练流程。我们提出了一种名为“批量上下文强化”（Batched Contextual Reinforcement, BCR）的极简、单阶段训练范式，通过一种简单的结构修改实现高效推理：在共享的上下文窗口中同时解决 N 个问题，并仅根据每个实例的准确性进行奖励。这种设定创造了一个隐式的标记预算，带来了几个关键发现：(1) 我们识别出一种新的任务扩展定律：随着推理过程中并发问题数量 N 的增加，每个问题的标记使用量单调减少，而准确率的下降远比基线更平缓，确立了 N 作为可控吞吐维度的潜力；(2) BCR 在标准的单问题推理中挑战了传统准确率与效率之间的权衡，展现出“免费午餐”现象；在 1.5B 和 4B 模型家族中，BCR 将标记使用量减少了 15.8% 到 62.6%，同时在五个主要数学基准测试中一致维持或提升了准确率；(3) 定性分析揭示了模型自发调节效率的能力，无需显式长度监督即可自主消除冗余的元认知循环；(4) 关键的是，我们实证表明，隐式预算约束成功避免了显式长度惩罚所固有的对抗梯度和灾难性优化崩溃问题，为长度控制提供了一种高度稳定且基于约束的替代方案。这些结果证明了 BCR 的实用性，展示了简单结构激励如何解锁大型语言模型中的高密度推理能力。
+
+核心贡献：本文提出了一种名为“批量上下文强化”的训练方法，通过并发处理多个问题并引入隐式标记预算，在不牺牲甚至提升准确率的前提下显著降低推理成本，并揭示了新的任务扩展规律和自适应效率机制。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-02</span>
+                    <a href="https://arxiv.org/pdf/2604.02322v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.02319v1" target="_blank">No Single Best Model for Diversity: Learning a Router for Sample Diversity</a>
+                </div>
+                <div class="paper-authors">👥 Yuhan Liu, Fangyuan Xu, Vishakh Padmakumar</div>
+                <div class="paper-summary">当面对允许大量有效答案的提示时，全面生成这些答案是满足各类用户需求的第一步。在本文中，我们研究了激发全面有效响应的方法。为此，我们引入了**多样性覆盖率（diversity coverage）**这一指标，该指标衡量预测答案集中每个**唯一**答案相对于相同数量的最佳可能答案集所获得的总质量评分。使用该指标，我们评估了18个大型语言模型（LLMs），发现没有单一模型在应对广泛开放式提示生成多样化响应方面表现最佳。然而，对于每个提示，都存在一个显著优于其他所有模型的表现突出的模型。受此发现启发，我们引入了一个路由器，用于为每个查询预测最佳模型。在NB-Wildchat数据集上，我们训练的路由器优于单个最佳模型基线（26.3% vs 23.8%）。我们还展示了其对领域外数据集（NB-Curated）以及不同答案生成提示策略的泛化能力。我们的工作为在拥有多个模型套件的情况下研究如何生成全面答案奠定了基础。
+
+核心贡献：本文提出了一种基于多样性覆盖率指标的路由机制，能够为不同查询选择最适合生成多样答案的语言模型，并验证了其在多个数据集和生成策略上的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-02</span>
+                    <a href="https://arxiv.org/pdf/2604.02319v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.02309v1" target="_blank">go-$m$HC: Direct Parameterization of Manifold-Constrained Hyper-Connections via Generalized Orthostochastic Matrices</a>
+                </div>
+                <div class="paper-authors">👥 Torque Dandachi, Sophia Diggs-Galligan</div>
+                <div class="paper-summary">双随机矩阵使得在残差流之间进行学习混合成为可能，但如何精确且高效地参数化双随机矩阵集合（Birkhoff多面体）仍然是一个开放性挑战。现有的精确方法随着流的数量 ($d$) 以阶乘方式扩展，而Kronecker因子化方法虽然高效，但表达能力受限。我们引入了一种基于广义正交随机矩阵理论的新颖精确参数化方法，其复杂度为 $\mathcal{O}(d^3)$，并引入了一个单一超参数 $s$，可以连续地在计算高效的边界与完全表达的Birkhoff多面体之间插值。基于一种用于学习动态层连接的框架——Manifold-Constrained Hyper-Connections ($m$HC)，我们将该参数化方法实例化为 go-$m$HC。我们的方法可以自然地与Kronecker因子化方法结合，在相似的FLOP成本下显著恢复了表达能力。谱分析表明，go-$m$HC 比 Kronecker 因子化基线更充分地填充了 Birkhoff 多面体。在合成流混合任务中，go-$m$HC 达到了理论最小损失，并且收敛速度提高了最高10倍。我们在一个30M参数的GPT风格语言模型中验证了我们的方法。go-$m$HC 的表达能力、效率和精确性为将 $d$ 视为模型容量的新维度提供了实用路径。
+
+核心贡献：提出 go-$m$HC 方法，通过广义正交随机矩阵实现对 Birkhoff 多面体的高效精确参数化，从而在流混合任务中实现了更高的表达能力和更快的收敛速度。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-02</span>
+                    <a href="https://arxiv.org/pdf/2604.02309v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.02276v1" target="_blank">De Jure: Iterative LLM Self-Refinement for Structured Extraction of Regulatory Rules</a>
+                </div>
+                <div class="paper-authors">👥 Keerat Guliani, Deepkamal Gill, David Landsman</div>
+                <div class="paper-summary">监管文件编码了法律上具有约束力的义务，基于大语言模型（LLM）的系统必须遵守这些义务。然而，将内容密集且结构层次复杂的法律文本转换为机器可读的规则仍是一个成本高昂、依赖专家的过程。我们提出了De Jure，一个完全自动化的、与领域无关的流水线系统，可以从原始文档中提取结构化监管规则，无需人工标注、领域特定提示或带标签的黄金数据。De Jure通过四个连续阶段运行：将源文档标准化为结构化Markdown；利用LLM进行语义分解为结构化的规则单元；在涵盖元数据、定义和规则语义等19个维度上使用LLM作为“法官”进行多标准评估；并在有限的再生预算内迭代修复低分提取结果，优先修复上游组件后再评估规则单元。我们在金融、医疗保健和AI治理三个监管语料库上评估了De Jure，并测试了四种模型。在金融领域，De Jure在三次由“法官”引导的迭代后实现了稳定且单调的质量提升。De Jure在医疗保健和AI治理领域也表现出良好的泛化能力，在开源和闭源模型中均保持高性能。在下游合规问答任务中，通过RAG方法，基于De Jure提取规则生成的回答在单条规则检索深度下有73.8%的情况下优于现有工作，当检索范围扩大时这一比例上升至84.0%，这证实了高质量的提取直接转化为下游应用的实用性。这些结果表明，在复杂的监管领域中，明确且可解释的评估标准可以替代人工标注，为实现基于监管的大语言模型对齐提供了一种可扩展且可审计的路径。
+
+核心贡献：本文提出了一种全自动、无需人工标注的监管规则提取框架De Jure，通过引入多维评估和迭代优化机制，显著提升了从复杂法律文本中提取结构化规则的准确性和实用性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-02</span>
+                    <a href="https://arxiv.org/pdf/2604.02276v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.02217v1" target="_blank">VISTA: Visualization of Token Attribution via Efficient Analysis</a>
+                </div>
+                <div class="paper-authors">👥 Syed Ahmed, Bharathi Vokkaliga Ganesh, Jagadish Babu P</div>
+                <div class="paper-summary">理解大型语言模型（LLMs）如何从提示中处理信息仍然是一个重大挑战。为了揭示这一“黑箱”，研究人员开发了注意力可视化技术，以捕捉神经元级别的感知机制，并解释模型如何关注输入数据的不同部分。然而，许多现有技术是针对特定模型架构（尤其是Transformer家族）设计的，且通常需要反向传播，导致GPU内存使用量几乎翻倍并增加了计算成本。目前仍缺乏一种轻量级、适用于各种模型的注意力可视化方法。在本文中，我们提出了一种模型无关的词元重要性可视化技术，旨在更深入地了解生成式AI系统如何感知和优先处理输入文本中的信息，而无需增加额外的计算开销。我们的方法结合了扰动策略与三矩阵分析框架，生成相关性图来展示词元对模型预测的贡献。该框架包括：(1) 角度偏差矩阵，用于捕捉语义方向的变化；(2) 幅度偏差矩阵，用于衡量语义强度的变化；以及 (3) 维度重要性矩阵，用于评估各个向量维度上的贡献。通过系统性地移除每个词元并测量其在这三个互补维度上的影响，我们得出一个综合的重要性评分，为词元的重要性提供了一个细致且数学基础扎实的度量方式。为了支持可重复性和促进更广泛的应用，我们提供了所有提出和使用的可解释性技术的开源实现，代码和资源可通过以下链接公开访问：https://github.com/Infosys/Infosys-Responsible-AI-Toolkit
+
+核心贡献：本文提出了一种轻量级、模型无关的词元重要性可视化方法VISTA，通过三矩阵分析框架实现了对生成式AI模型输入处理过程的高效、可解释分析。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-02</span>
+                    <a href="https://arxiv.org/pdf/2604.02217v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.02207v1" target="_blank">Blinded Radiologist and LLM-Based Evaluation of LLM-Generated Japanese Translations of Chest CT Reports: Comparative Study</a>
+                </div>
+                <div class="paper-authors">👥 Yosuke Yamagishi, Atsushi Takamatsu, Yasunori Hamaguchi</div>
+                <div class="paper-summary">Background: Accurate translation of radiology reports is important for multilingual research, clinical communication, and radiology education, but the validity of LLM-based evaluation remains unclear. Objective: To evaluate the educational suitability of LLM-generated Japanese translations of chest CT reports and compare radiologist assessments with LLM-as-a-judge evaluations. Methods: We analyzed 150 chest CT reports from the CT-RATE-JPN validation set. For each English report, a human-edited Japanese translation was compared with an LLM-generated translation by DeepSeek-V3.2. A board-certified radiologist and a radiology resident independently performed blinded pairwise evaluations across 4 criteria: terminology accuracy, readability, overall quality, and radiologist-style authenticity. In parallel, 3 LLM judges (DeepSeek-V3.2, Mistral Large 3, and GPT-5) evaluated the same pairs. Agreement was assessed using QWK and percentage agreement. Results: Agreement between radiologists and LLM judges was near zero (QWK=-0.04 to 0.15). Agreement between the 2 radiologists was also poor (QWK=0.01 to 0.06). Radiologist 1 rated terminology as equivalent in 59% of cases and favored the LLM translation for readability (51%) and overall quality (51%). Radiologist 2 rated readability as equivalent in 75% of cases and favored the human-edited translation for overall quality (40% vs 21%). All 3 LLM judges strongly favored the LLM translation across all criteria (70%-99%) and rated it as more radiologist-like in >93% of cases. Conclusions: LLM-generated translations were often judged natural and fluent, but the 2 radiologists differed substantially. LLM-as-a-judge showed strong preference for LLM output and negligible agreement with radiologists. For educational use of translated radiology reports, automated LLM-based evaluation alone is insufficient; expert radiologist review remains important.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-02</span>
+                    <a href="https://arxiv.org/pdf/2604.02207v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/reaffirming-commitment-to-child-safety/" target="_blank">Reaffirming our commitment to child safety in the face of European Union inaction</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/space/2026/04/artemis-ii-is-going-so-well-that-were-left-to-talk-about-frozen-urine/" target="_blank">Artemis II is going so well that we're left to talk about frozen urine</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/04/unpacking-peter-thiels-big-bet-on-solar-powered-cow-collars/" target="_blank">Peter Thiel’s big bet on solar-powered cow collars</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/04/embattled-startup-delve-has-parted-ways-with-y-combinator/" target="_blank">Embattled startup Delve has ‘parted ways’ with Y Combinator</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/04/tech-companies-are-trying-to-neuter-colorados-landmark-right-to-repair-law/" target="_blank">Tech companies are trying to neuter Colorado’s landmark right-to-repair law</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/907111/murphy-campbell-folk-music-ai-copyright" target="_blank">A folk musician became a target for AI fakes and a copyright troll</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/04/anthropic-says-claude-code-subscribers-will-need-to-pay-extra-for-openclaw-support/" target="_blank">Anthropic says Claude Code subscribers will need to pay extra for OpenClaw usage</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/04/anthropic-says-claude-code-subscribers-will-need-to-pay-extra-for-openclaw-support/" target="_blank">Anthropic says Claude Code subscribers will need to pay extra for OpenClaw usage</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/906843/nintendo-switch-2-game-sale-target-circle-deal" target="_blank">Buy two Nintendo Switch games, get $30 off at Target</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=6fbyiPRhMSs" target="_blank">🎥 Cisco AI Summit | Special live event with Jensen Huang</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live from the Cisco AI Summit, Chuck Robbins, Chair & CEO of Cisco and Jensen Huang, Founder, Presid...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=inxZ5SgAkQs" target="_blank">🎥 Renta Básica Universal ¿Salvación o Control Total? El Experimento de Sam Altman</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">La Renta Básica Universal y Worldcoin están revolucionando el debate económico mundial. Sam Altman, ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=fFNXZAbGGro" target="_blank">🎥 Sam Altman Has ZERO Equity in OpenAI (Scientists May Have Found a Second Sphinx)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Packed episode this week. We cover everything from a startup that lets you order sunlight from your ...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/VoltAgent/awesome-design-md" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                VoltAgent/awesome-design-md
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目收集了多个网站的设计系统文档，为 AI 编码代理提供了构建匹配 UI 的重要参考。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47633855" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Claude Code Found a Linux Vulnerability Hidden for 23 Years
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Claude Code 发现隐藏23年的 Linux 漏洞，展示了 AI 在安全领域的重要潜力。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47638810" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Components of a Coding Agent
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨编码代理的组件，对构建更高效的 AI 开发工具具有启发意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47606244" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Training mRNA Language Models Across 25 Species for $165
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 以低成本训练 mRNA 语言模型，为生物医学领域的 AI 应用提供了新思路。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2287<br>
+                    Output Tokens: 2050
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年04月05日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
