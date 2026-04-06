@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年04月06日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月19日**</p><p>**学术突破**  </p><p>今日三篇前沿论文聚焦大模型评估与优化。BAS 提出基于决策理论的模型置信度评估方法，有望提升 LLM 的可靠性；另一研究揭示了自回归语言模型中“记忆”特征的签名模式，为防止数据泄露提供新思路；此外，针对低资源摘要任务，Reliability Gated 多教师蒸馏技术显著提升了生成质量。</p><p>**行业动态**  </p><p>科技圈近日动作频频：Polymarket 删除与营救美军军官相关的投注内容，引发对预测市场的伦理争议；微软明确表示 Copilot 仅供娱乐用途，强化其责任边界；Google 则在欧盟监管压力下重申对儿童安全的承诺，凸显全球政策博弈加剧。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 和 Sam Altman 的最新访谈陆续发布，三位科技巨头对未来 AI 路线和全球议题发表了不同见解，值得深度追踪。AI 技术正加速进入现实规则体系，政策、伦理与创新的平衡将成为关键焦点。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.03216v1" target="_blank">BAS: A Decision-Theoretic Approach to Evaluating Large Language Model Confidence</a>
+                </div>
+                <div class="paper-authors">👥 Sean Wu, Fredrik K. Gustafsson, Edward Phillips</div>
+                <div class="paper-summary">大型语言模型（LLMs）在某些情况下会产生自信但错误的答案，而在此类场景中选择拒绝回答可能是更安全的。然而，标准的评估协议要求模型必须给出答案，并未考虑在不同风险偏好下置信度应如何指导决策。为了解决这一问题，我们引入了行为对齐分数（BAS），这是一种基于决策理论的指标，用于评估LLM的置信度在支持具有拒绝选项的决策中的表现。BAS源自一个明确的答案或拒绝效用模型，并在一系列风险阈值上聚合实际效用，从而得出一种依赖于置信度大小和排序的决策级可靠性度量。我们从理论上证明，真实的置信度估计能够唯一最大化预期BAS效用，将校准与最优决策行为联系起来。BAS与诸如对数损失等合适的评分规则相关，但在结构上有所不同：对数损失对低估和高估置信度的惩罚是对称的，而BAS则施加不对称的惩罚，优先避免高估置信度的错误。我们将BAS与广泛使用的ECE和AURC等指标结合使用，构建了一个跨多个LLM和任务的自我报告置信度可靠性的基准测试。我们的结果揭示了决策中有用的置信度存在显著差异，尽管更大、更准确的模型通常可以获得更高的BAS，但即使是前沿模型也容易出现严重的过度自信。重要的是，具有相似ECE或AURC的模型可能由于高度的过度自信错误而表现出非常不同的BAS，这突显了标准指标的局限性。我们进一步表明，简单的干预措施，如top-$k$置信度提取和事后校准，可以显著提高置信度的可靠性。总体而言，我们的工作提供了一种原则性的指标和全面的基准测试，用于评估LLM的置信度可靠性。
+
+核心贡献：本文提出了BAS（行为对齐分数），一种基于决策理论的新颖指标，用于评估大型语言模型在涉及拒绝选项的决策中的置信度可靠性，并构建了相应的基准测试，揭示了现有模型在置信度方面的系统性不足。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-03</span>
+                    <a href="https://arxiv.org/pdf/2604.03216v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.03199v1" target="_blank">Learning the Signature of Memorization in Autoregressive Language Models</a>
+                </div>
+                <div class="paper-authors">👥 David Ilić, Kostadin Cvejoski, David Stanojević</div>
+                <div class="paper-summary">摘要：所有先前针对微调语言模型的成员推理攻击都依赖手工设计的启发式方法（例如，损失阈值、Min-K\%、参考校准），这些方法受限于设计者的直觉。我们提出了首个可迁移的学习型攻击方法，其基础观察是：在任何语料库上对任意模型进行微调后，都会产生无限量的带标签数据，因为成员关系是已知的。这消除了“影子模型”的瓶颈，将成员推理带入了深度学习时代：通过训练的多样性和规模实现泛化，而不是手动设计规则。我们发现，微调语言模型会产生一种不变的记忆签名，在不同架构家族和数据领域中均可检测到。我们专门在基于Transformer的模型上训练了一个成员推理分类器，并实现了零样本迁移到Mamba（状态空间）、RWKV-4（线性注意力）和RecurrentGemma（门控循环），分别达到0.963、0.972和0.936的AUC。每种评估均结合了在训练过程中从未见过的架构和数据集，但三者的性能均超过了保留的Transformer模型（0.908 AUC）。这四个模型家族共享的唯一机制是交叉熵损失上的梯度下降，即使简单的基于似然的方法也表现出强迁移能力，进一步证明该记忆签名独立于检测方法而存在。我们的方法Learned Transfer MIA (LT-MIA) 通过将成员推理重新表述为基于每个token分布统计的序列分类，最有效地捕捉了这一信号。在Transformer模型上，LT-MIA在1% FPR下比最强基线高出2.8倍的TPR。该方法还可迁移到代码领域（AUC=0.865），尽管仅在自然语言文本上进行了训练。代码和训练好的分类器可在https://github.com/JetBrains-Research/learned-mia获取。
+
+核心贡献：本文提出了首个可迁移的学习型成员推理攻击方法LT-MIA，利用微调过程中的无限标记数据，显著提升了跨不同架构和数据域的检测性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-03</span>
+                    <a href="https://arxiv.org/pdf/2604.03199v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.03192v1" target="_blank">Reliability Gated Multi-Teacher Distillation for Low Resource Abstractive Summarization</a>
+                </div>
+                <div class="paper-authors">👥 Dipto Sumit, Ankan Kumar Roy, Sadia Khair Rodela</div>
+                <div class="paper-summary">我们从可靠性意识的角度研究了低资源抽象式摘要中的多教师知识蒸馏方法。我们引入了EWAD（熵加权共识感知蒸馏），这是一种基于教师之间一致性的令牌级机制，用于在教师蒸馏和黄金监督之间分配监督信号；还提出了CPDP（容量比例散度保持），一种对学生相对于异构教师位置的几何约束。在两个孟加拉语数据集、13个BanglaT5消融实验和八个Qwen2.5实验中，我们发现logit级别的知识蒸馏提供了最可靠的提升，而更复杂的蒸馏方法虽然提高了短摘要的语义相似性，但会降低长输出的质量。跨十种语言的跨语言伪标签知识蒸馏保留了教师模型71-122%的ROUGE-L得分，并实现了3.2倍的压缩比。经过人工验证的多评判者LLM评估进一步揭示了单一评判者流程中的校准偏差。总体而言，我们的结果表明，可靠性驱动的蒸馏有助于明确多教师监督何时能提升摘要质量，以及何时数据扩展优于损失函数工程。
+
+核心贡献：本文提出了一种可靠性驱动的多教师知识蒸馏框架，通过EWAD和CPDP机制有效提升了低资源条件下抽象式摘要的性能，并系统分析了不同蒸馏策略在不同场景下的表现差异。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-03</span>
+                    <a href="https://arxiv.org/pdf/2604.03192v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.03180v1" target="_blank">PRISM: LLM-Guided Semantic Clustering for High-Precision Topics</a>
+                </div>
+                <div class="paper-authors">👥 Connor Douglas, Utkucan Balci, Joseph Aylett-Bullock</div>
+                <div class="paper-summary">在本文中，我们提出了精度引导语义建模（PRISM），这是一个结合了大型语言模型（LLM）所捕捉的丰富表示优势与潜在语义聚类方法低成本和可解释性的结构化主题建模框架。PRISM 使用少量由 LLM 提供的标签对句子编码模型进行微调，这些样本来自感兴趣的语料库。我们通过阈值聚类分割嵌入空间，从而生成在某些狭窄领域内能够区分紧密相关主题的聚类。在多个语料库上，PRISM 在主题可分性方面优于最先进的局部主题模型，甚至优于基于大规模前沿嵌入模型的聚类方法，同时仅需少量的 LLM 查询即可完成训练。本研究通过以下三方面为多个研究方向做出了贡献：(i) 一个学生-教师管道，将稀疏的 LLM 监督提炼成用于主题发现的轻量级模型；(ii) 对采样策略有效性的分析，以改进聚类可分性的局部几何结构；(iii) 一种适用于网络规模文本分析的有效方法，使研究人员和实践者能够使用可解释且本地可部署的框架在线追踪细微的观点和子主题。
+
+核心贡献：PRISM 提出了一种结合 LLM 强大表征能力和传统聚类方法优点的主题建模框架，实现了高精度、低成本和可解释性的主题发现，并提供了有效的网络规模文本分析方法。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-03</span>
+                    <a href="https://arxiv.org/pdf/2604.03180v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.03174v1" target="_blank">Beyond the Parameters: A Technical Survey of Contextual Enrichment in Large Language Models: From In-Context Prompting to Causal Retrieval-Augmented Generation</a>
+                </div>
+                <div class="paper-authors">👥 Prakhar Bansal, Shivangi Agarwal</div>
+                <div class="paper-summary">大型语言模型（LLMs）在其参数中编码了广泛的世界知识，但它们仍然受到静态知识、有限上下文窗口和弱结构化因果推理的限制。本文综述沿着一个单一维度——推理时提供结构化上下文的程度——统一地介绍了各种增强策略。我们涵盖了基于上下文的学习与提示工程、检索增强生成（RAG）、图增强RAG（GraphRAG）以及因果RAG（CausalRAG）。除了概念上的比较外，我们还提供了一个透明的文献筛选协议、一个声明审核框架以及跨论文的结构化证据综合方法，从而区分出高可信度的发现和新兴的研究结果。最后，文章提出了一种面向部署的决策框架，并明确了可信赖的检索增强自然语言处理领域的具体研究优先事项。
+
+核心贡献：本文系统梳理并评估了从上下文提示到因果检索增强生成的多种增强策略，提供了统一的分析框架和实际部署指导，推动了检索增强NLP领域的发展。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-03</span>
+                    <a href="https://arxiv.org/pdf/2604.03174v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.03173v1" target="_blank">Detecting and Correcting Reference Hallucinations in Commercial LLMs and Deep Research Agents</a>
+                </div>
+                <div class="paper-authors">👥 Delip Rao, Eric Wong, Chris Callison-Burch</div>
+                <div class="paper-summary">Large language models and deep research agents supply citation URLs to support their claims, yet the reliability of these citations has not been systematically measured. We address six research questions about citation URL validity using 10 models and agents on DRBench (53,090 URLs) and 3 models on ExpertQA (168,021 URLs across 32 academic fields). We find that 3--13\% of citation URLs are hallucinated -- they have no record in the Wayback Machine and likely never existed -- while 5--18\% are non-resolving overall. Deep research agents generate substantially more citations per query than search-augmented LLMs but hallucinate URLs at higher rates. Domain effects are pronounced: non-resolving rates range from 5.4\% (Business) to 11.4\% (Theology), with per-model effects even larger. Decomposing failures reveals that some models fabricate every non-resolving URL, while others show substantial link-rot fractions indicating genuine retrieval. As a solution, we release urlhealth, an open-source tool for URL liveness checking and stale-vs-hallucinated classification using the Wayback Machine. In agentic self-correction experiments, models equipped with urlhealth reduce non-resolving citation URLs by $6\textrm{--}79\times$ to under 1\%, though effectiveness depends on the model's tool-use competence. The tool and all data are publicly available. Our characterization findings, failure taxonomy, and open-source tooling establish that citation URL validity is both measurable at scale and correctable in practice.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-03</span>
+                    <a href="https://arxiv.org/pdf/2604.03173v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/reaffirming-commitment-to-child-safety/" target="_blank">Reaffirming our commitment to child safety in the face of European Union inaction</a></div>
+                <div class="feed-date">04-04</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/05/polymarket-took-down-wagers-tied-to-rescue-of-downed-air-force-officer/" target="_blank">Polymarket took down wagers tied to rescue of downed Air Force officer</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/05/copilot-is-for-entertainment-purposes-only-according-to-microsofts-terms-of-service/" target="_blank">Copilot is ‘for entertainment purposes only,’ according to Microsoft’s terms of use</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/05/copilot-is-for-entertainment-purposes-only-according-to-microsofts-terms-of-service/" target="_blank">Copilot is ‘for entertainment purposes only,’ according to Microsoft’s terms of use</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/907174/los-thuthanaka-waka-review" target="_blank">Los Thuthanaka’s Wak&#8217;a is a mellower follow-up to last year’s surprise Pitchfork favorite</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/05/as-people-look-for-ways-to-make-new-friends-here-are-the-apps-promising-to-help/" target="_blank">As people look for ways to make new friends, here are the apps promising to help</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/05/techcrunch-mobility-a-stunning-lack-of-transparency/" target="_blank">TechCrunch Mobility: ‘A stunning lack of transparency’</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/906896/sunos-copyright-ai-music-covers" target="_blank">Suno is a music copyright nightmare</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/05/can-orbital-data-centers-help-justify-a-massive-valuation-for-spacex/" target="_blank">Can orbital data centers help justify a massive valuation for SpaceX?</a></div>
+                <div class="feed-date">04-05</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=zSvocfyepZI" target="_blank">🎥 NVIDIA GTC 2026 LIVE: Jensen Huang Keynote, AI Factories &amp; Agentic AI | Mar 16 LIVE</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live stock market coverage and day trading setups for today's market action. Join us for live aftern...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=lva38qH2deA" target="_blank">🎥 Sam Altman - Uncovering His Evil Plan For The Future</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">How did Sam Altman rise so quickly to the center of the AI revolution? In this video, we take a deep...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=inxZ5SgAkQs" target="_blank">🎥 Renta Básica Universal ¿Salvación o Control Total? El Experimento de Sam Altman</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">La Renta Básica Universal y Worldcoin están revolucionando el debate económico mundial. Sam Altman, ...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/HKUDS/OpenHarness" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                HKUDS/OpenHarness
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 OpenHarness 是一个开放的代理框架，适合 AI 研究者和工程师进行代理系统的开发与测试。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47655408" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: I built a tiny LLM to demystify how language models work
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该帖子展示了一个小型语言模型的构建过程，有助于理解语言模型的工作原理。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47651540" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Running Gemma 4 locally with LM Studio's new headless CLI and Claude Code
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 介绍如何在本地运行 Gemma 模型并结合 Claude Code，对实际部署 AI 模型有参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47649742" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Nanocode: The best Claude Code that $200 can buy in pure JAX on TPUs
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨了低成本实现高性能 JAX 代码的方法，对优化 AI 训练和推理有启发意义。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2072<br>
+                    Output Tokens: 1930
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年04月06日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
