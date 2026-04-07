@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年04月07日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月19日**</p><p>【学术突破】  </p><p>今日三篇前沿论文引发关注：斯坦福团队提出“Dual Roles”模型，首次区分文本生成中的创作者与编辑角色，提升对AI生成内容的细粒度检测能力；TriAttention通过三角函数优化KV缓存，实现高效长推理；QED-Nano则展示了如何训练微型模型证明复杂定理，为边缘计算铺路。</p><p>【行业动态】  </p><p>OpenAI发布“安全研究员计划”，并提出面向智能时代的产业政策蓝图。Meta分享其利用AI梳理数据流水线中隐性知识的方法。NVIDIA CEO黄仁勋在GTC 2026主题演讲中预告新一代工业级AI解决方案。此外，机器人模型GEN-1在多任务执行中达到99%可靠性，推动自动化应用边界。</p><p>【值得关注】  </p><p>马斯克、黄仁勋与Altman近期密集发声，分别涉及移民议题、算力演进与超级智能治理，预示AI将深度介入社会结构与公共政策，值得持续追踪。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.04932v1" target="_blank">Beyond the Final Actor: Modeling the Dual Roles of Creator and Editor for Fine-Grained LLM-Generated Text Detection</a>
+                </div>
+                <div class="paper-authors">👥 Yang Li, Qiang Sheng, Zhengjia Wang</div>
+                <div class="paper-summary">摘要：大型语言模型（LLMs）的滥用要求对合成文本进行精确检测。现有的研究主要采用二分类或三分类设置，最多只能区分纯人工/LLM生成的文本或协作生成的文本，这在复杂的监管需求面前仍显不足，因为经过LLM润色的人类文本和人类风格化的LLM文本往往会导致不同的政策后果。本文探讨了在严格的四分类设置下对细粒度LLM生成文本的检测。为应对这一复杂性，我们提出了RACE（用于创作者-编辑建模的修辞分析），这是一种能够刻画创作者与编辑不同特征的细粒度检测方法。具体而言，RACE利用修辞结构理论构建创作者的基础逻辑图，并提取话语单元级别的特征以捕捉编辑的风格。实验表明，RACE在识别细粒度类型方面优于12种基线方法，且误报率低，为LLM监管提供了一种符合政策导向的解决方案。
+
+核心贡献：本文提出了RACE方法，在严格的四分类设置下实现了对LLM生成文本的细粒度检测，有效区分了不同类型的文本创作行为，为精准监管提供了新思路。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-06</span>
+                    <a href="https://arxiv.org/pdf/2604.04932v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.04921v1" target="_blank">TriAttention: Efficient Long Reasoning with Trigonometric KV Compression</a>
+                </div>
+                <div class="paper-authors">👥 Weian Mao, Xi Lin, Wei Huang</div>
+                <div class="paper-summary">在大型语言模型（LLMs）中进行扩展推理会导致严重的KV缓存内存瓶颈。现有的主流KV缓存压缩方法通过近期的RoPE查询中的注意力分数来估计KV的重要性。然而，在RoPE过程中，查询会随着位置旋转，导致代表性查询非常稀少，从而使得关键项选择不佳，并且推理过程不稳定。为了解决这一问题，我们转向了预RoPE空间，在该空间中观察到Q和K向量高度集中于固定的非零中心，并且在不同位置上保持稳定——即Q/K集中现象。我们证明这种集中性使得查询倾向于关注特定距离的键（例如最近的键），而这些中心通过三角级数决定了哪些距离更受青睐。基于此，我们提出了TriAttention方法，利用这些中心来估计键的重要性。通过三角级数，我们使用由这些中心表征的距离偏好，根据键的位置对它们进行评分，并结合Q/K范数作为另一个重要性估计信号。在AIME25任务中，TriAttention在32K-token生成时能够达到与全注意力相当的推理准确率，同时实现2.5倍的吞吐量或10.7倍的KV内存减少，而现有最先进的基线方法在相同效率下仅能达到约一半的准确率。TriAttention使OpenClaw能够在单个消费级GPU上部署，而使用全注意力则会在长上下文情况下导致内存溢出。
+
+核心贡献：提出TriAttention方法，通过利用预RoPE空间中的Q/K集中现象和三角级数特性，实现了高效、稳定的长序列推理，并显著提升了KV缓存效率。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-06</span>
+                    <a href="https://arxiv.org/pdf/2604.04921v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.04898v1" target="_blank">QED-Nano: Teaching a Tiny Model to Prove Hard Theorems</a>
+                </div>
+                <div class="paper-authors">👥  LM-Provers, Yuxiao Qu, Amrith Setlur</div>
+                <div class="paper-summary">摘要：最近，专有AI系统在复杂证明类问题上展示了令人印象深刻的能力，并在2025年国际数学奥林匹克竞赛（IMO）中实现了金牌级别的表现。然而，这些系统的训练流程大多未公开，且它们依赖于大型的“内部”模型和结构，导致运行成本高、难以复现、研究或改进困难。这引发了一个核心问题：小型开源模型是否也能被训练以在具有挑战性的奥林匹克级别数学任务上实现竞争性推理性能？本文通过构建QED-Nano模型来回答这一问题，这是一个4B参数规模、经过后训练用于解决奥林匹克级别证明问题的小型模型。我们的训练方法包括三个阶段：(1) 监督微调，通过从DeepSeek-Math-V2中蒸馏以培养良好的证明书写风格；(2) 基于评分标准的奖励机制的强化学习（RL）；(3) 扩展RL的推理缓存，将长证明分解为迭代的总结与优化循环，从而增强测试时的推理能力。QED-Nano在证明生成性能上超越了许多更大的开源模型（如Nomos-1和GPT-OSS-120B），并接近专有模型（如Gemini 3 Pro）的表现，但其推理成本仅为后者的一小部分。为了支持进一步的开放数学推理研究，我们发布了完整的QED-Nano训练流程，包括QED-Nano和QED-Nano-SFT模型、FineProofs-SFT和FineProofs-RL数据集以及训练和评估代码。
+
+核心贡献：本文提出QED-Nano，一个高效的小型开源模型，能够在不依赖大模型的情况下，在奥林匹克级别数学证明任务上达到甚至超越现有开源模型的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-06</span>
+                    <a href="https://arxiv.org/pdf/2604.04898v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.04894v1" target="_blank">Rethinking Exploration in RLVR: From Entropy Regularization to Refinement via Bidirectional Entropy Modulation</a>
+                </div>
+                <div class="paper-authors">👥 Hengrui Gu, Xiaotian Han, Yujing Bian</div>
+                <div class="paper-summary">通过可验证奖励的强化学习（RLVR）显著提升了大型语言模型（LLMs）的推理能力。然而，它面临一个被称为“受限探索”的基本限制，即策略迅速收敛到狭窄的解决方案集合。尽管熵正则化是一种常用的维持探索的方法，但它在LLMs上往往不可靠，具有高度的超参数敏感性，并且性能提升有限。受这些低效性的启发，我们重新思考了策略熵与探索之间的关系。通过推导群体相对优势估计的参数化公式并分析熵动态，我们在概念上将策略熵分解为“信息熵”——保留多样化的解决方案路径，以及“虚假熵”——侵蚀推理模式。我们的分析表明，与盲目最大化不同，有效的探索需要“熵精炼”——一种隐含于群体相对优势估计中的机制，可以在正面轨迹中保持信息熵，同时在负面轨迹中抑制虚假熵。基于这一洞察，我们提出了**AsymGRPO**，这是一个显式解耦正负轨迹调制的探索框架。这使得可以独立控制信息熵的保留和虚假噪声的抑制。大量实验表明，AsymGRPO相比强基线方法表现出更优的性能，并显示出与现有熵正则化方法协同的潜力。
+
+核心贡献：提出AsymGRPO框架，通过显式解耦正负轨迹的熵调制，实现更高效、可控的探索，从而提升RLVR在LLMs中的推理能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-06</span>
+                    <a href="https://arxiv.org/pdf/2604.04894v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.04872v1" target="_blank">Synthetic Sandbox for Training Machine Learning Engineering Agents</a>
+                </div>
+                <div class="paper-authors">👥 Yuhang Zhou, Lizhu Zhang, Yifan Wu</div>
+                <div class="paper-summary">随着大型语言模型代理从软件工程（SWE）任务扩展到机器学习工程（MLE），验证代理行为的成本呈数量级增长：虽然SWE任务可以通过快速执行的单元测试进行验证，但MLE的验证需要在每次展开步骤中对大规模数据集运行完整的ML流水线——包括数据预处理、模型训练和指标评估，这使得基于轨迹的在线强化学习（RL）变得过于缓慢。现有方法退而求其次，采用监督微调（SFT）或离线代理奖励，牺牲了在线RL在探索和泛化方面的优势。我们观察到，沙箱数据的大小是这一瓶颈的主要来源。基于这一洞察，我们引入了SandMLE，这是一种多代理框架，可以从少量种子任务中生成多样且可验证的合成MLE环境，在保留现实问题结构和技术复杂性的同时，将数据集限制在微型规模（每个任务仅配对50-200个训练样本）。通过广泛的实验，我们证明SandMLE将执行时间减少了13倍以上，首次在MLE领域实现了大规模的在线轨迹式RL。在MLE-bench-lite上，SandMLE在Qwen3-8B、14B和30B-A3B基线中均显著优于SFT，相对奖牌率提升了20.3%至66.9%。此外，训练后的策略能够泛化到未见过的代理框架，在MLE-Dojo上的人类评分（HumanRank）得分最高提升达32.4%。
+
+核心贡献：SandMLE通过生成微型规模的合成MLE环境，大幅降低了训练成本并首次实现了MLE领域的高效在线强化学习，同时在多个基准测试中取得了显著性能提升。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-06</span>
+                    <a href="https://arxiv.org/pdf/2604.04872v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.04847v1" target="_blank">Full-Duplex-Bench-v3: Benchmarking Tool Use for Full-Duplex Voice Agents Under Real-World Disfluency</a>
+                </div>
+                <div class="paper-authors">👥 Guan-Ting Lin, Chen Chen, Zhehuai Chen</div>
+                <div class="paper-summary">We introduce Full-Duplex-Bench-v3 (FDB-v3), a benchmark for evaluating spoken language models under naturalistic speech conditions and multi-step tool use. Unlike prior work, our dataset consists entirely of real human audio annotated for five disfluency categories, paired with scenarios requiring chained API calls across four task domains. We evaluate six model configurations -- GPT-Realtime, Gemini Live 2.5, Gemini Live 3.1, Grok, Ultravox v0.7, and a traditional Cascaded pipeline (Whisper$\rightarrow$GPT-4o$\rightarrow$TTS) -- across accuracy, latency, and turn-taking dimensions. GPT-Realtime leads on Pass@1 (0.600) and interruption avoidance (13.5\%); Gemini Live 3.1 achieves the fastest latency (4.25~s) but the lowest turn-take rate (78.0\%); and the Cascaded baseline, despite a perfect turn-take rate, incurs the highest latency (10.12~s). Across all systems, self-correction handling and multi-step reasoning under hard scenarios remain the most consistent failure modes.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-06</span>
+                    <a href="https://arxiv.org/pdf/2604.04847v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/04/06/developer-tools/how-meta-used-ai-to-map-tribal-knowledge-in-large-scale-data-pipelines/" target="_blank">How Meta Used AI to Map Tribal Knowledge in Large-Scale Data Pipelines</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-openai-safety-fellowship" target="_blank">Announcing the OpenAI Safety Fellowship</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/industrial-policy-for-the-intelligence-age" target="_blank">Industrial policy for the Intelligence Age</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Y Combinator</div>
+                <div class="feed-title"><a href="https://www.ycombinator.com/blog/welcome-harshita/" target="_blank">Harshita Arora Joins YC as General Partner</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/04/after-court-loss-rfk-jr-gives-himself-more-power-over-cdc-vaccine-panel/" target="_blank">After court loss, RFK Jr. gives himself more power over CDC vaccine panel</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/ai/2026/04/generalists-new-physical-robotics-ai-brings-production-level-success-rates/" target="_blank">From folding boxes to fixing vacuums, GEN-1 robotics model hits 99% reliability</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/04/sports-bets-on-prediction-markets-ruled-to-be-swaps-exempt-from-state-laws/" target="_blank">Sports bets on prediction markets ruled to be "swaps," exempt from state laws</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/06/openai-alums-have-been-quietly-investing-from-a-new-potentially-100m-fund/" target="_blank">OpenAI alums have been quietly investing from a new, potentially $100M fund</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/06/openai-alums-have-been-quietly-investing-from-a-new-potentially-100m-fund/" target="_blank">OpenAI alums have been quietly investing from a new, potentially $100M fund</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/policy/907761/wisconsin-governor-porn-age-verification-vetoed" target="_blank">Wisconsin governor says ‘no’ to age checks for porn</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/science/2026/04/trumps-next-budget-once-again-calls-for-massive-cuts-to-science/" target="_blank">Trump's next budget once again calls for massive cuts to science</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/04/the-problem-is-sam-altman-openai-insiders-dont-trust-ceo/" target="_blank">“The problem is Sam Altman”: OpenAI Insiders don’t trust CEO</a></div>
+                <div class="feed-date">04-06</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=zSvocfyepZI" target="_blank">🎥 NVIDIA GTC 2026 LIVE: Jensen Huang Keynote, AI Factories &amp; Agentic AI | Mar 16 LIVE</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live stock market coverage and day trading setups for today's market action. Join us for live aftern...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=akGBXiX9Igs" target="_blank">🎥 📜 The Intelligence New Deal: Sam Altman’s Blueprint for Superintelligence</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Sam Altman: A New Deal For AI https://technbiz.blogspot.com/2026/04/sam-altman-new-deal-for-ai.html ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=BTHJhbOI4LI" target="_blank">🎥 OpenAI CEO Sam Altman &amp; His Sister&#39;s Shocking Accusations</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Today's stream is about Sam Altman, the accusations against him made by his sister, Annie Altman and...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/santifer/career-ops" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                santifer/career-ops
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 这个AI驱动的求职系统结合了Claude Code，提供了多种技能模式和批量处理功能，对构建自动化招聘工具的研究者有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/safishamsi/graphify" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                safishamsi/graphify
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该工具能够将代码、文档等转化为可查询的知识图谱，为AI编码助手的发展提供了新的方向。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/alchaincyf/nuwa-skill" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                alchaincyf/nuwa-skill
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目专注于蒸馏他人的思维方式，对于研究认知建模和决策启发式的人工智能工程师具有独特吸引力。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47660925" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Issue: Claude Code is unusable for complex engineering tasks with Feb updates
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Claude Code 更新后在复杂工程任务中表现不佳，引发开发者广泛讨论，值得关注其技术问题和改进方向。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47652007" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: Real-time AI (audio/video in, voice out) on an M3 Pro with Gemma E2B
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 展示基于 M3 Pro 实时运行的 AI 音视频处理应用，体现边缘计算与 AI 结合的前沿进展。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47655367" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: Gemma Gem – AI model embedded in a browser – no API keys, no cloud
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Gemma Gem 将 AI 模型嵌入浏览器且无需 API 密钥或云服务，为本地化 AI 应用提供新思路。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2216<br>
+                    Output Tokens: 1846
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年04月07日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
