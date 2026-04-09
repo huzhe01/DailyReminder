@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年04月09日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月19日**</p><p>**学术突破**  </p><p>今日三篇前沿论文引发关注：*Personalized RewardBench* 提出个性化奖励模型评估框架，推动人机对齐研究；*Appear2Meaning* 构建跨文化图像元数据推理基准，拓展视觉与文化语义的融合边界；另一项工作则通过同步上下文无关语法转换，提升大模型在情境翻译中的结构化表现，为多语言处理带来新思路。</p><p>**行业动态**  </p><p>Google 推出 Learn Mode，在 Colab 中提供个性化编程辅导功能，并宣布 AI 驱动的 Google Finance 将扩展至超 100 国。Meta 发布 *Trust But Canary*，提出规模化配置安全机制，强化系统鲁棒性。此外，Gemini 新增笔记本功能，助力项目组织管理；Elon Musk 在访谈中谈及移民政策，言论持续引发热议。</p><p>**值得关注**  </p><p>NVIDIA CEO 黄仁勋 GTC 2026 主旨演讲预告、Sam Altman “Scam Altman”事件争议不断发酵，值得关注其后续影响及AI伦理治理趋势。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.07343v1" target="_blank">Personalized RewardBench: Evaluating Reward Models with Human Aligned Personalization</a>
+                </div>
+                <div class="paper-authors">👥 Qiyao Ma, Dechen Gao, Rui Cai</div>
+                <div class="paper-summary">个性化奖励基准测试（Personalized RewardBench）：评估与人类对齐的个性化奖励模型  
+多极化对齐已成为大型语言模型（LLM）发展中的关键前沿领域，而奖励模型（RMs）作为捕捉多样化人类价值观的核心机制发挥着重要作用。尽管通用响应质量的基准测试已经较为普遍，但如何评估奖励模型在考虑个体用户偏好方面的表现仍然是一个开放性挑战。为了解决这一问题，我们提出了 Personalized RewardBench，这是一种全新的基准测试方法，旨在严格评估奖励模型在建模个性化偏好方面的能力。我们根据严格遵循（或违反）特定用户评分标准的原则构建了“选择”和“拒绝”的响应对，确保每对之间的偏好差异完全针对个人定制。特别是，人工评估确认了这对之间区分的主要因素是严格的个人偏好，且两个响应在一般质量（如正确性、相关性和有用性）上均保持较高水平。广泛的测试表明，现有的最先进奖励模型在个性化方面存在显著困难，最高准确率仅为 75.94%。至关重要的是，由于有效的奖励模型基准应能预测其在下游任务中的表现，我们进行了实验，证明与现有基线相比，我们的基准在 Best-of-N（BoN）采样和近端策略优化（PPO）中与下游性能的相关性显著更高。这些发现确立了 Personalized RewardBench 作为评估奖励模型在下游应用中表现的稳健且准确的代理工具的地位。
+
+核心贡献：本文提出 Personalized RewardBench，这是一个用于评估奖励模型在个性化偏好建模能力上的新基准，具有更高的下游任务预测相关性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-08</span>
+                    <a href="https://arxiv.org/pdf/2604.07343v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.07338v1" target="_blank">Appear2Meaning: A Cross-Cultural Benchmark for Structured Cultural Metadata Inference from Images</a>
+                </div>
+                <div class="paper-authors">👥 Yuechen Jiang, Enze Zhang, Md Mohsinul Kabir</div>
+                <div class="paper-summary">近年来，视觉-语言模型（VLM）在文化遗产图像描述方面取得了进展。然而，从视觉输入中推断结构化的文化元数据（例如创作者、起源地、时期等）仍鲜有研究。我们为此任务引入了一个多类别、跨文化的基准，并通过一个以大语言模型为评判者的框架对VLM进行评估，该框架衡量模型输出与参考标注之间的语义一致性。为了评估文化推理能力，我们在不同文化区域的精确匹配、部分匹配和属性级别准确率上进行了报告。结果表明，模型能够捕捉到零散的信息，并在不同文化和元数据类型之间表现出显著的性能差异，导致预测结果不一致且缺乏坚实依据。这些发现突显了当前VLM在超越视觉感知的文化结构化元数据推断方面的局限性。
+
+核心贡献：提出了一个多类别、跨文化的基准，用于评估视觉-语言模型在从图像中推断结构化文化元数据方面的表现，并揭示了现有模型在此任务上的不足。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-08</span>
+                    <a href="https://arxiv.org/pdf/2604.07338v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.07320v1" target="_blank">Evaluating In-Context Translation with Synchronous Context-Free Grammar Transduction</a>
+                </div>
+                <div class="paper-authors">👥 Jackson Petty, Jaulie Goe, Tal Linzen</div>
+                <div class="paper-summary">低资源语言对基于大型语言模型（LLMs）的机器翻译提出了挑战，因为这些模型需要大量训练数据。一种可能绕过这种数据依赖性的方法是利用LLMs根据上下文中的语言描述（如教科书和词典）进行翻译的能力。为此，LLMs必须能够推断出语言的语法描述与具体句子之间的联系。我们通过一个形式化的类比任务来隔离这种能力：基于在上下文中提供的形式语法进行字符串转换。我们构建了同步上下文无关文法，定义了成对的形式语言，以模拟自然语言的语法、形态和书写表示方面的特定属性。使用这些文法，我们测量了在给定文法和源语言句子的情况下，LLMs将句子从一种形式语言翻译为另一种形式语言的效果。我们调整了文法的大小、句子的长度、语言的句法和形态特性以及它们的书写系统。我们得出了三个主要发现。首先，LLMs的翻译准确性随着文法规模和句子长度的增加而显著下降。其次，源语言和目标语言在形态和书写表示上的差异会严重影响模型性能。第三，我们分析了模型犯错的类型，发现它们最容易出现的问题包括错误地回忆目标语言词汇、生成新词或未能将源语言词汇翻译。
+
+核心贡献：本文提出了一种基于同步上下文无关文法的形式化方法，用于评估大型语言模型在无训练数据情况下的上下文内翻译能力，并揭示了模型在不同语言结构和文本特征下的表现限制与常见错误模式。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-08</span>
+                    <a href="https://arxiv.org/pdf/2604.07320v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.07285v1" target="_blank">Why teaching resists automation in an AI-inundated era: Human judgment, non-modular work, and the limits of delegation</a>
+                </div>
+                <div class="paper-authors">👥 Songhee Han</div>
+                <div class="paper-summary">在人工智能泛滥的时代，关于教育中人工智能的争论通常将教学描绘为一种模块化和程序化的可以日益被自动化或委托给技术的工作。本文认为，这种观点建立在将教学视为比实际情况更容易分离的基础上。借助近期关于大型语言模型和检索增强生成系统的文献与实证研究，我认为尽管人工智能可以在某些有限的功能上提供支持，但教学工作由于其本质上的解释性、关系性和基于专业判断的特点，难以以有意义的方式实现自动化。更根本的是，教学与学习受到人类认知、行为、动机和社会互动的影响，这些因素无法被完全规定、预测或详尽建模。那些在原则上看似可分离的任务，在实践中其教学价值来源于对学习者、情境和关系的持续情境性解读。只要教育实践依赖于对人类认知和学习的涌现式理解，教学就将继续是一种难以自动化的专业工作。人工智能或许能提升信息获取并辅助特定的教学活动，但它无法取代有效教学所需的人类判断和关系责任。
+
+核心贡献：本文挑战了教学工作可以被AI自动化的观点，强调教学因其解释性、关系性和基于专业判断的本质而具有抗自动化特性，并指出AI在教育中的作用是辅助而非替代人类教师的核心职能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-08</span>
+                    <a href="https://arxiv.org/pdf/2604.07285v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.07274v1" target="_blank">A Systematic Study of Retrieval Pipeline Design for Retrieval-Augmented Medical Question Answering</a>
+                </div>
+                <div class="paper-authors">👥 Nusrat Sultana, Abdullah Muhammad Moosa, Kazi Afzalur Rahman</div>
+                <div class="paper-summary">大型语言模型（LLMs）在医学问答任务中表现出强大的能力；然而，纯粹的参数化模型常常面临知识空白和事实基础有限的问题。检索增强生成（RAG）通过将外部知识检索整合到推理过程中来解决这一限制。尽管基于RAG的医疗系统越来越受到关注，但各个检索组件对性能的影响仍不够明确。本研究利用MedQA USMLE基准测试和结构化的教科书知识库，对检索增强型医学问答进行了系统的评估。我们在一个包含四十种配置的统一实验框架下，分析了语言模型、嵌入模型、检索策略、查询重构以及交叉编码器重排序之间的相互作用。结果表明，检索增强显著提高了零样本医学问答的性能。最佳配置是结合查询重构和重排序的密集检索，达到了60.49%的准确率。研究还发现，领域专用的语言模型比通用模型更能有效利用检索到的医学证据。进一步的分析揭示了检索效果与计算成本之间的明显权衡，较简单的密集检索配置在保持较高吞吐量的同时也提供了良好的性能。所有实验均在一个消费级GPU上完成，证明在有限的计算资源下也可以进行检索增强型医学问答系统的系统性评估。
+
+核心贡献：本文系统地评估了不同检索组件对医学问答性能的影响，并展示了在有限计算资源下实现高效检索增强医学问答的方法。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-08</span>
+                    <a href="https://arxiv.org/pdf/2604.07274v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.07272v1" target="_blank">ClickGuard: A Trustworthy Adaptive Fusion Framework for Clickbait Detection</a>
+                </div>
+                <div class="paper-authors">👥 Chhavi Dhiman, Naman Chawla, Riya Dhami</div>
+                <div class="paper-summary">The widespread use of clickbait headlines, crafted to mislead and maximize engagement, poses a significant challenge to online credibility. These headlines employ sensationalism, misleading claims, and vague language, underscoring the need for effective detection to ensure trustworthy digital content. The paper introduces, ClickGuard: a trustworthy adaptive fusion framework for clickbait detection. It combines BERT embeddings and structural features using a Syntactic-Semantic Adaptive Fusion Block (SSAFB) for dynamic integration. The framework incorporates a hybrid CNN-BiLSTM to capture patterns and dependencies. The model achieved 96.93% testing accuracy, outperforming state-of-the-art approaches. The model's trustworthiness is evaluated using LIME and Permutation Feature Importance (PFI) for interpretability and perturbation analysis. These methods assess the model's robustness and sensitivity to feature changes by measuring the average prediction variation. Ablation studies validated the SSAFB's effectiveness in optimizing feature fusion. The model demonstrated robust performance across diverse datasets, providing a scalable, reliable solution for enhancing online content credibility by addressing syntactic-semantic modelling challenges. Code of the work is available at: https://github.com/palindromeRice/ClickBait_Detection_Architecture</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-08</span>
+                    <a href="https://arxiv.org/pdf/2604.07272v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/04/08/security/trust-but-canary-configuration-safety-at-scale-meta-tech-podcast/" target="_blank">Trust But Canary: Configuration Safety at Scale</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/colab-updates/" target="_blank">Introducing Learn Mode: your personal coding tutor in Google Colab</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/search/google-finance-expansion/" target="_blank">The new, AI-powered Google Finance is expanding to more than 100 countries.</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/next-phase-of-enterprise-ai" target="_blank">The next phase of enterprise AI</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/products/gemini-app/notebooks-gemini-notebooklm/" target="_blank">Try notebooks in Gemini to easily keep track of projects</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/retail-sales-ai/" target="_blank">AI is changing retail. Here’s how businesses can keep up.</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-child-safety-blueprint" target="_blank">Introducing the Child Safety Blueprint</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/chrome/new-chrome-productivity-features/" target="_blank">Get more done with new vertical tabs and immersive reading mode in Chrome</a></div>
+                <div class="feed-date">04-07</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/909031/google-gemini-notebooks-notebooklm" target="_blank">Gemini gets notebooks to help you organize projects</a></div>
+                <div class="feed-date">04-09</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/907802/dyson-hushjet-mini-cool-handheld-personal-fan-specs-availability" target="_blank">Dyson made a handheld version of its iconic fans</a></div>
+                <div class="feed-date">04-09</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/04/trump-admin-seeks-medical-records-of-federal-workers-for-vague-reasons/" target="_blank">Trump admin makes sweeping request for medical records of federal workers</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/08/wireguard-vpn-developer-cant-ship-software-updates-after-microsoft-locks-account/" target="_blank">WireGuard VPN developer can’t ship software updates after Microsoft locks account</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/08/avride-self-driving-car-austin-kills-duck-mueller/" target="_blank">A self-driving car in Texas hit and killed a mother duck, sparking neighborhood outrage</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/04/linkedin-scanning-users-browser-extensions-sparks-controversy-and-two-lawsuits/" target="_blank">LinkedIn scanning users' browser extensions sparks controversy and two lawsuits</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/08/poke-makes-ai-agents-as-easy-as-sending-a-text/" target="_blank">Poke makes using AI agents as easy as sending a text</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/08/poke-makes-ai-agents-as-easy-as-sending-a-text/" target="_blank">Poke makes using AI agents as easy as sending a text</a></div>
+                <div class="feed-date">04-08</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=zSvocfyepZI" target="_blank">🎥 NVIDIA GTC 2026 LIVE: Jensen Huang Keynote, AI Factories &amp; Agentic AI | Mar 16 LIVE</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live stock market coverage and day trading setups for today's market action. Join us for live aftern...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=H98oQZkJwQA" target="_blank">🎥 Scam Altman</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">So, OpenAI bought a podcast? For possibly hundreds of millions? Most importantly, it wasn't us? Our ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=GJQFPcoogME" target="_blank">🎥 Sam Altman’s MisAI-lignment of OpenAI’s Financial Reality</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Dan Nathan and Gene Munster of Deepwater Asset Management discuss tech stocks heading into Q1 earnin...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/LaurieWired/tailslayer" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                LaurieWired/tailslayer
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 tailslayer 是一个用于降低 RAM 读取尾延迟的 C++ 库，对系统性能优化有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/afar1/fieldtheory-cli" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                afar1/fieldtheory-cli
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 fieldtheory-cli 提供了一个开源 CLI 工具，方便用户管理 X/Twitter 收藏，适合前端开发者和工具爱好者。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/farzaa/clicky" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                farzaa/clicky
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 clicky 是一个 Swift 实现的项目，因其较高的关注度可能包含有价值的技术实现或创新点。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47689174" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                MegaTrain: Full Precision Training of 100B+ Parameter LLMs on a Single GPU
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 介绍了在单个 GPU 上训练 100B+ 参数大模型的技术，对大规模模型训练有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47693047" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Claude Managed Agents
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Claude 推出托管代理功能，展示了 AI 代理技术的最新进展和应用潜力。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47695647" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                The AI Great Leap Forward
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨了 AI 技术发展的重大飞跃，适合关注 AI 行业趋势的研究者阅读。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 1981<br>
+                    Output Tokens: 1678
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年04月09日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
