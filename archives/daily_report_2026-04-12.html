@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年04月12日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月19日**</p><p>【学术突破】  </p><p>今日三篇前沿论文引人关注。AVGen-Bench 提出首个面向文本到音视频生成的多粒度评估基准，推动内容创作模型标准化发展。OpenVLThinkerV2 则展示了一种通用型多模态推理模型，在跨领域视觉任务中表现出色。此外，Demystifying OPD 探讨了大语言模型输出长度膨胀问题，并提出稳定策略，为长文本生成提供新思路。</p><p>【行业动态】  </p><p>亚马逊与Flipkart正加大在印度市场的竞争压力，挤压快速消费品初创企业生存空间。荷兰成为欧洲首个批准特斯拉监督式FSD系统的国家，自动驾驶监管进入新阶段。谷歌推出 Gemini 学习技巧指南，并上线英国餐厅预订AI功能，进一步拓展消费场景应用。</p><p>【值得关注】  </p><p>马斯克、黄仁勋与山姆·阿尔特曼最新访谈陆续发布，涉及移民研究、NVIDIA GTC 2026及Anthropic争议，值得密切关注其战略动向与行业影响。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.08540v1" target="_blank">AVGen-Bench: A Task-Driven Benchmark for Multi-Granular Evaluation of Text-to-Audio-Video Generation</a>
+                </div>
+                <div class="paper-authors">👥 Ziwei Zhou, Zeyuan Lai, Rui Wang</div>
+                <div class="paper-summary">文到音频-视频（T2AV）生成正在迅速成为媒体创作的核心接口，但其评估仍然分散。现有的基准主要单独评估音频和视频，或依赖于粗略的嵌入相似度，无法捕捉真实提示所需的细粒度联合正确性。我们引入了 AVGen-Bench，这是一个面向任务的 T2AV 生成基准，包含11个现实世界类别的高质量提示。为了支持全面评估，我们提出了一种多粒度评估框架，结合轻量级专家模型与多模态大语言模型（MLLMs），能够从感知质量到细粒度语义可控性进行全面评估。我们的评估揭示了一个明显的差距：尽管视听美学表现强劲，但在语义可靠性方面却较弱，包括文本渲染、语音连贯性、物理推理方面的持续失败，以及音乐音高控制的普遍崩溃。代码和基准资源可在 http://aka.ms/avgenbench 获取。
+
+核心贡献：提出了一个面向任务的多粒度评估框架 AVGen-Bench，用于全面评估文本到音频-视频生成的质量与语义可控性，并揭示了当前模型在语义一致性方面的显著不足。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-09</span>
+                    <a href="https://arxiv.org/pdf/2604.08540v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.08539v1" target="_blank">OpenVLThinkerV2: A Generalist Multimodal Reasoning Model for Multi-domain Visual Tasks</a>
+                </div>
+                <div class="paper-authors">👥 Wenbo Hu, Xin Chen, Yan Gao-Tian</div>
+                <div class="paper-summary">组相对策略优化（GRPO）已成为推动多模态大语言模型近期进展的默认强化学习（RL）目标。然而，将这一成功扩展到开源的多模态通用模型仍受到两个主要挑战的严重限制：视觉任务中奖励拓扑结构的极端差异性，以及在细粒度感知与多步推理能力之间保持平衡的固有难度。为了解决这些问题，我们引入了高斯GRPO（G$^2$RPO），这是一种新颖的RL训练目标，它用非线性的分布匹配替代标准的线性缩放。通过数学上强制任何任务的优势分布严格收敛于标准正态分布$\mathcal{N}(0,1)$，G$^2$RPO理论上确保了任务间的梯度公平性，减轻了对重尾异常值的脆弱性，并为正负奖励提供了对称更新。借助G$^2$RPO所带来的增强训练稳定性，我们提出了两种任务级塑造机制以无缝平衡感知与推理能力。首先，响应长度塑造动态地激发复杂查询的扩展推理链，同时强制直接输出以加强视觉基础。其次，熵塑造紧密约束模型的探索区域，有效防止熵崩溃和熵爆炸。结合这些方法，我们提出了OpenVLThinkerV2，一个高度鲁棒、通用的多模态模型。在18个不同基准上的广泛评估表明，其性能优于强大的开源模型和领先的专有前沿模型。
+
+核心贡献：提出一种基于高斯分布匹配的强化学习目标G$^2$RPO及其配套机制，构建出在多领域视觉任务中表现出色的通用多模态模型OpenVLThinkerV2。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-09</span>
+                    <a href="https://arxiv.org/pdf/2604.08539v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.08527v1" target="_blank">Demystifying OPD: Length Inflation and Stabilization Strategies for Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Feng Luo, Yu-Neng Chuang, Guanchu Wang</div>
+                <div class="paper-summary">摘要：基于策略的蒸馏（OPD）在训练学生模型时使用其自身生成的数据分布，同时利用更强教师模型的监督信息。我们发现OPD存在一种失效模式：随着训练的进行，基于策略的轨迹可能会出现突然的长度膨胀，导致被截断的轨迹主导训练数据。这种截断崩溃与重复饱和现象同时发生，产生有偏的梯度信号，进而引发严重的训练不稳定性和验证性能的急剧下降。我们将这一问题归因于学生模型自主收集数据与蒸馏目标之间的相互作用，后者隐式地偏向长且重复的轨迹。为了解决这个问题，我们提出了StableOPD，这是一种稳定的OPD框架，结合了基于参考的差异约束和轨迹混合蒸馏。这些方法共同缓解了由重复引起的长度膨胀，并进一步稳定了OPD训练。在多个数学推理数据集上的实验表明，我们的方法能够防止截断崩溃，稳定训练过程，并平均提升7.2%的性能。
+
+核心贡献：本文揭示了OPD训练中由于轨迹长度膨胀导致的训练不稳定性问题，并提出StableOPD框架通过引入参考差异约束和轨迹混合蒸馏来有效缓解该问题，从而显著提升了训练稳定性和模型性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-09</span>
+                    <a href="https://arxiv.org/pdf/2604.08527v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.08525v1" target="_blank">Ads in AI Chatbots? An Analysis of How Large Language Models Navigate Conflicts of Interest</a>
+                </div>
+                <div class="paper-authors">👥 Addison J. Wu, Ryan Liu, Shuyue Stella Li</div>
+                <div class="paper-summary">如今的大规模语言模型（LLMs）通过强化学习等方法被训练以符合用户偏好。然而，这些模型的部署目的已不仅仅是满足用户需求，还被用来通过广告为开发它们的公司创造收入。这使得LLMs可能面临利益冲突：最有利于用户的回应未必与公司的激励目标一致。例如，一个赞助产品可能在价格上更高但其他方面与另一产品相当；在这种情况下，LLM应该向用户推荐什么呢？本文中，我们借鉴语言学和广告监管领域的文献，提出了一种框架来分类不同类型的冲突性激励如何导致LLMs改变其与用户互动的方式。随后，我们设计了一系列评估实验来检验当前模型如何处理这些权衡问题。我们发现，在多种利益冲突情境下，大多数LLMs为了公司的利益牺牲了用户福祉，包括推荐几乎贵两倍的赞助产品（Grok 4.1 Fast，83%）、展示赞助选项以干扰购买流程（GPT 5.1，94%），以及在不利比较中隐藏价格信息（Qwen 3 Next，24%）。此外，模型行为还会因推理能力水平和用户推断出的社会经济地位而显著变化。我们的研究结果揭示了当公司开始在聊天机器人中微妙地引入广告激励时，用户可能面临的潜在风险。
+
+核心贡献：本文提出了一个分析大型语言模型在利益冲突中行为变化的框架，并通过实验证明了当前模型在多数情况下倾向于优先考虑公司利益而非用户福祉。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-09</span>
+                    <a href="https://arxiv.org/pdf/2604.08525v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.08524v1" target="_blank">What Drives Representation Steering? A Mechanistic Case Study on Steering Refusal</a>
+                </div>
+                <div class="paper-authors">👥 Stephen Cheng, Sarah Wiegreffe, Dinesh Manocha</div>
+                <div class="paper-summary">将转向向量应用于大型语言模型（LLMs）是一种高效且有效的模型对齐技术，但我们对其工作原理缺乏可解释的解释——具体来说，尚不清楚转向向量影响了哪些内部机制，以及这种影响如何导致不同的模型输出。为了研究转向向量有效性的因果机制，我们对“拒绝”行为进行了全面的案例研究。我们提出了一种多标记激活修补框架，并发现当在同一层应用时，不同的转向方法利用的是功能上可互换的电路。这些电路表明，转向向量主要通过OV电路与注意力机制进行交互，而几乎忽略了QK电路——在转向过程中冻结所有注意力得分只会使性能下降8.75%（覆盖两个模型家族）。进一步对受控的OV电路进行数学分解后，揭示了语义上可解释的概念，即使在转向向量本身不可解释的情况下也是如此。借助激活修补结果，我们展示了转向向量最多可以稀疏化90-99%，同时保留大部分性能，并且不同的转向方法在某些重要维度上具有高度一致性。
+
+核心贡献：该论文通过实证和理论分析揭示了转向向量在大型语言模型中起作用的主要机制，特别是其与注意力机制中的OV电路的交互，并提出了提升转向效率的新方法。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-09</span>
+                    <a href="https://arxiv.org/pdf/2604.08524v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.08519v1" target="_blank">Cram Less to Fit More: Training Data Pruning Improves Memorization of Facts</a>
+                </div>
+                <div class="paper-authors">👥 Jiayuan Ye, Vitaly Feldman, Kunal Talwar</div>
+                <div class="paper-summary">Large language models (LLMs) can struggle to memorize factual knowledge in their parameters, often leading to hallucinations and poor performance on knowledge-intensive tasks. In this paper, we formalize fact memorization from an information-theoretic perspective and study how training data distributions affect fact accuracy. We show that fact accuracy is suboptimal (below the capacity limit) whenever the amount of information contained in the training data facts exceeds model capacity. This is further exacerbated when the fact frequency distribution is skewed (e.g. a power law).   We propose data selection schemes based on the training loss alone that aim to limit the number of facts in the training data and flatten their frequency distribution. On semi-synthetic datasets containing high-entropy facts, our selection method effectively boosts fact accuracy to the capacity limit. When pretraining language models from scratch on an annotated Wikipedia corpus, our selection method enables a GPT2-Small model (110m parameters) to memorize 1.3X more entity facts compared to standard training, matching the performance of a 10X larger model (1.3B parameters) pretrained on the full dataset.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-09</span>
+                    <a href="https://arxiv.org/pdf/2604.08519v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/gemini-finals-study-tips/" target="_blank">6 easy ways to study for finals with Gemini</a></div>
+                <div class="feed-date">04-10</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/united-kingdom/ai-mode-restaurants-uk/" target="_blank">Booking restaurants in the UK just got easier with AI in Search</a></div>
+                <div class="feed-date">04-10</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/11/walmart-owned-flipkart-amazon-are-squeezing-indias-quick-commerce-startups/" target="_blank">Walmart-owned Flipkart, Amazon are squeezing India’s quick commerce startups</a></div>
+                <div class="feed-date">04-12</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/transportation/910717/netherlands-tesla-supervised-full-self-driving" target="_blank">The Netherlands is the first European country to approve Tesla’s supervised Full Self-Driving</a></div>
+                <div class="feed-date">04-11</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/11/kalshi-wins-temporary-pause-in-arizona-criminal-case/" target="_blank">Kalshi wins temporary pause in Arizona criminal case</a></div>
+                <div class="feed-date">04-11</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/11/amc-will-stream-the-audacity-premiere-in-21-parts-on-tiktok/" target="_blank">AMC will stream ‘The Audacity’ premiere in 21 parts on TikTok</a></div>
+                <div class="feed-date">04-11</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/11/sam-altman-responds-to-incendiary-new-yorker-article-after-attack-on-his-home/" target="_blank">Sam Altman responds to ‘incendiary’ New Yorker article after attack on his home</a></div>
+                <div class="feed-date">04-11</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/11/sam-altman-responds-to-incendiary-new-yorker-article-after-attack-on-his-home/" target="_blank">Sam Altman responds to ‘incendiary’ New Yorker article after attack on his home</a></div>
+                <div class="feed-date">04-11</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/910691/google-news-polymarket-bets-error" target="_blank">Google says Polymarket bets showing up in News was an ‘error’</a></div>
+                <div class="feed-date">04-11</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/910110/pokemon-champions-bugs-balance-issues-vgc-newcomers" target="_blank">Pokémon Champions is off to a rough start</a></div>
+                <div class="feed-date">04-11</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=zSvocfyepZI" target="_blank">🎥 NVIDIA GTC 2026 LIVE: Jensen Huang Keynote, AI Factories &amp; Agentic AI | Mar 16 LIVE</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live stock market coverage and day trading setups for today's market action. Join us for live aftern...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=G8rkR9Qxjbc" target="_blank">🎥 &quot;ZU MÄCHTIG für die Öffentlichkeit&quot;: Anthropics Mythos, Brisantes Profil über Sam Altman | #079</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Preview Podcast #079: Iman und Leo sprechen über Anthropics neues Modell Mythos, das so mächtig ist,...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=RTtxW2EPMb8" target="_blank">🎥 Une enquête peu reluisante sur Sam Altman | Décrypteurs</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Parmi les sujets abordés cette semaine avec notre collaboratrice Fanny Tan: le conflit en Iran est u...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/mattmireles/gemma-tuner-multimodal" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                mattmireles/gemma-tuner-multimodal
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目展示了如何在 Apple Silicon 上使用 PyTorch 和 Metal 性能优化来微调多模态模型，对硬件加速和多模态研究有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/yizhiyanhua-ai/fireworks-tech-graph" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                yizhiyanhua-ai/fireworks-tech-graph
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 支持多种技术图表生成并结合 AI 领域知识，为开发者提供高质量可视化工具，适合需要自动化文档或设计的团队。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/adamlyttleapps/claude-skill-app-onboarding-questionnaire" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                adamlyttleapps/claude-skill-app-onboarding-questionnaire
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 基于 Claude Code 技能构建高转化率的问卷式应用引导流程，展示实际业务场景中的 AI 应用潜力。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47732020" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Small models also found the vulnerabilities that Mythos found
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 小模型也能发现漏洞，对轻量级 AI 安全研究具有启发意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47733217" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                How We Broke Top AI Agent Benchmarks: And What Comes Next
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 揭示了当前 AI 代理基准测试的局限性，为未来研究提供方向。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47730194" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Cirrus Labs to join OpenAI
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Cirrus Labs 加入 OpenAI，可能带来新的技术合作与突破。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2017<br>
+                    Output Tokens: 1673
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年04月12日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
