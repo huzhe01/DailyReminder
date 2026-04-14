@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年04月14日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月20日**</p><p>**学术突破**  </p><p>今日三篇前沿论文揭示大模型新动向：斯坦福团队提出“心理概念神经元”理论，探索LLM中偏见生成与控制机制；CLSGen框架实现分类与解释的联合概率建模，提升模型可解释性；C-ReD则构建首个基于真实用户提示的中文AI文本检测基准，推动内容安全研究。</p><p>**行业动态**  </p><p>科技界动作频频：OpenAI收购个人理财AI初创公司Hiro，加速金融领域布局；谷歌宣布为4万名制造业员工提供AI培训，并推出多项教育类AI工具；Cloudflare Agent Cloud联合OpenAI推动企业代理工作流落地，AI应用进入规模化阶段。</p><p>**值得关注**  </p><p>马斯克、黄仁勋与Altman近期言论持续引发热议。NVIDIA CEO黄仁勋发布GTC 2026主题演讲预告，预示新一轮算力竞赛将启；Elon Musk在访谈中提及移民议题，侧面反映AI对社会结构的潜在影响；Sam Altman则面对争议发声，强调AI发展需平衡创新与安全。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.11802v1" target="_blank">Psychological Concept Neurons: Can Neural Control Bias Probing and Shift Generation in LLMs?</a>
+                </div>
+                <div class="paper-authors">👥 Yuto Harada, Hiro Taiyo Hamada</div>
+                <div class="paper-summary">摘要：通过使用如大五人格等心理构念，大型语言模型（LLMs）可以模仿特定的人格特征并预测用户的人格。尽管LLMs能够表现出与这些构念一致的行为，但它们在模型内部如何表示以及如何与行为输出相关联仍然不清楚。为了解决这一问题，我们聚焦于问卷操作化的大五构念，分析其内部表征的形成和定位，并使用干预手段来研究这些表征如何与行为输出相关联。在我们的实验中，首先利用探针技术考察大五信息在模型深度中的出现位置；然后识别对每个大五构念具有选择性反应的神经元，并测试增强或抑制这些神经元的激活是否能偏向潜在表征和标签生成的方向。我们发现，大五信息在早期层中迅速变得可解码，并持续到最终层；而具有概念选择性的神经元主要集中在中间层，并且在不同领域之间重叠有限。对这些神经元进行干预后，探针读数会一致地向目标概念偏移，某些概念的成功率甚至超过0.8，表明模型内部对大五人格特质的分离可以被因果引导。在标签生成层面，同样的干预通常会使生成的标签分布向预期方向偏移，但效果较弱、依赖于具体概念，并常伴随跨特质的溢出效应，这表明即使干预大量概念选择性神经元，也难以实现对生成标签的完全控制。总体而言，我们的研究揭示了LLMs中表征控制与行为控制之间的差距。
+
+核心贡献：本文首次系统性地识别并操控LLMs中与大五人格相关的神经元，揭示了模型内部表征与行为输出之间的因果关系及其控制差异。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-13</span>
+                    <a href="https://arxiv.org/pdf/2604.11802v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.11801v1" target="_blank">CLSGen: A Dual-Head Fine-Tuning Framework for Joint Probabilistic Classification and Verbalized Explanation</a>
+                </div>
+                <div class="paper-authors">👥 WonJin Yoon, Kangyu Zhu, Ian Bulovic</div>
+                <div class="paper-summary">随着大型语言模型（LLMs）的最新进展，人们越来越有兴趣将这些模型应用于解决复杂和具有挑战性的问题。现代LLMs能够处理长上下文并生成语言化的解释，在应对现实世界的应用方面展现出巨大的潜力。然而，将LLMs用于实际决策时面临的一个关键障碍是它们无法提供可靠、定量的概率估计。虽然使用传统的判别目标对LLMs进行任务特定的微调（类似于仅编码器模型）可以获得概率估计，但这通常会导致灾难性遗忘和语言崩溃。结果，模型失去了生成解释的能力，严重削弱了其可解释性和可用性。为了解决这一问题，我们提出了CLSGen，一种专为二分类任务设计的新型LLM微调框架。CLSGen框架包含一种新的模型架构、训练方法和数据构建策略，能够在不牺牲模型内在解释生成能力的前提下实现稳健的概率估计。在多个基准数据集上的实验结果表明，使用CLSGen微调的模型在分类指标（AUROC和F1分数）上优于现有基线。在解释方面，预测标签与生成的理由之间表现出高度一致性，并且具有较高的可读性。
+
+核心贡献：CLSGen提出了一种新颖的双头微调框架，实现了在保持语言模型生成解释能力的同时，提高二分类任务中的概率估计性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-13</span>
+                    <a href="https://arxiv.org/pdf/2604.11801v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.11796v1" target="_blank">C-ReD: A Comprehensive Chinese Benchmark for AI-Generated Text Detection Derived from Real-World Prompts</a>
+                </div>
+                <div class="paper-authors">👥 Chenxi Qing, Junxi Wu, Zheng Liu</div>
+                <div class="paper-summary">最近，大型语言模型（LLMs）能够生成高度流畅的文本内容。尽管它们为人类提供了显著的便利性，但也带来了诸如网络钓鱼和学术不端等各类风险。因此，大量研究致力于开发检测AI生成文本的算法并构建相关数据集。然而，在中文语料库领域，仍存在诸多挑战，例如模型多样性不足和数据同质化问题。为了解决这些问题，我们提出了C-ReD：一个全面的基于真实提示的中文AI生成文本检测基准。实验表明，C-ReD不仅能够实现可靠的域内检测，还支持对未见过的LLM和外部中文数据集的强泛化能力，弥补了以往中文检测基准在模型多样性、领域覆盖和提示真实性方面的关键不足。我们的资源已发布在 https://github.com/HeraldofLight/C-ReD。
+
+核心贡献：提出C-ReD，一个解决中文AI生成文本检测中模型多样性、领域覆盖和提示真实性不足问题的综合性基准。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-13</span>
+                    <a href="https://arxiv.org/pdf/2604.11796v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.11778v1" target="_blank">General365: Benchmarking General Reasoning in Large Language Models Across Diverse and Challenging Tasks</a>
+                </div>
+                <div class="paper-authors">👥 Junlin Liu, Shengnan An, Shuang Zhou</div>
+                <div class="paper-summary">当代大语言模型（LLMs）在数学和物理等专业领域展现了卓越的推理能力。然而，它们将这些推理技能推广到更广泛和通用情境中的能力——通常被称为通用推理——仍鲜有研究。与特定领域的推理不同，通用推理依赖较少的专业知识，但仍面临复杂的约束条件、嵌套逻辑分支和语义干扰等重大挑战。为填补这一空白，我们引入了General365，这是一个专门用于评估LLM通用推理能力的基准测试。通过将背景知识限制在K-12水平，General365明确地将推理与专业知识解耦。该基准包括8个类别中的365个种子问题和1,095个变体问题，确保了高难度和多样性。对26个领先LLM的评估表明，即使表现最好的模型也仅达到62.8%的准确率，这与LLM在数学和物理基准测试中接近完美的表现形成鲜明对比。这些结果表明，当前LLM的推理能力高度依赖于特定领域，在更广泛的应用场景中仍有显著提升空间。我们期望General365能推动LLM的推理能力从特定任务扩展到稳健的通用现实场景。
+
+核心贡献：提出了General365基准测试，用于评估大语言模型在脱离专业知识背景下的通用推理能力，并揭示了当前模型在该领域表现有限的问题。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-13</span>
+                    <a href="https://arxiv.org/pdf/2604.11778v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.11749v1" target="_blank">HistLens: Mapping Idea Change across Concepts and Corpora</a>
+                </div>
+                <div class="paper-authors">👥 Yi Jing, Weiyun Qiu, Yihang Peng</div>
+                <div class="paper-summary">语言变化既反映了又塑造了社会进程，基础概念的语义演变提供了衡量历史和社会变迁的可追踪痕迹。尽管在历时语义和话语分析方面取得了最近进展，但现有的计算方法往往（i）集中于单一概念或单一语料库，使得在异质来源之间难以比较发现结果；（ii）局限于表面词汇证据，在概念隐含表达时缺乏足够的计算和解释粒度。我们提出了HistLens，一个基于SAE的统一框架，用于多概念、多语料库的概念史分析。该框架将概念表示分解为可解释的特征，并跟踪其在时间与不同来源中的激活动态，从而在共享坐标系统中生成可比较的概念轨迹。在长期跨度新闻语料上的实验表明，HistLens支持跨概念、跨语料库的思想演变模式计算，并能够处理隐含概念的计算。通过连接概念建模与解释需求，HistLens拓宽了社会科学和人文学科在历时文本分析方面的分析视角和方法工具。
+
+核心贡献：HistLens 提出了一种基于自编码器的统一框架，实现了跨概念和跨语料库的细粒度思想演变分析，提升了对隐含概念的建模能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-13</span>
+                    <a href="https://arxiv.org/pdf/2604.11749v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.11742v1" target="_blank">Discourse Diversity in Multi-Turn Empathic Dialogue</a>
+                </div>
+                <div class="paper-authors">👥 Hongli Zhan, Emma S. Gueorguieva, Javier Hernandez</div>
+                <div class="paper-summary">Large language models (LLMs) produce responses rated as highly empathic in single-turn settings (Ayers et al., 2023; Lee et al., 2024), yet they are also known to be formulaic generators that reuse the same lexical patterns, syntactic templates, and discourse structures across tasks (Jiang et al., 2025; Shaib et al., 2024; Namuduri et al., 2025). Less attention has been paid to whether this formulaicity extends to the level of discourse moves, i.e., what a response does for the person it is addressing. This question is especially consequential for empathic dialogue, where effective support demands not just a kind response at one moment but varied strategies as a conversation unfolds (Stiles et al., 1998). Indeed, prior work shows that LLMs reuse the same tactic sequences more than human supporters in single-turn settings (Gueorguieva et al., 2026). We extend this analysis to multi-turn conversations and find that the rigidity compounds: once a tactic appears in a supporter turn, LLMs reuse it in the next at nearly double the rate of humans (0.50-0.56 vs. 0.27). This pattern holds across LLMs serving as supporters in real emotional support conversations, and is invisible to standard similarity metrics. To address this gap, we introduce MINT (Multi-turn Inter-tactic Novelty Training), the first reinforcement learning framework to optimize discourse move diversity across multi-turn empathic dialogue. The best MINT variant combines an empathy quality reward with a cross-turn tactic novelty signal, improving aggregate empathy by 25.3% over vanilla across 1.7B and 4B models while reducing cross-turn discourse move repetition by 26.3% on the 4B model, surpassing all baselines including quality-only and token-level diversity methods on both measures. These results suggest that what current models lack is not empathy itself, but the ability to vary their discourse moves across a conversation.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-13</span>
+                    <a href="https://arxiv.org/pdf/2604.11742v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/google-org/manufacturing-institute-ai-training/" target="_blank">New AI training for 40,000 manufacturing workers</a></div>
+                <div class="feed-date">04-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/ai-tools-programs-educators/" target="_blank">From test prep to graduation, our latest AI tools support learners</a></div>
+                <div class="feed-date">04-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/cloudflare-openai-agent-cloud" target="_blank">Enterprises power agentic workflows in Cloudflare Agent Cloud with OpenAI</a></div>
+                <div class="feed-date">04-13</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/13/an-amazon-warehouse-worker-died-on-the-job-at-oregon-facility/" target="_blank">An Amazon warehouse worker died on the job at Oregon facility</a></div>
+                <div class="feed-date">04-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/13/openai-has-bought-ai-personal-finance-startup-hiro/" target="_blank">OpenAI has bought AI personal finance startup Hiro</a></div>
+                <div class="feed-date">04-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/13/openai-has-bought-ai-personal-finance-startup-hiro/" target="_blank">OpenAI has bought AI personal finance startup Hiro</a></div>
+                <div class="feed-date">04-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/911423/openai-sam-altman-attack" target="_blank">Daniel Moreno-Gama is facing federal charges for attacking Sam Altman&#8217;s home and OpenAI’s HQ</a></div>
+                <div class="feed-date">04-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/transportation/911196/mercedes-benz-eqs-ev-range-battery-charging-2027" target="_blank">The Mercedes EQS returns with massive range and charging gains</a></div>
+                <div class="feed-date">04-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/gaming/2026/04/retro-rewind-re-creates-the-glorious-drudgery-of-working-a-90s-video-store/" target="_blank">Retro Rewind re-creates the glorious drudgery of working a '90s video store</a></div>
+                <div class="feed-date">04-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/04/airport-measles-case-reported-in-idaho-state-with-lowest-vaccination-rate/" target="_blank">Measles takes a plane to Idaho, which has worst vaccination rate in US</a></div>
+                <div class="feed-date">04-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/911340/justin-bieber-youtube-coachella" target="_blank">Justin Bieber&#8217;s YouTube Coachella set had nothing to do with who owns his music</a></div>
+                <div class="feed-date">04-13</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=zSvocfyepZI" target="_blank">🎥 NVIDIA GTC 2026 LIVE: Jensen Huang Keynote, AI Factories &amp; Agentic AI | Mar 16 LIVE</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live stock market coverage and day trading setups for today's market action. Join us for live aftern...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=mOeKsjNZnbQ" target="_blank">🎥 Sam Altman&#39;s House Molotov&#39;d, Anthropic&#39;s Mythos Changes Everything, Meta is Back | Neural Nest #15</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">OpenAI just had its worst week since the 2023 board coup — insiders told the New Yorker that Sam Alt...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=IUgaTImsPmk" target="_blank">🎥 FBI, SFPD update on attacks on Sam Altman&#39;s home, OpenAI HQ | KTVU</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Watch FOX LOCAL San Francisco live for the latest breaking news from San Francisco, Oakland, San Jos...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/hexiecs/talk-normal" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                hexiecs/talk-normal
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提供一种让大型语言模型更自然表达的系统提示，对提升AI对话质量有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/whwangovo/pyre-code" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                whwangovo/pyre-code
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 自托管的机器学习编程练习平台，涵盖多种前沿技术问题，适合实践和教学使用。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/obdev/littlesnitch-linux" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                obdev/littlesnitch-linux
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Little Snitch 的 Linux 版本开源组件，为网络安全监控提供了 Rust 实现的参考案例。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47756772" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                GAIA – Open-source framework for building AI agents that run on local hardware
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 开源框架GAIA为在本地硬件上构建AI代理提供了新选择，值得关注。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47744255" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                I ran Gemma 4 as a local model in Codex CLI
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Gemma 4作为本地模型在Codex CLI中的运行展示了轻量级AI模型的实用性。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47758028" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Stanford report highlights growing disconnect between AI insiders and everyone
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 斯坦福报告揭示了AI领域内外认知的差异，对研究者理解行业生态有重要参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2056<br>
+                    Output Tokens: 1643
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年04月14日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
