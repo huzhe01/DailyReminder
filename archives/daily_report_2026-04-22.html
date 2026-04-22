@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年04月22日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月19日**</p><p>**学术突破**  </p><p>今日三篇前沿论文聚焦大模型的逻辑推理与知识生成能力。《Discovering a Shared Logical Subspace》提出通过对齐自然语言与符号化视角，提升LLM的逻辑推理性能；《An Answer is just the Start》则探索开放文档问答中如何生成相关洞见，推动AI从“答”走向“思”。这些研究为构建更智能、更具解释性的AI系统提供了新路径。</p><p>**行业动态**  </p><p>Meta持续加码AI训练数据，计划记录员工键盘输入用于模型优化，引发隐私争议。同时，Google推出Continued Conversation功能，使Gemini在家庭场景下实现更自然对话交互。Redwood Materials则裁员10%以重组业务，专注能源存储领域，反映科技企业战略调整趋势。</p><p>**值得关注**  </p><p>Elon Musk近日接受Don Lemon专访，围绕移民议题展开深入讨论；NVIDIA CEO黄仁勋发布GTC 2026主题演讲预告，预示下一代AI芯片与计算架构革新；而Sam Altman被指“说谎”，舆论风波或影响OpenAI未来走向。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.19716v1" target="_blank">Discovering a Shared Logical Subspace: Steering LLM Logical Reasoning via Alignment of Natural-Language and Symbolic Views</a>
+                </div>
+                <div class="paper-authors">👥 Feihao Fang, My T. Thai, Yuanyuan Lei</div>
+                <div class="paper-summary">大型语言模型（LLMs）在多步骤逻辑推理方面仍然存在困难。现有的方法要么纯粹优化自然语言形式中的推理链，要么将符号求解器作为外部模块附加。在这项工作中，我们提出一个不同的问题：LLMs是否包含一个共享的内部逻辑子空间，能够同时对齐自然语言和符号语言视角下的推理过程？我们的假设是，这个逻辑子空间捕捉了LLMs中跨不同视角共享的逻辑推理能力，而与表面形式无关。为了验证这一点，我们使用典型相关分析（CCA）来处理来自自然语言和符号语言推理链的配对残差激活，学习一个具有最大跨视角相关性的低维子空间。此外，我们设计了一种无需训练的方法，使LLMs的推理链沿着该逻辑子空间进行，从而利用两个视角下互补的推理信号。在四个逻辑推理基准上的实验表明，我们的方法有效，准确率最高提高了11个百分点，并且在域外问题上也表现出良好的泛化能力。
+
+核心贡献：本文提出一种无需训练的方法，通过对齐自然语言和符号语言视角，发现并利用LLMs中的共享逻辑子空间，显著提升了多步骤逻辑推理的性能和泛化能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-21</span>
+                    <a href="https://arxiv.org/pdf/2604.19716v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.19699v1" target="_blank">Epistemic orientation in parliamentary discourse is associated with deliberative democracy</a>
+                </div>
+                <div class="paper-authors">👥 Segun Aroyehun, Stephan Lewandowsky, David Garcia</div>
+                <div class="paper-summary">在民主审议和治理中，对真理的追求至关重要，然而政治话语反映了不同的认识论倾向，从基于可验证信息的实证推理到以信念和主观解释为基础的直觉推理不等。我们引入了一种可扩展的方法来衡量认识论倾向，即通过大型语言模型（LLM）评分和基于嵌入的语义相似性计算得出的“证据减去直觉”（Evidence--Minus--Intuition, EMI）得分。我们将这一方法应用于七个不同国家1946年至2025年间共1500万段议会演讲内容，研究了话语的时间模式及其与审议民主和治理的关系。我们发现，EMI得分与各国随时间推移的审议民主水平呈正相关，在同时期和滞后分析中均表现出一致关系。此外，EMI还与作为治理维度之一的法律透明度和可预测实施程度呈正相关。这些发现表明，政治话语的认识论特征对于民主质量和治理效果具有关键意义。
+
+核心贡献：本文提出了一种可扩展的量化方法（EMI得分），用于衡量政治话语中的认识论倾向，并揭示其与审议民主及治理质量之间的正向关联。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-21</span>
+                    <a href="https://arxiv.org/pdf/2604.19699v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.19685v1" target="_blank">An Answer is just the Start: Related Insight Generation for Open-Ended Document-Grounded QA</a>
+                </div>
+                <div class="paper-authors">👥 Saransh Sharma, Pritika Ramu, Aparna Garimella</div>
+                <div class="paper-summary">回答开放性问题对人工智能系统来说仍然具有挑战性，因为它需要超越事实检索的综合能力、判断力和探索能力，而用户通常会通过多次迭代来完善答案，而不是接受单一的回答。现有的问答基准并未明确支持这一改进过程。为了解决这一空白，我们引入了一个新任务——基于文档的相关洞察生成，其目标是从文档集合中生成额外的见解，以帮助改进、扩展或重新思考开放性问题的初步答案，从而最终支持更丰富的用户交互和更好的整体问答体验。我们整理并发布了 SCOpE-QA（用于开放性问答的科学文献集），这是一个包含 20 个研究文献集中的 3,000 个开放性问题的数据集。我们提出了 InsightGen，这是一种两阶段的方法：首先使用聚类构建文档集合的主题表示，然后基于主题图的邻域选择选取相关上下文，利用大语言模型生成多样且相关的见解。在 3,000 个问题上的广泛评估表明，在两种生成模型和两种评估设置下，InsightGen 能够持续生成有用、相关且可操作的见解，为这一新任务建立了强大的基线。
+
+核心贡献：本文提出了一个新的基于文档的相关洞察生成任务，并提出了一个两阶段方法 InsightGen，同时发布了一个名为 SCOpE-QA 的大规模数据集，为开放性问答提供了更丰富和互动性强的解决方案。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-21</span>
+                    <a href="https://arxiv.org/pdf/2604.19685v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.19678v1" target="_blank">Exploring Language-Agnosticity in Function Vectors: A Case Study in Machine Translation</a>
+                </div>
+                <div class="paper-authors">👥 Nurkhan Laiyk, Gerard I. Gállego, Javier Ferrando</div>
+                <div class="paper-summary">函数向量（FVs）是在上下文学习过程中从模型激活中提取的任务的向量表示。虽然先前的研究表明，多语言模型的表示可以是语言无关的，但尚不清楚函数向量是否也具有这一特性。我们以机器翻译为案例研究，探讨FVs是否表现出语言无关性。在三个仅解码器的多语言大语言模型中，我们发现从单一英语→目标语言方向提取的翻译FVs可以迁移到其他目标语言，并一致地提高了多个未见过的语言中正确翻译词元的排名。消融实验结果表明，移除FV会降低跨语言的翻译性能，但对不相关任务的影响较小。我们进一步证明，基础模型的FVs可以迁移到指令调优的变体，并部分地从词级推广到句级翻译。
+
+核心贡献：本文首次验证了翻译任务中的函数向量在多语言场景下具有语言无关性，并展示了其在不同语言和任务变体中的迁移能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-21</span>
+                    <a href="https://arxiv.org/pdf/2604.19678v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.19667v1" target="_blank">Chat2Workflow: A Benchmark for Generating Executable Visual Workflows with Natural Language</a>
+                </div>
+                <div class="paper-authors">👥 Yi Zhong, Buqiang Xu, Yijun Wang</div>
+                <div class="paper-summary">目前，可执行的可视化工作流已成为现实世界工业部署中的主流范式，因其具有较强的可靠性和可控性。然而，在当前实践中，这些工作流几乎完全依赖于人工工程：开发人员必须仔细设计工作流，为每个步骤编写提示，并随着需求的变化反复修改逻辑——这使得开发过程成本高昂、耗时且容易出错。为了研究大型语言模型是否能够自动化这一多轮交互过程，我们引入了Chat2Workflow，这是一个直接从自然语言生成可执行可视化工作流的基准测试集，并提出了一种鲁棒的代理框架以缓解重复执行错误。Chat2Workflow基于大量真实业务工作流构建，每个实例均设计为生成的工作流可以转换并直接部署到实际工作流平台（如Dify和Coze）。实验结果表明，尽管最先进的语言模型通常能够捕捉高层意图，但在生成正确、稳定且可执行的工作流方面仍存在困难，尤其是在复杂或变化的需求下。尽管我们的代理框架最多可带来5.34%的解决率提升，但剩余的实际差距使Chat2Workflow成为推动工业级自动化的基础。代码可在https://github.com/zjunlp/Chat2Workflow获取。
+
+核心贡献：Chat2Workflow提出了一个用于评估从自然语言生成可执行可视化工作流能力的基准测试集及鲁棒框架，揭示了当前语言模型在该任务上的局限性，并为工业级自动化提供了研究基础。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-21</span>
+                    <a href="https://arxiv.org/pdf/2604.19667v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.19656v1" target="_blank">Pause or Fabricate? Training Language Models for Grounded Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Yiwen Qiu, Linjuan Wu, Yizhou Liu</div>
+                <div class="paper-summary">Large language models have achieved remarkable progress on complex reasoning tasks. However, they often implicitly fabricate information when inputs are incomplete, producing confident but unreliable conclusions -- a failure mode we term ungrounded reasoning. We argue that this issue arises not from insufficient reasoning capability, but from the lack of inferential boundary awareness -- the ability to recognize when the necessary premises for valid inference are missing. To address this issue, we propose Grounded Reasoning via Interactive Reinforcement Learning (GRIL), a multi-turn reinforcement learning framework for grounded reasoning under incomplete information. GRIL decomposes the reasoning process into two stages: clarify and pause, which identifies whether the available information is sufficient, and grounded reasoning, which performs task solving once the necessary premises are established. We design stage-specific rewards to penalize hallucinations, enabling models to detect gaps, stop proactively, and resume reasoning after clarification. Experiments on GSM8K-Insufficient and MetaMATH-Insufficient show that GRIL significantly improves premise detection (up to 45%), leading to a 30% increase in task success while reducing average response length by over 20%. Additional analyses confirm robustness to noisy user responses and generalization to out-of-distribution tasks.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-21</span>
+                    <a href="https://arxiv.org/pdf/2604.19656v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2604.19550v1" target="_blank">LoopCTR: Unlocking the Loop Scaling Power for Click-Through Rate Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Jiakai Tang, Runfeng Zhang, Weiqiu Wang</div>
+                <div class="paper-summary">摘要：通过堆叠更多参数来扩展基于Transformer的点击率（CTR）模型会带来日益增长的计算和存储开销，导致扩展目标与工业部署严格限制之间的差距不断扩大。我们提出了LoopCTR，引入了一种循环扩展范式，通过递归重用共享模型层，在训练时增加计算量的同时将计算与参数增长解耦。LoopCTR采用带有超连接残差和专家混合结构的三明治架构，并在每个循环深度上应用过程监督，以将多循环优势编码到共享参数中。这使得模型能够采用“训练多循环、推理零循环”的策略，即在不使用任何循环的情况下进行一次前向传播即可超越所有基线。在三个公开基准和一个工业数据集上的实验表明了其最先进的性能。进一步的Oracle分析揭示了仍有0.02–0.04 AUC的未开发潜力，且训练中使用较少循环的模型表现出更高的Oracle上限，指向了自适应推理的有前景的研究方向。
+
+核心贡献：提出LoopCTR，一种通过循环机制实现计算与参数解耦的CTR预测模型，实现了高效训练与轻量推理的统一。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-04-21</span>
+                    <a href="https://arxiv.org/pdf/2604.19550v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/04/21/ml-applications/modernizing-the-facebook-groups-search-to-unlock-the-power-of-community-knowledge/" target="_blank">Modernizing the Facebook Groups Search to Unlock the Power of Community Knowledge</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-design-md/" target="_blank">Stitch’s DESIGN.md format is now open-source so you can use it across platforms.</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/devices/how-to-use-gemini-continued-conversation/" target="_blank">Make chats more natural and efficient with Continued Conversation, now in Gemini for Home</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/next-generation-gemini-deep-research/" target="_blank">Deep Research Max: a step change for autonomous research agents</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/ads-advisor-google-ads/" target="_blank">3 new ways Ads Advisor is making Google Ads safer and faster</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/teacher-of-the-year-2026/" target="_blank">How educators can help students reach their full potential</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/google-labs/pomelli-in-europe/" target="_blank">Google brings Pomelli in English to small businesses in Europe.</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/scaling-codex-to-enterprises-worldwide" target="_blank">Scaling Codex to enterprises worldwide</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/21/redwood-materials-lays-off-10-in-restructuring-to-chase-energy-storage-business/" target="_blank">Redwood Materials lays off 10% in restructuring to chase energy storage business</a></div>
+                <div class="feed-date">04-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/21/meta-will-record-employees-keystrokes-and-use-it-to-train-its-ai-models/" target="_blank">Meta will record employees’ keystrokes and use it to train its AI models</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/21/meta-will-record-employees-keystrokes-and-use-it-to-train-its-ai-models/" target="_blank">Meta will record employees’ keystrokes and use it to train its AI models</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/21/unauthorized-group-has-gained-access-to-anthropics-exclusive-cyber-tool-mythos-report-claims/" target="_blank">Unauthorized group has gained access to Anthropic’s exclusive cyber tool Mythos, report claims</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/21/unauthorized-group-has-gained-access-to-anthropics-exclusive-cyber-tool-mythos-report-claims/" target="_blank">Unauthorized group has gained access to Anthropic’s exclusive cyber tool Mythos, report claims</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/21/spacex-is-working-with-cursor-and-has-an-option-to-buy-the-startup-for-60-billion/" target="_blank">SpaceX is working with Cursor and has an option to buy the startup for $60B</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/04/21/spacex-is-working-with-cursor-and-has-an-option-to-buy-the-startup-for-60-billion/" target="_blank">SpaceX is working with Cursor and has an option to buy the startup for $60B</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/science/916427/spacex-cursor-potential-deal-acquisition" target="_blank">SpaceX cuts a deal to maybe buy Cursor for $60 billion</a></div>
+                <div class="feed-date">04-21</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=zSvocfyepZI" target="_blank">🎥 NVIDIA GTC 2026 LIVE: Jensen Huang Keynote, AI Factories &amp; Agentic AI | Mar 16 LIVE</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Live stock market coverage and day trading setups for today's market action. Join us for live aftern...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=XgWm-03yvqg" target="_blank">🎥 Sam Altman is a LIAR.</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oUq8kaCjk4c" target="_blank">🎥 Sam Altman Is Lying. That&#39;s the Job.</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Sam Altman is lying about OpenAI's roadmap. Hunter's take: that's not a bug, that's the gig. Hunter ...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/alchaincyf/huashu-design" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                alchaincyf/huashu-design
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Huashu Design 提供了在 Claude Code 中使用 HTML 原生设计技能的高保真原型和动画工具，适合 AI 工程师探索交互式界面生成。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/VoltAgent/awesome-claude-design" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                VoltAgent/awesome-claude-design
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Awesome Claude Design 汇集了多个设计系统灵感，为 AI 研究者提供了快速构建 UI 的参考资源。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/SteveTheKiller/KillerPDF" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                SteveTheKiller/KillerPDF
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 KillerPDF 是一个轻量级 PDF 编辑器，适用于需要处理文档数据的研究场景，且无订阅或监控问题。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47850212" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                CrabTrap: An LLM-as-a-judge HTTP proxy to secure agents in production
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 CrabTrap 提出了一种通过 LLM 判断的 HTTP 代理方法，用于在生产环境中保护 AI 代理的安全性，具有实际应用价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47849097" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: GoModel – an open-source AI gateway in Go
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 GoModel 是一个开源的 AI 网关实现，为开发者提供了轻量级部署和管理 AI 模型的新选择。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47844269" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Anthropic says OpenClaw-style Claude CLI usage is allowed again
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Anthropic 允许再次使用 OpenClaw 风格的 Claude CLI，对开发者社区和工具生态有直接影响。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2133<br>
+                    Output Tokens: 1811
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年04月22日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
