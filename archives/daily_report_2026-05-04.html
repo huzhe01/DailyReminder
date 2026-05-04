@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年05月04日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月19日**</p><p>**学术突破**  </p><p>近期多项研究聚焦大模型在程序性任务中的表现。《When LLMs Stop Following Steps》揭示语言模型在执行多步骤流程时可能出现的偏差；《Can Coding Agents Reproduce Findings in Computational Materials Science?》则探讨AI代理能否复现材料科学计算成果；《RunAgent》提出通过约束引导提升自然语言计划的可解释性，为智能系统开发提供新思路。</p><p>**行业动态**  </p><p>科技新闻持续发酵：TikTok用户发起“拯救Spirit航空”行动引发关注；知名插画师指控某AI初创公司盗用其作品用于训练模型，凸显版权争议加剧。同时，AI领域高管动向频繁，马斯克、黄仁勋与萨姆·奥尔特曼等人物成为焦点。</p><p>**值得关注**  </p><p>今日简报涵盖前沿论文、社会反响与高层访谈，反映出AI技术发展与伦理挑战并行的趋势。值得关注的是，AI应用正从实验室走向现实世界，其影响已超越技术边界，进入法律、文化与公众意识层面。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.00817v1" target="_blank">When LLMs Stop Following Steps: A Diagnostic Study of Procedural Execution in Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Sailesh Panda, Pritam Kadasi, Abhishek Upperwal</div>
+                <div class="paper-summary">大型语言模型（LLMs）在推理基准测试中通常表现出色，但最终答案的准确性并不能反映它们是否忠实地执行了提示中指定的步骤。我们通过一个针对程序性执行的可控诊断基准来研究这个问题，在该基准中，模型被提供一个分步进行的算术算法和两个数字输入，并需要返回最终计算结果。该基准使用简单的算术操作，但通过算法长度和中间变量上的回溯依赖关系来增加复杂性。在14个模型和55个数据集上，平均首次回答的准确率从5步过程的61%下降到95步过程的20%。生成级别的分析表明，失败通常涉及缺少答案、过早给出答案、初始错误后的自我纠正、执行轨迹不完整以及编造额外步骤。这些发现表明，表面上的推理能力可能掩盖了在忠实执行指令方面存在的重大弱点。
+
+核心贡献：本文提出了一种用于评估语言模型在长序列程序性任务中执行能力的可控诊断基准，并揭示了随着步骤增加，模型性能显著下降及常见的执行错误类型。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-01</span>
+                    <a href="https://arxiv.org/pdf/2605.00817v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.00803v1" target="_blank">Can Coding Agents Reproduce Findings in Computational Materials Science?</a>
+                </div>
+                <div class="paper-authors">👥 Ziyang Huang, Yi Cao, Ali K. Shargh</div>
+                <div class="paper-summary">摘要：大型语言模型正越来越多地被部署为自主的编码代理，并在软件工程基准测试中表现出色。然而，这种成功是否可以推广到计算科学工作流程中仍不清楚，因为在这些任务中不仅需要强大的编码能力，还需要能够处理复杂的、领域特定的程序，并在科学主张的背景下解释结果。为了解决这个问题，我们提出了AutoMat，这是一个用于评估基于大语言模型的代理在计算材料科学中复现主张能力的基准。AutoMat设定了三个相互关联的挑战：恢复未明确说明的计算过程、导航专业工具链以及判断所得证据是否支持某个主张。通过与领域专家密切合作，我们整理了一组来自真实材料科学论文的主张，以测试编码代理能否恢复并执行支持（或削弱）这些主张所需的端到端工作流程。我们随后在多个基础模型上评估了多种代表性的编码代理设置。结果显示，当前基于大语言模型的代理在AutoMat上的总体成功率较低，表现最好的设置也仅达到54.1%的成功率。进一步的错误分析表明，当必须仅从论文文本中重建工作流程时，代理的表现最差，其失败的主要原因包括流程不完整、方法偏离和执行脆弱性。综合来看，这些发现使AutoMat成为一个计算科学可重复性基准，同时也是诊断AI赋能科研场景中代理系统当前局限性的工具。
+
+核心贡献：本文提出了AutoMat，一个用于评估和诊断AI代理在计算材料科学中复现研究主张能力的基准，揭示了当前LLM代理在科学工作流程中的关键限制。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-01</span>
+                    <a href="https://arxiv.org/pdf/2605.00803v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.00798v1" target="_blank">RunAgent: Interpreting Natural-Language Plans with Constraint-Guided Execution</a>
+                </div>
+                <div class="paper-authors">👥 Arunabh Srivastava, Mohammad A.,  Khojastepour</div>
+                <div class="paper-summary">人类通过执行目标明确的计划来解决问题，然而大型语言模型（LLMs）在结构化工作流执行方面仍不可靠。我们提出了RunAgent，一个多代理计划执行平台，它通过约束和评分标准来解释自然语言计划并强制逐步执行。RunAgent 通过具有显式控制结构（如 \texttt{IF}、\texttt{GOTO}、\texttt{FORALL}）的代理语言，将自然语言的表达力与编程的确定性结合起来。除了根据每一步的具体指令验证输出的语法和语义之外，RunAgent 还会根据任务及其实例的描述自主推导并验证约束条件。RunAgent 还动态选择基于LLM的推理、工具使用以及代码生成和执行（例如Python），并引入纠错机制以确保正确性。此外，RunAgent 在每一步执行期间仅保留相关信息以过滤上下文历史记录。在 Natural-plan 和 SciBench 数据集上的评估表明，RunAgent 的性能优于基线LLM和最先进的PlanGEN方法。
+
+核心贡献：RunAgent 是一个结合约束引导与动态决策的多代理系统，显著提升了自然语言计划在结构化任务中的执行准确性和可靠性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-01</span>
+                    <a href="https://arxiv.org/pdf/2605.00798v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.00796v1" target="_blank">When RAG Chatbots Expose Their Backend: An Anonymized Case Study of Privacy and Security Risks in Patient-Facing Medical AI</a>
+                </div>
+                <div class="paper-authors">👥 Alfredo Madrid-García, Miguel Rujas</div>
+                <div class="paper-summary">背景：基于检索增强生成（RAG）的面向患者的医疗聊天机器人正被越来越多地推广，以提供可访问且基于事实的健康信息。人工智能辅助开发降低了构建它们的门槛，但它们仍需要严格的安全、隐私和治理控制。目标：报告对一个公开可用的面向患者的医疗RAG聊天机器人的匿名化、非破坏性安全评估，并识别在医疗领域中部署生成式AI时的治理经验教训。方法：我们采用了两阶段策略。第一阶段，使用Claude Opus 4.6进行基于提示的探索性测试并构建结构化的漏洞假设。第二阶段，通过Chrome开发者工具手动验证候选发现，检查浏览器可见的网络流量、数据负载、API模式、配置对象以及存储的交互数据。结果：LLM辅助阶段识别出一个关键漏洞：敏感系统和RAG配置通过客户端-服务器通信暴露出来，而不是限制在服务器端。手动验证确认，普通浏览器检查即可收集到系统提示、模型和嵌入配置、检索参数、后端端点、API模式、文档和块元数据、知识库内容，以及最近1,000次患者与聊天机器人的对话记录。该部署还违背了其隐私保证：完整的对话记录，包括与健康相关的查询，均可在无需身份验证的情况下检索。结论：使用标准浏览器工具即可识别面向患者的RAG聊天机器人中的严重隐私和安全问题，无需专业技能或身份验证；独立审查应作为部署的前提条件。商业LLM加速了此次评估，即使在虚假开发者身份下也是如此；审计人员可用的帮助同样可能被攻击者利用。
+
+核心贡献：本文首次展示了如何通过常规浏览器工具发现面向患者的医疗RAG聊天机器人中的重大隐私和安全漏洞，并强调了在部署前进行独立安全审查的重要性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-01</span>
+                    <a href="https://arxiv.org/pdf/2605.00796v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.00776v1" target="_blank">Directed Social Regard: Surfacing Targeted Advocacy, Opposition, Aid, Harms, and Victimization in Online Media</a>
+                </div>
+                <div class="paper-authors">👥 Scott Friedman, Ruta Wheelock, Sonja Schmer-Galunder</div>
+                <div class="paper-summary">在线平台、影响操作和政治言论中的语言经常在同一信息中针对不同话题混合了亲社会情感（例如，倡导、帮助、同情）和反社会情感（例如，威胁、反对、指责）。尽管许多自然语言处理（NLP）工具可以将文本的整体情感分类为积极、中性或消极，但这些工具无法报告积极与消极情感并存的情况，也无法识别这些情感所针对的目标。本文提出了“定向社会关怀”（Directed Social Regard, DSR）方法，用于多维、多极性的感情分析，该方法由两个基于Transformer的模型组成：第一个模型检测信息中情感的目标范围，第二个模型在信息上下文中沿三个(-1, 1)轴对所有范围进行评分，这三个轴受到道德脱离和道德框架的社会科学理论启发。我们提出了一种用于构建DSR数据集的数据收集和标注策略、一种用于范围级评分的基于Transformer的架构，并进行了验证研究，取得了令人鼓舞的结果。我们将经过验证的DSR模型应用于六个第三方在线媒体数据集，并报告了DSR输出与这些现有社会科学数据集中标签和主题之间有意义的相关性。
+
+核心贡献：本文提出了一种名为“定向社会关怀”（DSR）的多维情感分析方法，能够同时识别在线文本中情感的目标对象及其亲社会/反社会维度，并通过实验证明其在多个真实数据集上的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-01</span>
+                    <a href="https://arxiv.org/pdf/2605.00776v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.00768v1" target="_blank">Characterizing the Expressivity of Local Attention in Transformers</a>
+                </div>
+                <div class="paper-authors">👥 Jiaoda Li, Ryan Cotterell</div>
+                <div class="paper-summary">The transformer is the most popular neural architecture for language modeling. The cornerstone of the transformer is its global attention mechanism, which lets the model aggregate information from all preceding tokens before generating the next token. One common variant of attention is called local attention, which restricts each token to aggregating information from a bounded window of predecessors, reducing the quadratic cost of global attention to linear. Although this restriction is usually motivated by efficiency, it has also been found to improve model quality, a phenomenon that has so far lacked a satisfactory explanation. We provide a formal account of this phenomenon in terms of recognizer expressivity. It has been shown that fixed-precision transformers with global attention correspond to a fragment of linear temporal logic containing a single past operator. We additionally prove that adding local attention introduces a second temporal operator, strictly enlarging the class of recognizable regular languages. Moreover, global and local attention are expressively complementary: neither subsumes the other, and combining them yields the richest fragment. Experiments on formal language recognition and natural language modeling corroborate the theory, showing that hybrid global--local transformers outperform their global-only counterparts.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-01</span>
+                    <a href="https://arxiv.org/pdf/2605.00768v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/03/well-take-it-a-tiktoker-rallies-pledges-to-buy-spirit-airlines-after-its-abrupt-weekend-collapse/" target="_blank">We’ll take it: a TikToker rallies pledges to buy Spirit Airlines after its abrupt weekend collapse</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/03/this-is-fine-creator-says-ai-startup-stole-his-art/" target="_blank">‘This is fine’ creator says AI startup stole his art</a></div>
+                <div class="feed-date">05-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/03/this-is-fine-creator-says-ai-startup-stole-his-art/" target="_blank">‘This is fine’ creator says AI startup stole his art</a></div>
+                <div class="feed-date">05-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/03/in-harvard-study-ai-offered-more-accurate-diagnoses-than-emergency-room-doctors/" target="_blank">In Harvard study, AI offered more accurate emergency room diagnoses than two human doctors</a></div>
+                <div class="feed-date">05-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/03/in-harvard-study-ai-offered-more-accurate-diagnoses-than-emergency-room-doctors/" target="_blank">In Harvard study, AI offered more accurate emergency room diagnoses than two human doctors</a></div>
+                <div class="feed-date">05-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/03/techcrunch-mobility-how-do-you-issue-a-ticket-to-a-robotaxi/" target="_blank">TechCrunch Mobility: How do you issue a ticket to a robotaxi?</a></div>
+                <div class="feed-date">05-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/922840/reggie-fils-aime-amazon-nintendo-illegal" target="_blank">Reggie Fils-Aimé says Amazon once asked Nintendo to break the law</a></div>
+                <div class="feed-date">05-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/922616/shokz-openrun-pro-2-bone-conduction-headphones-mothers-day-deal-sale" target="_blank">Shokz’s bassy OpenRun Pro 2 are $40 off thanks to a new Mother’s Day promo</a></div>
+                <div class="feed-date">05-03</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0CmUgfZxgNY" target="_blank">🎥 The Adobe Summit 2026 Recap</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">The 2026 Adobe Summit Conference is a wrap! It can be said with certainty that if you continue into ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Mzzd5yOBffo" target="_blank">🎥 Musk v. Altman Lawsuit #openai #elonmusk #suchirbalaji #kentuckyderby #moonshine #foryou #news #fyp</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">This week we will dig into the Open AI lawsuit between Elon Musk and Sam Altman. Further, we dig int...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=78TiYjQv42E" target="_blank">🎥 ChatGPT và OpenAI đã thay đổi thế giới như thế nào?- Lịch sử điên rồ của OpenAI | Kiến Hay Hỏi</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">ChatGPT và OpenAI đã thay đổi thế giới như thế nào? Kể từ khi ra mắt ChatGPT, OpenAI đã trở thành cô...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/mattpocock/dictionary-of-ai-coding" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                mattpocock/dictionary-of-ai-coding
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目以通俗易懂的方式解释 AI 编程术语，适合初学者和从业者快速理解行业概念。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48002136" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                DeepClaude – Claude Code agent loop with DeepSeek V4 Pro, 17x cheaper
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 DeepClaude 提供了更低成本的 Claude Code agent 实现方案，对开发者和企业具有实际价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47991981" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                OpenAI's o1 correctly diagnosed 67% of ER patients vs. 50-55% by triage doctors
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 OpenAI 的 o1 在急诊诊断中表现优于医生，展示了 AI 在医疗领域的潜力。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48002442" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Agentic Coding Is a Trap
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Agentic Coding Is a Trap 对当前热门的智能代理编程模式提出了批判性思考，值得深入探讨。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2056<br>
+                    Output Tokens: 1727
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年05月04日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
