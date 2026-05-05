@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年05月05日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2026年4月**</p><p>**学术突破**  </p><p>本周AI研究亮点频出，SpecKV 提出自适应推测解码方法，通过压缩感知的伽玛选择显著提升推理效率；FlexSQL 则展示了灵活探索与执行机制如何优化文本到SQL的智能代理性能；而强化学习在多智能体系统中的应用也取得新进展，Orchestration Traces 技术为LLM协作提供更高效训练路径。</p><p>**行业动态**  </p><p>面对AI对就业的冲击，NVIDIA CEO 黄仁勋强调AI正在“创造大量新岗位”，引发广泛讨论。与此同时，地热能源公司 Fervo Energy 计划通过IPO融资13亿美元，科技与能源融合趋势凸显。Google 推动教育者主导AI学习，OpenAI 与普华永道则联手重塑财务长办公室，AI应用场景持续扩展。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 和 Sam Altman 的最新访谈聚焦技术愿景与行业挑战，揭示AI发展背后的深层博弈。这些领袖观点不仅影响技术走向，也将塑造未来职场与社会结构，值得密切关注。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.02888v1" target="_blank">SpecKV: Adaptive Speculative Decoding with Compression-Aware Gamma Selection</a>
+                </div>
+                <div class="paper-authors">👥 Shikhar Shukla</div>
+                <div class="paper-summary">推测性解码通过使用一个小的草稿模型来提出候选标记，由更大的目标模型进行验证，从而加速大语言模型（LLM）的推理。这一过程中的关键超参数是推测长度~$γ$，它决定了每一步中草稿模型提出的标记数量。几乎所有现有的系统都使用固定的~$γ$（通常为4），但实证证据表明，最优值会因任务类型而异，并且关键取决于应用于目标模型的压缩级别。在本文中，我们提出了**SpecKV**，这是一个轻量级的自适应控制器，它利用从草稿模型本身提取的信号，在每个推测步骤中选择~$γ$。我们在4个任务类别、4个推测长度和3种压缩级别（FP16、INT8、NF4）下对推测性解码进行了性能分析，收集了5,112条步级记录，包括每步的接受率、草稿熵和草稿置信度。我们证明了最优的~$γ$会随着压缩级别的变化而变化，并且草稿模型的置信度和熵是接受率的强预测因子（相关系数约为0.56）。SpecKV 使用一个小型MLP对这些信号进行训练，以最大化每推测步骤的预期标记数，在仅增加0.34毫秒的决策开销（<0.5%的步骤时间）的情况下，相比固定~$γ=4$基线提升了56.0%。这种改进具有统计显著性（p < 0.001，配对自助检验）。我们已将所有分析数据、训练模型和笔记本作为开源资源发布。
+
+核心贡献：  
+本文提出了SpecKV，一种基于草稿模型信号自适应选择推测长度γ的方法，实现了比固定γ更优的推理效率，且计算开销极低。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-04</span>
+                    <a href="https://arxiv.org/pdf/2605.02888v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.02815v1" target="_blank">FlexSQL: Flexible Exploration and Execution Make Better Text-to-SQL Agents</a>
+                </div>
+                <div class="paper-authors">👥 Quang Hieu Pham, Yang He, Ping Nie</div>
+                <div class="paper-summary">在大型分析数据库上进行文本到SQL的转换需要处理复杂的模式、解决模糊查询，并基于实际数据做出决策。目前大多数系统采用固定的流水线方式，即在前期一次性检索模式元素，并且仅在后期重新访问数据库以进行修复，这限制了从早期错误中恢复的能力。我们提出了FlexSQL，这是一种文本到SQL代理，其核心设计原则是灵活的数据库交互：代理可以在推理过程中的任何阶段探索模式结构、检查数据值以及运行验证查询。FlexSQL会生成多种执行计划以覆盖不同的查询解释，根据任务选择用SQL或Python实现每个计划，并使用两级修复机制，能够从代码级错误回溯到计划级修订。在Spider2-Snow数据集上，使用gpt-oss-120b模型，FlexSQL达到了65.4%的得分，优于使用更强大、更大模型（如gpt-o3和DeepSeek-R1）的开源基线。当将我们的方法集成到通用编程代理（如Claude Code中的技能）中时，在Spider2-Snow上实现了超过10%的相对提升。进一步分析表明，灵活的探索与执行共同提升了方法的有效性，突显出灵活性作为关键设计原则的重要性。
+
+核心贡献：FlexSQL通过引入灵活的数据库交互机制，在文本到SQL任务中实现了更高的准确性和鲁棒性，显著超越了现有方法。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-04</span>
+                    <a href="https://arxiv.org/pdf/2605.02815v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.02801v1" target="_blank">Reinforcement Learning for LLM-based Multi-Agent Systems through Orchestration Traces</a>
+                </div>
+                <div class="paper-authors">👥 Chenchen Zhang</div>
+                <div class="paper-summary">随着大型语言模型（LLM）代理从孤立的工具使用者演变为协调团队，强化学习（RL）必须优化的不仅是单个动作，还包括任务的生成、委派、通信、聚合和停止方式。本文通过“编排轨迹”研究基于LLM的多智能体系统的强化学习：这是一种时间交互图，其事件包括子代理的生成、委派、通信、工具使用、返回、聚合以及停止决策。通过这一视角，我们识别出三个技术维度。首先，奖励设计涵盖八个类别，包括用于并行加速、拆分正确性和聚合质量的编排奖励。其次，奖励和信用信号可以附加到从令牌到团队的八个具有信用或信号属性的单元；在我们整理的数据集中，显式的反事实消息级信用仍然非常稀少。第三，编排学习分解为五个子决策：何时生成代理、将任务委派给谁、如何通信、如何聚合以及何时停止。截至2026年5月4日，在我们的数据集中未发现针对停止决策的显式强化学习训练方法。
+
+我们还将学术方法与Kimi Agent Swarm、OpenAI Codex和Anthropic Claude Code等工业界的公开证据联系起来。由此产生的规模差距是公开部署范围与开放学术评估体系之间的差距，并非对工业训练轨迹的独立验证。我们已发布相关成果于 https://github.com/xxzcc/awesome-llm-mas-rl，其中包括一个84篇论文的标记数据集、32条排除记录的日志、脚本化的语料统计信息，以及用于可重放编排轨迹的最小JSON模式。
+
+核心贡献：本文系统性地提出了基于编排轨迹的强化学习框架，用于优化基于LLM的多智能体系统的协作机制，并提供了包含大量文献和数据的开源资源以支持进一步研究。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-04</span>
+                    <a href="https://arxiv.org/pdf/2605.02801v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.02789v1" target="_blank">FunFuzz: An LLM-Powered Evolutionary Fuzzing Framework</a>
+                </div>
+                <div class="paper-authors">👥 Mario Rodríguez Béjar, B. Romera-Paredes, Jose L. Hernández-Ramos</div>
+                <div class="paper-summary">现代模糊测试工具越来越多地利用大型语言模型（LLMs）生成结构化输入，但基于LLM的模糊测试对提示初始化和采样变化非常敏感，这可能会降低探索效率并导致输入冗余。我们提出了FunFuzz，一个多岛屿进化模糊测试框架，该框架并行运行多个隔离的搜索，并定期迁移高价值候选方案以保持多样性。FunFuzz从文档中提取初始生成提示，并使用主题特定指令初始化岛屿，然后通过反馈引导选择持续调整提示。在模糊测试过程中，候选方案根据增量编译器覆盖率进行优先排序，同时利用编译器内部的失败信号识别引发崩溃的输入。我们在编译器模糊测试上评估了FunFuzz，其中输入是源程序，成功率由编译器覆盖率和唯一编译器内部失败来衡量。在对GCC和Clang进行的多次24小时测试中，FunFuzz实现了比以往LLM驱动基线更高的编译器覆盖率，并发现了更多能触发唯一失败的输入。
+
+核心贡献：FunFuzz 提出了一种多岛屿进化模糊测试框架，通过结合LLM生成和反馈引导机制，显著提升了编译器模糊测试中的覆盖率与独特失败发现能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-04</span>
+                    <a href="https://arxiv.org/pdf/2605.02789v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.02740v1" target="_blank">Foundation Models to Unlock Real-World Evidence from Nationwide Medical Claims</a>
+                </div>
+                <div class="paper-authors">👥 Fan Ma, Yuntian Liu, Xiang Lan</div>
+                <div class="paper-summary">来自大规模真实世界数据（RWD）的证据正在越来越多地影响监管评估和医疗决策。行政索赔数据提供了人口规模的、纵向的医疗服务使用、支出记录以及详细的诊断、程序和药物编码，但其作为医疗基础模型的数据来源潜力尚未得到充分探索。本文介绍了ReClaim，这是一种基于从零开始训练的生成式Transformer模型，训练数据来自于MarketScan索赔数据库中2008年至2022年间超过2亿参保人的438亿个医疗事件。ReClaim能够建模诊断、程序、药物和支出的纵向轨迹，并扩展到1.4亿、7亿和17亿参数。在超过1,000种疾病发作预测任务中，ReClaim实现了平均AUC为75.6%的表现，显著优于疾病特定的LightGBM模型（66.3%）和基于Transformer的Delphi模型（69.4%），尤其在罕见病方面提升明显。这些优势在回顾性和前瞻性评估中均成立，并在两个独立数据集上的外部验证中得到保持。性能随着模型规模增加而单调提升，后训练阶段相比预训练阶段提升了13.8个百分点。除了疾病预测外，ReClaim还捕捉了财务结果并改进了真实世界证据（RWE）分析：在医疗支出预测方面，与LightGBM相比，解释方差从0.28提高到了0.37；在目标试验模拟中，相对于Delphi模型，系统性偏差平均减少了72%。总体而言，这些结果表明行政索赔数据可以作为可扩展的医疗基础模型的数据来源，并展示了学习到的表示具有跨时间段和数据源的泛化能力，从而支持疾病监测、支出预测和真实世界证据的生成。
+
+核心贡献：本文提出了ReClaim，一个基于大规模医疗索赔数据训练的生成式Transformer模型，展示了其在疾病预测、支出预测和真实世界证据分析中的优越性能和广泛适用性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-04</span>
+                    <a href="https://arxiv.org/pdf/2605.02740v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.02720v1" target="_blank">PubMed-Ophtha: An open resource for training ophthalmology vision-language models on scientific literature</a>
+                </div>
+                <div class="paper-authors">👥 Verena Jasmin Hallitschke, Carsten Eickhoff, Philipp Berens</div>
+                <div class="paper-summary">Vision-language models hold considerable promise for ophthalmology, but their development depends on large-scale, high-quality image-text datasets that remain scarce. We present PubMed-Ophtha, a hierarchical dataset of 102,023 ophthalmological image-caption pairs extracted from 15,842 open-access articles in PubMed Central. Unlike existing datasets, figures are extracted directly from article PDFs at full resolution and decomposed into their constituent panels, panel identifiers, and individual images. Each image is annotated with its imaging modality -- color fundus photography, optical coherence tomography, retinal imaging, or other -- and a mark status indicating the presence of annotation marks such as arrows. Figure captions are split into panel-level subcaptions using a two-step LLM approach, achieving a mean average sentence BLEU score of 0.913 on human-annotated data. Panel and image detection models reach a mAP@0.50 of 0.909 and 0.892, respectively, and figure extraction achieves a median IoU of 0.997. To support reproducibility, we additionally release the human-annotated ground-truth data, all trained models, and the full dataset generation pipeline.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-04</span>
+                    <a href="https://arxiv.org/pdf/2605.02720v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-asia/putting-educators-at-the-center-of-ai-learning/" target="_blank">Putting educators at the center of AI learning</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/openai-pwc-finance-collaboration" target="_blank">OpenAI and PwC collaborate to reimagine the office of the CFO</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-april-2026/" target="_blank">The latest AI news we announced in April 2026</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/small-business/ai-for-small-businesses/" target="_blank">Here's how Google AI is powering small business growth</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/event-driven-webhooks/" target="_blank">Reduce friction and latency for long-running jobs with Webhooks in Gemini API</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/arts-culture/celebrating-america/" target="_blank">Celebrating America’s 250th on Google Arts & Culture</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/entrepreneurs/google-for-startups-accelerator/" target="_blank">Supporting startups that are shaping the future of energy</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/delivering-low-latency-voice-ai-at-scale" target="_blank">How OpenAI delivers low-latency voice AI at scale</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/04/as-workers-worry-about-ai-nvidias-jensen-huang-says-ai-is-creating-an-enormous-number-of-jobs/" target="_blank">As workers worry about AI, Nvidia’s Jensen Huang says AI is ‘creating an enormous number of jobs’</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/04/as-workers-worry-about-ai-nvidias-jensen-huang-says-ai-is-creating-an-enormous-number-of-jobs/" target="_blank">As workers worry about AI, Nvidia’s Jensen Huang says AI is ‘creating an enormous number of jobs’</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/04/geothermal-startup-fervo-energy-to-raise-up-to-1-3b-in-ipo/" target="_blank">Geothermal startup Fervo Energy to raise up to $1.3B in IPO</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/907032/best-mothers-day-gift-ideas-2026-mom-tech-gadgets" target="_blank">The 40 best Mother’s Day gift ideas for 2026</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/news/923461/valve-steam-machine-frame-deck-import-records-may-2026" target="_blank">Valve just imported 50 tons of game consoles in two days</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/923684/musk-brockman-altman-openai-trial" target="_blank">OpenAI’s president does ‘all the things,’ except answer a question</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/04/u-s-government-warns-of-severe-copyfail-bug-affecting-major-versions-of-linux/" target="_blank">US government warns of severe CopyFail bug affecting major versions of Linux</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/923612/elon-musk-sec-1-5-million-penalty-twitter-x" target="_blank">Elon Musk will settle the feds’ Twitter lawsuit with pocket change</a></div>
+                <div class="feed-date">05-04</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0CmUgfZxgNY" target="_blank">🎥 The Adobe Summit 2026 Recap</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">The 2026 Adobe Summit Conference is a wrap! It can be said with certainty that if you continue into ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=ts1DVsuCbQo" target="_blank">🎥 Musk v Altman May 4 p4 | Funding OpenAI  😳⚠️</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">What happens when one of the world's top AI experts testifies under oath about the future of artific...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=1dojSX6meqk" target="_blank">🎥 Musk v Altman May 4 p3 | Funding OpenAI  😳⚠️</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">What happens when one of the world's top AI experts testifies under oath about the future of artific...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/aattaran/deepclaude" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                aattaran/deepclaude
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目结合了 Claude Code 的自主代理循环与多种后端模型，提供更低成本的 AI 开发体验。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/vibeforge1111/keep-codex-fast" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                vibeforge1111/keep-codex-fast
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该工具通过备份机制优化 Codex 状态管理，提升本地开发效率和可靠性。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/EvanBacon/serve-sim" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                EvanBacon/serve-sim
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 简化 Apple 模拟器的服务部署流程，提高开发者在模拟环境中的工作效率。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48013919" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                How OpenAI delivers low-latency voice AI at scale
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨 OpenAI 如何实现低延迟语音 AI 的规模化，对实际工程优化有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=47983467" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Why are neural networks and cryptographic ciphers so similar? (2025)
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 神经网络与密码学的相似性分析，可能揭示模型设计的新视角。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48010774" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                OpenAI, Google, and Microsoft Back Bill to Fund 'AI Literacy' in Schools
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 科技巨头推动 AI 素养教育立法，反映 AI 社会影响的重要趋势。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2299<br>
+                    Output Tokens: 1987
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年05月05日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
