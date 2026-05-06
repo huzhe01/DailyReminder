@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年05月06日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月20日**</p><p>**学术突破**  </p><p>近期多项研究揭示了AI在关键领域的进展与挑战。一项关于临床大语言模型的研究指出，安全性和准确性遵循不同的扩展规律，为医疗AI的优化提供了新方向。另一项成果OpenSeeker-v2通过复杂轨迹提升搜索代理性能，而EQUITRIAGE则聚焦于性别偏见问题，推动公平性评估在急诊分诊中的应用。</p><p>**行业动态**  </p><p>科技领域动作频频：Nuro获得自动驾驶测试许可，为Uber robotaxi服务铺路；SAP投资11.6亿美元押注德国AI实验室，展现其对AI生态的长期布局；Google则推出多模态Gemini API文件搜索功能，并加强用户隐私保护措施，同时携手XPRIZE发起百万美元级未来愿景电影竞赛。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang与Sam Altman等科技领袖近期公开亮相，分享对未来技术与管理哲学的见解，值得持续关注其观点如何影响行业趋势。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.04039v1" target="_blank">Safety and accuracy follow different scaling laws in clinical large language models</a>
+                </div>
+                <div class="paper-authors">👥 Sebastian Wind, Tri-Thien Nguyen, Jeta Sopa</div>
+                <div class="paper-summary">临床大语言模型（LLMs）通常通过增加模型规模、上下文长度、检索复杂性或推理时的计算资源来扩展，其隐含假设是更高的准确性意味着更安全的行为。然而在医学领域，这种假设并不完整，因为少数几个自信度高、风险高或与证据相矛盾的错误可能比平均基准性能更为重要。我们提出了SaFE-Scale框架，用于衡量在不同模型规模、证据质量、检索策略、上下文暴露和推理时计算资源下临床LLM安全性如何变化。为了实现这一框架，我们引入了RadSaFE-200，这是一个专注于放射学安全评估的基准测试集，包含200个多项选择题，并配有医生定义的清洁证据、冲突证据以及针对高风险错误、不安全答案和证据矛盾的选项级标签。我们在六种部署条件下对34个本地部署的LLM进行了评估：闭卷提示（零样本）、清洁证据、冲突证据、标准RAG、智能体RAG和最大上下文提示。结果表明，使用清洁证据带来了最显著的改进，平均准确率从73.5%提升至94.1%，同时高风险错误从12.0%降至2.6%，矛盾错误从12.7%降至2.3%，危险过度自信从8.0%降至1.6%。而标准RAG和智能体RAG未能再现这种安全表现：尽管智能体RAG相比标准RAG提高了准确性和减少了矛盾错误，但高风险错误和危险过度自信仍然较高。最大上下文提示增加了延迟，却未缩小安全差距，额外的推理计算也仅带来有限的收益。最坏情况分析显示，具有临床后果的错误集中在一小部分问题上。因此，临床LLM的安全性并非模型扩展的被动结果，而是由证据质量、检索设计、上下文构建和集体失败行为所塑造的一种部署属性。
+
+核心贡献：本文提出了一个用于系统评估临床大语言模型安全性的新框架SaFE-Scale，并展示了临床LLM的安全性不仅取决于模型规模，还受到证据质量、检索策略等部署因素的显著影响。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-05</span>
+                    <a href="https://arxiv.org/pdf/2605.04039v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.04036v1" target="_blank">OpenSeeker-v2: Pushing the Limits of Search Agents with Informative and High-Difficulty Trajectories</a>
+                </div>
+                <div class="paper-authors">👥 Yuwen Du, Rui Ye, Shuo Tang</div>
+                <div class="paper-summary">深度搜索能力已成为前沿大型语言模型（LLM）代理不可或缺的技能，但其发展仍主要由工业巨头主导。典型的行业方法涉及一个资源密集型的流程，包括预训练、持续预训练（CPT）、监督微调（SFT）和强化学习（RL）。在本报告中，我们表明，当使用信息丰富且高难度的轨迹进行训练时，一种简单的SFT方法在训练前沿搜索代理方面可能具有惊人的效果。通过引入三种简单的数据合成改进：扩展知识图谱规模以实现更丰富的探索、扩大工具集规模以提升功能广度以及严格限制步骤数的过滤，我们建立了一个更强的基线。仅使用10.6k个数据点训练，我们的OpenSeeker-v2在四个基准测试中实现了最先进的性能（30B规模的ReAct范式代理）：在BrowseComp上达到46.0%，在BrowseComp-ZH上为58.1%，在Humanity's Last Exam上为34.6%，在xbench上为78.0%。这一表现甚至超越了采用复杂CPT+SFT+RL流程训练的Tongyi DeepResearch，后者分别达到了43.4%、46.7%、32.9%和75.0%。值得注意的是，OpenSeeker-v2是首个由纯学术团队仅使用SFT开发的在其模型规模和范式下达到最先进水平的搜索代理。我们非常高兴地开源了OpenSeeker-v2的模型权重，并分享了我们简单而有效的发现，以使前沿搜索代理的研究更加普及。
+
+核心贡献：本文展示了通过使用高质量和高难度轨迹数据，仅用监督微调（SFT）即可训练出在多个基准上超越复杂流程的前沿搜索代理OpenSeeker-v2。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-05</span>
+                    <a href="https://arxiv.org/pdf/2605.04036v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.03998v1" target="_blank">EQUITRIAGE: A Fairness Audit of Gender Bias in LLM-Based Emergency Department Triage</a>
+                </div>
+                <div class="paper-authors">👥 Richard J. Young, Alice M. Matthews</div>
+                <div class="paper-summary">急诊科分诊为患者分配一个决定治疗优先级的急症评分，临床证据表明人类在急症评估中存在持续的性别差异。随着医院开始试点使用大语言模型（LLMs）作为分诊决策支持工具，一个关键问题是这些模型是否会复制或缓解已知的偏见。我们提出了 EQUITRIAGE，这是一个对基于 LLM 的 ESI 评分的公平性审计，评估了五种模型（Gemini-3-Flash、Nemotron-3-Super、DeepSeek-V3.1、Mistral-Small-3.2 和 GPT-4.1-Nano）在 18,714 个 MIMIC-IV-ED 病例描述中的表现，共进行了 374,275 次评估，并采用了四种提示策略。在 9,368 个原始病例中，有 9,346 个配对了性别交换的反事实案例。所有五个模型的翻转率均超过了预先注册的 5% 阈值（9.9% 到 43.8%）。其中两个模型表现出女性被低估的趋势（DeepSeek F/M 2.15:1，Gemini 1.34:1）；两个接近平衡；一个具有高灵敏度但男性方向不对称较弱。DeepSeek 的定向偏差与低结果相关的校准差距并存（0.013 对比 MIMIC-IV 入院），这类似于 Chouldechova 式的组内校准与组间反事实不变性之间的解耦。人口统计信息隐藏使 Gemini 的翻转率降至 0.5%；一种保留年龄的盲法变体显示 DeepSeek 仍存在 F/M 1.25 的残差，暗示年龄是残留通道。链式推理提示降低了所有五种模型的准确性。两种模型的消融实验揭示了相同方向表型下不同的潜在机制：在 Gemini 中，信号出现在姓名+性别交换的组合中，而在 DeepSeek 中，仅性别标记就携带了该信号。EQUITRIAGE 表明，群体均衡、反事实不变性和性别校准是不同的公平属性，干预效果因模型而异，并且应在临床部署前进行按模型的反事实审计。
+
+核心贡献：  
+本文提出 EQUITRIAGE，系统地审计了多种大型语言模型在急诊分诊任务中的性别偏见，揭示了不同模型在公平性属性上的差异，并强调了在临床部署前进行模型特定反事实审计的重要性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-05</span>
+                    <a href="https://arxiv.org/pdf/2605.03998v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.03971v1" target="_blank">Logical Consistency as a Bridge: Improving LLM Hallucination Detection via Label Constraint Modeling between Responses and Self-Judgments</a>
+                </div>
+                <div class="paper-authors">👥 Hao Mi, Qiang Sheng, Shaofei Wang</div>
+                <div class="paper-summary">大型语言模型（LLMs）容易产生事实性幻觉，从而影响其在现实应用中的可靠性。现有的幻觉检测方法主要通过提取微观层面的内在模式来进行不确定性量化，或通过显式提示来引发宏观层面的自我判断。然而，这些方法仅关注幻觉问题的一个方面，要么聚焦于隐式的神经不确定性，要么关注显式的符号推理，从而将这两种本质上相互关联的行为割裂开来，未能利用它们之间的相互依赖关系以获得全面的理解。本文提出LaaB（Logical Consistency-as-a-Bridge），这是一种连接神经特征与符号判断的幻觉检测框架。LaaB引入了一个“元判断”过程，将符号标签映射回特征空间。通过利用响应和元判断标签之间基于自我判断语义而相同或相反的内在逻辑桥梁，LaaB通过互学习对齐并整合双视角信号，从而增强幻觉检测能力。在4个公开数据集、4个LLM模型上进行的广泛实验表明，LaaB在8个基线方法中表现优异。
+
+核心贡献：提出LaaB框架，通过结合神经特征与符号判断之间的逻辑一致性，有效提升大语言模型的幻觉检测性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-05</span>
+                    <a href="https://arxiv.org/pdf/2605.03971v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.03969v1" target="_blank">Feature-Augmented Transformers for Robust AI-Text Detection Across Domains and Generators</a>
+                </div>
+                <div class="paper-authors">👥 Mohamed Mady, Johannes Reschke, Björn Schuller</div>
+                <div class="paper-summary">如今，AI生成的文本在多个领域和异构生成管道中大规模产生，这使得对分布变化具有鲁棒性成为监督二分类检测器的核心要求。我们基于HC3 PLUS数据集训练了基于Transformer的检测器，并通过在保留验证集上最大化平衡准确率来校准单一决策阈值；随后将该阈值固定不变，用于所有下游测试分布，从而揭示出在分布变化下不同领域和生成器之间的错误不对称性。我们在HC3 PLUS内域、跨数据集迁移到多领域、多生成器的M4基准以及外部AI-Text-Detection-Pile上进行了评估。尽管基础模型在内域任务上表现出接近天花板的性能（最高可达99.5%的平衡准确率），但在分布变化下的表现却脆弱且高度依赖模型。通过注意力机制的语言特征融合进行特征增强可以提升迁移能力，我们的最佳模型（DeBERTa-v3-base+FeatAttn）在M4上的平衡准确率达到85.9%。多种子实验验证了其高稳定性。在相同的固定阈值协议下，我们的模型比强大的零样本基线提升了最多7.22个百分点。类别级别的消融实验进一步表明，可读性和词汇特征在应对分布变化时对鲁棒性的贡献最大。总体而言，这些结果表明，特征增强与现代DeBERTa主干模型显著优于早期的BERT/RoBERTa模型，而固定阈值协议则为实际检测器的鲁棒性提供了一个更现实且信息丰富的评估方式。
+
+核心贡献：本文提出了一种结合特征增强和现代DeBERTa架构的AI文本检测方法，在面对跨领域和跨生成器的分布变化时展现出更高的鲁棒性和稳定性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-05</span>
+                    <a href="https://arxiv.org/pdf/2605.03969v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.03953v1" target="_blank">Transformers with Selective Access to Early Representations</a>
+                </div>
+                <div class="paper-authors">👥 Skye Gunasekaran, Téa Wright, Rui-Jie Zhu</div>
+                <div class="paper-summary">Several recent Transformer architectures expose later layers to representations computed in the earliest layers, motivated by the observation that low-level features can become harder to recover as the residual stream is repeatedly transformed through depth. The cheapest among these methods add static value residuals: learned mixing coefficients that expose the first-layer value projection V_1 uniformly across tokens and heads. More expressive dense or dynamic alternatives recover finer-grained access, but at higher memory cost and lower throughput. The usefulness of V_1 is unlikely to be constant across tokens, heads, and contexts; different positions plausibly require different amounts of access to early lexical or semantic information. We therefore treat early-representation reuse as a retrieval problem rather than a connectivity problem, and introduce Selective Access Transformer (SATFormer), which preserves the first-layer value pathway while controlling access with a context-dependent gate. Across models from 130M to 1.3B parameters, SATFormer consistently improves validation loss and zero-shot accuracy over the static value-residual and Transformer baselines. Its strongest gains appear on retrieval-intensive benchmarks, where it improves over static value residuals by approximately 1.5 average points, while maintaining throughput and memory usage close to the baseline Transformer. Gate analyses suggest sparse, depth-dependent, head-specific, and category-sensitive access patterns, supporting the interpretation that SATFormer learns selective reuse of early representations rather than uniform residual copying. Our code is available at https://github.com/SkyeGunasekaran/SATFormer.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-05</span>
+                    <a href="https://arxiv.org/pdf/2605.03953v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.01726v1" target="_blank">FEDIN: Frequency-Enhanced Deep Interest Network for Click-Through Rate Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Zenan Dai, Jinpeng Wang, Junwei Pan</div>
+                <div class="paper-summary">摘要：序列推荐模型通常难以捕捉用户兴趣中的潜在周期性模式，这主要是由于时域行为数据中固有的噪声所致。虽然频域分析可以提供全局视角来解决这一问题，但现有方法通常孤立地处理用户序列，忽略了目标物品的重要上下文信息。在本文中，我们提出了一个新的实证观察：当以正负目标物品为条件时，用户的注意力得分在频谱熵分布上表现出显著差异。具体而言，真实用户兴趣在频域中表现为高度集中的频谱模式且熵值较低，而无关行为则表现为高熵的噪声。基于这一洞察，我们提出了频率增强的深度兴趣网络（FEDIN）。FEDIN引入了一个频域分支，通过目标感知的频谱过滤机制来分离这些周期性兴趣信号。在三个公开数据集上的大量实验表明，FEDIN始终优于最先进的序列推荐基线，并展现出更强的抗噪鲁棒性。我们的代码已发布在：https://github.com/otokoneko/FEDIN。
+
+核心贡献：FEDIN通过引入目标感知的频域分析机制，有效提升了点击率预测中对用户周期性兴趣的建模能力与抗噪性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-03</span>
+                    <a href="https://arxiv.org/pdf/2605.01726v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/expanded-gemini-api-file-search-multimodal-rag/" target="_blank">Gemini API File Search is now multimodal: build efficient, verifiable RAG</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/chrome/approximate-location-chrome-on-android/" target="_blank">Approximate location sharing gives you more control over your location data in Chrome.</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/future-vision-film-competition-xprize/" target="_blank">Google is partnering with XPRIZE and Range Media Partners on the $3.5 million Future Vision film competition.</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/multi-token-prediction-gemma-4/" target="_blank">Accelerating Gemma 4: faster inference with  multi-token prediction drafters</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/devices/google-nest/home-updates/" target="_blank">Here’s what’s new with Google Home.</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/teacher-appreciation-week-2026/" target="_blank">Celebrating educators’ creativity this Teacher Appreciation Week</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/google-marketing-live-2026-turn-your-data-into-decisions/" target="_blank">Turn your data into decisions: 3 things your business needs for growth in the AI era</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/gpt-5-5-instant-system-card" target="_blank">GPT-5.5 Instant System Card</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/05/nuro-receives-driverless-testing-permit-ahead-of-uber-robotaxi-service-launch/" target="_blank">Nuro receives driverless testing permit ahead of Uber robotaxi service launch</a></div>
+                <div class="feed-date">05-06</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/05/sap-bets-1-16b-on-18-month-old-german-ai-lab-and-says-yes-to-nemoclaw/" target="_blank">SAP bets $1.16B on 18-month-old German AI lab and says yes to NemoClaw</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/05/sap-bets-1-16b-on-18-month-old-german-ai-lab-and-says-yes-to-nemoclaw/" target="_blank">SAP bets $1.16B on 18-month-old German AI lab and says yes to NemoClaw</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/05/bumbles-paying-users-are-slipping-as-it-bets-on-an-overhaul-later-this-year/" target="_blank">Bumble’s paying users are slipping as it bets on an overhaul later this year</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/05/altara-secures-7m-to-bridge-the-data-gap-thats-slowing-down-physical-sciences/" target="_blank">Altara secures $7M to bridge the data gap that’s slowing down physical sciences</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/05/altara-secures-7m-to-bridge-the-data-gap-thats-slowing-down-physical-sciences/" target="_blank">Altara secures $7M to bridge the data gap that’s slowing down physical sciences</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/05/lucid-motors-doesnt-know-how-many-evs-it-will-build-this-year/" target="_blank">Lucid Motors doesn’t know how many EVs it will build this year</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/tech-policy/2026/05/openai-president-explains-to-jury-why-his-diary-entries-sound-greedy/" target="_blank">OpenAI president forced to read his personal diary entries to jury</a></div>
+                <div class="feed-date">05-05</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0CmUgfZxgNY" target="_blank">🎥 The Adobe Summit 2026 Recap</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">The 2026 Adobe Summit Conference is a wrap! It can be said with certainty that if you continue into ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=dHcIopSu8P4" target="_blank">🎥 How Sam Altman Works</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">This episode breaks down how Sam Altman actually works — his thinking, decision-making, and the prin...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=g4WEzZdvDSQ" target="_blank">🎥 IMPERIUM SZTUCZNEJ INTELIGENCJI. SNY I KOSZMARY W OPENAI SAMA ALTMANA | KAREN HAO | AUDIOBOOK PL</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Pełna wersja audiobooka do kupienia w serwisie woblink.com ➡ Audiobook link not ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/vercel-labs/deepsec" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                vercel-labs/deepsec
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Deepsec 是一个基于编码代理的代码安全工具，有助于发现代码漏洞，对提升代码安全性具有重要价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Tommy-yw/RunbookHermes" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Tommy-yw/RunbookHermes
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 RunbookHermes 提供了智能化的运维响应能力，适合 AIOps 领域的研究和实践参考。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/raiyanyahya/how-to-train-your-gpt" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                raiyanyahya/how-to-train-your-gpt
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目从零开始构建现代大语言模型，并配有详细注释，非常适合学习 LLM 的原理与实现。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48024540" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Accelerating Gemma 4: faster inference with multi-token prediction drafters
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Gemma 4 的推理加速技术展示了多标记预测在提升模型效率方面的潜力，对实际部署有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48019219" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Google Chrome silently installs a 4 GB AI model on your device without consent
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Chrome 在设备上静默安装 AI 模型引发隐私和透明度争议，是 AI 部署伦理的重要讨论点。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48026021" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                GLM-5V-Turbo: Toward a Native Foundation Model for Multimodal Agents
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 GLM-5V-Turbo 是多模态代理模型的前沿进展，为构建更强大的智能系统提供了新方向。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2819<br>
+                    Output Tokens: 2496
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年05月06日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
