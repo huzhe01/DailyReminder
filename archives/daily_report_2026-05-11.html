@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年05月11日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月19日**</p><p>**学术突破**  </p><p>今日三篇前沿论文揭示了大模型发展的关键方向。《LLMs Improving LLMs》提出通过智能代理实现推理时的动态扩展，提升模型性能；《The Memory Curse》则警示记忆增强可能削弱多智能体协作意图；而《CA-SQL》通过探索与计算预算分配机制，优化文本到SQL的复杂推理过程，推动数据库交互智能化。</p><p>**行业动态**  </p><p>科技媒体聚焦未来办公场景，TechCrunch 连续报道“低语式”办公环境趋势，暗示语音助手将深度嵌入工作空间。同时，《The Verge》介绍一款融合拇指琴与合成器概念的 Bastl Kalimba，展现AI驱动下音乐硬件创新边界不断拓展。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 与 Sam Altman 的最新发言持续引发关注：从移民研究到NVIDIA GTC 2026愿景，再到无屏设备颠覆手机市场，三位科技领袖的布局预示着2027年前后或将迎来新一轮技术拐点，值得持续追踪。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.08083v1" target="_blank">LLMs Improving LLMs: Agentic Discovery for Test-Time Scaling</a>
+                </div>
+                <div class="paper-authors">👥 Tong Zheng, Haolin Liu, Chengsong Huang</div>
+                <div class="paper-summary">测试时扩展（Test-Time Scaling, TTS）已成为通过在推理过程中分配额外计算资源来提高大语言模型性能的有效方法。然而，现有的TTS策略大多是手工设计的：研究人员依靠直觉手动设计推理模式并调整启发式规则，导致计算资源分配的空间大部分未被探索。我们提出了一种环境驱动的框架AutoTTS，该框架改变了研究者的设计对象：从单独的TTS启发式规则转向可以自动发现TTS策略的环境。AutoTTS的关键在于环境构建：发现环境必须使控制空间易于处理，并为TTS搜索提供低成本、频繁的反馈。作为具体实现，我们将宽度-深度TTS形式化为对预先收集的推理轨迹和探测信号进行控制器合成的问题，其中控制器决定何时分支、继续、探测、剪枝或停止，并且可以在无需重复调用LLM的情况下进行廉价评估。我们进一步引入了beta参数化方法以使搜索可处理，并采用细粒度执行跟踪反馈以通过帮助智能体诊断TTS程序失败原因来提高发现效率。在数学推理基准上的实验表明，所发现的策略在整体准确率与成本权衡方面优于强大的手工设计基线。这些策略能够推广到保留的基准任务和不同模型规模上，而整个发现过程仅需39.9美元和160分钟。我们的数据和代码将开源发布于https://github.com/zhengkid/AutoTTS。
+
+核心贡献：本文提出了一个自动化发现TTS策略的框架AutoTTS，通过环境驱动的方法显著提升了大语言模型推理过程中的性能与成本平衡。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-08</span>
+                    <a href="https://arxiv.org/pdf/2605.08083v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.08060v1" target="_blank">The Memory Curse: How Expanded Recall Erodes Cooperative Intent in LLM Agents</a>
+                </div>
+                <div class="paper-authors">👥 Jiayuan Liu, Tianqin Li, Shiyi Du</div>
+                <div class="paper-summary">摘要：上下文窗口的扩展通常被视为LLM能力的直接提升，但我们发现它在多智能体社会困境中系统性地失败。在7个LLM和4个游戏共500轮的实验中，28个模型-游戏设置中有18个在历史记录扩展后合作性下降，我们称这一现象为“记忆诅咒”。通过三项分析，我们揭示了其背后的机制。首先，对378,000条推理轨迹进行词汇分析表明，这种崩溃与前瞻意图的削弱有关，而非单纯的猜疑增加。我们通过目标微调验证了这一点：一个仅在前瞻轨迹上训练的LoRA适配器缓解了性能衰减，并能零样本迁移到不同游戏中。其次，在保持提示长度不变的情况下用合成的合作记录替换可见的历史记录（记忆净化），显著恢复了合作性，证明触发因素是记忆内容本身，而不仅仅是长度。最后，去除显式的Chain-of-Thought推理往往可以减少崩溃，表明反思反而会放大“记忆诅咒”。总体而言，这些结果重新定义了记忆作为多智能体行为的关键决定因素：更长的记忆回溯可能根据引发的推理模式破坏或支持合作。
+
+核心贡献：该研究首次揭示了大语言模型中“记忆诅咒”现象，即记忆扩展并非总是有益，反而可能破坏多智能体间的合作，同时提出了通过控制记忆内容和推理方式来缓解这一问题的方法。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-08</span>
+                    <a href="https://arxiv.org/pdf/2605.08060v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.08057v1" target="_blank">CA-SQL: Complexity-Aware Inference Time Reasoning for Text-to-SQL via Exploration and Compute Budget Allocation</a>
+                </div>
+                <div class="paper-authors">👥 James Petullo, Nianwen Xue</div>
+                <div class="paper-summary">尽管推理时学习的最新进展提高了大型语言模型（LLM）在文本到SQL任务中的推理能力，但当前的方法在Bird-Bench（BIRD）基准中最具挑战性的任务上仍表现不佳。这是由于对解决方案空间的探索不足，而这种探索是发现有潜力的候选查询并进一步优化以生成正确输出所必需的。为了解决这一问题，我们提出了CA-SQL，一种新颖的文本到SQL流水线方法，该方法利用任务难度估计动态调整探索范围以生成候选解决方案。此外，我们采用了一种基于进化搜索原理的定制提示种子方法，以进一步激发基础LLM的探索行为，并引入了一种新的投票方法来选择最终的最佳候选方案。实验表明，我们的方法仅使用GPT-4o-mini就在BIRD开发集“具有挑战性”的任务层面上取得了51.72%的最先进成绩，优于其他上下文学习方法，甚至包括那些使用更大模型的方法。总体而言，我们的方法在BIRD开发数据集上实现了具有竞争力的61.06%执行准确率和68.77%软F1分数。
+
+核心贡献：提出了一种基于任务复杂度感知的文本到SQL推理方法CA-SQL，在不依赖大模型的情况下显著提升了在高难度任务上的性能表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-08</span>
+                    <a href="https://arxiv.org/pdf/2605.08057v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.08045v1" target="_blank">Uncertainty-Aware Structured Data Extraction from Full CMR Reports via Distilled LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Yi Yu, Parker Martin, Zhenyu Bu</div>
+                <div class="paper-summary">将自由文本的心脏磁共振（CMR）报告转换为可审计的结构化数据，仍然是队列构建、纵向管理和临床决策支持中的一个瓶颈。我们提出了 CMR-EXTR，这是一个轻量级框架，能够将自由文本的 CMR 报告转换为结构化数据，并为每个字段分配置信度以进行质量控制。通过教师-学生蒸馏流程，实现了完全离线推理并减少了人工标注的需求。不确定性评估整合了三种互补原则——分布合理性、采样稳定性和字段间一致性，用于确定是否需要人工复审。实验表明，CMR-EXTR 在变量级别实现了 99.65% 的准确率，展示了其可靠的提取能力和有信息量的置信度评分。据我们所知，这是首个集成了置信度估计的专用 CMR 提取系统。
+
+核心贡献：提出了一种基于知识蒸馏和不确定性评估的轻量级 CMR 报告结构化提取系统 CMR-EXTR，首次实现了高精度且具备可信度评分的 CMR 数据自动化处理。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-08</span>
+                    <a href="https://arxiv.org/pdf/2605.08045v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.08044v1" target="_blank">Fast Byte Latent Transformer</a>
+                </div>
+                <div class="paper-authors">👥 Julie Kallini, Artidoro Pagnoni, Tomasz Limisiewicz</div>
+                <div class="paper-summary">近期的字节级语言模型（LMs）在不依赖子词词汇表的情况下，其性能已可与基于词元的语言模型相媲美，但其实际应用受到缓慢的逐字节自回归生成过程的限制。我们通过引入新的训练和生成技术，在字节潜在变换器（BLT）中解决了这一瓶颈。首先，我们提出了 BLT 扩散（BLT-D），这是我们的最快 BLT 变体，并结合了标准的下一个字节预测损失与辅助的块级扩散目标进行训练。这使得推理过程中可以在每个解码步骤中并行生成多个字节，从而大幅减少生成序列所需的前向传播次数。其次，我们提出了两种受推测性解码启发的扩展方法，以牺牲部分速度为代价换取更高的生成质量：BLT 自我推测（BLT-S），其中 BLT 的局部解码器会继续在其正常块边界之后生成草案字节，随后通过一次完整的模型前向传播进行验证；以及 BLT 扩散+验证（BLT-DV），该方法在扩散生成后增加了一个自回归验证步骤来增强 BLT-D。所有方法在生成任务上的估计内存带宽成本都比原始 BLT 降低了超过 50%。每种方法都有其独特的优势，共同消除了字节级语言模型实用化的关键障碍。
+
+核心贡献：本文提出了一种高效的字节级语言模型——Fast Byte Latent Transformer，通过扩散机制和推测性解码技术显著提升了生成速度并降低了计算成本。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-08</span>
+                    <a href="https://arxiv.org/pdf/2605.08044v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.07982v1" target="_blank">GLiGuard: Schema-Conditioned Classification for LLM Safeguard</a>
+                </div>
+                <div class="paper-authors">👥 Urchade Zaratiana, Mary Newhauser, George Hurn-Maloney</div>
+                <div class="paper-summary">Ensuring safe, policy-compliant outputs from large language models requires real-time content moderation that can scale across multiple safety dimensions. However, state-of-the-art guardrail models rely on autoregressive decoders with 7B--27B parameters, reformulating what is fundamentally a classification problem as sequential text generation, a design choice that incurs high latency and scales poorly to multi-aspect evaluation. In this work, we introduce \textbf{GLiGuard}, a 0.3B-parameter schema-conditioned bidirectional encoder adapted from GLiNER2 for LLM content moderation. The key idea is to encode task definitions and label semantics directly into the input sequence as structured token schemas, enabling simultaneous evaluation of prompt safety, response safety, refusal detection, 14 fine-grained harm categories, and 11 jailbreak strategies in a single non-autoregressive forward pass. This schema-conditioned design lets supported task and label blocks be composed directly in the input schema at inference time. Across nine established safety benchmarks, GLiGuard achieves F1 scores competitive with 7B--27B decoder-based guards despite being 23--90$\times$ smaller, while delivering up to 16$\times$ higher throughput and 17$\times$ lower latency. These results suggest that compact bidirectional encoders can approach the accuracy of much larger guard models while drastically reducing inference cost. Code and models are available at https://github.com/fastino-ai/GLiGuard.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-08</span>
+                    <a href="https://arxiv.org/pdf/2605.07982v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/10/get-ready-for-the-whisper-filled-office-of-the-future/" target="_blank">Get ready for the whisper-filled office of the future</a></div>
+                <div class="feed-date">05-10</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/10/get-ready-for-the-whisper-filled-office-of-the-future/" target="_blank">Get ready for the whisper-filled office of the future</a></div>
+                <div class="feed-date">05-10</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/927638/the-bastl-kalimba-is-a-wild-synth-that-thinks-its-a-thumb-piano" target="_blank">The Bastl Kalimba is a wild synth that thinks it’s a thumb piano</a></div>
+                <div class="feed-date">05-10</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/10/anthropic-says-evil-portrayals-of-ai-were-responsible-for-claudes-blackmail-attempts/" target="_blank">Anthropic says ‘evil’ portrayals of AI were responsible for Claude’s blackmail attempts</a></div>
+                <div class="feed-date">05-10</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/10/anthropic-says-evil-portrayals-of-ai-were-responsible-for-claudes-blackmail-attempts/" target="_blank">Anthropic says ‘evil’ portrayals of AI were responsible for Claude’s blackmail attempts</a></div>
+                <div class="feed-date">05-10</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/10/uber-has-always-wanted-to-be-more-than-a-ride-now-it-has-reason-to-hurry/" target="_blank">Uber has always wanted to be more than a ride; now it has reason to hurry</a></div>
+                <div class="feed-date">05-10</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/927620/ashnymph-childhood-ep-music-review" target="_blank">Ashnymph’s Childhood EP is exhilarating dance goth rock</a></div>
+                <div class="feed-date">05-10</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/10/techcrunch-mobility-limes-ipo-gamble/" target="_blank">TechCrunch Mobility: Lime’s IPO gamble</a></div>
+                <div class="feed-date">05-10</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Pf0AX4vRNLM" target="_blank">🎥 Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk &amp; The 2024 Recession</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Full Interviews of Impact Theory + The Truth About Money, AI, Elon Musk & The 2024 Recession. This c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jIviHI7fqyc" target="_blank">🎥 NVIDIA CEO Jensen Huang GTC 2026 Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Nvidia (NVDA) CEO Jensen Huang kicked off the company's GTC event in San Jose, California, with his ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=jw_o0xr8MWU" target="_blank">🎥 NVIDIA GTC Keynote 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Watch NVIDIA Founder and CEO Jensen Huang's GTC keynote as he unveils the latest breakthroughs in AI...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0ky2mTxwSS4" target="_blank">🎥 Sam Altman&#39;s $6.5 Billion Screenless Device: Why It Could Make Your Phone Obsolete By 2027</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Sam Altman's $6.5 Billion Screenless Device: Why It Could Make Your Phone Obsolete By 2027 Sam Altma...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pRYEbC1BLcs" target="_blank">🎥 Everybody wants to rule the AI world | The Vergecast</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">The Musk v. OpenAI trial continues, which means so do the allegations and leaks surrounding some of ...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/huangserva/3DCellForge" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                huangserva/3DCellForge
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 3DCellForge 提供了AI驱动的交互式3D细胞生成和探索工具，对生物医学研究和可视化技术有重要价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/BigPizzaV3/CodexPlusPlus" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                BigPizzaV3/CodexPlusPlus
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 CodexPlusPlus 是 CodexApp 的增强工具，为代码生成和开发效率提供了新的可能性。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48085821" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Local AI needs to be the norm
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 讨论本地 AI 应成为常态，对 AI 部署和隐私保护有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48089091" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Running local models on an M4 with 24GB memory
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨在 M4 芯片上运行本地模型，对硬件性能与模型优化研究具有实践意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48082021" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                LLMorphism: When humans come to see themselves as language models
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 分析人类如何看待自己与语言模型的关系，涉及认知科学与 AI 哲学的交叉领域。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 1992<br>
+                    Output Tokens: 1724
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年05月11日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
