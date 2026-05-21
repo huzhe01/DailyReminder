@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年05月21日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年3月20日**</p><p>**学术突破**  </p><p>今日暂无重大大模型论文发布，但学界对AI与基础科学融合的探索持续升温。Imperagen 获得 500 万英镑融资，计划结合量子物理与 AI 技术推进酶工程研究，预示着跨学科应用的新方向。</p><p>**行业动态**  </p><p>科技圈风起云涌：SpaceX 的 IPO 计划引发对其 CEO 马斯克个人风险因素的关注；NVIDIA 首席执行官黄仁勋高调宣布发现一个价值 2000 亿美元的新市场，凸显 AI 硬件需求持续爆发；Google 则在 Missouri 推出社区投资，并公布 I/O 2026 大会百项重磅更新，进一步夯实其在 AI 生态中的布局。</p><p>**值得关注**  </p><p>本周多位科技领袖接受深度访谈，马斯克、黄仁勋与奥特曼的言论持续引发讨论。尽管 OpenAI 审判尚未定论，AI 监管与技术伦理仍是焦点。关注这些领袖的动向，或许能提前捕捉到下一个科技浪潮的方向。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.15905v1" target="_blank">Generative Long-term User Interest Modeling for Click-Through Rate Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Jiangli Shao, Kaifu Zheng, Hao Fang</div>
+                <div class="paper-summary">摘要：在广告和推荐系统中，利用大量历史用户行为建模长期用户兴趣可以提升点击率（CTR）预测的性能。通常采用两阶段框架，其中通用搜索单元（GSU）首先检索与目标物品相关的前k个行为，然后通过定制注意力机制生成兴趣特征。然而，现有以目标为中心的GSU会忽略用户的其他潜在兴趣，导致兴趣特征不完整且有偏。此外，基于匹配的行为检索过程依赖于目标物品与每个历史行为之间的成对相似度评分，这不仅随着用户行为的增长而变得耗时，还忽略了用户行为之间的交互信息。为了解决这些问题，我们提出了一个名为GenLI的**生成式长期用户兴趣模型**用于CTR预测。GenLI包含兴趣生成模块（IGM）、行为检索模块（BRM）和兴趣融合模块（IFM）。IGM生成多个兴趣分布以表示用户实时兴趣的不同方面，其独立于目标，并整合了行为间的交互信息，从而确保兴趣特征的完整性和多样性。BRM通过简单的查找操作选择相关行为，将每项行为加权的时间复杂度降低至O(1)。最后，IFM使用精细的门控机制生成兴趣特征。基于生成过程，GenLI提升了用户兴趣的多样性，避免了复杂的基于匹配的行为检索，在准确性与效率之间取得了更好的平衡。
+
+核心贡献：本文提出了一种无需目标依赖、能捕捉用户多维度兴趣并显著提升CTR预测效率与准确性的生成式长期用户兴趣建模方法GenLI。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-15</span>
+                    <a href="https://arxiv.org/pdf/2605.15905v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/missouri-programs/" target="_blank">We’re announcing new community investments in Missouri.</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/google-io-2026-all-our-announcements/" target="_blank">100 things we announced at I/O 2026</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/google-research/google-beam-group-meetings/" target="_blank">A new experiment brings better group meetings to Google Beam</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/youtube/youtube-demand-gen-updates/" target="_blank">Fuel your next wave of growth on YouTube with Demand Gen</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/asset-studio-updates/" target="_blank">Asset Studio is entering a new era of AI-powered creativity.</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/shopping/shopping-updates-google-marketing-live/" target="_blank">How we’re helping retailers thrive with new Universal Commerce Protocol features and AI tools on Google</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/google-marketing-live-search-ads/" target="_blank">A new generation of ads for the AI era of Search</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/google-marketing-live-2026-collection/" target="_blank">Google Marketing Live 2026</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/20/imperagen-raises-5-million-to-redefine-enzyme-engineering/" target="_blank">Imperagen raises £5 million to use quantum physics, AI on enzyme engineering</a></div>
+                <div class="feed-date">05-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/science/935102/spacex-ipo-elon-musk-tesla-cybertruck-xai-risk-factor" target="_blank">In SpaceX’s IPO, Elon Musk is a risk factor</a></div>
+                <div class="feed-date">05-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/20/jensen-huang-says-hes-found-a-brand-new-200b-market-for-nvidia/" target="_blank">Jensen Huang says he’s found a ‘brand new’ $200B market for Nvidia</a></div>
+                <div class="feed-date">05-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/20/jensen-huang-says-hes-found-a-brand-new-200b-market-for-nvidia/" target="_blank">Jensen Huang says he’s found a ‘brand new’ $200B market for Nvidia</a></div>
+                <div class="feed-date">05-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/20/anthropic-says-its-about-to-have-its-first-profitable-quarter/" target="_blank">Anthropic says it’s about to have its first profitable quarter</a></div>
+                <div class="feed-date">05-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/20/anthropic-says-its-about-to-have-its-first-profitable-quarter/" target="_blank">Anthropic says it’s about to have its first profitable quarter</a></div>
+                <div class="feed-date">05-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/20/the-spacex-ipo-filing-ai-bets-starship-dreams-elon-musk/" target="_blank">The SpaceX IPO filing is filled with AI bets, Starship dreams, and Elon Musk at the center</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/space/2026/05/spacex-submits-detailed-financial-filing-ahead-of-going-public-in-june/" target="_blank">Famously secret about its finances, SpaceX opens its books for the first time</a></div>
+                <div class="feed-date">05-20</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=GfIRd44wLoc" target="_blank">🎥 🔥Noticias de IA🔥Musk PIERDE contra OpenAI, Karpathy los &quot;traiciona&quot; y Google lanza su IA 24/7</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Web: https://theresetlabs.eu/ ▻ GLM codigo de descuento: https://z.ai/subscribe?ic=TRQNTOY68T ▻ Curs...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=-dSTakWQaR8" target="_blank">🎥 Jensen Huang Today On NVIDIA, Memory Supply, China, AI Demand - NVDA Update</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Jensen Huang Today On NVIDIA, Memory Supply, China, AI Demand - NVDA Update NVIDIA CEO Jensen Huang,...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=M1tetAL6RSc" target="_blank">🎥 Dell Tech World 2026 Day 1 Keynote | Unleash the Future of AI</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Watch the Dell Tech World (DTW) 2026 Day 1 Keynote, “Unleash the Future,” featuring Michael Dell and...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=iPd5R3YN2qA" target="_blank">🎥 马斯克vs.奥特曼: 三周庭审之后，法院为什么还是没有回答AI时代最关键的问题？- Vivien律师</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">马斯克（Elon Musk）起诉OpenAI与奥特曼（Sam Altman）的案件，终于迎来阶段性裁决。 但这场全球关注三周的庭审，最终却并 ......</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=cV6vIpy2IVQ" target="_blank">🎥 এজিআই আসছে: যা জানা জরুরি | Proffesor Jhiang | Bangla Dubbing</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">কৃত্রিম বুদ্ধিমত্তা (AI) কি সত্যিই কেবল একটি প্রযুক্তিগত অগ্রগতি, ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/xw7872081123/wallpaper-engine-steam" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                xw7872081123/wallpaper-engine-steam
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提供 Wallpaper Engine 的优化方案和问题修复，对桌面体验提升有实际价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Flizorules05/ROM-MGBA-Pokemon-Emulator-PC" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Flizorules05/ROM-MGBA-Pokemon-Emulator-PC
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 整合多个游戏模拟器资源，适合研究复古游戏和跨平台兼容性。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/BasZ4ll/Stable-Diffusion-WebUI" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                BasZ4ll/Stable-Diffusion-WebUI
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Stable Diffusion WebUI 相关资源丰富，适合 AI 图像生成领域的开发者参考。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48212493" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                An OpenAI model has disproved a central conjecture in discrete geometry
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 OpenAI 模型推翻离散几何核心猜想，展示了 AI 在数学研究中的突破性潜力。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48205626" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Qwen3.7-Max: The Agent Frontier
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Qwen3.7-Max 推动智能体前沿发展，是大模型能力演进的重要标志。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48209323" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Formal Verification Gates for AI Coding Loops
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 形式化验证在 AI 编程循环中的应用，有助于提升代码安全性和可靠性。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 2<br>
+                    Input Tokens: 760<br>
+                    Output Tokens: 575
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 16<br>
+                    Quota 消耗: 907 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年05月21日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
