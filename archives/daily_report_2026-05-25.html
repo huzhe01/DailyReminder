@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年05月25日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2024年X月X日**</p><p>**学术突破**  </p><p>今日三篇重要论文引发关注。SkillOpt 提出一种自我演化的代理技能优化框架，推动智能体自主学习与策略进化；ETCHR 则聚焦推理能力的澄清与增强，通过编辑机制提升模型逻辑性；另一项研究挑战传统预训练范式，指出“强大教师”并非必要的前提，为大模型蒸馏带来新思路。</p><p>**行业动态**  </p><p>谷歌正实时应对 AI 安全挑战，成为全球科技巨头中探索 AI 风险治理的先行者。与此同时，合作开发 Google 智能眼镜的 Xreal 表示已攻克行业难题，或预示可穿戴设备进入新阶段。AI 安全与硬件落地，正同步加速推进。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 和 Sam Altman 的近期言论与动态持续搅动舆论场，从选举风波到 AI 展会，再到法庭争议，三位科技领袖的一举一动牵动着 AI 产业的神经，值得持续追踪。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.23904v1" target="_blank">SkillOpt: Executive Strategy for Self-Evolving Agent Skills</a>
+                </div>
+                <div class="paper-authors">👥 Yifan Yang, Ziyang Gong, Weiquan Huang</div>
+                <div class="paper-summary">当前的智能体技能是手工设计的、一次性生成的，或者通过松散控制的自我修订来演化，这些方法都不像深度学习优化器那样对技能进行优化，也无法在反馈下可靠地优于初始状态。我们认为，应该以与权重空间优化相同的方式训练技能——将其视为冻结智能体的外部状态，并遵循可复现的训练规范。SkillOpt 是我们所知的第一个系统性可控的文本空间优化器，用于智能体技能：一个独立的优化模型将评分后的轨迹转化为对单一技能文档的有限增删改操作，只有当编辑严格提升验证集得分时才会被接受。该方法通过文本学习率预算、拒绝编辑缓冲区和逐轮慢速/元更新使技能训练稳定，且在部署时不会增加任何推理阶段的模型调用。在六个基准测试、七个目标模型和三种执行框架（直接聊天、Codex、Claude Code）中，SkillOpt 在所有 52 个评估单元（模型、基准、框架）中表现最佳或并列第一，超越了人类技能、一次性 LLM 技能、Trace2Skill、TextGrad、GEPA 和 EvoSkill 等方法。在 GPT-5.5 上，它在直接聊天中提升了无技能准确率 23.5 分，在 Codex 智能体循环中提升 24.8 分，在 Claude Code 中提升 19.1 分。迁移实验进一步表明，经过优化的技能在跨模型规模、在 Codex 与 Claude Code 执行环境之间转移，甚至迁移到相近的数学基准任务上时仍保留价值，无需进一步优化。
+
+核心贡献：SkillOpt 提出了一种系统性的文本空间优化方法，能够稳定地提升智能体技能的表现，并在多种模型和执行环境中展现出优越的性能和良好的迁移能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-22</span>
+                    <a href="https://arxiv.org/pdf/2605.23904v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.23897v1" target="_blank">ETCHR: Editing To Clarify and Harness Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Beichen Zhang, Yuhong Liu, Jinsong Li</div>
+                <div class="paper-summary">多模态大语言模型在视觉推理方面取得了进展，然而对于需要细粒度关注或视角变换的问题，纯文本的思维链仍然是一个瓶颈。“用图像思考”的范式缩小了这一差距，但现有方法要么受限于固定的预定义工具包，要么通过统一的多模态方法生成嘈杂的中间图像。我们追求第三种选择：使用专用的图像编辑模型，并将其与理解模型解耦。然而，现成的图像编辑器作为推理助手存在两个互补性的不足：语言侧的不足在于，训练为被动指令跟随者的编辑器无法将抽象问题映射到适当的视觉变换；生成侧的不足在于，随着推理深度的增加，编辑的准确性会下降。基于这一分析，我们引入了ETCHR（Editing To Clarify and Harness Reasoning），这是一种以问题为条件、具有推理意识的图像编辑器，与下游的理解模型解耦，并通过两阶段训练策略针对上述两个不足进行训练：第一阶段是通过对编辑轨迹的监督微调进行推理模仿，第二阶段是通过VLM衍生的奖励来增强推理能力，以提高编辑的准确性和下游推理的准确性。由于编辑器是解耦的，ETCHR可以以无需训练的方式插入不同的开源和闭源多模态大语言模型中。在五个任务家族（细粒度感知、图表理解、逻辑推理、拼图恢复和3D理解）中，ETCHR将Qwen3-VL-8B的平均Pass@1从55.95提升至60.77（+4.82），将Gemini-3.1-Flash-Lite的平均Pass@1从65.08提升至70.55（+5.47），并将1T参数MoE模型Kimi K2.5的平均Pass@1从76.55提升至81.16（+4.61）。
+
+核心贡献：提出ETCHR，一种解耦的、具有推理意识的图像编辑器，通过两阶段训练显著提升了多模态大语言模型在多个视觉推理任务上的表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-22</span>
+                    <a href="https://arxiv.org/pdf/2605.23897v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.23857v1" target="_blank">Strong Teacher Not Needed? On Distillation in LLM Pretraining</a>
+                </div>
+                <div class="paper-authors">👥 Taiming Lu, Zhuang Liu</div>
+                <div class="paper-summary">知识蒸馏通常假设一种从强到弱的关系，即更强的教师模型能培养出更好的学生模型。在本研究中，我们检验了这一关于大型语言模型预训练中知识蒸馏的假设。通过调整架构规模和训练令牌预算，我们创建了从强到弱、同级别以及从弱到强的教师-学生关系，并研究每种关系下蒸馏的有效性。我们发现，教师模型并不一定需要很强：只要合理混合语言建模和知识蒸馏损失，即使是小型且训练不足的教师模型也能提升更大模型的学生表现。同时，更强的教师模型也并非总是更好：通过增加参数或更多训练令牌来进一步增强教师模型，可能会使蒸馏收益饱和甚至逆转。此外，我们还观察到，与领域内拟合相比，蒸馏更容易提高模型的泛化能力（包括分布外性能和下游任务表现）。综上所述，这些结果挑战了“知识蒸馏预训练总是需要一个强大教师”的普遍信念。
+
+核心贡献：本文挑战了知识蒸馏预训练必须依赖强大教师模型的传统观点，证明了即使使用较弱的教师模型，在适当条件下也能有效提升学生模型的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-22</span>
+                    <a href="https://arxiv.org/pdf/2605.23857v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.23826v1" target="_blank">Decomposing Queries into Tool Calls for Long-Video Keyframe Retrieval</a>
+                </div>
+                <div class="paper-authors">👥 Michal Shlapentokh-Rothman, Prachi Garg, Yu-Xiong Wang</div>
+                <div class="paper-summary">关键帧选择是为长视频问答（QA）提供可验证视觉证据的直接方法。查询内容因所需信息的不同而异，找到合适的帧取决于明确需要查找的内容。现有的关键帧选择器要么将每一帧与单一查询进行评分，要么将查询分解为由单一视觉工具评估的固定模式。我们提出了 ToolMerge，一种基于分解和合并的关键帧检索方法：基于大语言模型（LLM）的规划器将查询分解为工具调用，并指定如何使用布尔运算符合并每个工具的排名结果。为了直接评估检索效果，我们构建了 Molmo-2 Moments (M2M) 基准数据集，在该数据集中，每个问题都锚定到特定的时间区间。在 QA、问题检索和字幕检索任务中，ToolMerge 与现有关键帧选择方法具有竞争力，特别是在字幕检索上，优于其他方法5%。代码和数据可在 https://github.com/michalsr/ToolMerge 获取。
+
+核心贡献：提出了一种基于查询分解与合并的关键帧检索方法 ToolMerge，并构建了用于评估的基准数据集 M2M，显著提升了字幕检索性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-22</span>
+                    <a href="https://arxiv.org/pdf/2605.23826v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.23821v1" target="_blank">Hierarchical Concept Geometry in Language Models Emerges from Word Co-occurrence</a>
+                </div>
+                <div class="paper-authors">👥 Andres Nava, Matthieu Wyart</div>
+                <div class="paper-summary">我们提出了一种分布式的理论，解释语言表示中如何以几何方式编码上位关系（hypernymy）——即一般概念与具体概念之间的“是-一种”关系。基于已验证的假设，即在WordNet上位图中距离较近的词更常共现，我们从理论上表征了由此产生的word2vec嵌入的Gram矩阵谱。在共现核满足温和正性和衰减条件的情况下，我们证明主特征向量首先分离出广泛的分类分支，然后逐步细化为更小的子分支，从而产生一种**层次分割几何结构**，其粗到细的谱组织反映了树状结构。我们在多个采样的WordNet子树上的word2vec嵌入中验证了这些预测，并展示了相同的模式在Gemma 2B的反嵌入中也具有显著的扩展性。我们的结果表明，大型语言模型中的层次概念几何结构并不需要特定于层次的功能机制，而是源自词对统计信息的谱结构。
+
+核心贡献：本文揭示了语言模型中层次概念几何结构并非依赖特定机制，而是自然地从词共现统计的谱特性中涌现出来。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-22</span>
+                    <a href="https://arxiv.org/pdf/2605.23821v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.23715v1" target="_blank">NLG Evaluation: Past, Present, Future</a>
+                </div>
+                <div class="paper-authors">👥 Ehud Reiter</div>
+                <div class="paper-summary">Natural Language Generation (NLG) evaluation has changed dramatically since 1990, and will continue to evolve in the future. In 1990, when NLG had close ties to linguistics, there was very little formal experimental evaluation in the modern sense. In 2026, when NLG is closely linked to machine learning, experimental evaluation is expected and indeed fundamental to research. Many evaluation techniques were developed over this period, including most recently LLM-as-Judge. I expect NLG evaluation will continue to evolve in the future. In particular, impact, qualitative, and safety evaluation will become more important as large numbers of people routinely use NLG technology.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-22</span>
+                    <a href="https://arxiv.org/pdf/2605.23715v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Benedict Evans</div>
+                <div class="feed-title"><a href="https://www.ben-evans.com/benedictevans/2026/5/24/ai-job-exposure" target="_blank">Predicting AI job exposure</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/24/everyone-is-navigating-ai-security-in-real-time-even-google/" target="_blank">Everyone is navigating AI security in real time — even Google</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/24/everyone-is-navigating-ai-security-in-real-time-even-google/" target="_blank">Everyone is navigating AI security in real time — even Google</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/24/xreal-googles-smartglasses-partner-thinks-it-has-finally-mastered-this-notoriously-tricky-industry/" target="_blank">Xreal, Google’s smartglasses partner, thinks it has finally mastered this notoriously tricky industry</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/24/6-kitchen-gadgets-that-make-adulting-feel-easier/" target="_blank">6 kitchen gadgets that make adulting feel easier</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/24/techcrunch-mobility-robotaxi-reality-check/" target="_blank">TechCrunch Mobility: Robotaxi reality check</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/936196/best-memorial-day-sales-tech-deals-2026" target="_blank">The best Memorial Day sales you can shop this weekend</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/936860/robert-moor-on-trails-book-review" target="_blank">On Trails is a wandering tale that blends hiking, science, and history</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/24/i-tried-amazons-bee-wearable-and-am-both-intrigued-and-slightly-creeped-out/" target="_blank">I tried Amazon’s Bee wearable and am both intrigued and slightly creeped out</a></div>
+                <div class="feed-date">05-24</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=sHHxN9pG8bI" target="_blank">🎥 BREAKING: She LEAKED Elon’s 2024 ELECTION SCHEME, IT’S INSANE!</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Today on the show, Luke discusses Ashley St. Claire's allegations against Elon, the new Leavitt, and...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=pcQK0t95V1g" target="_blank">🎥 2024 03 19 Don Lemon x Elon Musk Interview  Immigration Research hqsk sANbOw</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=UulEAq54sLg" target="_blank">🎥 LIVE: Nvidia CEO Jensen Huang Lands In Taipei Ahead Of Nvidia Tech Show Buzz Surge | DWS News | AI14</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">WATCH LIVE as Jensen Huang, CEO of Nvidia, has arrived in Taipei ahead of a major global tech show, ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=-dSTakWQaR8" target="_blank">🎥 Jensen Huang Today On NVIDIA, Memory Supply, China, AI Demand - NVDA Update</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Jensen Huang Today On NVIDIA, Memory Supply, China, AI Demand - NVDA Update NVIDIA CEO Jensen Huang,...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=SDQMCemt-bY" target="_blank">🎥 イーロン・マスク敗訴。なぜ20兆円裁判の中身は審理されなかったのか</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">2026年5月18日。陪審員9人は、わずか2時間で全員一致の評決を出した。 イーロン・マスク全面敗訴。しかし、20兆円の慈善 ......</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=uF7st6jY0G0" target="_blank">🎥 &quot;Sam Altman, c&#39;est Staline sous GLP-1&quot; — Anthropic kill ses investisseurs, Elon vs OpenAI</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Premier épisode tous les 4 — après plusieurs mois sans poster, Sans Permission revient en force. ▭▭▭...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/0xSero/codex-shim" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                0xSero/codex-shim
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 codex-shim 提供了本地模型与 Codex Desktop 的接口，对研究模型部署和集成有参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Tong89/smartNode" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Tong89/smartNode
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 smartNode 项目可能涉及智能节点技术，适合关注自动化与 AI 工程实践的研究者。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/NicoleK-M/Spoof-Matrix-Hardware" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                NicoleK-M/Spoof-Matrix-Hardware
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Spoof-Matrix-Hardware 涉及硬件伪装技术，对研究设备识别与反检测机制有一定启发。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48256953" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                DeepSeek reasonix, DeepSeek native coding agent with high caching and low cost
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 DeepSeek reasonix 展示了高效的缓存机制和低成本的原生编码代理，对实际应用有重要价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48256912" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Constraint Decay: The Fragility of LLM Agents in Back End Code Generation
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Constraint Decay 揭示了大语言模型在后端代码生成中的脆弱性，对改进 LLM 代理具有指导意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48258684" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Memory has grown to nearly two-thirds of AI chip component costs
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 内存成本占比上升揭示了 AI 芯片设计的关键挑战，对硬件工程师具有参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2028<br>
+                    Output Tokens: 1816
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 17<br>
+                    Quota 消耗: 908 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年05月25日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
