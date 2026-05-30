@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年05月30日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日三篇重要论文引发关注：LLMSurgeon 提出诊断大模型数据混合问题的新方法，提升模型透明度；SchGen 利用语义驱动代码表示生成 PCB 电路图，推动工程自动化发展；Unlocking the Working Memory 探索大模型潜在推理能力的“工作记忆”机制，为高效推理架构提供新思路。</p><p>**行业动态**  </p><p>科技新闻聚焦多方动向：印度法院裁决或为挑战谷歌广告业务打开新窗口；英伟达、微软与 Arm 联手预告新一代 N1X 笔记本处理器，AI 硬件竞赛再升温；Google 展示 Gemini 系列最新应用，并推出 I/O 2026 预热互动活动，持续强化其 AI 生态布局。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 与 Sam Altman 最新访谈陆续发布，三位 AI 领域关键人物对技术、竞争与未来方向的观点值得深入追踪。此外，波士顿儿童医院利用 AI 实现罕见病新诊断，凸显医疗领域落地潜力。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30348v1" target="_blank">LLMSurgeon: Diagnosing Data Mixture of Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Yaxin Luo, Jiacheng Cui, Xiaohan Zhao</div>
+                <div class="paper-summary">大型语言模型（LLMs）的预训练数据混合构成了它们的“数字DNA”，塑造了模型的行为、能力和失败模式。然而，这种组成通常不被公开，使得事后审计数据组合或来源变得困难。在这项工作中，我们形式化了**数据混合手术（Data Mixture Surgery, DMS）**：仅凭目标LLM生成的文本，估计其预训练语料库在预定义分类法下的领域级分布。我们提出了**LLMSurgeon**，一个强大的框架，将DMS建模为在标签偏移假设下的逆问题。与直接聚合分类器输出不同，LLMSurgeon估计一个校准后的*软*混淆矩阵，并通过求解约束逆问题来纠正系统性的领域混淆并恢复潜在的混合先验。为了评估，我们引入了**LLMScan**，这是一个基于开源LLMs构建的可验证评估套件，这些模型具有透明的预训练混合配置。在LLMScan中，LLMSurgeon在固定协议下以高保真度恢复了领域混合情况。我们的工作提供了一种实用的事后方法，用于审计基础模型的“数字DNA”，而无需访问其训练数据。
+
+核心贡献：提出LLMSurgeon框架，实现无需访问训练数据即可对大型语言模型的预训练数据混合进行高精度事后审计。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30348v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30345v1" target="_blank">SchGen: PCB Schematic Generation with Semantic-Grounded Code Representations</a>
+                </div>
+                <div class="paper-authors">👥 Qinpei Luo, Ruichun Ma, Xinyu Zhang</div>
+                <div class="paper-summary">印刷电路板（PCB）原理图设计几乎定义了所有电子硬件，但该过程仍然依赖人工且需要专业知识。尽管生成式人工智能在数字和模拟集成电路设计方面取得了进展，但从自然语言意图生成PCB原理图的研究仍较为匮乏。本文提出了SchGen，这是首个能够根据自然语言请求生成可编辑PCB原理图的大规模语言模型。关键挑战在于缺乏适用于LLM的表示方法和大规模数据集。目前的原理图格式主要由冗长、工具特定的语法和几何描述主导，难以可靠地生成。我们引入了一种语义驱动的代码表示方法，通过相对布局和基于引脚名称的布线来编码原理图编辑的基本操作，从而将原本以几何为主的生成问题转化为适合LLM处理的语义匹配任务。我们进一步构建了一个大规模数据集，通过人机协作流程将开源硬件设计转换为我们的表示形式，并与用户提示配对。实验表明，SchGen在布线连接准确性和功能正确性方面显著优于其他表示方式，甚至优于更大规模的通用LLM。我们的结果强调了表示设计在实现复杂硬件设计任务生成模型中的关键作用。
+
+核心贡献：SchGen 是首个能从自然语言生成 PCB 原理图的大型语言模型，通过引入语义驱动的代码表示和大规模数据集，显著提升了生成质量和功能性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30345v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30343v1" target="_blank">Unlocking the Working Memory of Large Language Models for Latent Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Lukas Aichberger, Sepp Hochreiter</div>
+                <div class="paper-summary">为了提高大语言模型的推理能力，通常通过在生成最终答案之前生成中间标记来扩展测试时的计算。然而，这种方法将推理与自回归生成耦合在一起，从而混淆了内部计算和外部交流。相比之下，人类认知可以利用工作记忆在内部存储和操作信息，而无需外部化中间思维。基于这一原理，我们引入了“记忆中的推理”（Reasoning in Memory, RiM），这是一种潜在推理方法，用记忆块取代自回归生成的推理步骤。这些记忆块是固定的特殊标记序列，能够解锁大语言模型的工作记忆能力。由于它们是固定而非生成的，因此可以在一次前向传递中处理，从而实现高效计算的潜在推理。为了具体实施这些记忆块，我们采用了一个两阶段的课程：首先，通过在每个记忆块后预测明确的推理步骤来建立基础；其次，去除这种步骤级监督，并在每个记忆块后迭代优化最终答案。我们在多个推理基准上的实验表明，在不同家族和规模的语言模型上，RiM 在避免自回归生成思维的同时，匹配或超越了现有的潜在推理方法。这些结果表明，大语言模型可以被训练为使用工作记忆作为有效的潜在推理机制。
+
+核心贡献：本文提出了一种名为 Reasoning in Memory (RiM) 的新方法，通过引入固定的记忆块替代自回归生成，使大语言模型能够在不依赖外部化中间步骤的情况下进行高效且强大的潜在推理。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30343v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30335v1" target="_blank">Locally Coherent, Globally Incoherent: Bounding Compositional Incoherence in Multi-Component LLM Agents</a>
+                </div>
+                <div class="paper-authors">👥 Anany Kotawala</div>
+                <div class="paper-summary">摘要：多组件大语言模型（LLM）代理从各自只能看到联合问题部分的组件中组合出概率性主张；即使每个组件在局部上是连贯的，这种组合可能会违反基本的概率公理。我们通过“组合残差 eps*”形式化了这种局部连贯但全局不连贯的失败现象，eps* 是组合后的结果与联合连贯多面体之间的 L2 距离，可以在运行时根据系统输出和声明的跨组件耦合约束进行计算。一个乘积结构二分法刻画了何时局部连贯就足够；一个瑞利商预测在四个关系类别中的三个类别内与观察到的残差匹配度在 7% 以内。一种层次化的 Boyle-Dykstra 投影方法可以确定性地修复组合；一种随时有效的 e-过程提供了顺序连贯性的监控。在四组中等规模 LLM 面板上的 1,876 个集合团块（第 5.5 节重新运行前沿面板）中，33-94% 的团块显示 eps* > 0，按照比例分配规则，在 1,770 个已解决的赌注中，这转化为每赌注 +0.115 nats 的遗憾（如果投注者本身也进行了连贯化处理，则收益下降至 +0.006）。三种直观的 LLM 侧缓解措施（检索、分区感知提示、聚合器 LLM）均失败或导致性能回退。
+
+核心贡献：本文提出了一个量化多组件 LLM 代理中局部连贯但全局不连贯问题的新指标 eps*，并设计了修复和监控机制，揭示了现有缓解策略的局限性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30335v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30334v1" target="_blank">Demystifying Data Organization for Enhanced LLM Training</a>
+                </div>
+                <div class="paper-authors">👥 Yalun Dai, Yangyu Huang, Tongshen Yang</div>
+                <div class="paper-summary">大型语言模型（LLMs）已经革新了众多领域，但其训练效率高度依赖于有效的数据整理。尽管数据选择已得到广泛研究，但为了提高训练效果而进行的策略性数据组织仍是一个未被充分探索的领域，特别是当前的LLMs通常只训练一到几个周期。本文通过重用原本为数据效率生成的样本级预计算分数，系统地探讨了数据组织对LLM训练的影响，从而几乎不增加额外计算开销。我们识别并形式化了优化数据组织的四个关键指导原则：边界锐化、循环调度、课程连续性和局部多样性。在这些原则的指导下，我们提出了两种新的数据排序方法：STR和SAW。我们在不同模型规模和数据量下进行了广泛的实验，涵盖了预训练和SFT阶段，验证了我们总结出的指导原则的有效性。实验还表明，我们提出的数据排序方法在增强LLM训练的稳定性和性能方面具有鲁棒性。
+
+核心贡献：本文系统地研究了数据组织对LLM训练的影响，提出了四项优化原则和两种新方法，并通过大量实验证明了其在提升训练效率和稳定性方面的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30334v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30333v1" target="_blank">COMPOSE: Composing Future Theorems from Citations and Formal Structure</a>
+                </div>
+                <div class="paper-authors">👥 David Busbib, Michael Werman</div>
+                <div class="paper-summary">A plausible future mathematical claim must satisfy two constraints: it should follow the direction of prior work and respect the formal dependencies that constrain what can validly follow. Existing approaches typically model only one of these sources, producing claims that are either weakly grounded or insufficiently motivated. We introduce grounded future mathematical generation, where the goal is to generate a plausible future theorem-like claim for an anchor paper using two complementary sources of context: its scientific citation graph and aligned formal theorem dependency graph. To address this setting, we propose COMPOSE, a dual-graph framework that conditions a language model on both scientific citation context and formal theorem structure. To support this setting, we construct a dataset of 108K paired scientific-formal graph examples from arXiv and Mathlib, together with a benchmark of 47K future papers from 2024--2025. Experiments show that COMPOSE outperforms strong baselines on retrieval to real future papers and achieves the best overall performance under LLM-judge evaluation, producing more grounded and mathematically richer outputs. These results show that future mathematical generation benefits from combining scientific context with formal structure. Project page is available at https://david-busbib.github.io/COMPOSE-page/.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30333v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.29232v1" target="_blank">On the Practice of Scaling Search Conversion Rate Prediction</a>
+                </div>
+                <div class="paper-authors">👥 James Pak, Jyun-Yu Jiang, Fan Zhang</div>
+                <div class="paper-summary">在高流量环境中扩展搜索转化率（CVR）预测模型面临挑战：需要在模型质量与训练成本和推理延迟的严格限制之间取得平衡。本文详细介绍了一种有效的方法，用于扩展现代搜索CVR预测模型。我们首先进行了一项实证研究，以了解搜索CVR模型的扩展性能，分析了随着模型主干计算、嵌入参数规模和训练数据量这三个关键因素的扩展，模型质量如何提升。我们使用了一个大规模生产数据集，该数据集包含来自一个高流量电商平台超过一年的客户交互日志，评估了几种最先进的架构及其集成的可扩展性。我们的主要发现包括：(1) 选择合适的主干和扩展因素至关重要；(2) 扩展主干、嵌入和数据的影响基本独立且具有累加效应，这对更高效的扩展探索具有启示意义；(3) 简化的预热策略可以加速训练迭代并简化新更新；(4) 推理优化策略，如解耦图执行和动态批处理，即使对于高容量模型，也能实现低延迟的GPU服务。与扩展前的基线生产模型相比，我们最终部署了一个训练数据量扩大2.5倍、推理计算能力增加8倍的模型，同时对延迟几乎没有影响。在线A/B测试也表明，我们的发布在搜索转化率这一关键指标上实现了+2.6%的综合提升。
+
+核心贡献：本文提出了一种有效的扩展方法，使得搜索CVR预测模型在保持低延迟的同时显著提升了模型质量和训练效率，并通过大规模实验证明其在实际应用中的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.29232v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.25583v1" target="_blank">LENS: A Staged Design for Interaction Granularityin Sequential CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Yuan Wang, Yue Liu, Jun Zhang</div>
+                <div class="paper-summary">在顺序点击率（CTR）预测中，一个核心的设计问题是目标应该以怎样的粒度与用户行为序列进行交互。现有的模型主要遵循两种方法：原始项架构（如DIN）让目标直接对序列中的每一项进行评分，这种方法依赖于训练良好的项嵌入，在稀疏项上表现脆弱；而潜在查询架构（如HyFormer、MixFormer和OneTrans）通过将目标与其他信息结合来构建查询表示，这种方法在不同项密度下更具鲁棒性，但控制力较弱：目标特定的控制被稀释了。我们提出LENS来在这种更粗粒度的瓶颈中恢复目标特定的控制。LENS包含两个模块：用于查询激活的目标条件查询门控（TCQG）和用于历史检索的目标条件位置偏置（TCPB）。我们还引入了一种简单的静态位置感知参考——查询特定位置偏置（QueryPos），作为潜在查询主干的补充。在三种具有代表性的潜在查询主干和四个数据集上的实验表明，QueryPos+LENS设计在所有十二个主干-数据集组合中均取得了正向的总收益点估计。我们还发现了一个密度相关的条件规则：随着项密度的降低，最优的条件来源从仅项转向项加序列。
+
+核心贡献：LENS通过引入目标条件化模块和位置偏置机制，在保持鲁棒性的同时恢复了目标特定的控制能力，并提出了一个基于项密度变化的动态条件策略。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-25</span>
+                    <a href="https://arxiv.org/pdf/2605.25583v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.24989v1" target="_blank">Selective Test-Time Compute Scaling for Click-Through Rate Prediction via Uncertainty-Triggered Feature Path Exploration</a>
+                </div>
+                <div class="paper-authors">👥 Moyu Zhang, Yun Chen, Yujun Jin</div>
+                <div class="paper-summary">在测试时扩展计算资源已被证明对语言模型非常有效，但这一方法在工业级点击率（CTR）预测中的应用仍鲜有探索。CTR模型面临一个基本的不对称问题：训练中频繁出现的特征组合能产生可靠的预测，而稀疏观察到的特征组合则会导致不可靠的输出。现有的训练阶段解决方案（如自适应门控机制）学习的是固定的特征选择函数，受制于相同的稀疏性限制，在部署阶段无法针对每个实例进行调整。我们提出了UTTSI（基于不确定性的测试时选择性推理），这是一个无需训练、与模型无关的框架，能够根据每个实例的不确定性按比例扩展推理深度。该框架结合模型logit置信度和数据级别的频率先验，构建双信号估计器以区分认识论上的不确定性（epistemic uncertainty）和本体论上的模糊性（aleatoric ambiguity）。每个实例都会经过自适应的特征过滤，剔除不可靠的嵌入表示；对于不确定的实例，还会进行随机的特征路径探索，并通过一致性加权集成聚合预测结果。而确定性强的实例则完全跳过探索过程，从而将平均计算开销控制在基础模型的约2.8倍，且最坏情况下的延迟保持不变。我们在四个数据集上使用三种主干架构进行了实验，结果一致显示出相比所有训练阶段基线方法具有统计显著的优势。此外，为期七天的在线A/B测试进一步验证了5.3%的相对CTR提升（p < 0.01），表明选择性测试时计算分配是CTR预测中训练阶段改进的一种实用补充。
+
+核心贡献：提出UTTSI，一种无需训练的测试时选择性推理框架，通过基于不确定性的动态特征路径探索，有效提升了CTR预测的性能并控制了计算成本。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-24</span>
+                    <a href="https://arxiv.org/pdf/2605.24989v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.24986v1" target="_blank">Self-Balancing Gradient Allocation for Heterogeneity-Aware Feature Generation in Click-Through Rate Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Moyu Zhang, Yun Chen, Yujun Jin</div>
+                <div class="paper-summary">通过离散扩散进行生成式预训练能够同时在所有特征字段上提供密集的重建监督，缓解了CTR预测中因数据稀疏性导致的表示崩溃问题。然而，现有的所有生成式CTR方法都存在一个根本性的限制：重建目标对每个特征字段赋予相同的训练权重，忽视了高基数ID字段、稀疏类别属性、数值变量和行为序列之间重建难度的显著异质性。这导致容易的字段主导了训练梯度，而最难但最具信息量的字段则始终拟合不足，我们称这一问题为“生成难度不平衡”。为此，我们提出了HeteGenCTR，通过与去噪网络联合训练的每字段可学习难度参数来解决这一不平衡问题。该统一信号驱动两个协调组件，无需额外超参数：一种自我平衡的损失函数，能够自动将梯度预算重新分配给更难的字段，并具有可证明稳定的均衡；以及一种以难度为导向的注意力机制，抑制已收敛易字段的影响，同时增强向困难字段的信息流动。这两个组件共享相同的信号，在整个训练过程中保持相互一致。在五个CTR基准数据集和为期七天的在线A/B测试中，实验结果表明HeteGenCTR相比最先进的基线方法实现了持续且统计显著的提升，尤其在冷启动用户和长尾用户上的增益更为明显。
+
+核心贡献：提出HeteGenCTR，通过引入可学习的字段难度参数实现自适应梯度分配，有效解决了CTR预测中由于特征异质性引起的生成难度不平衡问题。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-24</span>
+                    <a href="https://arxiv.org/pdf/2605.24986v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/io-2026-vibe-coded-quiz/" target="_blank">Take our I/O 2026 quiz, vibe coded in Google AI Studio.</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-omni-3-5-videos/" target="_blank">9 demos of Gemini Omni and Gemini 3.5 in action</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/boston-childrens-hospital" target="_blank">Boston Children’s uses AI to unlock new diagnoses</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/braintrust" target="_blank">How Braintrust turns customer requests into code with Codex</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/university-waterloo-labs/" target="_blank">Check out real-life AI prototypes from the Futures Lab.</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/strengthening-societal-resilience-with-rosalind-biodefense" target="_blank">Strengthening societal resilience with Rosalind Biodefense</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/trustworthy-third-party-evaluations-foundations" target="_blank">A shared playbook for trustworthy third party evaluations</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/io-2026-keynote-moment-videos/" target="_blank">Catch up on 12 major I/O 2026 moments</a></div>
+                <div class="feed-date">05-28</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/29/founders-seize-on-indian-court-ruling-to-revive-criticism-of-googles-ad-business/" target="_blank">Founders seize on Indian court ruling to revive criticism of Google’s ad business</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/29/i-went-to-the-so-called-steroid-olympics-to-understand-why-silicon-valley-is-obsessed-with-peptides/" target="_blank">I went to the so-called ‘steroid Olympics,’ to understand why Silicon Valley is obsessed with peptides</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/news/940275/nvidia-n1x-laptop-processor-arm-microsoft-teaser" target="_blank">Nvidia, Microsoft, and Arm are all teasing Nvidia’s new N1X laptop processors</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/science/2026/05/the-office-of-management-and-budget-tries-again-to-cripple-us-science/" target="_blank">Proposed new US funding rules: We can cancel any grant at any time</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/29/spacex-awarded-6-45b-in-space-force-contracts-ahead-of-ipo/" target="_blank">SpaceX awarded $6.45B in Space Force contracts ahead of IPO</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/29/coders-are-refusing-to-work-without-ai-and-that-could-come-back-to-bite-them/" target="_blank">Coders are refusing to work without AI — and that could come back to bite them</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/29/coders-are-refusing-to-work-without-ai-and-that-could-come-back-to-bite-them/" target="_blank">Coders are refusing to work without AI — and that could come back to bite them</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/science/940207/spacex-golden-dome-satellite-contract" target="_blank">SpaceX gets $4 billion contract to build missile-tracking ‘Golden Dome’ satellites</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=3NlCmaenepg" target="_blank">🎥 Elon Musk Is NOT Going to Like This</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Spilling the tea with Ashley St. Clair on conservative politics, right-wing media, Elon Musk, MAGA c...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=sHHxN9pG8bI" target="_blank">🎥 BREAKING: She LEAKED Elon’s 2024 ELECTION SCHEME, IT’S INSANE!</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Today on the show, Luke discusses Ashley St. Claire's allegations against Elon, the new Leavitt, and...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=UulEAq54sLg" target="_blank">🎥 LIVE: Nvidia CEO Jensen Huang Lands In Taipei Ahead Of Nvidia Tech Show Buzz Surge | DWS News | AI14</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">WATCH LIVE as Jensen Huang, CEO of Nvidia, has arrived in Taipei ahead of a major global tech show, ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=IMPzw5ip1PQ" target="_blank">🎥 NVIDIA 2026 Q1 EARNINGS LIVE | JENSEN HUANG SPEAKS</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">twitter: https://x.com/amitisinvesting deepdives: https://amitsdeepdives.substack.com/ singapore mee...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=CaSxUc3AzHM" target="_blank">🎥 【OpenAI】評価額8520億ドル・週9億人が使うAI｜サム・アルトマンと、非営利から世界最注目企業への軌跡｜ビジネス夜話</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">2015年、非営利団体として出発したはずの組織が、いまや評価額8520億ドル規模。週に9億人がChatGPTを使い、サム・ ......</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=BckF06b0o8M" target="_blank">🎥 McKinsey&#39;s Opioid Scandal: How It Nearly Destroyed Them</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">McKinsey & Company, America's most prestigious consulting firm, faced its biggest crisis when their ...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/helloianneo/ian-xiaohei-illustrations" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                helloianneo/ian-xiaohei-illustrations
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提供中文小黑怪诞风格的配图生成技能，适合AI图像生成研究者探索创意内容生成。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Sophomoresty/gemini-web2api" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Sophomoresty/gemini-web2api
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 将Google Gemini网页转换为OpenAI兼容API，方便开发者快速集成和测试模型功能。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/baoweise-bot/aimili-vpngate" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                baoweise-bot/aimili-vpngate
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 基于VPNGate实现Linux系统出站代理，对需要网络隐私保护的研究场景有一定参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48328184" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: Tiny-vLLM – high performance LLM inference engine in C++ and CUDA
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Tiny-vLLM 是一个高性能的 LLM 推理引擎，值得关注 AI 工程师研究其 C++ 和 CUDA 实现方式。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48321076" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Real-time LLM Inference on Standard GPUs: 3k tokens/s per request
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该文章展示了如何在标准 GPU 上实现实时 LLM 推理，对提升推理效率具有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48325306" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Liquid AI reveals 8B-A1B MoE trained on 38T
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Liquid AI 发布的 MoE 模型基于大规模训练数据，对模型架构和训练方法的研究有启发意义。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 10<br>
+                    Input Tokens: 3458<br>
+                    Output Tokens: 3108
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 16<br>
+                    Quota 消耗: 907 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年05月30日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
