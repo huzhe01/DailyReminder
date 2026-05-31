@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年05月31日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日三篇重要论文引发关注：LLMSurgeon 提出诊断大模型数据混合问题的新方法，提升模型透明度；SchGen 利用语义驱动代码表示生成 PCB 电路图，推动工程自动化发展；另一项研究则提出高效测试时微调技术，通过凸重建与梯度缓存优化推理性能，为部署场景提供新思路。</p><p>**行业动态**  </p><p>软银宣布计划投资高达 750 亿欧元在法国建设数据中心，凸显欧洲在 AI 基础设施领域的战略地位。Google The Keyword 推出 I/O 2026 题测验，并展示 Gemini Omni 和 Gemini 3.5 的九项实际应用案例，预示其持续拓展多模态能力。OpenAI 报道波士顿儿童医院借助 AI 实现新疾病诊断，显示医疗领域落地加速。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 和 Sam Altman 在最新访谈中分别回应 AI 对社会与工作的潜在影响，观点碰撞激烈。从投资动向到技术演进，AI 正以前所未有的速度重塑科技版图，值得持续追踪。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30348v1" target="_blank">LLMSurgeon: Diagnosing Data Mixture of Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Yaxin Luo, Jiacheng Cui, Xiaohan Zhao</div>
+                <div class="paper-summary">大型语言模型（LLMs）的预训练数据混合构成了它们的“数字DNA”，塑造了模型的行为、能力和失败模式。然而，这种组成通常不被公开，使得事后审计数据组合或来源变得困难。在这项工作中，我们形式化了**数据混合手术（Data Mixture Surgery, DMS）**：仅凭目标LLM生成的文本，估计其预训练语料库在预定义分类法下的领域级分布。我们提出了**LLMSurgeon**，一个强大的框架，将DMS建模为在标签偏移假设下的逆问题。与直接聚合分类器输出不同，LLMSurgeon估计一个校准后的*软*混淆矩阵，并通过求解约束逆问题来纠正系统性的领域混淆并恢复潜在的混合先验。为了评估，我们引入了**LLMScan**，一个基于开源LLMs构建的可验证评估套件，这些模型具有透明的预训练混合配置。在LLMScan中，LLMSurgeon在固定协议下以高保真度恢复了领域混合情况。我们的工作提供了一种实用的事后方法，用于审计基础模型的“数字DNA”，而无需访问其训练数据。
+
+核心贡献：提出LLMSurgeon框架，实现无需访问训练数据即可对大型语言模型的预训练数据混合进行高精度事后审计。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30348v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30345v1" target="_blank">SchGen: PCB Schematic Generation with Semantic-Grounded Code Representations</a>
+                </div>
+                <div class="paper-authors">👥 Qinpei Luo, Ruichun Ma, Xinyu Zhang</div>
+                <div class="paper-summary">印刷电路板（PCB）原理图设计几乎定义了所有电子硬件，但该过程仍然依赖人工且需要专业知识。尽管生成式人工智能在数字和模拟集成电路设计方面取得了进展，但从自然语言意图生成PCB原理图的研究仍较为匮乏。本文提出了SchGen，这是首个能够根据自然语言请求生成可编辑PCB原理图的大规模语言模型。关键挑战在于缺乏适用于LLM的表示方法和大规模数据集。目前的原理图格式主要由冗长、工具特定的语法和几何描述主导，难以可靠地生成。我们引入了一种语义驱动的代码表示方法，通过相对布局和基于引脚名称的布线来编码原理图编辑的基本操作，从而将原本以几何为主的生成问题转化为适合LLM处理的语义匹配任务。我们还构建了一个大规模数据集，通过人机协作流程将开源硬件设计转换为我们的表示形式，并与用户提示配对。实验表明，SchGen在布线连接准确性和功能正确性方面显著优于其他表示方式，甚至优于更大规模的通用LLM。我们的结果强调了表示设计在实现复杂硬件设计任务生成模型中的关键作用。
+
+核心贡献：SchGen 是首个能从自然语言生成 PCB 原理图的大型语言模型，通过引入语义驱动的代码表示和大规模数据集，显著提升了生成质量和功能性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30345v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30337v1" target="_blank">Efficient Test-Time Finetuning of LLMs via Convex Reconstruction and Gradient Caching</a>
+                </div>
+                <div class="paper-authors">👥 Alaa Khamis, Alaa Maalouf</div>
+                <div class="paper-summary">测试时微调（TTFT）是一种快速发展的范式，它通过检索相关序列、在这些序列上更新模型，然后评估提示来适应每个提示。然而，只有当TTFT足够快时才具有实用性：选择和微调都是按查询进行的，因此每个步骤都成为直接瓶颈。现有方法在速度与质量之间进行了权衡：快速检索往往冗余，而更强的多样性感知选择则会带来高昂的每查询成本。我们提出了HullFT，一种几何方法来解决这两个瓶颈。给定一个查询，HullFT首先使用高效的无投影Frank-Wolfe优化算法将查询嵌入表示为少量训练序列的稀疏凸组合，从而获得一个本质上相关且多样化的支持集。然后，我们将分数形式的凸权重通过几何整数化过程转换为精确的整数多重集合，用于微调。由此产生的重复样本被Gradient Reuse利用，以跨多次微调步骤分摊前向-反向计算的成本。我们的实验表明，HullFT在质量和效率之间的权衡优于当前最先进的TTFT方法，在显著降低总运行时间的同时实现了更低的每字节比特数。
+
+核心贡献：提出了一种基于几何方法的高效测试时微调框架HullFT，通过凸重建和梯度缓存技术显著提升了微调的质量-效率平衡。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30337v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30329v1" target="_blank">SoundnessBench: Can Your AI Scientist Really Tell Good Research Ideas from Bad Ones?</a>
+                </div>
+                <div class="paper-authors">👥 Sy-Tuyen Ho, Minghui Liu, Huy Nghiem</div>
+                <div class="paper-summary">自主的AI研究代理旨在通过自动化从假设生成到同行评审的研究流程来加速科学发现。然而，现有的基准测试很少检验一个基本瓶颈：大型语言模型是否能在耗费时间和计算资源之前判断一项研究想法的方法论可行性。我们引入了SoundnessBench，这是一个经过精心整理的基准测试集，包含1,099个从ICLR投稿中重建的机器学习研究提案，并标注了审稿人的方法论得分，并与原始论文进行了核对。SoundnessBench应被理解为用于衡量提案阶段可恢复方法论质量的基准，而非准确预测完整论文评审结果。在12种前沿大语言模型上，我们发现普遍存在乐观偏差：在标准提示下，模型经常将低方法论质量的提案评为合理，而激进的提示方式则主要将错误类型从假阳性转变为假阴性。额外控制公共语料污染、论文识别短语、表面特征和人类审核质量的结果表明，这种行为不能由单一混淆因素解释。我们的研究结果表明，目前的大语言模型尚不能作为科学严谨性的独立初筛评估者。
+
+核心贡献：本文提出了SoundnessBench，这是一个评估大语言模型在科研提案阶段判断方法论合理性能力的基准测试集，并揭示了当前LLM在此任务上的局限性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30329v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30323v1" target="_blank">In-Context Reward Adaptation for Robust Preference Modeling</a>
+                </div>
+                <div class="paper-authors">👥 Zhenyu Sun, Zheng Xu, Ermin Wei</div>
+                <div class="paper-summary">从人类反馈中进行强化学习（RLHF）通常依赖静态奖励模型来使大型语言模型与人类偏好保持一致。然而，人类价值观本质上是多样且异质的，单一奖励模型往往缺乏在未见过的偏好领域中泛化的鲁棒性。尽管现有的多奖励框架试图解决这一问题，但它们通常受限于一组固定的已知领域，并且无法在不经过昂贵再训练的情况下适应新的用户分布。在这项工作中，我们提出了“上下文内奖励适应”（In-Context Reward Adaptation），这是一个基于Transformer的框架，旨在实时建模多样且未知的人类偏好。通过利用Transformer的上下文内学习能力，我们的方法能够从少量偏好示例中自适应地推断出潜在的奖励结构。我们证明了标准的Transformer架构由于存在对真实值的渐近偏差而不足以完成此任务，而将人类响应时间作为辅助输入信号可以使得模型成功适应来自先前未见领域的偏好。我们的研究结果表明，这种方法为偏好建模提供了更稳健的基础，能够表示异质性奖励和偏好分布的变化，并为更灵活的人机对齐提供了一条可扩展的路径。
+
+核心贡献：本文提出了一种基于Transformer的“上下文内奖励适应”框架，能够在无需重新训练的情况下动态建模多样且未知的人类偏好，从而提升偏好建模的鲁棒性和灵活性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30323v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.30315v1" target="_blank">Resolution Diagnostics for Paired LLM Evaluation</a>
+                </div>
+                <div class="paper-authors">👥 Anany Kotawala</div>
+                <div class="paper-summary">Across two public LLM leaderboards, many displayed pairwise rankings do not meet a conventional paired-test resolution target under the actual paired evaluation design: 11 of 40 Open LLM Leaderboard v1 pairwise comparisons and 4 of 9 MMLU-Pro top-10 adjacent-rank pairs are unresolved at (alpha, 1-beta) = (0.05, 0.8). The MMLU-Pro count rises to 6/9 under real subject-level clustering and stays at 5-6 out of 9 in 99.9% of category-bootstrap resamples. We frame paired LLM evaluation as a hypothesis-testing problem, invert level-alpha, power-(1-beta) tests, and report a per-pair resolution ratio q = N/N* as the primary diagnostic. A sharp small-effect expansion with an explicit second-order constant shows that the widely-used unpaired Cohen-h-plus-(1-rho) shortcut deviates from the correct N* by approximately a factor of two in the close-comparison regime, a deficit that three of five off-the-shelf calculators(Cohen 1988, G*Power, R pwr) silently inherit when the user post-multiplies their per-arm output by (1-rho). The unresolved-pair pattern remains under multiplicity correction and anytime-valid sequential testing.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.30315v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.29232v1" target="_blank">On the Practice of Scaling Search Conversion Rate Prediction</a>
+                </div>
+                <div class="paper-authors">👥 James Pak, Jyun-Yu Jiang, Fan Zhang</div>
+                <div class="paper-summary">在高流量环境中扩展搜索转化率（CVR）预测模型面临挑战：需要在模型质量与训练成本和推理延迟的严格限制之间取得平衡。本文详细介绍了一种有效的方法，用于扩展现代搜索CVR预测模型。我们首先进行了一项实证研究，以了解搜索CVR模型的扩展性能，分析了随着模型主干计算、嵌入参数规模和训练数据量这三个关键因素的扩展，模型质量如何提升。我们使用了一个大规模生产数据集，该数据集包含来自一个高流量电商平台超过一年的客户交互日志，评估了几种最先进的架构及其集成的可扩展性。我们的主要发现包括：(1) 选择合适的主干和扩展因素至关重要；(2) 扩展主干、嵌入和数据的影响基本独立且具有累加效应，这对更高效的扩展探索具有启示意义；(3) 简化的预热策略可以加速训练迭代并简化新更新；(4) 推理优化策略，如解耦图执行和动态批处理，即使对于高容量模型，也能实现低延迟的GPU服务。与扩展前的基线生产模型相比，我们最终部署了一个训练数据量扩大2.5倍、推理计算能力增加8倍的模型，同时对延迟几乎没有影响。在线A/B测试也表明，我们的发布在搜索转化率这一关键指标上实现了+2.6%的综合提升。
+
+核心贡献：本文提出了一种有效的扩展方法，使得搜索CVR预测模型能够在保持低延迟的同时显著提升模型质量和训练效率，并通过大规模实验验证了其在实际应用中的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.29232v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.25583v1" target="_blank">LENS: A Staged Design for Interaction Granularityin Sequential CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Yuan Wang, Yue Liu, Jun Zhang</div>
+                <div class="paper-summary">在序列CTR预测中，一个核心的设计问题是目标应该以何种粒度与用户行为序列进行交互。现有的模型主要遵循两种路径：原始项架构（如DIN）让目标直接对序列中的每个项目进行评分，这依赖于训练良好的项目嵌入，并且对于稀疏项目表现脆弱；潜在查询架构（如HyFormer、MixFormer和OneTrans）通过将目标与其他信息结合来构建查询表示，这种方法在不同项目密度下更稳健，但控制粒度较粗：目标特定的控制被稀释了。我们提出LENS来在这些较粗的瓶颈中恢复目标特定的控制。LENS包含两个模块：一个用于查询激活的目标条件查询门控（TCQG），以及一个用于历史检索的目标条件位置偏差（TCPB）。我们还引入了一个简单的静态位置感知参考——查询特定位置偏差（QueryPos），用于潜在查询骨干网络。在三个具有代表性的潜在查询骨干网络和四个数据集上，QueryPos+LENS设计在所有十二个评估的骨干-数据集组合中均实现了正向总增益点估计。我们还发现了一条依赖于密度的条件规则：随着项目密度的降低，最优的条件来源从仅项目转向项目加序列。
+
+核心贡献：本文提出了LENS框架，在保持鲁棒性的同时恢复了目标特定的细粒度控制，并引入了QueryPos模块以提升潜在查询模型的表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-25</span>
+                    <a href="https://arxiv.org/pdf/2605.25583v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/io-2026-vibe-coded-quiz/" target="_blank">Take our I/O 2026 quiz, vibe coded in Google AI Studio.</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-omni-3-5-videos/" target="_blank">9 demos of Gemini Omni and Gemini 3.5 in action</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/boston-childrens-hospital" target="_blank">Boston Children’s uses AI to unlock new diagnoses</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/braintrust" target="_blank">How Braintrust turns customer requests into code with Codex</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/university-waterloo-labs/" target="_blank">Check out real-life AI prototypes from the Futures Lab.</a></div>
+                <div class="feed-date">05-29</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/30/softbank-says-it-will-invest-up-to-e75-billion-to-build-french-data-centers/" target="_blank">SoftBank says it will invest up to €75 billion to build French data centers</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/30/softbank-says-it-will-invest-up-to-e75-billion-to-build-french-data-centers/" target="_blank">SoftBank says it will invest up to €75 billion to build French data centers</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/30/this-weekends-two-biggest-movies-were-both-directed-by-youtubers/" target="_blank">This weekend’s two biggest movies were both directed by YouTubers</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/30/snap-alums-unveil-ghost-angels-fund/" target="_blank">Snap alums unveil Ghost Angels fund</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/940421/backrooms-blockbuster-38-million-opening" target="_blank">Backrooms is a certified blockbuster with a $38 million opening day</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/30/what-a-joke-github-copilots-new-token-based-billing-spurs-consternation-among-devs/" target="_blank">‘What a joke’: Github Copilot’s new token-based billing spurs consternation among devs</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/30/what-a-joke-github-copilots-new-token-based-billing-spurs-consternation-among-devs/" target="_blank">‘What a joke’: Github Copilot’s new token-based billing spurs consternation among devs</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/939930/welcome-to-night-vale-host-cecil-baldwin-shares-his-tech-pet-peeves" target="_blank">Welcome to Night Vale host Cecil Baldwin shares his tech pet peeves</a></div>
+                <div class="feed-date">05-30</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=3NlCmaenepg" target="_blank">🎥 Elon Musk Is NOT Going to Like This</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Spilling the tea with Ashley St. Clair on conservative politics, right-wing media, Elon Musk, MAGA c...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=bZg53X3nntk" target="_blank">🎥 Ashley St. Clair implicates Elon Musk in 2024 election fraud!</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Art Lightstone of Policy Watch examines Ashley St. Claire's allegations that Elon Musk confessed pla...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=tsQB0n0YV3k" target="_blank">🎥 Stanford CS153 Frontier Systems | Jensen Huang from NVIDIA on the Compute Behind Intelligence</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">For more information about Stanford's online Artificial Intelligence programs, visit: https://stanfo...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=9w9f8Std_TI" target="_blank">🎥 #134 NVIDIAs Chip-Offensive und der humanoide Butler für zu Hause</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Wir tauchen tief in die aufregendsten Neuigkeiten aus der Welt der KI und Robotik ein! Den Auftakt m...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=W8oaDUWnXLU" target="_blank">🎥 Anthropic Raises $65B in Series H, Sam Altman and Dario Say No Job Apocalypse?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">AGTP goes live at 11am every week day to discuss the most important tech news of the day and answer ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=CaSxUc3AzHM" target="_blank">🎥 【OpenAI】評価額8520億ドル・週9億人が使うAI｜サム・アルトマンと、非営利から世界最注目企業への軌跡｜ビジネス夜話</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">2015年、非営利団体として出発したはずの組織が、いまや評価額8520億ドル規模。週に9億人がChatGPTを使い、サム・ ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/nv-tlabs/Gamma-World" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                nv-tlabs/Gamma-World
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Gamma-World 是多智能体世界建模的生成模型实现，适合研究复杂交互场景。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/2aronS/Duel-Agents" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                2aronS/Duel-Agents
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Duel-Agents 提供了 Duel 智能体的 CLI、SDK 和 IDE 插件，便于开发和测试对抗性 AI 系统。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/MatinSenPai/SenPaiScanner" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                MatinSenPai/SenPaiScanner
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 SenPaiScanner 是一个轻量级 Cloudflare IP 扫描工具，适用于网络安全和基础设施分析。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48340411" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Domain expertise has always been the real moat
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 讨论领域专业知识在AI发展中的重要性，对研究者有启发意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48338660" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                OpenRouter raises $113M Series B
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 OpenRouter融资进展展示了AI基础设施领域的市场热度与潜力。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48336760" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                AI job grief: A psychological crisis hitting tech workers
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨AI对科技行业就业的心理影响，具有现实意义和研究价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 8<br>
+                    Input Tokens: 2672<br>
+                    Output Tokens: 2319
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年05月31日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
