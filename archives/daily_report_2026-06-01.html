@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年06月01日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日三篇重要论文揭示了语言模型在语义理解、长上下文推理及生成过程中的新机制。研究指出，大模型并非单纯依赖句法结构，而是通过“构造语义”理解复杂表达；LongTraceRL 提出利用搜索轨迹与评分体系优化长文本推理能力；而另一项研究则首次分析图到文本扩散模型的解码路径，为生成质量评估提供新视角。</p><p>**行业动态**  </p><p>微软推出搭载 NVIDIA RTX Spark 的 Surface Laptop Ultra，NVIDIA 宣称该芯片为“史上效率最高 PC 芯片”，引发性能与能耗比讨论。与此同时，AMD 则反其道行之，主张用户应继续使用现有成熟技术，强调稳定性与性价比。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 与 Sam Altman 在最新访谈中对 AI 发展方向各抒己见：从“AI 是否会导致失业危机”到“计算力如何推动智能边界”，观点交锋激烈，值得持续追踪。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.31586v1" target="_blank">Language Models Learn Constructional Semantics, Not To Mention Syntax: Investigating LM Understanding of Paired-Focus Constructions</a>
+                </div>
+                <div class="paper-authors">👥 Wesley Scivetti, Ethan Wilcox, Nathan Schneider</div>
+                <div class="paper-summary">掌握稀有构式（形式-意义配对）的语义一直是一个具有挑战性的问题，目前只有最大的语言模型（LLMs）能够解决。开放源代码模型是否具备稳健的构式理解能力，以及这种知识的获取背后是否存在特定的学习动态，仍然是一个悬而未决的问题。我们聚焦于英语中一组罕见的“配对焦点”构式（如“let alone”，“much less”），构建了一个新颖的数据集，通过标量形容词语义和一般世界知识来测试这些构式的含义。在测试了参数数量、架构和预训练数据规模各不相同的多种模型后，我们发现一些规模适中的模型对配对焦点构式的形态和语义都表现出敏感性，尽管那些仅使用人类规模数据训练的模型在所有语义评估中均失败。进一步分析开放检查点模型的训练动态时，我们发现配对焦点构式的语义理解是在其句法知识之后才出现的，并且配对焦点语义的学习与某些领域世界知识的提升存在相关性。总体而言，我们的实证结果支持这样的结论：适度大小的开源模型可以掌握稀有配对焦点构式，并表明配对焦点构式的知识与其他语义领域之间存在联系。
+
+核心贡献：本研究通过实验验证了适度规模的开源语言模型能够理解稀有的配对焦点构式，并揭示了其语义学习与世界知识之间的关联。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-29</span>
+                    <a href="https://arxiv.org/pdf/2605.31586v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.31584v1" target="_blank">LongTraceRL: Learning Long-Context Reasoning from Search Agent Trajectories with Rubric Rewards</a>
+                </div>
+                <div class="paper-authors">👥 Nianyi Lin, Jiajie Zhang, Lei Hou</div>
+                <div class="paper-summary">长上下文推理仍然是大型语言模型面临的核心挑战，这些模型常常无法在大量干扰内容中定位并整合关键信息。基于可验证奖励的强化学习（RLVR）为此任务展现了潜力，但现有方法受限于低混淆性干扰项和稀疏的结果导向奖励信号，无法对中间推理步骤进行监督。为了解决这些问题，我们提出了 LongTraceRL。在数据构建方面，我们通过知识图谱随机游走生成多跳问题，并利用搜索代理的轨迹构建分层干扰项：包括代理阅读但未引用的文档（高混淆性）和出现在搜索结果中但从未被打开的文档（低混淆性），从而创建出比随机采样或单次搜索更具有挑战性的训练上下文。在奖励设计方面，我们提出了一种“评分标准奖励”（rubric reward），它使用每条推理链中的黄金实体作为细粒度、实体级别的过程监督。该评分奖励仅应用于最终答案正确的响应（正样本策略），从而区分正确响应中的推理质量并防止奖励欺骗。在五个长上下文基准上的三个推理大语言模型（4B–30B）上的实验表明，LongTraceRL 一致优于强基线，并能促进全面且基于证据的推理。代码、数据集和模型可在 https://github.com/THU-KEG/LongTraceRL 获取。
+
+核心贡献：LongTraceRL 提出了一种结合结构化数据构建与精细奖励机制的强化学习方法，显著提升了大语言模型在长上下文推理任务中的表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-29</span>
+                    <a href="https://arxiv.org/pdf/2605.31584v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.31564v1" target="_blank">What Gets Unmasked First? Trajectory Analysis of Diffusion Models for Graph-to-Text Generation</a>
+                </div>
+                <div class="paper-authors">👥 Qing Wang, Jacob Devasier, Chengkai Li</div>
+                <div class="paper-summary">我们首次对用于图到文本生成的掩码扩散语言模型（MDLMs）进行了系统研究。我们分析了MDLM的生成轨迹——在迭代解码过程中令牌被取消掩码的顺序——发现与线性生成文本的自回归大语言模型不同，MDLM自然地优先处理实体词，其次是关系词和功能词，最后才解决结构化令牌。我们进一步识别出监督微调（SFT）一种此前未被记录的失效模式：SFT通过过早地在解码轨迹中锚定句子结束的结构化令牌，破坏了这种策略，从而有效固定了输出长度，可能导致信息遗漏或幻觉。为了解决这一问题，我们提出了lambda缩放结构解码，这是一种无需训练、仅在推理时进行修改的方法，可以降低结构化令牌的置信度，并恢复+9.4 BLEU-4的性能。最后，我们引入了Graph-LLaDA，它将图变换器编码器整合进LLaDA的解码过程中，以显式地结合关系图结构。在LAGRANGE数据集上的跨数据集评估表明，之前的基线方法过度拟合了特定数据集的模式，而基于LLM和MDLM的方法则表现出显著更好的泛化能力。
+
+核心贡献：本文首次系统分析了MDLM在图到文本生成中的生成轨迹，并提出了一种无需训练的推理改进方法以及结合图结构的新型解码框架Graph-LLaDA，显著提升了生成效果和泛化能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-29</span>
+                    <a href="https://arxiv.org/pdf/2605.31564v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.31561v1" target="_blank">What Am I Missing? Question-Answering as Hidden State Probing</a>
+                </div>
+                <div class="paper-authors">👥 Chu Fei Luo, Samuel Dahan, Xiaodan Zhu</div>
+                <div class="paper-summary">测试时推理已成为一个重要研究领域，自从在大语言模型（LLMs）中引入链式思维推理以来。然而，这种推理过程的机制仍未得到充分探索——即使从相同的输入提示，甚至是部分解决方案出发，LLMs在多次采样时仍可能产生不同的答案。我们提出利用提问作为一种推理时的干预手段，以揭示模型隐藏状态中的信息。为此，我们提出了一个学生-教师框架，其中学生向教师提问。我们在学生提问前后的隐藏状态上训练了一个探测器，并发现该探测器能够预测最终答案的正确性，甚至在教师回答生成之前就能做到这一点。这表明，在问题生成过程中发生的自我诊断提供了有意义的信号，而非来自教师的信息传递。我们将提问建模为一个序列决策问题，使用该探测器作为质量评分，并定义了一种门控策略，以最大化正确性的可能性。我们发现，提问作为干预的成功与否在很大程度上取决于模型的自洽性。我们的实验结果显示出检测与恢复之间的差距：尽管我们的门控策略能够捕捉模型的正确性和不确定性，但干预同样可能损害原本正确的轨迹，也可能纠正错误的轨迹。这种诊断与修正之间的差距对语言模型在不确定性下的自我完善能力具有更广泛的启示意义。
+
+核心贡献：本文提出通过提问来探测大语言模型的隐藏状态，从而实现对其推理过程的自我诊断，并构建了基于此的门控策略，揭示了模型在不确定情况下的自我修正能力限制。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-29</span>
+                    <a href="https://arxiv.org/pdf/2605.31561v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.31550v1" target="_blank">Semantic Triplet Restoration: A Novel Protocol for Hierarchical Table Understanding in Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Yibin Zhao, Fangxin Shang, Dingrui Yang</div>
+                <div class="paper-summary">表格问答需要模型从二维布局、合并单元格和层次标题中恢复隐式编码的语义关系。当前的流水线通常使用HTML或Markdown作为中间表格表示，但这些以布局为导向的序列化方式引入了标记开销，并要求大语言模型从行和列的跨度中推断标题与单元格的对齐关系。我们提出了一种新的协议——语义三元组恢复（Semantic Triplet Restoration, STR），它将每个单元格重写为一个原子事实 <item path, feature path, value>，其中 item path 指定行方向上的实体，feature path 指定层次属性，value 包含单元格内容。我们还提出了 TripletQL，一种轻量级的查询感知路由器，它利用 STR 为每个问题选择适当的渲染或过滤后的三元组子集。在四个中文和英文表格问答基准上，STR 在减少输入 token 的同时匹配或优于基于 HTML 的基线方法。相对优势随着模型规模减小和表格上下文变长而增加，表明在推理预算受限的情况下，显式的语义表示尤为有用。代码和数据可在 https://github.com/Phoenix-ni/STR.git 获取。
+
+核心贡献：本文提出了一种新颖的表格语义三元组恢复协议 STR 和查询感知路由器 TripletQL，通过显式语义表示提升表格问答性能并降低输入成本。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-29</span>
+                    <a href="https://arxiv.org/pdf/2605.31550v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.31545v1" target="_blank">Preference-Aware Rubric Learning for Personalized Evaluation</a>
+                </div>
+                <div class="paper-authors">👥 Yilun Qiu, Xiaoyan Zhao, Yang Zhang</div>
+                <div class="paper-summary">As Large Language Models (LLMs) evolve from general-purpose assistants to user-centric agents, personalization has become central to aligning model behavior with individual preferences, making the evaluation of personalized alignment a critical bottleneck. Existing evaluation methods-ranging from automatic metrics to LLM-as-a-judge approaches-fail to capture subjective, user-specific preferences embedded in long-term interaction histories. We identify three essential principles for reliable and effective personalized evaluation: Representativeness, User-Consistency, and Discriminativeness. To address these principles, we introduce Personalized Evaluation as Learning, a paradigm that formulates personalized evaluation as a learning problem rather than a static judgment. Under this paradigm, we propose PARL (Preference-Aware Rubric Learning for Personalized Evaluation), a framework that learns to induce preference-aware evaluation rubrics directly from raw user histories and performs a self-validation mechanism to ensure consistency with the user's preferences. PARL integrates rubric induction with a discriminative reinforcement learning objective that contrasts user-authored responses against competitive personalized model outputs, enabling the learned rubrics to capture precise, user-specific decision boundaries. Experiments on real-world personalized text generation tasks show that PARL consistently induces high-fidelity rubrics that reliably identify user-aligned responses and generalize across users and tasks, while capturing stable stylistic preferences and fine-grained evaluative patterns. To ensure reproducibility, our code is available at https://github.com/SnowCharmQ/PARL.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-29</span>
+                    <a href="https://arxiv.org/pdf/2605.31545v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2605.29232v1" target="_blank">On the Practice of Scaling Search Conversion Rate Prediction</a>
+                </div>
+                <div class="paper-authors">👥 James Pak, Jyun-Yu Jiang, Fan Zhang</div>
+                <div class="paper-summary">在高流量环境中扩展搜索转化率（CVR）预测模型面临挑战：需要在模型质量与训练成本和推理延迟的严格限制之间取得平衡。本文详细介绍了一种有效的方法，用于扩展现代搜索CVR预测模型。我们首先进行了一项实证研究，以了解搜索CVR模型的扩展性能，分析了随着模型主干计算、嵌入参数规模和训练数据量这三个关键因素的扩展，模型质量如何提升。我们使用了一个大规模生产数据集，该数据集包含来自一个高流量电商平台超过一年的客户交互日志，评估了几种最先进的架构及其集成的可扩展性。我们的主要发现包括：(1) 选择合适的主干和扩展因子至关重要；(2) 扩展主干、嵌入和数据的影响基本独立且具有累加效应，这对更高效的扩展探索具有启示意义；(3) 简化的预热策略可以加速训练迭代并简化新更新；(4) 推理优化策略，如解耦图执行和动态批处理，即使对于高容量模型，也能实现低延迟的GPU服务。与扩展前的基线生产模型相比，我们最终部署了一个训练数据量扩大2.5倍、推理计算能力增加8倍的模型，同时对延迟几乎没有影响。在线A/B测试也表明，我们的发布在搜索转化率这一关键指标上实现了+2.6%的综合提升。
+
+核心贡献：本文提出了一种有效的扩展方法，使得搜索CVR预测模型在保持低延迟的同时显著提升了模型质量和训练效率，并通过大规模实验验证了其在实际应用中的有效性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-28</span>
+                    <a href="https://arxiv.org/pdf/2605.29232v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/940584/microsoft-surface-laptop-ultra-nvidia-rtx-spark-pictures" target="_blank">This is the Microsoft Surface Laptop Ultra with Nvidia RTX Spark</a></div>
+                <div class="feed-date">06-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/940589/nvidia-rtx-spark-n1-n1x-laptop-desktop-pc-cpu-gpu-ai-release-date" target="_blank">Nvidia announces RTX Spark as ‘the most efficient PC chip ever built’</a></div>
+                <div class="feed-date">06-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/940524/amd-computex-am5-promise-2029-rx9070gre-7700x3d-5800x3d" target="_blank">AMD’s new pitch: our old tech is so good you should just keep using it</a></div>
+                <div class="feed-date">06-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/938956/alienware-computex-tandem-qd-oled-penta-rgb-stripe-gaming-monitors-specs" target="_blank">The QD-OLED gaming monitor that started it all got a big upgrade</a></div>
+                <div class="feed-date">05-31</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/940498/dell-xps-13-student-laptop-intel-wildcat-panther-lake-computex-price" target="_blank">Dell is bringing back the XPS 13 as a MacBook Neo competitor — with a temporary discount to $599</a></div>
+                <div class="feed-date">05-31</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/940572/apples-strategy-smart-glasses-smart-watches" target="_blank">Apple’s strategy for smart glasses is the same as smart watches</a></div>
+                <div class="feed-date">05-31</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy/" target="_blank">Erin Brockovich takes aim at data center secrecy</a></div>
+                <div class="feed-date">05-31</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy/" target="_blank">Erin Brockovich takes aim at data center secrecy</a></div>
+                <div class="feed-date">05-31</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=3NlCmaenepg" target="_blank">🎥 Elon Musk Is NOT Going to Like This</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Spilling the tea with Ashley St. Clair on conservative politics, right-wing media, Elon Musk, MAGA c...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=bZg53X3nntk" target="_blank">🎥 Ashley St. Clair implicates Elon Musk in 2024 election fraud!</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Art Lightstone of Policy Watch examines Ashley St. Claire's allegations that Elon Musk confessed pla...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=tsQB0n0YV3k" target="_blank">🎥 Stanford CS153 Frontier Systems | Jensen Huang from NVIDIA on the Compute Behind Intelligence</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">For more information about Stanford's online Artificial Intelligence programs, visit: https://stanfo...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=9Pk8FxDDFL8" target="_blank">🎥 【新聞現場】LIVE COMPUTEX 2026 輝達執行長黃仁勳主題演講 ｜ NVIDIA CEO Jensen Huang&#39;s COMPUTEX 2026 Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">2026台北國際電腦展(COMPUTEX 2026) 於6月2日至6月5日在台北舉行，輝達（NVIDIA）創辦人黃仁勳也於6月1日率先在台北流行 ......</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=W8oaDUWnXLU" target="_blank">🎥 Anthropic Raises $65B in Series H, Sam Altman and Dario Say No Job Apocalypse?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">AGTP goes live at 11am every week day to discuss the most important tech news of the day and answer ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=CaSxUc3AzHM" target="_blank">🎥 【OpenAI】評価額8520億ドル・週9億人が使うAI｜サム・アルトマンと、非営利から世界最注目企業への軌跡｜ビジネス夜話</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">2015年、非営利団体として出発したはずの組織が、いまや評価額8520億ドル規模。週に9億人がChatGPTを使い、サム・ ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/pewdiepie-archdaemon/odysseus" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                pewdiepie-archdaemon/odysseus
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Self-hosted AI workspace 提供了一个本地化的AI工作环境，适合研究者和工程师进行模型开发与部署。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/GordenSun/GordenPPTSkill" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                GordenSun/GordenPPTSkill
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 基于 Python-pptx 的 AI 友好型 PPT 工具为内容生成提供了实用的模板和编辑功能，便于自动化演示文稿制作。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/ace-trump-tech/DeltaForce-OBS-Locker" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                ace-trump-tech/DeltaForce-OBS-Locker
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 OBS 锁头插件展示了计算机视觉在游戏辅助中的应用，对实时骨骼识别和自瞄技术有参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48346257" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                1-Bit Bonsai Image 4B Image Generation for Local Devices
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 介绍了一种可在本地设备上运行的轻量级图像生成模型，对边缘计算和低资源环境下的 AI 应用具有重要意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48346693" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Odysseus – self-hosted AI workspace
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提供了一个自托管的 AI 工作空间解决方案，适合注重数据隐私和自主部署的研究者与开发者。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48347153" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                The Speed of Prototyping in the Age of AI
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨了 AI 如何加速原型设计过程，为 AI 在产品开发中的实际应用提供了有价值的见解。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2447<br>
+                    Output Tokens: 2131
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年06月01日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
