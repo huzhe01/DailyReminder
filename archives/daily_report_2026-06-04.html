@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年06月04日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日三篇重要论文聚焦大模型训练与推理优化。STRIDE 提出通过稀疏恢复技术进行训练数据归因，为模型透明性研究提供新路径；多智能体系统中的流式通信机制则提升了协同推理效率；而基于激活的主动学习方法，则揭示了上下文学习中的关键挑战与潜在改进方向。</p><p>**行业动态**  </p><p>Benchmark 完成 20 亿美元融资并启动增长基金，凸显企业搜索领域的持续热度；Google 推出 Gemma 4 12B 多模态模型，进一步拓展其在生成式 AI 的布局；YouTube 获得 MRC 认证，巩固短视频内容测量标准地位。此外，Quick Commerce 领域的 FirstClub 估值翻倍至 2.55 亿美元，展现即时零售的强劲势头。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 与 Sam Altman 最新访谈引发热议，围绕 AI 治理、算力边界及组织冲突等议题展开深度探讨，值得持续关注其后续影响。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.05165v1" target="_blank">STRIDE: Training Data Attribution via Sparse Recovery from Subset Perturbations</a>
+                </div>
+                <div class="paper-authors">👥 Rishit Dagli, Abir Harrasse, Luke Zhang</div>
+                <div class="paper-summary">训练数据归因（TDA）旨在将模型的预测追溯到其训练数据。TDA的黄金标准依赖于因果干预，通过观察在添加或删除数据时模型的变化情况，但对大型语言模型（LLMs）而言，重复重新训练计算成本极高。因此，大多数方法尝试使用梯度在参数空间中近似这种影响。然而，跟踪数十亿个参数的梯度不仅代价高昂，还依赖局部近似。在这项工作中，我们提出了一种转变：与其估计参数变化，不如在激活空间中建模训练数据的功能性影响。我们引入了STRIDE（基于控制的训练数据影响分解），这是一种受压缩感知启发、将TDA表述为稀疏恢复问题的框架。STRIDE学习轻量级的“控制算子”，以模拟在不同数据子集上训练所引起的模型行为变化。通过测量这些算子对测试预测的影响，我们通过稀疏线性分解恢复单个训练样本的影响。STRIDE在大语言模型预训练归因任务中达到了最先进的性能，同时比现有方法快一个数量级（13倍）。我们进一步通过下游应用验证了其实用性，包括数据选择、数据污染检测和定性分析。
+
+核心贡献：STRIDE提出了一种新颖的训练数据归因框架，通过稀疏恢复从激活空间中的子集扰动推断训练数据的影响，显著提升了计算效率和准确性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-03</span>
+                    <a href="https://arxiv.org/pdf/2606.05165v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.05158v1" target="_blank">Streaming Communication in Multi-Agent Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Zhen Yang, Xiaogang Xu, Wen Wang</div>
+                <div class="paper-summary">多智能体推理系统采用“生成-传输”范式，导致端到端延迟随流水线深度呈线性增长。我们提出了StreamMA，一种多智能体推理系统，它在每一步推理生成后立即将其流式传输给下游智能体，通过将相邻智能体进行流水线处理从而减少延迟。令人惊讶的是，这种流水线机制还提高了推理效果：由于多步推理的质量是非均匀的，早期步骤比后期步骤更可靠，因此使用这些可靠的早期步骤而不是完整的链式推理，可以防止容易出错的后期步骤误导下游智能体。我们首次对流式、串行和单智能体协议进行了封闭形式的联合分析，推导出了有效性排序、加速上限和成本比例。在涵盖数学、科学和代码的八个推理基准上，在两个前沿大语言模型（Claude Opus 4.6 和 GPT-5.4）以及三种拓扑结构（链式、树状、图状）中，StreamMA 的表现均优于基线方法（平均提升7.3个百分点，HMMT 2026 上 Claude Opus 4.6-high 最高提升22.4个百分点）。除了上述贡献外，我们还发现了一个“步骤级缩放定律”：增加每个智能体的推理步骤数能一致地提升效果和效率，这是一个与智能体数量扩展正交且可组合的新扩展维度。
+
+核心贡献：提出 StreamMA 系统，通过流式处理实现低延迟和高效果的多智能体推理，并揭示了“步骤级缩放定律”。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-03</span>
+                    <a href="https://arxiv.org/pdf/2606.05158v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.05134v1" target="_blank">Activation-Based Active Learning for In-Context Learning: Challenges and Insights</a>
+                </div>
+                <div class="paper-authors">👥 Yaseen M. Osman, Geoff V. Merrett, Stuart E. Middleton</div>
+                <div class="paper-summary">摘要：先前的研究已探索了深度主动学习在大语言模型（LLM）上下文样本选择中的应用，但尚未利用近期对Transformer激活机制的理解所取得的进展。本文中，我们测试了一个假设，即模型激活可能提供一个细粒度信号，用于优化上下文示例的选择。我们目前对基于MLP激活的深度主动学习方法在上下文学习中的应用进行了最全面的分析，包括不同的注意力掩码策略如何影响多种分类和生成数据集上的主动学习效果，并使用Llama-3.2-3B和Qwen2.5-3B两个基础模型进行实验。然而，我们的研究发现了一个负面结果：无论是从大规模激活还是前四个矩来看，MLP输出与示例质量或任务性能之间均无显著相关性。具体而言，在所有测试任务和模型中，斯皮尔曼相关系数的绝对值最高仅为0.33，表明此类基于激活的采样不应用于上下文学习。我们推测，这一现象可能是由于“叠加”效应造成的——即模型表示的特征数量超过了其维度，暗示稀疏自编码器（SAE）等方法可能是未来有前景的研究方向。
+
+核心贡献：本文系统评估了基于MLP激活的主动学习方法在上下文学习中的表现，发现其与示例质量和任务性能无关，并提出叠加效应可能是关键原因，为未来研究指明了新方向。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-03</span>
+                    <a href="https://arxiv.org/pdf/2606.05134v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.05122v1" target="_blank">Self-Evaluation Is Already There: Eliciting Latent Judge Calibration in Base LLMs with Minimal Data</a>
+                </div>
+                <div class="paper-authors">👥 XiuYu Zhang, Yi Shan, Junfeng Fang</div>
+                <div class="paper-summary">大型语言模型越来越多地被其他模型评估，这引发了一个自然的问题：一个模型能否预测评判者对其自身输出的评分？我们发现，在任何有针对性的训练之前，这种能力已经存在：仅通过少量样本提示，基础模型就能在三个基准测试中显著高于随机水平地预测外部评判者对开放性回答的多属性质量评分。我们提出了一种名为“自我评估诱发”（Self-Evaluation Elicitation, SEE）的方法，该方法通过一个简短的循环过程激发这一潜在能力：首先是一个与校准结合的强化学习阶段，用于提升回答并预测评判者；接着是一个掩码蒸馏阶段，使预测更加精准，同时不改变回答本身。使用160个独特示例（约为强化学习基线所需数据量的31分之一），SEE在三个基准测试中提升了保留集的校准效果，同时保持了回答的质量。所诱发的自我评估高度集中于模型自身的token分布中，并且在未经过训练的评判者之间保持稳定，表明其反映的是一种可迁移的质量概念，而不仅仅是某个特定评判者的偏好。这些结果将与评判者一致的自我评估问题重新定义为一种“诱发”问题，而非“获取”问题。
+
+核心贡献：本文提出了一种名为SEE的方法，能够在极少数据下有效激发基础语言模型中已存在的自我评估能力，并证明这种能力具有跨评判者的泛化性和稳定性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-03</span>
+                    <a href="https://arxiv.org/pdf/2606.05122v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.05112v1" target="_blank">Evaluating Large Language Models in Dynamic Clinical Decision-Making with Standardized Patient Cases</a>
+                </div>
+                <div class="paper-authors">👥 Cheng Liang, Pengcheng Qiu, Ya Zhang</div>
+                <div class="paper-summary">大型语言模型（LLMs）越来越多地被提议作为临床代理，然而静态的、单轮次的基准测试无法捕捉模型在实际诊疗过程中动态提供护理的方式：包括信息收集、治疗计划制定以及根据患者状态变化调整长期管理策略。医学教育长期以来通过标准化病人（SPs）解决了类似的挑战：由训练有素的演员一致呈现临床案例，从而实现真实的实践和客观、脚本化的评估。本文我们引入了MedSP1000，这是一个基于SP的交互式临床代理评估基准，包含1,638个SP案例和24,602条轨迹级别的同行评审评分标准。MedSP1000将经过同行评审的SP教学案例转化为可执行场景，定义了SP案例脚本、临床环境上下文和人类验证的结构化评分标准。在每次模拟评估运行中，临床代理与患者代理和环境控制器进行闭环交互，并在整个诊疗过程中依据原始材料中专家设定的标准进行评分。我们将MedSP1000应用于一系列通用型和医疗专用型LLMs，发现静态基准上的表现并不能可靠地转化为这类教育性场景中的表现。表现最佳的GPT-5.5模型仅完成了60.4%的专家定义评分项，而最强的医疗专用模型也只达到了40.0%；增加推理时的计算资源并未带来可测量的提升。这些结果表明，当前的LLMs，包括针对医学优化的代理系统，尚未达到足够可靠的水平，无法安全地整合到实际临床实践中。更广泛地说，MedSP1000展示了如何通过过程层面、类似SP的评估揭示单轮次基准所忽略的临床相关失败模式。
+
+核心贡献：提出了MedSP1000，一个基于标准化病人的交互式临床代理评估基准，揭示了当前大语言模型在动态临床决策任务中的不足，并展示了其在真实医疗场景下评估模型可靠性的重要价值。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-03</span>
+                    <a href="https://arxiv.org/pdf/2606.05112v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.05106v1" target="_blank">Arithmetic Pedagogy for Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Andhika Bernard Lumbantobing, Hokky Situngkir</div>
+                <div class="paper-summary">We investigate whether methods of human mathematics pedagogy can guide the training of language models toward arithmetic reasoning. Building on the GASING method -- an Indonesian pedagogy that solves basic arithmetic through a left-to-right procedure aligned with the causal order of token generation -- we operationalize each operation as a computational procedure whose execution trace is serialized into natural-language Chain-of-Thought (CoT) supervision. A small GPT-2 decoder (86M parameters) with a syllabic-agglutinative TOBA tokenizer for Indonesian is trained from scratch on this data using only a next-token prediction objective, without reinforcement learning or reward-based optimization. Monitoring training reveals three distinct learning phases, and mechanistic analyses -- attention-masking interventions on the CoT information graph, residual-stream probing, and logit-lens inspection -- show that the model first internalizes a procedural pathway and subsequently develops an associative, ``mental-arithmetic'' capacity that retrieves intermediate results without explicit step-by-step computation. The trained model reaches over 80% accuracy on held-out problems and attains competitive performance against substantially larger language models, indicating that targeted, pedagogically grounded training can yield strong and economical arithmetic capability at small scale.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-03</span>
+                    <a href="https://arxiv.org/pdf/2606.05106v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.04944v1" target="_blank">Dual-Stream MLP is All You Need for CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Kesha Ou, Zhen Tian, Wayne Xin Zhao</div>
+                <div class="paper-summary">点击率（CTR）预测在在线广告和推荐系统中起着关键作用，即使微小的改进也能显著提升收入。现有研究主要集中在设计双流架构，以从显式和隐式两个角度捕捉有效的复杂特征交互。然而，这些方法面临两大挑战：1）特征交互学习的高复杂性，增加了计算需求和过拟合风险；2）显式与隐式模块之间的不平衡，其中一个模块的输出可能主导最终预测。为了解决这些问题，本文提出了一种新的CTR预测特征交互框架——双流MLP（DS-MLP）。具体而言，它利用知识蒸馏将显式特征交互的学习能力整合到一个主MLP网络中，同时通过并行的MLP捕捉隐式特征交互作为补充。为了有效优化双流MLP架构，我们进一步设计了一种特定的学习方法，并引入了两种对齐策略以增强两个MLP组件的兼容性。实验表明，尽管DS-MLP仅是一个普通的MLP结构（最终模型），却在三个广泛使用的基准测试中实现了最先进的性能，为大规模推荐系统提供了一种可扩展且高效的解决方案。我们的代码可在 https://github.com/RUCAIBox/DS-MLP 获取。
+
+核心贡献：本文提出了一种基于双流MLP的CTR预测框架DS-MLP，通过知识蒸馏和对齐策略有效融合显式与隐式特征交互，在多个基准上取得了SOTA性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-03</span>
+                    <a href="https://arxiv.org/pdf/2606.04944v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.01396v1" target="_blank">Quantizing Intent: Cross-Domain Semantic IDs from Organic Activity for Industrial Ranking</a>
+                </div>
+                <div class="paper-authors">👥 Julie Choi, Haoran Ye, Zhiwei Ding</div>
+                <div class="paper-summary">摘要：广告点击率（CTR）预测受到用户监督稀疏性的限制：大多数用户很少与广告互动，但会在信息流等自然场景中产生密集的行为证据。将这些跨域信号转移到广告排序中面临领域不匹配、服务成本和生产复杂性等问题。我们引入了基于自然信息流活动的跨域用户语义ID（SIDs），并展示了行为丰富度对跨域迁移质量的决定作用：从用户简介文本生成的SIDs提升了+0.036% AUC，从经过行为调优的LLaMA基础用户嵌入模型生成的SIDs提升了+0.107%，而直接从信息流行为嵌入生成的SIDs提升了+0.213%。我们进一步提出了RQ-FSQ方法，这是一种残差有限标量量化方法，能够在大幅减少存储空间的同时保持与稠密嵌入相当的AUC表现。在两个异构数据源上，RQ-FSQ的表现与原始稠密嵌入相当或略优，在存储空间减少约30倍的情况下实现了Feed Activity +0.351% AUC，在减少约280倍存储空间下实现了Activity-Tuned LLaMA +0.265% AUC。我们还引入了一个层次化离散嵌入模块，通过端到端训练的前缀n-gram稀疏嵌入表对多级SIDs进行编码。在大规模工业广告排序系统中，冷启动用户群体分析显示，对于几乎没有广告交互历史的用户，CTR提升高达+1.522%，验证了跨域行为迁移在稀疏历史排序中的有效性。
+
+核心贡献：本文提出了一种基于跨域用户行为的语义ID（SID）构建方法，并结合高效的量化技术与层次化离散嵌入模块，显著提升了广告CTR预测效果，尤其在冷启动用户上表现出色。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-05-31</span>
+                    <a href="https://arxiv.org/pdf/2606.01396v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemma-4-12b/" target="_blank">Introducing Gemma 4 12B: a unified, encoder-free multimodal model</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/google-labs/dreambeans/" target="_blank">Meet Dreambeans, an app that connects you with what matters</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/youtube-mrc-accreditation-shorts/" target="_blank">YouTube earns industry's first MRC accreditation for short-form video.</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/alphabet/investor-presentation-june-2026/" target="_blank">Alphabet investor presentation: June 2026</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-new-capabilities-to-gpt-rosalind" target="_blank">Introducing new capabilities to GPT-Rosalind</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/search/thrifting-tips/" target="_blank">5 ways Google Search can level up your thrift and vintage shopping</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/wasmer" target="_blank">How Wasmer used Codex to build a Node.js runtime for the edge</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/frontier-safety-blueprint" target="_blank">A blueprint for democratic governance of frontier AI</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/03/benchmark-raises-its-first-ever-growth-fund-as-part-of-2b-capital-raise/" target="_blank">Benchmark raises its first-ever growth fund as part of $2B capital raise</a></div>
+                <div class="feed-date">06-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/06/flesh-eating-screwworm-infection-detected-in-south-texas-usda-says/" target="_blank">Flesh-eating screwworm infection confirmed in South Texas, USDA says</a></div>
+                <div class="feed-date">06-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/03/firstclub-doubles-valuation-to-255m-in-nine-months-on-quality-first-grocery-bet/" target="_blank">Quick commerce FirstClub doubles valuation to $255M in nine months</a></div>
+                <div class="feed-date">06-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/942808/nintendo-switch-2-replaceable-battery-eu" target="_blank">Nintendo confirms it will sell a new Switch 2 with replaceable battery in the EU</a></div>
+                <div class="feed-date">06-04</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/03/lovable-signs-multi-year-deal-with-google-cloud-to-up-usage-5x-source-says/" target="_blank">Lovable signs multiyear deal with Google Cloud to up usage 5x, source says</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/03/lovable-signs-multi-year-deal-with-google-cloud-to-up-usage-5x-source-says/" target="_blank">Lovable signs multiyear deal with Google Cloud to up usage 5x, source says</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/science/2026/06/microsoft-atom-computing-eeroq-update-their-quantum-computing-progress/" target="_blank">Microsoft, Atom Computing, EeroQ update their quantum computing progress</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/942761/apple-texas-age-verification-app-store" target="_blank">Apple is bringing age verification to Texas this week</a></div>
+                <div class="feed-date">06-03</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=ByAGlvj3bfE" target="_blank">🎥 IHIP News: Stephen Miller EXPOSED with DAMNING LEAKED Texts! Elon Musk CAUGHT RED-HANDED!</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">We are joined by former MAGA influencer Ashley St. Clair to discuss her disillusionment with the rig...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=3NlCmaenepg" target="_blank">🎥 Elon Musk Is NOT Going to Like This</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Spilling the tea with Ashley St. Clair on conservative politics, right-wing media, Elon Musk, MAGA c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=tsQB0n0YV3k" target="_blank">🎥 Stanford CS153 Frontier Systems | Jensen Huang from NVIDIA on the Compute Behind Intelligence</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">For more information about Stanford's online Artificial Intelligence programs, visit: https://stanfo...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=ox9VuEy0F88" target="_blank">🎥 廣東話配音｜完整直播 NVIDIA英偉達 GTC 2026一個人講足兩個鐘！宣布AI代理上線，白領工作全面改寫？40年電腦時代結束？每個人都擁有專屬AI員工，只賣GPU，連Intel、AMD都被改寫</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">本影片為NVIDIA 執行長黃仁勳（Jensen Huang）於NVIDIA GTC Taipei 2026（GPU Technology Conference）主題演講的廣東話 ......</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=3WI12uWDfok" target="_blank">🎥 Florida vs OpenAI.</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">This week, Dave and Ben sit down to Florida's recent lawsuit against OpenAI and Sam Altman. In the s...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=kEqAfHy_P5U" target="_blank">🎥 Ep 225 — SCOTUS Breaks Democracy</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">DESCRIPTION: Elon Musk discovers that filing a lawsuit against Sam Altman and sh*tposting about it o...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/cpaczek/skylight" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                cpaczek/skylight
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目利用 RTL-SDR 实时投影飞行器信息，结合天文数据，展示了技术与创意的结合。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/SenhorH/tab-labeler" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                SenhorH/tab-labeler
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 通过本地重命名浏览器标签页提升工作效率，适合开发人员和多任务处理者。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/qiuqiubuchongle-cloud/chokepoint-atlas" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                qiuqiubuchongle-cloud/chokepoint-atlas
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 项目描述缺失，但基于 Python 的高星标可能暗示其在特定领域有潜在价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48385906" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Gemma 4 12B: A unified, encoder-free multimodal model
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Gemma 4 12B 是一个统一的、无编码器的多模态模型，对 AI 模型架构研究具有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48379664" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                U of T researchers demonstrate AI worm could target any online device
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 U of T 研究人员展示 AI 蠕虫可能攻击任何联网设备，揭示了 AI 在网络安全领域的潜在威胁。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48383056" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Uber's $1,500/month AI limit is a useful signal for AI tool pricing
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Uber 的 AI 使用成本限制为 AI 工具定价提供了实际参考信号，对行业经济模型有启发意义。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 8<br>
+                    Input Tokens: 2849<br>
+                    Output Tokens: 2597
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年06月04日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
