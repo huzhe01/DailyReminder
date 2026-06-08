@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年06月08日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>近期多篇前沿论文揭示了大模型在复杂任务中的潜力与局限。《How reliable are LLMs when it comes to playing dice?》探讨了语言模型在模拟随机性任务中的可靠性，引发对模型“确定性幻觉”的深入思考。而《Agentopia》提出长期生命模拟框架，推动智能体社会的持续学习研究。另一项关于“UnEmbedding Matrix”的研究则展示了嵌入矩阵作为文本特征透镜的新视角，为模型解释性提供了创新思路。</p><p>**行业动态**  </p><p>NASA 将与 Prada 合作推出高科技连体衣，助力登月任务，展现科技与时尚融合趋势。TechCrunch 连续发布两篇关于“Tokenpocalypse”（代币末日）的文章，警示AI训练成本激增可能带来的行业冲击，引发市场对算力与可持续性的广泛讨论。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang 和 Sam Altman 的最新访谈内容热度不减，涵盖从政治风波到AI计算架构的广泛话题。这些领袖的声音，正在塑造AI行业的未来走向。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.07515v1" target="_blank">How reliable are LLMs when it comes to playing dice?</a>
+                </div>
+                <div class="paper-authors">👥 Luca Avena, Gianmarco Bet, Bernardo Busoni</div>
+                <div class="paper-summary">我们通过在离散概率问题上的受控基准测试研究，探讨了大型语言模型的概率推理能力。我们构建了两个数据集：一组标准练习题和一组反直觉练习题，旨在触发启发式推理，并评估了8个最先进的模型，每个模型分别在有和没有思维链提示的情况下进行测试。模型在标准问题上的平均准确率为0.96，但在反直觉问题上仅为0.59。我们进一步提供了关于标记偏差的实证证据：当标准表述被伪装变体取代时，性能下降超过20%。在提示中嵌入误导性建议会使性能降低多达34%，没有任何模型表现出免疫性。综上所述，这些发现表明，尽管当前大语言模型在高级数学问题上表现出色，但它们尚未成为真正的概率推理者。
+
+核心贡献：本文通过系统实验揭示了大型语言模型在处理反直觉概率问题时的局限性，指出其并非真正具备概率推理能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-05</span>
+                    <a href="https://arxiv.org/pdf/2606.07515v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.07513v1" target="_blank">Agentopia: Long-Term Life Simulation and Learning in Agent Societies</a>
+                </div>
+                <div class="paper-authors">👥 Xintao Wang, Sirui Zheng, Hongqiu Wu</div>
+                <div class="paper-summary">人类从社会生活中学习。使用大型语言模型（LLM）驱动的智能体来模拟这一过程代表了一个有前景的研究方向，这引发了一个自然的问题：LLMs是否能够通过这种模拟的社会经验更好地理解和复制人类行为？然而，以往的智能体社会模拟通常只在几天的时间尺度上运行，限制了社交互动的深度和长期的成长性。在本文中，我们研究了智能体社会中的长期生活模拟和LLM的学习，有两个目标：（1）探索来自终身模拟所产生的社会行为；（2）通过多年的模拟社会经验，在LLMs中发展类人能力，特别是社会生活中的智能。具体来说，我们提出了Agentopia，这是一个用于多智能体社会长期生活模拟的综合框架，其中100个智能体在10年的模拟时间内自主追求个人成长、建立社会关系并满足其需求与目标。我们定义了“生活奖励”以反映人类的幸福感，并利用该奖励通过拒绝采样训练LLMs。大量实验表明，智能体表现出丰富的涌现社会行为。此外，基于生活奖励的训练有效提升了底层LLM的性能，从而提高了模拟中的智能体幸福感，并在下游角色扮演基准测试中实现了+15.6%的提升。
+
+核心贡献：本文提出了Agentopia，一个支持长期社会模拟的框架，并展示了通过多年模拟社会经验训练LLMs可以显著增强其类人社会行为的理解与生成能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-05</span>
+                    <a href="https://arxiv.org/pdf/2606.07513v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.07502v1" target="_blank">Your UnEmbedding Matrix is Secretly a Feature Lens for Text Embeddings</a>
+                </div>
+                <div class="paper-authors">👥 Songhao Wu, Zhongxin Chen, Yuxuan Liu</div>
+                <div class="paper-summary">大型语言模型在各种下游任务中展现出令人印象深刻的零样本能力。然而，它们作为现成的嵌入模型表现不佳，在大规模文本嵌入基准测试中的性能往往不理想。在本文中，我们识别出导致这一缺陷的一个潜在原因。我们的动机源于一个意外的观察：当将文本嵌入投影到词汇空间时，它们倾向于与频繁但无信息量的词元对齐。我们认为，这种高频词元的过度表达会抑制模型捕捉细微语义的能力。为了解决这一问题，我们提出了 EmbedFilter，这是一种简单的线性变换，旨在直接优化从大语言模型中获得的文本嵌入。具体而言，我们发现大语言模型中的 unembedding 矩阵编码了一个隐含空间，该空间主动将这些高频词元写入嵌入空间。通过过滤掉这个子空间，EmbedFilter 抑制了高频词元的影响，从而增强了语义表示。此外，这种方法还带来了一个显著的优势——实现内在的降维，降低了索引存储需求并加快检索速度，同时完全保留了优化后的嵌入质量。我们在多个大语言模型主干上进行的实验表明，配备 EmbedFilter 的 LLM 在零样本下游任务中即使使用大幅降低的嵌入维度也能取得更优的表现。我们希望这些发现能为基于 LLM 的表示机制提供更深入的理解，并激发更多原理性的设计以改进文本嵌入训练。
+
+核心贡献：本文提出了一种名为 EmbedFilter 的简单线性变换方法，通过抑制大语言模型中高频词元的影响来提升文本嵌入的语义质量，并在减少嵌入维度的同时保持甚至提升模型性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-05</span>
+                    <a href="https://arxiv.org/pdf/2606.07502v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.07479v1" target="_blank">Supervision versus Demonstration-Based In-Context Learning for Multiword Expression Classification</a>
+                </div>
+                <div class="paper-authors">👥 Sercan Karakaş, Yusuf Şimşek</div>
+                <div class="paper-summary">土耳其习语性的轻动词结构（LVCs）对多词表达处理提出了挑战，因为它们在表面上常常与完全字面的动宾组合相同，但在功能上作为单一的、部分习语性的谓语。我们将土耳其语LVC检测构造成一个二分类任务（字面意义 vs. 习语意义），并在一个手动创建的控制数据集（N=147）上进行评估，该数据集包含匹配的负例：来自域外的随机句子和域内的字面对照（NLVC），以及LVC正例。我们比较了一个监督式土耳其语编码器基线模型（BERTurk加上分类头）与三个来自不同家族的指令调优大语言模型（LLMs）在零样本、单样本和少样本提示下的表现，并分析了演示如何改变错误模式。在零样本情况下，LLMs在负例上的表现良好，但对LVC的召回率非常低。单样本提示显著提升了LVC的检测能力，但也可能引入强烈的、模型特定的偏差，导致模型过度预测或低估LVC。更丰富的少样本提示改善了模型的校准，并为GPT-OSS-20B和Qwen 2.5-14B带来了稳健的整体性能。总体而言，结果突显了土耳其语元语言分类中对提示的高度敏感性：监督式基线模型仍具有竞争力，而通过精心构建的演示，提示后的LLMs可以在LVC任务上与之匹敌甚至超越。
+
+核心贡献：本文系统地比较了监督学习与基于演示的上下文学习在土耳其语多词表达分类中的效果，揭示了提示策略对模型性能的关键影响，并展示了精心设计的演示可以显著提升大语言模型在习语性轻动词结构检测中的表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-05</span>
+                    <a href="https://arxiv.org/pdf/2606.07479v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.07441v1" target="_blank">Sycophantic Praise: Evaluating Excessive Praise in Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Daniel Vennemeyer, Phan Anh Duong, Meryl Ye</div>
+                <div class="paper-summary">语言模型中的谄媚行为通常被研究为过度的同意或验证，而明确的赞美和奉承则受到较少关注。我们认为，谄媚式的赞美是一种独特的对齐问题，无法通过现有方法可靠地衡量。我们引入了一个参数化的框架，用于衡量相对于贡献质量和预期用户能力而言，赞美是否过度。我们证明，与通用的大语言模型（LLM）评估者相比，我们的框架在与人类注释的一致性方面表现显著更好，并且谄媚式赞美在社交和解释性领域中出现的频率远高于客观推理场景。这些发现共同表明，赞美校准是一个独立的对齐挑战。
+
+核心贡献：本文提出了一个用于检测语言模型中谄媚式赞美的新框架，并揭示了该问题在不同领域中的分布差异，从而确立了赞美校准作为新的对齐挑战的重要性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-05</span>
+                    <a href="https://arxiv.org/pdf/2606.07441v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.07422v1" target="_blank">The Masked Advantage: Uncovering Local-Language Access to Cultural Knowledge in LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Yang Zhang, Xiao Fei, Amr Mohamed</div>
+                <div class="paper-summary">Large language models are increasingly used to answer culturally grounded questions across languages, yet it remains unclear whether local cultural knowledge is better accessed through English or the local language. Existing evaluations face two key limitations: many rely on parallel template-based questions that may not reflect how cultural knowledge naturally appears, and raw accuracy conflates general language proficiency with language-conditioned knowledge access. We address these issues with a controlled framework built on real-world cultural questions collected from regional benchmarks and local sources. By crossing question type (culture-agnostic vs. culture-specific) with query language (English vs. local language), and estimating ability with a shared 1PL item response theory model, we separate proficiency from localized knowledge access. Across 13 locales and roughly 80 models, we find a consistent English advantage on culture-agnostic questions, indicating stronger English proficiency. However, after accounting for this proficiency gap, local languages show a positive knowledge-access advantage in nearly all locale-model settings. This advantage is often masked in raw accuracy but becomes more visible for frontier, regionally aligned, or language-adapted models. Our results suggest that weaker local-language performance does not necessarily imply weaker cultural knowledge; rather, local cultural knowledge may be more accessible through the local language but hidden by limited language proficiency.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-05</span>
+                    <a href="https://arxiv.org/pdf/2606.07422v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.04944v1" target="_blank">Dual-Stream MLP is All You Need for CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Kesha Ou, Zhen Tian, Wayne Xin Zhao</div>
+                <div class="paper-summary">点击率（CTR）预测在在线广告和推荐系统中起着关键作用，即使微小的改进也能显著提升收入。现有研究主要集中在设计双流架构，以从显式和隐式两个角度捕捉有效的复杂特征交互。然而，这些方法面临两大挑战：1）特征交互学习的高复杂性，增加了计算需求和过拟合风险；2）显式与隐式模块之间的不平衡，其中一个模块的输出可能主导最终预测。为了解决这些问题，本文提出了一种新的CTR预测特征交互框架——双流MLP（DS-MLP）。具体而言，它利用知识蒸馏将显式特征交互的学习能力整合到一个主MLP网络中，同时通过并行的MLP捕捉隐式特征交互作为补充。为了有效优化双流MLP架构，我们进一步设计了一种特定的学习方法，并引入了两种对齐策略以增强两个MLP组件的兼容性。实验表明，尽管DS-MLP仅是一个普通的MLP结构（最终模型），却在三个广泛使用的基准测试中实现了最先进的性能，为大规模推荐系统提供了一种可扩展且高效的解决方案。我们的代码可在 https://github.com/RUCAIBox/DS-MLP 获取。
+
+核心贡献：本文提出了一种基于双流MLP的CTR预测框架DS-MLP，通过知识蒸馏和对齐策略有效融合显式与隐式特征交互，在多个基准上取得了SOTA性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-03</span>
+                    <a href="https://arxiv.org/pdf/2606.04944v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/design/945540/nasa-axiom-space-prada-lcvg-spacesuit-moon-artemis" target="_blank">NASA will wear high-tech Prada long johns to the Moon</a></div>
+                <div class="feed-date">06-07</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/07/is-this-the-dawn-of-the-tokenpocalypse/" target="_blank">Is this the dawn of the Tokenpocalypse?</a></div>
+                <div class="feed-date">06-07</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/07/is-this-the-dawn-of-the-tokenpocalypse/" target="_blank">Is this the dawn of the Tokenpocalypse?</a></div>
+                <div class="feed-date">06-07</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/culture/2026/06/rip-anthony-head-our-10-favorite-moments-of-buffys-giles/" target="_blank">RIP Anthony Head: Our 10 favorite moments of Buffy's Giles</a></div>
+                <div class="feed-date">06-07</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/945445/summer-game-fest-2026-biggest-stories" target="_blank">The 7 biggest storylines from Summer Game Fest 2026</a></div>
+                <div class="feed-date">06-07</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/945256/persona-6-teaser" target="_blank">Persona 6 exists, and that’s all we know</a></div>
+                <div class="feed-date">06-07</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/07/notion-restores-access-to-anthropic-after-service-disruption/" target="_blank">Notion restores access to Anthropic after service disruption</a></div>
+                <div class="feed-date">06-07</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/07/notion-restores-access-to-anthropic-after-service-disruption/" target="_blank">Notion restores access to Anthropic after service disruption</a></div>
+                <div class="feed-date">06-07</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=ByAGlvj3bfE" target="_blank">🎥 IHIP News: Stephen Miller EXPOSED with DAMNING LEAKED Texts! Elon Musk CAUGHT RED-HANDED!</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">We are joined by former MAGA influencer Ashley St. Clair to discuss her disillusionment with the rig...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=3NlCmaenepg" target="_blank">🎥 Elon Musk Is NOT Going to Like This</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Spilling the tea with Ashley St. Clair on conservative politics, right-wing media, Elon Musk, MAGA c...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=tsQB0n0YV3k" target="_blank">🎥 Stanford CS153 Frontier Systems | Jensen Huang from NVIDIA on the Compute Behind Intelligence</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">For more information about Stanford's online Artificial Intelligence programs, visit: https://stanfo...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=mAaxm5lGjVk" target="_blank">🎥 40 Năm PC Đã Kết Thúc… Một Thời Đại Mới Đang Đến | NVIDIA Keynote 2026 - Jensen Huang [Podcast Việt]</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Bài thuyết trình (keynote) mở màn của CEO NVIDIA Jensen Huang tại GTC Taipei 2026, diễn ra ngày 01/0...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=v06EB5eERJE" target="_blank">🎥 Sam Altman&#39;s Plot to Take Over the World™️</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Sam Altman's Biometric tech company Tools for Humanity has partnered with The Gap to install these O...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=HVS1jKtZOTg" target="_blank">🎥 Karen Hao. El Imperio de la IA y su cara oculta (capítulo en inglés)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Karen Hao es periodista estadounidense, autora del bestseller del New York Times Empire of AI: Dream...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/tastyeffectco/sandboxd" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                tastyeffectco/sandboxd
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提供自托管开发沙箱，适合构建和测试 AI 编码代理。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/JimLiu/baoyu-design" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                JimLiu/baoyu-design
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 支持本地运行 Claude 设计功能，对 AI 生成 UI 原型有重要价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/amElnagdy/guard-skills" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                amElnagdy/guard-skills
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 为编码代理提供质量检测技能，有助于提升 AI 生成代码的可靠性。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48440448" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                DeepSeek V4 Pro beats GPT-5.5 Pro on precision
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 DeepSeek V4 Pro 在精度上超越 GPT-5.5 Pro，对模型性能对比研究具有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48434312" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                LLMs are eroding my software engineering career and I don't know what to do
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 LLM 对软件工程师职业发展的影响引发了广泛讨论，值得 AI 工程师反思与应对。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48433305" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Efficient and Training-Free Single-Image Diffusion Models
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提出了一种高效且无需训练的单图像扩散模型，为生成模型研究提供了新思路。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2175<br>
+                    Output Tokens: 1973
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年06月08日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
