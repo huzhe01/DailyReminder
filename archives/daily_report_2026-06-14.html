@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年06月14日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日三篇前沿论文值得关注：EvoArena 提出通过追踪记忆演化，提升大模型代理在动态环境中的鲁棒性；Influcoder 创新性地将解码器梯度影响排名蒸馏至编码器，优化数据归属分析；HyperTool 跳出逐步调用工具的框架，推动工具增强代理的新范式。</p><p>**行业动态**  </p><p>Anthropic 暂停新模型访问权限，引发印度对AI战略路径的广泛讨论。Meta 据传因北京监管压力撤回20亿美元Manus投资计划。OpenAI 推出面向未来工作的新课程体系，Google 则发布打击AI诈骗的综合安全与立法举措。</p><p>**值得关注**  </p><p>Elon Musk 和 Trump 关于选举的争议言论、NVIDIA Jensen Huang 在GTC台北2026的演讲回顾，以及 Sam Altman 揭露 Musk 对 OpenAI 的“背后算盘”，均为当前科技与政治交锋的焦点话题。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.13681v1" target="_blank">EvoArena: Tracking Memory Evolution for Robust LLM Agents in Dynamic Environments</a>
+                </div>
+                <div class="paper-authors">👥 Jundong Xu, Qingchuan Li, Jiaying Wu</div>
+                <div class="paper-summary">大型语言模型（LLM）代理在各种基准测试中表现出色，但大多数评估假设环境是静态的。相比之下，现实世界中的部署本质上是动态的，要求代理不断调整其知识、技能和行为以适应变化的环境和更新的任务条件。为了解决这一差距，我们引入了EvoArena，这是一个将环境变化建模为终端、软件和社会领域中逐步更新序列的基准套件。我们进一步提出了EvoMem，这是一种基于补丁的记忆范式，通过结构化的更新历史记录记忆的演变，使代理能够通过记忆的变化推理环境的演化。实验表明，当前的代理在EvoArena上表现不佳，在演化的终端、软件和社会偏好领域平均准确率为39.6%。EvoMem持续提升了性能，在EvoArena上平均提高了1.5%，同时也在标准基准GAIA和LoCoMo上分别提高了6.1%和4.8%。除了单个任务外，EvoMem还使EvoArena上的链级准确率提高了3.7%，其中成功需要完成一系列连续相关的进化子任务。机制分析表明，EvoMem改善了记忆中的证据捕获，表明更好地保留了完整的演化环境状态。我们的结果强调了在评估和记忆中建模演化对于可靠代理部署的重要性。
+
+核心贡献：本文提出了EvoMem，一种基于补丁的记忆范式，用于追踪和利用记忆演化，从而提升大语言模型代理在动态环境中的鲁棒性与任务表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-11</span>
+                    <a href="https://arxiv.org/pdf/2606.13681v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.13668v1" target="_blank">Influcoder: Distilling Decoders' Gradient Influence Rankings into an Encoder for Data Attribution</a>
+                </div>
+                <div class="paper-authors">👥 Dimitri Kachler, Damien Sileo, Pascal Denis</div>
+                <div class="paper-summary">随着大型语言模型（LLMs）能力的增长，人们越来越重视通过过滤训练数据中的样本来构建高质量的数据集。一般来说，数据归因（Data Attribution, DA）方法旨在估计训练数据集中单个样本如何预设模型以生成特定输出。例如，人们可能想知道哪些数据样本在训练后可能导致了模型的有毒行为。许多方法通过影响函数范式来量化这种条件关系。尽管这类方法在功能上是有效的，但它们缺乏足够的处理速度和存储紧凑性，难以在大规模数据集上实际应用。我们提出了一种名为 Influcoder 的方法，它是一种快速且经济高效的大规模基于影响的数据归因方法。
+
+核心贡献：Influcoder 提出了一种高效的、可扩展的基于影响函数的数据归因方法，解决了传统方法在处理大规模数据时的速度和存储瓶颈问题。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-11</span>
+                    <a href="https://arxiv.org/pdf/2606.13668v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.13663v1" target="_blank">HyperTool: Beyond Step-Wise Tool Calls for Tool-Augmented Agents</a>
+                </div>
+                <div class="paper-authors">👥 Yaxin Du, Yifan Zhou, Yujie Ge</div>
+                <div class="paper-summary">工具增强的LLM代理通常依赖于逐步的原子工具调用，其中每次调用、观察和值传递都会在主推理轨迹中显式呈现。这导致了一种“执行粒度不匹配”问题：局部确定性的工具工作流被展开为多次模型可见的决策过程，消耗上下文并迫使模型在轨迹中管理低层次的数据流。我们提出了**HyperTool**，这是一种统一的可执行MCP风格工具接口，改变了模型可见的工具执行单元。模型通过一个代码块调用HyperTool，该代码块可以通过原始模式调用现有工具、操作返回值，并在本地传递中间结果，从而将确定性的工具子程序折叠为一次外部调用。为了训练模型使用此接口，我们从跨工具组合任务中合成了HyperTool格式的轨迹，并在真实的MCP环境中验证了它们。在MCP-Universe上，HyperTool使Qwen3-32B的平均准确率从15.69%提升至35.29%，Qwen3-8B从9.93%提升至33.33%，并在平均准确率上超越了GPT-OSS和Kimi-k2.5，表明我们的HyperTool可以显著提升多步骤工具使用的性能。
+
+核心贡献：HyperTool通过引入一种新的统一工具接口，将多个确定性工具调用折叠为单个外部调用，显著提升了多步骤工具使用的效率与准确性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-11</span>
+                    <a href="https://arxiv.org/pdf/2606.13663v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.13662v1" target="_blank">EurekAgent: Agent Environment Engineering is All You Need For Autonomous Scientific Discovery</a>
+                </div>
+                <div class="paper-authors">👥 Amy Xin, Jiening Siow, Junjie Wang</div>
+                <div class="paper-summary">基于大语言模型（LLM）的智能体在自动化科学发现方面展现出越来越大的潜力。只要给定一个可优化的指标和执行环境，它们就能提出、验证并迭代科学解决方案，并且已经产生了优于人类设计方法的结果。随着模型能力的持续提升，我们认为自主科学发现的瓶颈正从规定智能体的工作流程转向设计智能体环境：即塑造智能体行为的资源、约束和接口。我们将这一问题框架化为“环境工程”：构建能够增强有益行为（如开放式的探索、系统化的成果管理以及智能体之间的协作）同时抑制有害行为（如奖励黑客攻击和高摩擦的人类监督）的环境。我们提出了 EurekAgent，这是一个面向指标驱动型自主科学发现的环境工程智能体系统。EurekAgent 从四个维度对环境进行了工程化处理：权限工程用于限制智能体的执行范围和隔离评估；成果工程用于文件系统和基于 Git 的协作；预算工程用于预算感知的探索；以及人机交互工程用于简化人类的监督与干预。EurekAgent 在多个数学、内核工程和机器学习任务上取得了新的最先进成果，包括以不到11美元的总API成本发现的26个圆的新最优打包结果。我们开源了代码和实验结果，并呼吁将环境工程作为开发可靠自主研究智能体的核心研究方向。
+
+核心贡献：EurekAgent 提出了一种通过环境工程来增强自主科学发现智能体性能的方法，在多个领域实现了最先进的成果。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-11</span>
+                    <a href="https://arxiv.org/pdf/2606.13662v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.13649v1" target="_blank">Operadic consistency: a label-free signal for compositional reasoning failures in LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Nathaniel Bottman, Yinhong Liu, Kyle Richardson</div>
+                <div class="paper-summary">在没有真实标签的情况下检测大语言模型（LLM）推理失败，已经推动了多种置信度基准的发展，包括自我一致性、语义熵和P(True)，这些方法通常基于问题内部的采样与自评估。操作子理论（operad theory），即通过迭代替换构建系统的形式化理论，提出了一种互补的诊断方式：对于一个组合查询，模型直接给出的答案应与其通过对该查询声明分解后组合得出的答案一致。我们将这一想法具体化为“操作子一致性”（Operadic Consistency, OC），这是一种针对每个问题的信号。在四个多跳问答数据集上的十二个经过指令微调的LLM（参数范围从4B到671B，包含开源和闭源模型）中，OC与所有数据集的准确率均高度相关（皮尔逊相关系数 $r \in [0.86, 0.94]$，所有 $p \leq 0.0004$），并且是我们在所有四个数据集中唯一一个在所有情况下 $r \geq 0.85$ 的信号。链式思维自我一致性（CoT-SC；Wang et al., 2023）在HotpotQA和DROP上与OC相当（$r = 0.93, 0.87$），但在MuSiQue和StrategyQA上下降至 $r \approx 0.45$。在每个问题层面，OC提供了超越CoT-SC和语义熵的信息（聚类稳健性 $p \leq 10^{-16}$ 对于OC系数），且这一结论在控制构造的分解感知基线时依然稳健（$p \leq 10^{-13}$）。相同的信号在固定覆盖范围下的选择性预测性能方面优于调整后的CoT-SC基线，在等成本预算 $K = 3$ 下实现了显著提升（AUARC 提升 +0.086 至 +0.096，AUROC 提升 +0.092 至 +0.164；所有单元格的95%置信区间均不包含零）。在五个前沿思考模型上，当分解是从模型自身的链式思维中提取时，同样的等成本比较在所有16个（数据集，预算，指标）单元格中均表现出正的选择性预测点估计提升，其中16个中有12个的95%置信区间排除零。
+
+核心贡献：本文提出了“操作子一致性”（Operadic Consistency, OC）作为一种无需标签即可检测LLM组合推理失败的新信号，并验证其在多个模型和数据集上的有效性，显著优于现有方法。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-11</span>
+                    <a href="https://arxiv.org/pdf/2606.13649v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.13643v1" target="_blank">Recursive Agent Harnesses</a>
+                </div>
+                <div class="paper-authors">👥 Elias Lumer, Sahil Sen, Kevin Paul</div>
+                <div class="paper-summary">Recursive language models (RLMs) showed that recursion over model calls is an effective strategy for long-context reasoning, and production coding agents have begun to write code that spawns subagents at scale, most recently in Anthropic's dynamic workflows. We name and study the pattern between these two lines of work, where the recursive unit is a full agent harness with filesystem tools, code execution, and planning rather than a model call with no tools. We call this the Recursive Agent Harness (RAH) and frame it as harness recursion, the code-first extension to the model recursion of RLMs. A parent agent generates and runs an executable script that spawns subagent harnesses in parallel for fine-grained workloads and uses structured function calls for small subtasks. We provide a controlled evaluation on long-context reasoning. With the backbone held fixed at GPT-5 to match the published Codex and RLM baselines, RAH improves the Codex coding-agent baseline from 71.75% to 81.36% on Oolong-Synthetic (199 samples, 13 context-length buckets up to 4M tokens), a gain attributable to the harness rather than the model. With a stronger backbone, Claude Sonnet 4.5, the same design reaches 89.77%.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-11</span>
+                    <a href="https://arxiv.org/pdf/2606.13643v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/academy-courses-applying-ai-at-work" target="_blank">New OpenAI Academy courses for the next era of work</a></div>
+                <div class="feed-date">06-12</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/safety-security/combatting-ai-scams/" target="_blank">How we're combatting AI scams with security, legislation and more</a></div>
+                <div class="feed-date">06-12</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/13/as-anthropic-suspends-access-to-new-models-india-debates-its-ai-future/" target="_blank">As Anthropic suspends access to new models, India debates its AI future</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/13/as-anthropic-suspends-access-to-new-models-india-debates-its-ai-future/" target="_blank">As Anthropic suspends access to new models, India debates its AI future</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/" target="_blank">Meta reportedly moves to unwind $2B Manus deal after Beijing’s demand</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand/" target="_blank">Meta reportedly moves to unwind $2B Manus deal after Beijing’s demand</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/949601/amazon-anthropic-fablemythos-government-ban" target="_blank">Amazon security research reportedly led to the White House’s Anthropic Fable ban</a></div>
+                <div class="feed-date">06-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/13/kpmg-pulls-report-on-ai-usage-due-to-apparent-hallucinations/" target="_blank">KPMG pulls report on AI usage due to apparent hallucinations</a></div>
+                <div class="feed-date">06-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/13/kpmg-pulls-report-on-ai-usage-due-to-apparent-hallucinations/" target="_blank">KPMG pulls report on AI usage due to apparent hallucinations</a></div>
+                <div class="feed-date">06-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/947064/xmen-97-season-2-disney-plus-marvel-masters-of-the-universe-mattel" target="_blank">X-Men ’97 has what Master of the Universe is missing</a></div>
+                <div class="feed-date">06-13</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oJSOUyaJeV4" target="_blank">🎥 Did Musk and Trump Rig the 2024 Election?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Political analyst and commentator Nathan Taylor joins Wajahat Ali to examine claims, allegations, an...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wnCtlZdoDnM" target="_blank">🎥 How Elon Musk and MAGA Built a Grift Empire...with Ashley St. Clair!</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Former MAGA influencer and commentator Ashley St. Clair joins Wajahat Ali for a candid conversation ...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wSp6AiNIrsY" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=tsQB0n0YV3k" target="_blank">🎥 Stanford CS153 Frontier Systems | Jensen Huang from NVIDIA on the Compute Behind Intelligence</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">For more information about Stanford's online Artificial Intelligence programs, visit: https://stanfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=9F7E_M9BCXk" target="_blank">🎥 揭秘 Elon Musk 砸千亿搞死 OpenAI 的终极算盘 |【水博 Trio EP7】</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">YouTube 影片简介(Description) 出钱出力帮兄弟创业做慈善，结果几年后兄弟拿着你的钱，搞出了一家市值8000 亿的超级印钞机， ......</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=xgWERcUvUjE" target="_blank">🎥 How OpenAI Became the Most Powerful Startup in the World</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">OpenAI did not begin like a normal startup. It began as a nonprofit AI research lab with a mission t...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/plannotator/effective-html" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                plannotator/effective-html
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 effective-html 提供了一种优雅且简洁的 HTML 构建方式，适合关注前端开发与自动化工具的研究者。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/levy-street/world-of-claudecraft" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                levy-street/world-of-claudecraft
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 world-of-claudecraft 虽然描述缺失，但其 TypeScript 标签和高关注度可能涉及 AI 领域的创新应用。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/omnigent-ai/omnigent" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                omnigent-ai/omnigent
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 omnigent 是一个统一管理多种 AI 模型的框架，对多模型集成研究具有重要价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48519092" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Amazon CEO's talks with U.S. officials triggered crackdown on Anthropic models
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 亚马逊CEO与美国官员的对话引发对Anthropic模型的监管，涉及AI行业政策变化。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48518969" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                AI coding at home without going broke
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 探讨如何在家庭环境下低成本进行AI编程，对开发者实践有实际参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48522675" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                State Attorneys General Are Investigating OpenAI
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 美国总检察长对OpenAI展开调查，反映AI领域法律和合规问题的重要性。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2240<br>
+                    Output Tokens: 1931
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年06月14日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
