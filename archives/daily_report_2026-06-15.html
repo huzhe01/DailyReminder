@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年06月15日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2026年4月5日**</p><p>**学术突破**  </p><p>本周三篇重要论文引发关注：ClinHallu 提出医疗多模态模型中推理阶段幻觉的诊断基准，推动医学AI可信度研究；Persona-Pruner 则通过角色剪枝技术实现轻量化大模型部署；CORA 论文提出一致性导向推理对齐方法，解决多模态视觉语言任务中的思维-答案偏差问题。</p><p>**行业动态**  </p><p>科技融资与战略动向频传：Orbio 获 2100 万美元融资，专注自动化一线员工招聘与入职流程。OpenAI 推出合作伙伴网络，拓展生态布局。同时，FBI 建造模拟小镇测试网络攻击，凸显安全议题日益严峻。</p><p>**值得关注**  </p><p>马斯克、黄仁勋与Altman最新访谈相继发布，揭示SpaceX计划、NVIDIA未来愿景及AI监管挑战。Pichai斯坦福毕业演讲全文上线，展现Google在AI伦理与社会影响上的深度思考。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.14697v1" target="_blank">ClinHallu: A Benchmark for Diagnosing Stage-Wise Hallucinations in Medical MLLM Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Sicheng Yang, Hangjie Yuan, Wenjun Zhang</div>
+                <div class="paper-summary">构建可信的医疗多模态大语言模型（MLLMs）对于可靠的临床决策支持至关重要。现有的医学幻觉基准主要关注数据收集，但往往忽略了幻觉在推理过程中的具体来源。我们发现，不同样本中的幻觉来源各不相同：错误可能来自视觉误识别、错误的医学知识回忆或推理整合不当。为了实现对幻觉来源的诊断，我们引入了ClinHallu，这是一个用于医疗MLLM推理中分阶段幻觉诊断的基准。ClinHallu包含7,031个经过验证的实例，每个实例都附带一个结构化的推理轨迹，分解为视觉识别、知识回忆和推理整合三个阶段。我们还使用阶段替换干预方法来衡量纠正特定阶段对最终答案的影响。除了评估之外，我们还表明轨迹监督微调可以减少阶段性幻觉。ClinHallu为诊断和缓解医疗MLLMs中的推理失败提供了一个细粒度的幻觉测试平台。该基准可在https://github.com/alibaba-damo-academy/ClinHallu上公开获取。
+
+核心贡献：ClinHallu是一个用于分析和减少医疗多模态大语言模型推理过程中幻觉来源的细粒度基准。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-12</span>
+                    <a href="https://arxiv.org/pdf/2606.14697v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.14695v1" target="_blank">Persona-Pruner: Sculpting Lightweight Models for Role-Playing</a>
+                </div>
+                <div class="paper-authors">👥 Jinsu Kim, Jihoon Tack, Noah Lee</div>
+                <div class="paper-summary">语言模型（LMs）在角色扮演聊天机器人方面表现出显著的潜力，当提供特定角色或用户人设时，能够实现一致且风格化的互动。然而，在将其应用于现实世界的应用场景（例如包含大量同时交互的NPC的生态系统）时，由于计算成本过高而暴露出关键性的效率问题。在本文中，我们质疑是否有必要为每个角色分配一个完整的通用模型，假设特定的角色身份实际上仅依赖于模型总容量的一小部分。我们观察到，简单地对语言模型进行剪枝通常会严重损害其角色扮演性能，因为它无法区分冗余知识和关键角色特征。为此，我们提出了Persona-Pruner，一种通过从单一描述中分离出角色特有子网络来塑造轻量级角色扮演模型的框架。我们的实验一致表明，与现有的最先进的大语言模型剪枝技术相比，Persona-Pruner在保持角色扮演性能方面效果更显著，在RoleBench数据集上，以LLM作为评估者的评分中，将性能下降幅度减少了高达93.8%，同时仍能保持通用的大语言模型能力。代码可在https://github.com/jsu-kim/Persona-Pruner获取。
+
+核心贡献：提出Persona-Pruner框架，通过提取角色特有子网络，有效减少大语言模型在角色扮演任务中的计算开销，同时显著保留其性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-12</span>
+                    <a href="https://arxiv.org/pdf/2606.14695v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.14691v1" target="_blank">CORA: Analyzing and bridging thinking-answer gap in Multimodal RLVR via Consistency-Oriented Reasoning Alignment</a>
+                </div>
+                <div class="paper-authors">👥 Jiayue Cao, Zhicong Lu, Xuehan Sun</div>
+                <div class="paper-summary">摘要：基于可验证奖励的强化学习（RLVR）已成功激发了大型语言模型的推理能力，推动其向多模态场景扩展。现有方法主要关注于提高推理轨迹的视觉覆盖率和缓解视觉幻觉问题，但忽视了推理过程与最终答案之间的语义不一致性。在本文中，我们深入研究了大型视觉-语言模型（LVLMs）中RLVR框架下的“思考-答案”不一致现象，并通过全面分析在Group Relative Policy Optimization（GRPO）训练过程中收集到的rollouts以及RLVR后评估输出，表明这一问题在训练期间持续存在并在推理阶段仍然存在。受此分析启发，我们提出了面向一致性的推理对齐方法CORA，该方法通过一个轻量级、即插即用的一致性奖励模型将“思考-答案”的语义一致性引入RLVR，并进一步结合混合奖励优势拆分（HRAS），以稳定协调任务优化与一致性优化。大量实验表明，在代表性多模态推理基准和主流LVLMs上，CORA在提升任务性能的同时有效缓解了“思考-答案”不一致问题，从而生成更加忠实的推理轨迹。
+
+核心贡献：提出CORA方法，通过引入一致性奖励机制和HRAS策略，有效缓解多模态RLVR中的“思考-答案”不一致问题，提升了推理的忠实性和任务表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-12</span>
+                    <a href="https://arxiv.org/pdf/2606.14691v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.14674v1" target="_blank">AgentSpec: Understanding Embodied Agent Scaffolds Through Controlled Composition</a>
+                </div>
+                <div class="paper-authors">👥 Jixuan Chen, Jianzhi Shen, Haoqiang Kang</div>
+                <div class="paper-summary">LLM代理正越来越多地以模块化系统的形式构建，而不是单一模型调用。这些系统结合了推理、记忆、反思、动作执行和学习等多个组件。尽管这种结构通常能提升性能，但它们往往嵌入在紧密耦合的流程中，使得难以单独评估各组件的贡献、比较不同设计或理解模块之间的交互如何影响代理行为。我们提出了AgentSpec，这是一个模块化的规范框架，通过标准化接口将具身代理表示为可重用策略组件的类型化组合。AgentSpec统一了感知、记忆、推理、反思、动作以及可选学习模块之间的接口，从而允许在受控条件下交换和重新组合这些组件。我们在DeliveryBench、ALFRED、MiniGrid和RoboTHOR等多个平台上实例化该框架，并分析了不同模型架构下的推理、记忆、反思和强化学习模块。我们的结果显示，代理性能主要由支架兼容性和模块间的交互效应决定，而非单个模块的独立能力。具体而言，结构化的多粒度记忆提升了长期状态追踪能力，推理与记忆在不同环境中的交互不均，反思在纠正错误和成本之间存在权衡，而使用部署时支架结构优化的RL训练策略表现最佳。AgentSpec为研究、比较和设计可组合的LLM代理提供了一个可控的基础。我们的代码、基线和交互式平台已公开在https://agentspec-embodied.github.io。
+
+核心贡献：提出AgentSpec，一种模块化框架，用于在受控条件下分析和组合具身LLM代理的不同组件，揭示了模块间交互对代理性能的关键影响。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-12</span>
+                    <a href="https://arxiv.org/pdf/2606.14674v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.14672v1" target="_blank">Towards Direct Latent-Space Synthesis for Parallel Branches in LLM-Agent Workflows</a>
+                </div>
+                <div class="paper-authors">👥 Shikun Liu, Mufei Li, Dongqi Fu</div>
+                <div class="paper-summary">大型语言模型越来越多地作为代理系统中的执行引擎，但它们仍然通过顺序文本接口消耗上下文。这与现代结构化的代理工作流程之间存在不匹配，因为这些流程中独立的分支会探索子任务、检索证据或生成候选解决方案，最终再进行一次综合步骤。现有的系统通常通过连接这些分支的文本输出来合并它们，这不仅丢弃了并行结构，还会引发冗余的预填充计算。在本研究中，我们提出了 **Parallel-Synthesis**，这是一个即插即用的框架，使合成器能够直接消费由并行工作代理产生的KV缓存。Parallel-Synthesis 结合了一个缓存映射器（将独立生成的分支缓存校准）和一个微调的合成适配器（支持从非顺序缓存接口中生成内容）。我们使用包含并行缓存上下文的数据训练 Parallel-Synthesis，使其学习跨缓存分支的聚合，并从基于文本拼接的合成中蒸馏推理行为。在九个下游数据集上的实验表明，包括数学、科学问答、代码生成、GAIA 和多代理数据库诊断等任务，Parallel-Synthesis 在七个数据集上表现匹敌或优于基于文本的合成方法，在另外两个数据集上也表现接近。此外，它还减少了首词生成时间 2.5 到 11 倍，表明直接基于缓存的合成是实现更原生且高效并行代理分支合成的有前景的接口。
+
+核心贡献：提出了一种名为 Parallel-Synthesis 的框架，实现了直接基于缓存的并行代理分支合成，显著提升了效率并保持或超越了传统文本拼接方法的性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-12</span>
+                    <a href="https://arxiv.org/pdf/2606.14672v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.14654v1" target="_blank">Abstracting Cross-Domain Action Sequences into Interpretable Workflows</a>
+                </div>
+                <div class="paper-authors">👥 Gaurav Verma, Scott Counts</div>
+                <div class="paper-summary">Sequential or time-stamped interaction logs provide objective records of digital application usage, yet their granularity and noise often obscure meaningful insights into people's work. Such insights are essential for improving digital products in ways grounded in real-world user interactions. Prior research has applied deep learning models to cluster user actions into high-level activities, but these approaches are highly sensitive to noise and struggle to generalize across applications. To address this limitation, we introduce WorkflowView, a framework that uses large language models (LLMs) to abstract low-level action sequences into high-level activities. We establish the effectiveness and generality of our approach across three distinct, challenging sequential tasks and diverse domains: (a) zero-shot task description reconstruction from browser logs (achieving high semantic similarity, $μ_{sim} = 0.91$), (b) few-shot student dropout prediction using MOOC interaction logs (reaching weighted $F_1 = 0.90$ with only five few-shot examples), and (c) anonymized, privacy-preserving analysis of AI tool integration within document workflows in Microsoft Word. Our work demonstrates that LLM-based abstraction is a robust and efficient path forward for transforming low-level behavioral data into high-level, interpretable, and actionable insights. We also discuss practical considerations for deploying LLM-based inferences within logging infrastructures, including computational efficiency and user privacy.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-12</span>
+                    <a href="https://arxiv.org/pdf/2606.14654v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/message-ceo/stanford-commencement-speech-2026/" target="_blank">Read Sundar Pichai’s 2026 Commencement Address at Stanford University</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-openai-partner-network" target="_blank">Introducing the OpenAI Partner Network</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/14/orbio-raises-21-million-to-automate-hiring-and-onboarding-for-frontline-workers/" target="_blank">Orbio raises $21 million to automate hiring and onboarding for frontline workers</a></div>
+                <div class="feed-date">06-15</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/14/startup-ceo-charlie-javice-is-reportedly-angling-for-a-trump-pardon/" target="_blank">Startup CEO Charlie Javice is reportedly angling for a Trump pardon</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/949648/fbi-fake-town-cyberattacks-kinetic-cyber-range" target="_blank">The FBI built a small town to simulate cyberattacks</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/14/uk-may-ban-social-media-for-children-under-16/" target="_blank">UK may ban social media for children under 16</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/949644/china-white-house-anthropic-mythos" target="_blank">China may have accessed Mythos</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/14/as-ai-companies-race-to-go-public-who-else-is-along-for-the-ride/" target="_blank">As AI companies race to go public, who else is along for the ride?</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/14/as-ai-companies-race-to-go-public-who-else-is-along-for-the-ride/" target="_blank">As AI companies race to go public, who else is along for the ride?</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/949621/conclave-nyc-summer-block-party-album-review" target="_blank">Conclave is the sound of a NYC summer block party</a></div>
+                <div class="feed-date">06-14</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=D_1j5dVWNYI" target="_blank">🎥 JUST RECORDED: Elon Musk Announces SPACEX Plans</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">I've launched a private community for people responsible for significant personal, family, or busine...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oJSOUyaJeV4" target="_blank">🎥 Did Musk and Trump Rig the 2024 Election?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Political analyst and commentator Nathan Taylor joins Wajahat Ali to examine claims, allegations, an...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wSp6AiNIrsY" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=tsQB0n0YV3k" target="_blank">🎥 Stanford CS153 Frontier Systems | Jensen Huang from NVIDIA on the Compute Behind Intelligence</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">For more information about Stanford's online Artificial Intelligence programs, visit: https://stanfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Xhr_OgazqTE" target="_blank">🎥 Why Has Every Attempt to Stop This Man Failed?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Sam Altman was fired. Five days later he came back. And what he built next changed everything. In No...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=9F7E_M9BCXk" target="_blank">🎥 揭秘 Elon Musk 砸千亿搞死 OpenAI 的终极算盘 |【水博 Trio EP7】</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">YouTube 影片简介(Description) 出钱出力帮兄弟创业做慈善，结果几年后兄弟拿着你的钱，搞出了一家市值8000 亿的超级印钞机， ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #6366f1; padding-bottom: 10px; color: #4338ca;">🐙 开源社区动态</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/vllm-project/vllm/issues/42426" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                [vllm] [Bug]: Kimi-K2.6 intermittently outputs only "!!!!!!!!!!" in reasoning field with content null
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该问题描述了 vllm 在 Kimi-K2.6 模型推理时出现异常输出，对模型推理稳定性研究有重要参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/tamnd/kage" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                tamnd/kage
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 kage 提供了网站离线查看功能，对研究去 JavaScript 渲染和静态内容处理的 AI 工程师有参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48528371" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Rio de Janeiro's "homegrown" LLM appears to be a merge of an existing model
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 里约热内卢的本地大语言模型引发关注，因其似乎是由现有模型合并而成，对模型开发和伦理问题具有启发意义。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48527700" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Not everyone is using AI for everything
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该帖讨论了AI并非被所有人广泛使用，为研究者提供了关于AI实际应用现状的重要视角。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48527297" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                KPMG pulls report on AI usage due to apparent hallucinations
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 KPMG因报告中出现幻觉现象而撤回报告，突显了AI在生成内容时的可靠性挑战。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2029<br>
+                    Output Tokens: 1751
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年06月15日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
