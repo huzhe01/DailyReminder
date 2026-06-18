@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年06月18日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日三篇重要论文揭示了AI模型的前沿进展：一项研究提出“图灵奖励”机制，通过模拟用户行为提升对话系统的自适应能力；另一项工作借助多智能体虚拟博弈策略，增强大语言模型在决策任务中的表现；此外，法国医学领域的一项实证研究探讨了医疗LLM在本地化问答中的性能权衡，为模型适配提供了新视角。</p><p>**行业动态**  </p><p>Midjourney Medical正将图像生成技术拓展至医学影像，已实现全身影像超声扫描生成。Google则推出关闭AI辅助功能的选项，回应用户对隐私与控制的需求。同时，Google The Keyword报道高校如何重塑课程体系以应对AI时代，并展示其医疗AI AMIE在健康管理中的应用潜力。</p><p>**值得关注**  </p><p>Elon Musk、Jensen Huang与Sam Altman等科技领袖近期密集发声，分别聚焦太空探索、AI硬件演进及法律挑战，预示AI产业正进入深度整合与政策调整的关键阶段。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.19336v1" target="_blank">Learning User Simulators with Turing Rewards</a>
+                </div>
+                <div class="paper-authors">👥 Yingshan Susan Wang, Cedegao E. Zhang, Linlu Qiu</div>
+                <div class="paper-summary">在交互式环境中学习模拟人类用户可以推动代理助手的训练、个性化系统的评估以及社会科学的研究等。现有的方法通常通过训练一个大型语言模型（LLM）来匹配单一的真实响应，方法包括最大化对数概率或使用相似性奖励。我们提出了一种基于图灵测试的强化学习方法{Turing-RL}，用于训练用户模拟器模型。{Turing-RL} 使用了一个具有 LLM 评判者的判别式图灵奖励，根据用户历史记录，对生成的响应与真实用户响应之间的不可区分性进行评分，并利用这些奖励使用户模拟器 LLM 学会生成与真实用户可能说出的内容无法区分的响应。我们在两个不同的领域——对话聊天和 Reddit 论坛讨论中发现，{Turing-RL} 在 LLM 和人工评估指标上均一致优于基线方法。我们的研究表明，优化响应的不可区分性比响应匹配更有效地学习用户模拟器。
+
+核心贡献：本文提出了基于图灵测试奖励的强化学习方法{Turing-RL}，通过优化响应的不可区分性，显著提升了用户模拟器的学习效果。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-17</span>
+                    <a href="https://arxiv.org/pdf/2606.19336v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.19308v1" target="_blank">Enhancing Decision-Making with Large Language Models through Multi-Agent Fictitious Play</a>
+                </div>
+                <div class="paper-authors">👥 Leyang Shen, Yang Zhang, Xiaoyan Zhao</div>
+                <div class="paper-summary">基于大语言模型（LLM）的多智能体系统（MAS）在解决具有执行复杂性的任务方面表现出巨大潜力，通过将子任务分配给合作代理来完成。然而，这种分而治之的方法在处理现实中常见的决策任务时表现不佳。这些任务需要从所有相关利益相关者的立场进行同时推理，其决策相互依赖，因此不能孤立地解决。我们将这一挑战定义为立场纠缠，这是一种与执行复杂性不同的决策复杂性。为了解决这一问题，我们提出了多智能体拟真博弈（Multi-Agent Fictitious Play, MAFP），一种新颖的MAS范式，它将利益相关者的立场表示为代理，并将决策制定建模为一种寻求均衡的过程。MAFP基于博弈论中的拟真博弈原则，通过迭代更新每个代理的决策以最佳响应其他代理过去决策的经验混合，从而使得代理能够揭示并应对彼此的弱点，逐步提高决策的质量和鲁棒性。我们在一些具有挑战性的决策任务上评估了MAFP，这些任务测试了在行动前决定竞争场景策略的能力。实验表明，MAFP在两个互补指标——竞赛强度和鲁棒性上均优于单轮和多轮基线方法，证明了其在解决立场纠缠方面的有效性。
+
+核心贡献：本文提出了一种名为多智能体拟真博弈（MAFP）的新范式，有效解决了多智能体系统中由于立场相互依赖而导致的决策复杂性问题，显著提升了决策质量和鲁棒性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-17</span>
+                    <a href="https://arxiv.org/pdf/2606.19308v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.19266v1" target="_blank">Trade-offs in Medical LLM Adaptation: An Empirical Study in French QA</a>
+                </div>
+                <div class="paper-authors">👥 Ikram Belmadani, Oumaima El Khettari, Carlos Ramisch</div>
+                <div class="paper-summary">大型语言模型（LLMs）的发展引发了对其在特定领域和语言中适应性的更多关注，但领域适应策略的有效性仍不明确。我们以法语医学问答（QA）为案例研究了医学领域的适应问题。我们在三种模型家族、多种规模以及三种初始化类型上比较了持续预训练（CPT）、监督微调（SFT）及其组合，并明确区分了适应效果与基础模型选择的影响。我们使用自动指标和LLM作为评判者的评估方法，在贪婪解码和受限解码下对多项选择题（MCQA）和开放式问答（OEQA）进行了评估。对于MCQA任务，CPT+SFT通常得分最高，但其相比SFT的提升较小且经常不具备统计显著性，因此SFT是一个强大且成本效益高的默认选择。对于OEQA任务，CPT持续提升了基于重叠的指标，而SFT常常降低生成质量；指令调优和CPT+SFT则更受LLM评估的青睐。跨语言实验进一步表明，从法语适应到英语基准的迁移是有效的。总体而言，我们提供了在计算资源受限情况下选择适应策略的实用指南。
+
+核心贡献：本文通过实证研究系统比较了不同医学领域适应策略的效果，提出了在计算约束下选择最优适应方法的实用指南。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-17</span>
+                    <a href="https://arxiv.org/pdf/2606.19266v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.19264v1" target="_blank">Structured Inference with Large Language Gibbs</a>
+                </div>
+                <div class="paper-authors">👥 Sanghyeok Choi, Henry Gouk, Esmeralda S. Whitammer</div>
+                <div class="paper-summary">大型语言模型（LLMs）中编码的知识可以作为对描述复杂世界的变量进行结构化推理的基础，但以概率上一致的方式访问这些知识是一个具有挑战性的推理问题。我们提出了“大型语言吉布斯”（Large Language Gibbs），这是一种利用LLM的条件分布作为转移算子的结构化概率推理方法。与通过单次自回归生成来采样结构化对象不同，我们通过迭代地在其他变量条件下重新采样单个变量，使用LLM的下一个词条件分布。这种方法避免了顺序依赖偏差，并生成一个反映所有局部条件之间妥协的平稳分布。我们将该方法应用于合成分布采样、一致性推理任务和贝叶斯结构学习。结果表明，在基于噪声LLM条件的世界先验下，将LLM条件用于马尔可夫链蒙特卡洛（MCMC）是单次生成的一种实用替代方案。
+
+核心贡献：提出了一种基于LLM条件分布的结构化概率推理方法——大型语言吉布斯，能够更有效地处理复杂世界中的变量关系并避免顺序依赖偏差。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-17</span>
+                    <a href="https://arxiv.org/pdf/2606.19264v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.19236v1" target="_blank">STARE: Surprisal-Guided Token-Level Advantage Reweighting for Policy Entropy Stability</a>
+                </div>
+                <div class="paper-authors">👥 Haipeng Luo, Qingfeng Sun, Songli Wu</div>
+                <div class="paper-summary">摘要：在大语言模型（LLM）中进行复杂推理的后训练范式中，基于可验证奖励的强化学习算法（如GRPO）已成为主流方法，但在训练过程中常常面临策略熵崩溃的问题。我们对GRPO下令牌级别的熵动态进行了首次梯度分析，并识别出一个令牌级别的信用分配不匹配问题：每个令牌的熵变化可以分解为轨迹级优势和下一个令牌分布上的熵敏感函数的乘积，从而形成了优势-惊奇四象限结构以及接近临界性的特性。受此启发，我们提出了STARE（用于策略熵稳定性的惊奇引导的令牌级优势重加权），通过批次内部的惊奇分位数识别出熵关键的令牌子集，选择性地重新加权其有效优势，并引入目标熵闭环门控机制以实现稳定的熵调节。在1.5B到32B规模的模型上，针对三个任务家族（短链式思维、长链式思维和多轮工具使用），STARE在数千步训练中保持了稳定的强化学习过程，同时将策略熵维持在目标范围内。在AIME24和AIME25数据集上，STARE在平均准确率上比DAPO和其他竞争基线高出4%-8%，且反思令牌和响应长度同步增长，表明探索与利用之间的平衡得以持续，进一步释放了强化学习的训练潜力。
+
+核心贡献：STARE通过引入基于令牌级别惊奇性的优势重加权机制，解决了强化学习训练中的策略熵崩溃问题，实现了更稳定和高效的训练效果。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-17</span>
+                    <a href="https://arxiv.org/pdf/2606.19236v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.19218v1" target="_blank">RECOM: A Validity Discrimination Tradeoff in Automatic Metrics for Open Ended Reddit Question Answering</a>
+                </div>
+                <div class="paper-authors">👥 Pushwitha Krishnappa, Amit Das, Vinija Jain</div>
+                <div class="paper-summary">Automatic metrics are the default for evaluating LLM-generated text, yet a metric is quietly asked to do two jobs: tell genuine content alignment from surface coincidence (validity), and tell a better system from a worse one (discriminative power). On open-ended, opinion-driven question answering, the two are in tension. We introduce RECOM (Reddit Evaluation for Correspondence of Models), a contamination-free evaluation dataset of 15,000 r/AskReddit questions (September 2025), each paired with its authentic community replies, which postdate every evaluated model's training cutoff. Scoring five open-source LLMs (7--10B) against every reply each metric paired with a random-derangement noise floor we find that no metric does both jobs well. Cosine similarity separates real from random answers (Cohen's $d \approx 2$) but cannot rank the five models ($|d| < 0.1$); BERTScore precision appears to rank the models (raw $|d|$ up to 0.63), but once response length is controlled this collapses to $|d| = 0.09$ and its validity is weak ($d \approx 0.8$, versus cosine's $\approx 2$). Because every metric scores the same outputs, this validity--discrimination tradeoff is a property of the metrics, not the models, and we argue it stems from representation design. Three independent LLM judges reproduce the validity gap and likewise separate the five models only weakly. We recommend reporting metrics on both axes, with an explicit random-baseline floor. RECOM is publicly available at https://anonymous.4open.science/r/recom-D4B0</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-17</span>
+                    <a href="https://arxiv.org/pdf/2606.19218v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.15252v1" target="_blank">Beyond Positive Signals: Unlocking Implicit Negative Behaviors for Enhanced Sequential User Modeling</a>
+                </div>
+                <div class="paper-authors">👥 Zexuan Cheng, Yue Liu, Jun Zhang</div>
+                <div class="paper-summary">用户行为序列建模已成为现代点击率（CTR）预测的核心组成部分。近年来，研究界投入了大量精力改进序列的编码方式，从目标感知注意力机制、兴趣演化网络到统一架构以联合处理序列和非序列特征。然而，一个更为基础的问题仍未得到充分探索：行为序列应包含哪些内容？目前的做法仅从正向交互（点击、购买、完成）中构建序列，而数量远为丰富的隐式负行为（跳过、低参与度、滑过）则被严重忽视。随着正向序列带来的增益逐渐趋于边际效益递减，我们重新审视了在序列建模框架中这一未充分利用的数据源。本文表明，在固定长度预算内将正负行为标记按时间顺序交错排列的混合极性行为序列，在各种模型架构中始终优于仅使用正向序列的方法，并且几乎不增加计算开销。我们进一步发现，简单的极性嵌入存在语义不可区分的问题，并提出了目标感知极性融合（TAPF），这是一种轻量级的目标条件门控机制，通过区分行为证据实现额外性能提升。值得注意的是，即使是最简单的极性偏置基线也捕捉到了大部分性能提升，这说明主要贡献在于混合极性数据范式本身。我们在三个公开基准上的实验显示，五种架构的相对AUC平均提升了+1.9%至+9.6%，验证了我们方法的实际价值。
+
+核心贡献：本文提出了一种基于混合正负行为的序列建模新范式，显著提升了CTR预测效果，并引入了有效的极性融合机制来增强模型对行为信号的理解。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-13</span>
+                    <a href="https://arxiv.org/pdf/2606.15252v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/higher-education-gemini-notebooklm/" target="_blank">How universities are preparing students for an AI-powered future</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/google-research/amie-for-disease-management-in-nature/" target="_blank">New research shows how AMIE, our medical AI, could help manage health conditions.</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/sustainability/frontier-funding-expansion/" target="_blank">We’re expanding our support for breakthrough carbon removal technologies.</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/devices/google-nest/google-home-speaker-gemini-features/" target="_blank">Meet the new Google Home Speaker, built for Gemini</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/ai-chemist-improves-reaction" target="_blank">A near-autonomous AI chemist improves a challenging reaction in medicinal chemistry</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/united-kingdom/google-cloud-summit-london-2026/" target="_blank">Scaling the UK government’s AI vision</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-life-sci-bench" target="_blank">Introducing LifeSciBench</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/google-org/digital-wellbeing-fund-mental-health/" target="_blank">Expanding our U.S. digital wellbeing fund</a></div>
+                <div class="feed-date">06-16</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Y Combinator</div>
+                <div class="feed-title"><a href="https://www.ycombinator.com/blog/chris-golda-and-grey-baker-general-partners/" target="_blank">Christopher Golda and Grey Baker Join YC as General Partners</a></div>
+                <div class="feed-date">06-16</div>
+            </div>
+            </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/952011/midjourney-medical-ai-ultrasound-scan" target="_blank">Midjourney Medical goes from generating ‘cat images’ to full-body ultrasound scans</a></div>
+                <div class="feed-date">06-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/17/how-to-turn-off-ai-in-your-google-docs/" target="_blank">How to turn off AI in your Google Docs</a></div>
+                <div class="feed-date">06-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/17/how-to-turn-off-ai-in-your-google-docs/" target="_blank">How to turn off AI in your Google Docs</a></div>
+                <div class="feed-date">06-18</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/17/ai-is-hurting-apple-in-more-ways-than-one-it-may-force-iphone-price-increases/" target="_blank">AI is hurting Apple in more ways than one: it may force iPhone price increases</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/06/second-carcass-eating-fly-species-cleared-by-fda-for-maggot-wound-therapy/" target="_blank">Second carcass-eating fly species cleared by FDA for maggot wound therapy</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/951948/apple-tim-cook-price-increases-ram" target="_blank">Tim Cook says RAM expenses are &#8216;unsustainable&#8217; and Apple is going to raise prices</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/17/chi-hua-chien-saw-facebook-coming-now-he-says-the-real-ai-winners-wont-be-selling-ai/" target="_blank">Chi-Hua Chien saw Facebook coming — now he says the real AI winners won’t be selling AI</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/science/2026/06/amazon-quera-promise-useful-quantum-error-correction-by-2028/" target="_blank">Sooner than expected? Useful quantum error correction promised for 2028.</a></div>
+                <div class="feed-date">06-17</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=D_1j5dVWNYI" target="_blank">🎥 JUST RECORDED: Elon Musk Announces SPACEX Plans</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">I've launched a private community for people responsible for significant personal, family, or busine...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oJSOUyaJeV4" target="_blank">🎥 Did Musk and Trump Rig the 2024 Election?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Political analyst and commentator Nathan Taylor joins Wajahat Ali to examine claims, allegations, an...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=q_umfWm8J28" target="_blank">🎥 Nvidia GTC Taipei 2026: Jensen Huang Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">nvidia #ai #jensenhuang #artificialintelligence #technology #stocks #yahoofinance #semiconductors #i...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wSp6AiNIrsY" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=O5gnlpNKWjs" target="_blank">🎥 AI Hellscape, Part I: State of Florida v. OpenAI Global LLC...and Sam Altman.</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">AI Hellscape, Part I: State of Florida v. OpenAI Global LLC...and Sam Altman. Become a supporter of ...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=RSRAflfEF1s" target="_blank">🎥 Билет в тюрьму, которую построили за Твои деньги.</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Платить будешь Ты. ◬ Telegram: https://t.me/vladimirchallenger Человек, стоящий во главе ИИ-империи ...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/vercel/eve" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                vercel/eve
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Vercel 推出的 Agent 框架，为构建智能代理提供了强大的开发工具和框架支持。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/nolangz/pixel2motion" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                nolangz/pixel2motion
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 利用 AI 技术将像素化 Logo 转换为动画，展示了图像处理与生成领域的创新应用。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/alchaincyf/loop-engineering-orange-book" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                alchaincyf/loop-engineering-orange-book
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提供关于 Loop Engineering 的实用指南，对系统设计和工程实践有重要参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48567759" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                GLM-5.2 is the new leading open weights model on Artificial Analysis
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 GLM-5.2 在 Artificial Analysis 上表现领先，是值得关注的开源模型进展。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48571851" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                TREX: An AI code reviewer that runs your code
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 TREX 是一个运行代码的 AI 代码审查工具，对提升开发效率具有实际价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48573757" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Using AI to improve a challenging reaction in medicinal chemistry
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 AI 在药物化学中的应用展示了其在科学领域解决复杂问题的潜力。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 7<br>
+                    Input Tokens: 2331<br>
+                    Output Tokens: 1958
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年06月18日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
