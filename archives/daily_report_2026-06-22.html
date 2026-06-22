@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年06月22日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日三篇重要论文揭示了多模态大模型的新挑战与潜力。《StylisticBias》指出，人类视觉偏好可能无意中加剧了模型的社会偏见；《Your Mouse and Eyes...》提出通过用户隐式行为优化LLM对齐方式；而《Scalable Training of Spatially Grounded...》则展示了医学影像理解的可扩展训练方法，为AI在医疗领域的应用铺平道路。</p><p>**行业动态**  </p><p>科技圈风云变幻：SpaceX创始人马斯克宣布新太空计划，三星引入ChatGPT和Codex赋能员工，谷歌推出佐治亚全景视图服务。同时，Bose尝试转型媒体公司引发讨论，育碧联合创始人意外离世令人唏嘘。</p><p>**值得关注**  </p><p>黄仁勋展望Nvidia GTC台北2026，Altman在斯坦福分享AI创业未来，三大科技领袖的最新发声不容错过。AI正以前所未有的速度重塑世界，紧跟趋势，方能抢占先机。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.20527v1" target="_blank">StylisticBias: A Few Human Visual Cues Drive Most Social Biases in MLLMs</a>
+                </div>
+                <div class="paper-authors">👥 Shaghayegh Kolli, Timo Cavelius, Nafiseh Nikeghbal</div>
+                <div class="paper-summary">多模态大语言模型（MLLMs）正越来越多地被应用于对个人和社会具有重大影响的场景，然而这些模型如何根据视觉线索判断人的机制仍不明确。以往的研究通常比较不同的（群体）个体，使得难以区分外观效应与身份差异的影响。我们提出了 StylisticBias，这是一个用于评估 MLLMs 中属性级别社会偏见的可控基准测试集。我们生成了 500 张逼真的基础人脸，并为每张脸创建约 50 种单属性变体，共生成约 25,000 张图像。这种设计固定了身份并每次仅改变一个视觉属性，使我们能够测量特定线索如何改变模型的判断。我们在 25 个二元社会判断场景中评估了六种 MLLMs。我们发现年龄和体型主导了身份级别的影响，而时尚风格和其他视觉线索则引发了最大的属性级别变化。我们还发现大约 15 个属性解释了近 80% 的总变异，表明偏见集中于一小部分视觉线索。在语义上与外貌一致的判断中，如经济地位和风格相关的判断，模型的敏感性最强。我们发布 StylisticBias 作为多模态模型细粒度偏见评估的基准。代码和数据集：https://github.com/timo-cavelius/StylisticBias 和 https://hf.co/datasets/shaghayegh/stylistic-bias-dataset。
+
+核心贡献：本文提出 StylisticBias 基准，通过控制变量法揭示了多模态大语言模型中的社会偏见主要由少数视觉属性驱动。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-18</span>
+                    <a href="https://arxiv.org/pdf/2606.20527v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.20482v1" target="_blank">Your Mouse and Eyes Secretly Leak Your Preference: LLM Alignment using Implicit Feedback from Users</a>
+                </div>
+                <div class="paper-authors">👥 Haw-Shiuan Chang, Jeffrey Gomez, Mehul Patwari</div>
+                <div class="paper-summary">为了对齐大语言模型（LLM），大多数现有方法通过收集人类的显式反馈，并训练一个奖励模型来根据响应文本预测人类偏好。然而，这些方法存在两个关键限制。首先，用户很少为LLM的响应提供显式反馈，这使得高质量偏好标注的收集成本很高。其次，这些方法没有利用隐式的人类反馈，而隐式反馈已被证明是互联网巨头构建护城河的重要因素。为了量化隐式反馈的价值，我们构建了一个新的数据集IFLLM，该数据集从59名Mechanical Turk工人那里收集了1336个回合的问题、他们的鼠标轨迹以及他们通过网络摄像头记录到LLM响应的注视点。IFLLM显示，用户在注视行为和鼠标轨迹方面表现出非常多样化的模式。基于隐式用户反馈的奖励模型将文本基础奖励模型的准确率从55%提升至64%，并且在对八个LLM应用DPO后，相对响应质量改进几乎翻了三倍，展示了隐式反馈在真实场景中的价值。我们的数据收集网站、数据集和代码可在https://github.com/themehulpatwari/llm-implicit-feedback/找到。
+
+核心贡献：本文提出了基于用户隐式反馈（如鼠标轨迹和注视点）来对齐大型语言模型的新方法，并构建了相应的数据集IFLLM，显著提升了模型响应质量。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-18</span>
+                    <a href="https://arxiv.org/pdf/2606.20482v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.20477v1" target="_blank">Scalable Training of Spatially Grounded 2D Vision-Language Models for Radiology</a>
+                </div>
+                <div class="paper-authors">👥 Yusuf Salcan, Simon Ging, Robin Schirrmeister</div>
+                <div class="paper-summary">我们研究了如何在没有人工空间标注的情况下，训练用于放射学的视觉基础的视觉-语言模型（VLMs）。我们引入了RefRad2D，这是一个大规模的双语（德语/英语）数据集，包含120万对来自临床实践的CT和MRI图像-文本对，并通过基于大语言模型（LLM）的整理和自动分割生成任务特定的视觉问答（VQA）和空间定位子集。基于该数据训练出的模型RadGrounder能够联合执行报告生成、视觉问答和空间定位（通过边界框检测或分割）。在外部VQA基准测试（Slake、VQA-RAD）中，RadGrounder的表现与专用医学VLM相当。将我们的临床数据添加到训练集中，可以提升开放式的VQA性能，优于仅在下游数据集上微调的效果，展示了数据集的可迁移性。关键的是，增加定位监督不会降低语言质量，从而在不影响VQA性能的前提下实现了空间可验证的输出。
+
+核心贡献：提出了一种无需手动空间标注的大规模训练方法，构建了双语医学图像-文本数据集RefRad2D，并开发了多任务模型RadGrounder，在视觉问答和空间定位任务中均取得优异表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-18</span>
+                    <a href="https://arxiv.org/pdf/2606.20477v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.20369v1" target="_blank">CATCH-ME if you RAG: a dataset of Contextually Annotated multi-Turn Counterspeech against Hate and Misinformation Exchanges</a>
+                </div>
+                <div class="paper-authors">👥 Helena Bonaldi, Genoveffa Martone, Marco Guerini</div>
+                <div class="paper-summary">在线仇恨言论和虚假信息经常重叠，但自然语言处理（NLP）研究主要将它们孤立地对待。尽管大型语言模型（LLMs）为人类生成针对这两种威胁的反驳言论提供了可扩展的解决方案，但零样本模型常常生成重复且模糊的回应，这凸显了高质量示例在引导模型生成方面的必要性。然而，目前针对仇恨与虚假信息重叠现象的反驳数据集非常稀缺，并且仅限于单轮英文对话，而现实生活中的互动通常涉及多轮对话和多种语言。为弥合这一差距，我们首次推出了一个大规模、专家策划的多语言对话数据集，用于应对仇恨与虚假信息的交叉问题。为了确保事实基础，这些对话还基于经过验证的外部知识（即事实核查文章和非政府组织报告），并包含文档级和片段级的标注，使其可以直接应用于检索增强生成（RAG）系统。该数据集涵盖五种语言，针对七类边缘化群体所遭受的仇恨言论，这一新颖资源使得训练和评估更具说服力且事实依据更强的反驳模型成为可能。
+
+核心贡献：本文提出了首个大规模、专家标注的多语言数据集，专门用于对抗仇恨言论与虚假信息的交叉现象，并结合事实核查知识，适用于RAG系统的训练与评估。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-18</span>
+                    <a href="https://arxiv.org/pdf/2606.20369v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.20287v1" target="_blank">PsyScore: A Psychometrically-Aware Framework for Trait-Adaptive Essay Scoring and ZPD-Scaffolded Feedback</a>
+                </div>
+                <div class="paper-authors">👥 Wei Xia, Jin Wu, Haoran Shi</div>
+                <div class="paper-summary">有效的自动作文评分（AES）应同时支持可靠的评估和可操作的教学反馈。然而，现有方法通常将评分与反馈视为独立的组件：神经网络评分模型缺乏解释性，而基于大型语言模型（LLM）的反馈通常对学习者的水平不敏感。为了解决这一碎片化问题，本文提出PsyScore，一个心理测量感知框架，通过共享潜在能力表示，将诊断性评估与教学支架相结合。PsyScore包含三个关键模块：一种特征自适应的神经项目反应理论（IRT）评分器，将分级部分信用模型（GPCM）整合到神经架构中，从而在保持心理测量解释性的前提下精确估计学生能力；一种以最近发展区（ZPD）为基础的反馈生成器，根据诊断出的能力参数调整不同水平的教学重点；以及一种多视角反馈评估策略，通过成对偏好判断和学生修订模拟来评估反馈质量。在ASAP++数据集上的实验表明，PsyScore在实现具有竞争力评分表现的同时，提供了更具教育意义的反馈。
+
+核心贡献：PsyScore 提出了一个心理测量感知框架，通过共享潜在能力表示将评分与反馈统一起来，实现了更准确且更具教育价值的作文自动评分系统。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-18</span>
+                    <a href="https://arxiv.org/pdf/2606.20287v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.20205v1" target="_blank">Apparent Psychological Profiles of Large Language Models are Largely a Measurement Artifact</a>
+                </div>
+                <div class="paper-authors">👥 Jelena Meyer, David Garcia, Dirk U. Wulff</div>
+                <div class="paper-summary">Psychological instruments designed for humans are increasingly used to assign large language models (LLMs) stable psychological profiles that affect their usability, safety assessment, and use as proxies for human participants in research. Using a formal psychometric framework, we show that these profiles are largely a measurement artifact. Administering a battery of personality and risk-preference instruments spanning self-reports and behavioral tasks to 56 instruction-tuned LLMs alongside large human reference samples, we report four findings. First, differences between models are driven not by the traits an instrument targets but by a directional response bias, a tendency to respond toward one end of the scale, or one labeled option, regardless of item content; a variance decomposition attributes 81-90% of between-model variation to this bias, against 9-16% in humans. Second, the bias declines with model capability but is not eliminated by it. Third, because bias rather than trait drives responding, an instrument's apparent reliability is almost entirely predicted by its response orthogonality, a term we coin for the proportion of items for which trait and bias point in opposite directions. Fourth, the profile a model appears to have shifts with the items used and can be manufactured through item selection. These results demonstrate that the apparent psychological profiles of LLMs are artifacts of the instrument used to measure them, not properties of the models themselves. As instruments borrowed from human psychology are rarely fully orthogonal and may inherently lack validity for LLMs, we call for dedicated assessments centered on response orthogonality.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-18</span>
+                    <a href="https://arxiv.org/pdf/2606.20205v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/maps/georgia-street-view/" target="_blank">Street View opens a new window into Georgia</a></div>
+                <div class="feed-date">06-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/samsung-electronics-chatgpt-codex-deployment" target="_blank">Samsung Electronics brings ChatGPT and Codex to employees</a></div>
+                <div class="feed-date">06-21</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/21/ethan-thornton-is-trying-to-do-everything-all-at-once/" target="_blank">Ethan Thornton is trying to do everything all at once</a></div>
+                <div class="feed-date">06-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/953324/bose-studios-record-label-media-company" target="_blank">Bose thinks it can be a media company for some reason</a></div>
+                <div class="feed-date">06-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/21/ubisoft-co-founder-claude-guillemot-dies-in-plane-crash/" target="_blank">Ubisoft co-founder Claude Guillemot dies in plane crash</a></div>
+                <div class="feed-date">06-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/science/2026/06/trump-admins-coal-investments-assist-plants-with-repeated-violations/" target="_blank">Trump admin’s coal investments assist plants with repeated violations</a></div>
+                <div class="feed-date">06-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/entertainment/953303/cold-court-hands-up-ep-music-review" target="_blank">Cold Court’s debut EP is an infectious, glitchy genre mashup</a></div>
+                <div class="feed-date">06-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/21/polymarket-reportedly-paid-creators-to-post-deceptive-videos-about-fake-bets/" target="_blank">Polymarket reportedly paid creators to post deceptive videos about fake bets</a></div>
+                <div class="feed-date">06-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/21/techcrunch-mobility-a-new-robotaxi-scorecard-shows-chinas-dominance/" target="_blank">TechCrunch Mobility: A new robotaxi scorecard shows China’s dominance</a></div>
+                <div class="feed-date">06-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/21/when-the-trump-administration-cracks-down-on-anthropic-who-benefits/" target="_blank">When the Trump administration cracks down on Anthropic, who benefits?</a></div>
+                <div class="feed-date">06-21</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=D_1j5dVWNYI" target="_blank">🎥 JUST RECORDED: Elon Musk Announces SPACEX Plans</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">I've launched a private community for people responsible for significant personal, family, or busine...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oJSOUyaJeV4" target="_blank">🎥 Did Musk and Trump Rig the 2024 Election?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Political analyst and commentator Nathan Taylor joins Wajahat Ali to examine claims, allegations, an...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=q_umfWm8J28" target="_blank">🎥 Nvidia GTC Taipei 2026: Jensen Huang Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">nvidia #ai #jensenhuang #artificialintelligence #technology #stocks #yahoofinance #semiconductors #i...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wSp6AiNIrsY" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=owmsvxGCahI" target="_blank">🎥 Sam Altman’ın Stanford (Stenfırd) Konuşması: Yapay Zekâ Çağında Girişimcilik, Gelecek ve ChatGPT</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Sam Altman'ın Stanford (Stenfırd) konuşmasından yola çıkan bu videoda, yapay zekâ çağında girişimcil...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=ZcQGkEZe7WE" target="_blank">🎥 AI Hellscape, Part II: State of Florida v. OpenAI Global LLC...and Sam Altman.</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">AI Hellscape, Part II: State of Florida v. OpenAI Global LLC...and Sam Altman. Become a supporter of...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/zhongerxin/Cowart" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                zhongerxin/Cowart
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目可能与 AI 技术相关，因其高关注度和 JavaScript 的广泛使用值得进一步探索。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/aidenybai/cnfast" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                aidenybai/cnfast
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 作为 cn 的快速替代方案，该工具对提升开发效率有一定参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/ReulgeApmpetty0O/Back-End-Developer-Interview-Questions" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                ReulgeApmpetty0O/Back-End-Developer-Interview-Questions
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 后端开发面试题集合对技术团队招聘和自我测试具有实用价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48622778" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Apertus – Open Foundation Model for Sovereign AI
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Apertus 是一个开源模型，为自主 AI 提供了新的可能性，值得关注其技术细节和社区发展。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48623434" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Good results fine tuning a local LLM like Qwen 3:0.6B to categorize questions
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 展示了如何对本地 LLM 进行微调以实现特定任务，对实际工程应用有直接参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48622590" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: Recall – Local project memory for Claude Code
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Recall 工具为 Claude Code 提供了项目记忆功能，有助于提升开发效率和代码理解能力。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 1971<br>
+                    Output Tokens: 1687
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年06月22日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
