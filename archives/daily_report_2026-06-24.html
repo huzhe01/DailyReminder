@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年06月24日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日多篇前沿论文值得关注。L3Cube-MahaPOS 推出首个马拉地语词性标注数据集与 BERT 模型，为印度语言 NLP 提供新工具。SHERLOC 则聚焦代码修复代理的结构化诊断定位技术，提升代码自动修复精度。此外，一篇探讨“Agent-Native 内存系统”的论文引发对智能体架构未来演进的思考。</p><p>**行业动态**  </p><p>Flipkart 在沃尔玛支持下加速推进即时零售业务，直面亚马逊在印度市场的竞争。Google 推出自然灾害预警愿景，并将 Chrome 高级自动填充功能整合至 Google Wallet。OpenAI 展示 GPT-5 在科研领域的潜力，协助免疫学家解开三年谜题；Prime Day 苹果产品优惠也吸引消费者目光。</p><p>**值得关注**  </p><p>马斯克最新宣布 SpaceX 计划、黄仁勋展望 2026 年台积电合作蓝图，以及 Sam Altman 关于 AI 影视应用的访谈内容，均值得深度跟进。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.24825v1" target="_blank">L3Cube-MahaPOS: A Marathi Part-of-Speech Tagging Dataset and BERT Models</a>
+                </div>
+                <div class="paper-authors">👥 Hariom Ingle, Ronit Ghode, Ishwari Gondkar</div>
+                <div class="paper-summary">词性标注（POS）是支撑机器翻译、信息抽取和句法分析等任务的基础自然语言处理任务。尽管马拉地语拥有超过8300万使用者，并在全球最常用的语言中排名前二十，但其在标注语料库和标准化评估基准方面资源严重不足。马拉地语由于丰富的形态变化、相对自由的词序、缺乏大小写规范以及与印地语和英语的广泛混合使用，给计算建模带来了独特的挑战。我们提出了 L3Cube-MahaPOS，一个高质量的马拉地语词性标注数据集，包含从新闻文本中手工标注的32,354个句子。该数据集由精通马拉地语的标注人员团队按照16个标签的通用依赖（Universal Dependencies）标准进行完全手动标注。结构化的预处理流程包括Unicode规范化、梵文字符识别的分词和噪声过滤，以确保所有数据分割中的标签一致性。我们在HMM、CRF、BiLSTM、BiLSTM+CharCNN、MuRIL以及马拉地语专用的MahaBERT-v2六类模型上对该数据集进行了基准测试。最佳系统在15个评估标签类别上的词级准确率达到88.67%，宏F1得分为81.67%。我们公开了该数据集、标注指南和训练好的模型检查点，以促进马拉地语自然语言处理领域的进一步研究。
+
+核心贡献：本文提出了首个大规模、高质量的马拉地语词性标注数据集 L3Cube-MahaPOS，并提供了多种模型的基准结果，推动了马拉地语NLP的研究发展。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-23</span>
+                    <a href="https://arxiv.org/pdf/2606.24825v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.24820v1" target="_blank">SHERLOC: Structured Diagnostic Localization for Code Repair Agents</a>
+                </div>
+                <div class="paper-authors">👥 Hovhannes Tamoyan, Sean Narenthiran, Erik Arakelyan</div>
+                <div class="paper-summary">LLM代理通过多轮工具使用来解决仓库级别的编程任务，但它们将一半的预算用于编辑之前的故障定位。尽管已经出现了一些专门的定位框架，但这些框架仍被评估为文件检索，而不是可操作的诊断，因此生成的位置缺乏修复代理所需的诊断上下文。我们引入了SHERLOC（基于结构化假设驱动的探索与推理的定位框架），这是一个无需训练的框架，它结合了一个推理LLM、紧凑的仓库工具和自我恢复机制，无需微调或多方代理协作。SHERLOC在不同模型规模下实现了最先进的定位效果：在SWE-Bench Lite上的准确率@1为84.33%，在SWE-Bench Verified上的召回率@1为81.27%；在约30B参数的情况下，其表现可媲美甚至优于其他代理方法。将我们的定位结果和诊断发现注入修复代理后，在SWE-Bench Verified上平均提升了5.95个百分点的解决率，同时将定位和总token数量分别减少了36.7%和23.1%。
+
+核心贡献：SHERLOC提出了一种无需训练的代码故障定位框架，显著提升了定位准确性并有效降低了计算开销，从而增强了代码修复代理的整体性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-23</span>
+                    <a href="https://arxiv.org/pdf/2606.24820v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.24775v1" target="_blank">Are We Ready For An Agent-Native Memory System?</a>
+                </div>
+                <div class="paper-authors">👥 Wei Zhou, Xuanhe Zhou, Shaokun Han</div>
+                <div class="paper-summary">摘要：大型语言模型（LLM）代理的内存系统已迅速从简单的检索增强机制发展为支持持久信息存储、检索、更新、整合以及动态生命周期管理的数据管理系统。尽管如此，现有的评估方法仍主要通过端到端任务成功指标（如F1、BLEU）来衡量代理内存性能，并将底层系统视为一个整体黑盒。因此，关键的系统级问题，如操作成本、内存模块间的架构权衡以及在动态知识更新下的鲁棒性，仍未得到充分研究。本文从数据管理的角度对代理内存进行了系统的实验研究。我们提出了一个分析框架，将代理内存分解为四个核心模块：内存表示与存储、提取、检索与路由以及维护。基于该框架，我们在五个基准工作负载（覆盖11个数据集）下评估了12种代表性内存系统和两个参考基线。我们的广泛端到端评估表明，没有任何一种架构能在所有场景中占优；相反，其有效性高度依赖于内存结构与工作负载瓶颈的一致性。此外，通过细粒度消融实验，我们量化了各个模块对表示保真度、检索精度、更新正确性和长期稳定性的影响。最后，我们在真实工作负载下揭示了成本与性能之间的权衡关系，显示局部维护比全局重组更具成本效益。基于这些发现，我们确定了构建真正面向代理的内存系统的有前景方向。
+
+核心贡献：本文提出了一种系统性的代理内存评估框架，揭示了不同内存架构在多种工作负载下的表现差异，并通过详尽实验量化了各模块的关键影响，为设计高效、成本可控的代理原生内存系统提供了理论依据和实践指导。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-23</span>
+                    <a href="https://arxiv.org/pdf/2606.24775v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.24758v1" target="_blank">CANDLE: Character-level Arabic Noise Deduplication using Lightweight Encoder</a>
+                </div>
+                <div class="paper-authors">👥 Faris Alasmary, Taif Nono, Orjuwan Zaafarani</div>
+                <div class="paper-summary">处理文本中的重复字符具有挑战性，因为它们既可以表示单词的正确拼写，也可以表示社交媒体帖子中常见的非正式字符拉长现象。我们提出了 CANDLE，这是一个轻量级的阿拉伯语字符级噪声去重系统，能够在不依赖手工规则、词典或形态分析器的情况下解决这一问题。CANDLE 的核心是对连接时间分类（CTC）方法在该任务上的创新应用，这种公式形式此前尚未用于字符去重，它将规范化建模为基于字符编码器的序列对齐问题。我们在三个基准数据集上进行了评估，涵盖干净的报纸文本、手动整理的模糊案例以及真实世界的社交媒体文本，CTC 模型实现了低至 5.37% 的句子错误率（SER），并且始终大幅优于基于分类的基线模型。为了减少推理开销，我们将 6 层 CTC 模型蒸馏为 2 层学生模型，在性能损失极小的前提下实现了深度降低 3 倍。除了去重准确性之外，规范化还带来了实际的下游好处：在多样化的阿拉伯语大语言模型标记器中，相对减少了高达 12.8% 的标记生成量，从而直接降低了推理成本并提高了上下文窗口的利用率。我们公开了所有代码和模型，以支持可复现性并推动未来的研究。
+
+核心贡献：CANDLE 提出了一种基于 CTC 的轻量级阿拉伯语字符级噪声去重方法，并通过模型压缩和实际下游效益验证了其高效性和实用性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-23</span>
+                    <a href="https://arxiv.org/pdf/2606.24758v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.24714v1" target="_blank">CN-NewsTTS Bench: a target-level automatic benchmark for raw-input Chinese news TTS pronunciation</a>
+                </div>
+                <div class="paper-authors">👥 Shijun Luo</div>
+                <div class="paper-summary">中文摘要：中文新闻文本中包含大量密集的书面形式，如分数、连字符型号名称、范围、单位符号、百分比、英文缩写以及中英数字混合的名称。这些形式在实际语音流程中频繁出现，而文本到语音（TTS）系统可能会在保留书面字符串的同时改变发音含义。我们引入了CN-NewsTTS Bench v0.1，这是一个开放的目标级基准测试集，用于评估中文新闻TTS产品是否能从原始文本中正确发音这些目标，无需用户端规则、大型语言模型重写、SSML提示或手动编辑。该发布包括一个200条记录的开发集、一个800条记录的公共测试集、992个可自动评估的目标、来自三个ASR模型集成的固定转录本、一个自动目标评分器以及七个产品TTS系统的初步结果。此外，我们还报告了ASR路径诊断、ASR子集消融实验、类别级别结果、置信区间和供应商配置元数据。最佳系统的严格准确率为0.879，而一些系统仍低于0.60。
+
+核心贡献：提出了CN-NewsTTS Bench v0.1，这是首个面向原始输入中文新闻TTS发音评估的目标级自动基准测试集。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-23</span>
+                    <a href="https://arxiv.org/pdf/2606.24714v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.24667v1" target="_blank">DREAM: Dense Retrieval Embeddings via Autoregressive Modeling</a>
+                </div>
+                <div class="paper-authors">👥 Yixuan Tang, Yi Yang</div>
+                <div class="paper-summary">Dense retrieval embedding models are a fundamental component of modern retrieval-based AI systems. Most dense retrievers are trained with contrastive objectives, which require labeled positive and negative document pairs that are often costly and difficult to obtain. In this work, we investigate whether the autoregressive next-token prediction objective of a large language model (LLM) can provide supervision for dense retrieval. The intuition is simple: if a document contains information relevant to a query, conditioning on that document should make the target output easier for the LLM to predict. A key challenge is that the next-token prediction loss is computed inside the LLM, while the retriever is a separate embedding model. To address this challenge, we propose DREAM (Dense Retrieval Embeddings via Autoregressive Modeling), which injects retriever-generated query-document similarity scores into selected attention heads of a frozen LLM. During training, these scores determine how much attention each candidate document receives while the LLM predicts the target output. The resulting prediction loss provides gradients for retriever training through the attention mechanism. We evaluate DREAM on retrieval benchmarks BEIR and RTEB using embedding backbones ranging from 0.5B to 3B parameters. DREAM consistently outperforms existing baselines across different model scales. These results demonstrate that DREAM provides a promising approach for training dense retrievers through autoregressive modeling.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-23</span>
+                    <a href="https://arxiv.org/pdf/2606.24667v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/research/helping-communities-prepare-for-natural-disasters/" target="_blank">Towards a world where no one is surprised by a natural disaster</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/gpt-5-immunology-mystery" target="_blank">How GPT-5 helped immunologist Derya Unutmaz solve a 3-year-old mystery</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/chrome/autofill-ios-android-wallet/" target="_blank">Chrome is bringing advanced autofill capabilities to your phone with Google Wallet</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/06/23/production-engineering/how-meta-built-ultra-narrow-batteries-for-ai-glasses-meta-tech-podcast/" target="_blank">How Meta Engineered Ultra-Narrow Batteries for AI Glasses</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/search/summergeist-google-trends/" target="_blank">What’s trending on Google this summer</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/helping-build-shared-standards-for-advanced-ai" target="_blank">Helping build shared standards for advanced AI</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/preserving-cultural-heritage-inside-google-deepminds-collaboration-with-pele/" target="_blank">Preserving cultural heritage: Inside Google DeepMind’s collaboration with Pelé</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/youtube-insights-tools-cannes-lions-2026/" target="_blank">Cannes Lions 2026: Strengthen creative campaigns with new tools from YouTube</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Sequoia Capital</div>
+                <div class="feed-title"><a href="https://sequoiacap.com/article/partnering-with-probook-ai-for-the-trades/" target="_blank">Partnering with Probook: AI for the Trades</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/23/walmart-backed-flipkart-expands-quick-commerce-push-as-amazon-ramps-up-in-india/" target="_blank">Walmart-backed Flipkart expands quick-commerce push as Amazon ramps up in India</a></div>
+                <div class="feed-date">06-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/951081/robot-vacuum-mop-deals-amazon-prime-day-2026" target="_blank">The best robot vacuum deals available during Prime Day</a></div>
+                <div class="feed-date">06-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/949350/amazon-prime-day-sale-best-apple-deals-2026" target="_blank">This year’s Prime Day deals on Apple products are the best I’ve seen</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/23/indias-moengage-bets-marketings-future-on-millions-of-ai-agents/" target="_blank">India’s MoEngage bets that the future of marketing is millions of AI agents</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/23/indias-moengage-bets-marketings-future-on-millions-of-ai-agents/" target="_blank">India’s MoEngage bets that the future of marketing is millions of AI agents</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/950871/nex-playground-prime-day-deal-sale" target="_blank">The Nex Playground is down to its pre-RAMageddon price during Prime Day</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/information-technology/2026/06/executive-order-bumps-up-deadline-to-move-off-quantum-vulnerable-crypto/" target="_blank">White House drastically shortens deadline for dropping quantum-vulnerable crypto</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/955385/google-home-familiar-faces-clothing" target="_blank">Google Home will soon get better at recognizing you</a></div>
+                <div class="feed-date">06-23</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=D_1j5dVWNYI" target="_blank">🎥 JUST RECORDED: Elon Musk Announces SPACEX Plans</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">I've launched a private community for people responsible for significant personal, family, or busine...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oJSOUyaJeV4" target="_blank">🎥 Did Musk and Trump Rig the 2024 Election?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Political analyst and commentator Nathan Taylor joins Wajahat Ali to examine claims, allegations, an...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=q_umfWm8J28" target="_blank">🎥 Nvidia GTC Taipei 2026: Jensen Huang Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">nvidia #ai #jensenhuang #artificialintelligence #technology #stocks #yahoofinance #semiconductors #i...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wSp6AiNIrsY" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=d57qL-Jyp2w" target="_blank">🎥 The Film No One Wants To Touch</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Does Hollywood have a problem with censorship? What's the best post-pandemic movie? Is Andy Burnham,...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=mzeiG5Ia7Hg" target="_blank">🎥 Amazon Won’t Release Its Sam Altman Movie. Will Anyone?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Matt is joined by Keach Hagey, a journalist at The Wall Street Journal and author of 'The Optimist: ...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/bozhouDev/codex-orange-book" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                bozhouDev/codex-orange-book
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Codex 橙皮书为 Codex 的使用提供了详尽的指南，适合 AI 工程师参考学习。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/yo-WASSUP/Good-Badminton" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                yo-WASSUP/Good-Badminton
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 AI 羽毛球鹰眼系统展示了计算机视觉在体育领域的创新应用，具有研究价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48645152" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Mistral OCR 4
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Mistral OCR 4 的发布可能代表OCR技术的最新进展，值得关注其性能和应用场景。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48646276" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                AI's Affordability Crisis
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 AI 的可负担性危机讨论了AI发展中的经济挑战，对研究者和工程师具有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48642030" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Show HN: Neural Particle Automata
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Neural Particle Automata 展示了一种结合神经网络与自动机的新方法，具有理论探索价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2113<br>
+                    Output Tokens: 1802
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年06月24日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
