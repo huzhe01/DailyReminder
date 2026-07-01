@@ -1,0 +1,550 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年07月01日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2025年4月5日**</p><p>**学术突破**  </p><p>今日三篇重要论文聚焦大模型的评估与优化。QVal 提出低成本方法，用于评估长周期代理任务中的密集监督信号；另一研究通过元认知反馈强化学习，使大模型更真实地表达不确定性；第三项则揭示了 LLM 在处理表格数据时容易出现引用错误，并提出改进策略，为提升模型可靠性提供新思路。</p><p>**行业动态**  </p><p>互联网之父正式退休引发科技界关注，而特朗普政府宣布解除对 Anthropic 模型的限制，释放出政策松绑信号。Google 推出 Gemini Spark 的 macOS 更新及更多连接应用，持续扩展其 AI 生态。Meta 则发布 Python 十周年技术回顾，展现其在开源领域的长期投入。</p><p>**值得关注**  </p><p>马斯克、黄仁勋与萨姆·奥尔特曼的最新访谈相继上线，涵盖太空探索、NVIDIA 技术蓝图与 AI 末日论等热点议题，值得深度追踪。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.32034v1" target="_blank">QVal: Cheaply Evaluating Dense Supervision Signals for Long-Horizon LLM Agents</a>
+                </div>
+                <div class="paper-authors">👥 Sergio Hernández-Gutiérrez, Matteo Merler, Ilze Amanda Auzina</div>
+                <div class="paper-summary">LLM代理正在越来越多地执行长期任务，其中单个轨迹可能包含数百甚至数千个动作。在这些情况下，仅基于结果的奖励提供了过于稀疏的指导，无法告知模型中间步骤的好坏。密集监督方法旨在通过评估中间步骤（从内在置信度到自蒸馏和嵌入相似性）来解决这个问题。然而，目前常见的做法是通过测量整合这些方法的训练管道的下游性能来进行评估。这种方法成本高昂，混淆了监督质量与训练工程中的混杂因素，并使得需要不同训练设置的不同方法难以比较。因此，密集监督方法很少在统一基准上进行比较。我们提出了QVal——一个无需训练即可直接评估密集监督信号的测试平台。给定一个状态-动作对，QVal衡量该方法的评分与参考策略的Q值的一致性：即是否能根据强参考策略的Q值对动作进行排序。这使我们能够在任何训练运行之前比较信号，并将信号质量与其他工程选择区分开来。我们将QVal实例化为QVal-v1.0，在四个不同的环境中对21种密集监督方法进行了基准测试，涵盖七个方法学家族，总共进行了超过1,200次实验，使用六种开源权重模型骨干。我们发现，简单的提示基线持续优于文献中最近的密集监督方法，并且性能按方法家族高度聚集。这一发现适用于不同模型规模、环境和观察模式。QVal设计为易于扩展至新环境和新方法，使研究人员能够在任何训练运行之前迭代优化密集监督方法。
+
+核心贡献：提出QVal，一种无需训练即可直接评估密集监督信号质量的测试框架，实现了跨方法、环境和模型的公平比较。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-30</span>
+                    <a href="https://arxiv.org/pdf/2606.32034v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.32032v1" target="_blank">Reinforcement Learning with Metacognitive Feedback Elicits Faithful Uncertainty Expression in LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Gabrielle Kaili-May Liu, Avi Caciularu, Gal Yona</div>
+                <div class="paper-summary">元认知是智能的一个关键组成部分，描述了监控和调节自身认知过程的能力。然而，大型语言模型（LLMs）在关键的元认知能力方面表现出系统性缺陷：它们以高度自信的方式产生幻觉，无法识别知识边界，并错误地表达其内部不确定性——这削弱了其可信度和可靠性。由于监控任务表现并据此调整行为是元认知的核心，我们认为能够准确判断自身表现的模型更有可能改进其性能。我们通过两种新机制来实现这一理念：基于元认知反馈的强化学习（RLMF），这是一种在偏好优化过程中根据模型对自身表现的自我判断质量来优化完成排序的方法；以及元认知数据选择，该方法利用类似的自我判断来识别高价值训练样本，优于传统的主动学习方法。我们将这些创新应用于“忠实校准”（FC）问题，这本身就是一个本质上与元认知相关的任务：目标是将所表达的不确定性与内在不确定性对齐，即使对于最先进的LLMs来说也是一项具有挑战性的任务。我们采用了一种两阶段、解耦的方法，首先使用这些方法校准模型报告的信心得分的忠实度，然后通过有针对性的输出编辑将其映射为自然且适应上下文的语言不确定性。大量实验表明，RLMF在各种任务上实现了通用且最先进的FC性能，同时保持了准确性。此外，RLMF的性能比标准强化学习高出最多63%，并且增强了模型评估和表达自身能力限制的能力。这表明RLMF是一种有前景的范式，有助于增强LLM的元认知能力，从而提升其能力和对齐效果，并提示元认知表现可以作为一种有效的强化学习信号，以克服传统内在反馈方法的局限性。
+
+核心贡献：本文提出了一种基于元认知反馈的强化学习框架RLMF，显著提升了大型语言模型在忠实校准方面的性能，并增强了其评估和表达自身能力边界的能力。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-30</span>
+                    <a href="https://arxiv.org/pdf/2606.32032v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.32029v1" target="_blank">When LLMs Read Tables Carelessly: Measuring and Reducing Data Referencing Errors</a>
+                </div>
+                <div class="paper-authors">👥 Yuqing Yang, Qi Zhu, Zhen Han</div>
+                <div class="paper-summary">尽管大型语言模型（LLMs）在表格任务上表现良好，它们仍会犯数据引用错误（DREs），即错误地引用或遗漏表格中的值，即使理解了表格结构。除了最终答案的准确性之外，DREs直接影响中间推理步骤的正确性和可靠性。然而，以往的研究仅提供了有限的小规模分析。在这项工作中，我们首次对不同模型和任务中的表格数据引用错误进行了系统评估。我们的结果显示，所有测试模型（参数从1.7B到20B不等）都会出现DREs。此外，我们将数据引用作为批评者进行整合后，通过基于批评者的过滤和拒绝采样，答案准确性最高提升了12.0%。最后，我们训练了一个轻量级的4B参数批评者模型，在检测分布内和分布外的DREs方面平均F1得分为78.2%，并能有效辅助大模型的推理。
+
+核心贡献：本文首次系统评估了大规模语言模型在表格任务中的数据引用错误，并提出了一种有效的批评者机制来显著提升答案准确性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-30</span>
+                    <a href="https://arxiv.org/pdf/2606.32029v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.32025v1" target="_blank">Generative Skill Composition for LLM Agents</a>
+                </div>
+                <div class="paper-authors">👥 Xinyu Zhao, Zhen Tan, Vaishnav Tadiparthi</div>
+                <div class="paper-summary">最近的大型语言模型（LLM）代理通过使用技能来解决复杂任务而受益。技能封装了模块化的程序性知识和执行特定任务的指令，例如设置沙箱环境、运行测试套件或在多个文件中重构函数。随着技能库的增长并能够在不同任务和领域之间复用，选择合适的技能组合已成为核心瓶颈。现有方法可分为两类：一类将整个技能集合暴露给代理进行推理；另一类则通过嵌入或基于LLM的重排序器进行技能检索。这两种方法都有一定的启发作用，但它们忽略了技能组合的结构特性——这是一个关于选择哪些技能、多少个以及执行顺序的联合决策问题，这三个维度无法被分离。我们将其形式化为**结构化技能组合**：给定一个任务和一个技能库，预测一个可执行的技能计划，该计划同时指定激活的子集、数量和执行顺序。我们提出了SkillComposer，它将结构化技能组合实例化为**任务条件下的技能序列预测**。SkillComposer使用对技能标识符的约束自回归解码器，因此子集、数量和顺序可以在一次解码过程中联合生成，并自然捕捉到连续技能之间的依赖关系。我们从真实的人工策划技能库中构建了一个任务-组合配对的训练集。随后，我们在两个维度上评估了SkillComposer：其一是在保留测试集上的组合质量，其二是SkillBench上两个生产级代码代理的下游任务成功率。在GPT-5.2-Codex和Gemini-3-Pro-Preview上，SkillComposer相比无技能基线分别提升了+23.1和+18.2个百分点，超越了前三名的检索方法，并在更低的提示词成本下达到了黄金技能检索的上限。
+
+核心贡献：  
+本文提出SkillComposer，一种通过结构化技能组合实现高效任务规划的方法，能够在一个解码过程中联合确定技能的子集、数量与顺序，显著提升LLM代理在复杂任务中的表现。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-30</span>
+                    <a href="https://arxiv.org/pdf/2606.32025v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.31966v1" target="_blank">MECoBench: A Systematic Study of Multimodal Agent Collaboration in Embodied Environments</a>
+                </div>
+                <div class="paper-authors">👥 Qingyun Liu, Jiwen Zhang, Jingyi Hu</div>
+                <div class="paper-summary">最近的多模态大语言模型（MLLMs）在具身智能体方面具有巨大潜力，但它们在视觉基础上的协作能力仍鲜有研究。为填补这一空白，我们提出了MECoBench，这是一个涵盖多种真实任务、两种协作结构和三种协作模式的多模态具身协作基准测试平台。通过对多种MLLMs进行广泛实验，我们总结出三个关键发现：(i) 协作通常能提升具身任务的完成效果，但其优势取决于协作收益与协调复杂性的平衡；(ii) 交流对于协作收益至关重要，而最佳协作模式则取决于团队规模和模型能力；(iii) 此外，协作在噪声先验和探索条件下能够提高鲁棒性。总体而言，MECoBench提供了一个系统化的测试平台，用于理解多模态具身协作的机制与限制。代码和数据集可在https://github.com/q-i-n-g/MECoBench获取。
+
+核心贡献：本文提出了MECoBench，一个系统化的多模态具身协作基准测试平台，并通过实验证明了协作在视觉环境中的有效性及影响因素。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-30</span>
+                    <a href="https://arxiv.org/pdf/2606.31966v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2606.31963v1" target="_blank">Signed-Permutation Coordinate Transport for RMSNorm Transformers</a>
+                </div>
+                <div class="paper-authors">👥 John Sweeney</div>
+                <div class="paper-summary">Modern LLM workflows move coordinate-indexed objects across checkpoints: steering vectors, sparse autoencoders, top-$k$ neuron sets, attribution lists, and merge alignments. This is only well posed after fixing the model's residual-stream gauge, which we show is architecture-dependent: LayerNorm residual charts have permutation gauge $S_d$ (up to a global sign flip), while RMSNorm charts with generic per-channel gain have signed-permutation gauge $B_d = S_d \ltimes \{\pm 1\}^d$. Permutation-only alignment is therefore symmetry-incomplete for RMSNorm models. We introduce sign-marginalized Hungarian matching and prove a sharp failure mode: with decorrelated coordinates, raw signed-correlation matching has a structural permutation-accuracy ceiling at the positive-sign fraction of the true gauge, which sign-marginalization removes. We then make coordinate-preserving transport, not function-level merging, the primary object: composing saved-checkpoint local $B_d$ gauges along same-base fine-tuning trajectories recovers 91.1% of cross-run coordinates at 1500 steps versus 60.3% for endpoint matching, and the gain is not explained by merely routing through the base. The recovered gauge transfers tools that permutation-only alignment breaks: TinyLlama SAE reconstruction has NMSE 0.004 under $B_d$ versus 1.08 under $S_d$; Qwen sentiment steering preserves 95.8% of its effect versus 17.2%; refusal steering reverses sign under $S_d$; coordinate-preserving merges behave the same way. The same covariance governs stateful training: signed transport of AdamW state preserves the resumed trajectory, while permutation-only state follows a different one from a functionally identical checkpoint. Finally, gauge-sweep audits show index-level interpretability claims are reproducible only relative to an explicit gauge.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-06-30</span>
+                    <a href="https://arxiv.org/pdf/2606.31963v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-spark-updates-june-2026/" target="_blank">Gemini Spark updates: macOS launch, connected apps and more</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/sustainability/2026-environmental-report/" target="_blank">Read our 11th annual Environmental Report</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/06/30/open-source/10-years-of-metas-commitment-to-python/" target="_blank">10 Years of Meta’s Commitment to Python</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-omni-flash-nano-banana-2-lite/" target="_blank">Start building with Nano Banana 2 Lite and Gemini Omni Flash</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/how-chatgpt-adoption-has-expanded" target="_blank">How ChatGPT adoption has expanded</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/around-the-globe/google-europe/united-kingdom/unlocking-britains-next-era-of-productivity-building-a-nation-of-ai-trailblazers/" target="_blank">Unlocking Britain’s next era of productivity: Building a nation of AI trailblazers</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-genebench-pro" target="_blank">Introducing GeneBench-Pro</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/core-dump-epidemiology-data-infrastructure-bug" target="_blank">Core dump epidemiology: fixing an 18-year-old bug</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/30/the-father-of-the-internet-is-finally-retiring/" target="_blank">The “Father of the Internet” is finally retiring</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/30/the-father-of-the-internet-is-finally-retiring/" target="_blank">The “Father of the Internet” is finally retiring</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/30/trump-drops-restrictions-on-anthropics-mythos-and-fable-models/" target="_blank">Trump drops restrictions on Anthropic’s Mythos and Fable models</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/30/trump-drops-restrictions-on-anthropics-mythos-and-fable-models/" target="_blank">Trump drops restrictions on Anthropic’s Mythos and Fable models</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/30/wayve-launches-85m-employee-tender-offer-at-8-5b-valuation/" target="_blank">Wayve launches $85M employee tender offer at $8.5B valuation</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/06/30/wayve-launches-85m-employee-tender-offer-at-8-5b-valuation/" target="_blank">Wayve launches $85M employee tender offer at $8.5B valuation</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/959899/meta-ai-glasses-paywall-rate-limit" target="_blank">Meta is adding ridiculous &#8216;rate limits&#8217; and a soft paywall to its smart glasses</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/958964/anthropic-claude-fable-5-is-back" target="_blank">Anthropic&#8217;s long-sidelined Fable 5 is greenlit to return</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=D_1j5dVWNYI" target="_blank">🎥 JUST RECORDED: Elon Musk Announces SPACEX Plans</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">I've launched a private community for people responsible for significant personal, family, or busine...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oJSOUyaJeV4" target="_blank">🎥 Did Musk and Trump Rig the 2024 Election?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Political analyst and commentator Nathan Taylor joins Wajahat Ali to examine claims, allegations, an...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=q_umfWm8J28" target="_blank">🎥 Nvidia GTC Taipei 2026: Jensen Huang Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">nvidia #ai #jensenhuang #artificialintelligence #technology #stocks #yahoofinance #semiconductors #i...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wSp6AiNIrsY" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=SEy3GNigGL0" target="_blank">🎥 博弈论#24：AI末日</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">当OpenAI核心科学家谈论“被提”与“地堡”时，AI已不再是科技，而是神秘学造神运动——蒋教授在本次课程中依据记者Karen Hao ......</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=q4W_RQdi54U" target="_blank">🎥 OpenAI Wants to Delay Its IPO, Binance Is Getting Kicked Out of Europe, WorldPay Is Down;</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">WorldPay went offline during England vs Ghana. Pubs, restaurants, Tesco — none of them could take ca...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/TianhangZhuzth/Fundamental-Ava" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                TianhangZhuzth/Fundamental-Ava
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目致力于构建具有自主性、协作性和社交智能的数字人类代理，对AI研究者和工程师有重要参考价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/cclank/lanshu-animated-architecture-diagram" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                cclank/lanshu-animated-architecture-diagram
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 提供高质量的手绘动画架构图，适合需要可视化表达复杂系统设计的AI工程师或架构师。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/tdeverx/contained-app" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                tdeverx/contained-app
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 为macOS用户提供的容器CLI原生应用，有助于提升开发效率，值得关注。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48734373" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Claude Code is steganographically marking requests
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Claude Code 的请求被隐写标记，涉及模型安全和隐私问题，值得关注。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48736605" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Claude Sonnet 5
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Claude Sonnet 5 受到高度关注，可能代表 Claude 系列的重要更新或性能提升。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48739919" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                TabFM: A zero-shot foundation model for tabular data
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 TabFM 是针对表格数据的零样本基础模型，为结构化数据处理提供新思路。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2198<br>
+                    Output Tokens: 1873
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年07月01日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
