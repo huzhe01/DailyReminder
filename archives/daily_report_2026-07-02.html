@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年07月02日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>**每日 AI 简报 | 2026年6月**</p><p>**学术突破**  </p><p>本周多篇前沿论文引发关注：《Measuring the Gap Between Human and LLM Research Ideas》揭示人类与大模型在研究创意上的差距；《Is One Layer Enough?》提出单层Transformer可媲美全参数强化学习训练，挑战传统架构认知；而《AutoMem》则探索AI自动构建记忆能力，为类人认知系统提供新路径。</p><p>**行业动态**  </p><p>苹果据悉计划于明年初推出新版iPad Pro和MacBook Pro，并可能重新设计入门款MacBook Pro（The Verge）。Bending Spoons首日股价暴涨40%，逆势突围SaaS寒冬。Google方面强调选择Android平台推动安全AI生产力应用，并更新多项AI进展（The Keyword）。</p><p>**值得关注**  </p><p>马斯克、黄仁勋与Altman近期公开亮相，分别谈及SpaceX未来、Nvidia最新技术布局及OpenAI发展愿景，三位科技领袖的动向持续牵动全球AI生态走向。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.01233v1" target="_blank">Measuring the Gap Between Human and LLM Research Ideas</a>
+                </div>
+                <div class="paper-authors">👥 Ziyu Chen, Yilun Zhao, Arman Cohan</div>
+                <div class="paper-summary">大型语言模型（LLMs）越来越多地被用于头脑风暴研究想法，但现有的评估主要通过新颖性、可行性或专家偏好来评判单个想法。我们则提出一个不同的问题：当前由LLM生成的想法与人类研究人员的想法之间差距有多大？为了描述这一差距，我们构建了一个大规模的评估框架，该框架基于高质量的人类研究论文进行创意生成的评估。对于每篇论文，我们逆向工程出一小部分密切相关且可能启发其核心想法的先前工作。然后提示LLM根据这些论文的标题和摘要生成新的想法。我们引入了一个双轴的研究品味分类法，通过机会模式和研究范式对每个想法进行特征分析，并利用它量化人类与LLM想法之间的差异。在不同LLM生成的想法集合中，我们观察到一种一致的分布差距：LLM生成的想法过度集中于桥梁型机会和综合方法，而人类论文参考文献的分布则更广泛地涵盖了如何界定空白和构建贡献的不同方式。这一结果表明，强大的LLM可以生成一系列合理的想法，但这些想法的范围仍然比人类研究者的偏好更窄，并呈现出系统性的偏移。
+
+核心贡献：本文构建了一个评估框架，揭示了当前大型语言模型生成的研究想法在分布上与人类研究者存在系统性差距，尤其是在创意的广度和研究范式的多样性方面。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-01</span>
+                    <a href="https://arxiv.org/pdf/2607.01233v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.01232v1" target="_blank">Is One Layer Enough? Training A Single Transformer Layer Can Match Full-Parameter RL Training</a>
+                </div>
+                <div class="paper-authors">👥 Zijian Zhang, Rizhen Hu, Athanasios Glentis</div>
+                <div class="paper-summary">强化学习（RL）已成为大语言模型（LLMs）后训练的核心组成部分，但关于RL适应如何在Transformer层之间分布的理解仍然有限。现有方法通常统一更新所有模型参数，隐式假设每一层对RL后训练所获得的收益贡献相似。在这项工作中，我们通过系统性的逐层研究挑战了这一假设。令人惊讶的是，我们发现仅训练一个Transformer层即可恢复大多数由全参数RL训练带来的收益，在某些情况下甚至可以超越它。为了量化这一现象，我们引入了一个“层贡献”指标，用于衡量单独训练某一层所能恢复的完整RL改进的比例。在七种模型（涵盖Qwen3和Qwen2.5两个模型家族）、三种RL算法（GRPO、GiGPO、Dr. GRPO）以及包括数学推理、代码生成和代理决策等多个任务领域中，我们观察到一种高度稳定的模式：RL的收益主要集中在少数几层，甚至在许多情况下集中于单一层。更引人注目的是，相同的结构模式始终出现：高贡献层集中在Transformer堆栈的中间部分，而靠近输入和输出端的层贡献明显较少。这种层排名在数据集、任务、模型家族和RL算法之间保持高度相关。
+
+核心贡献：该论文发现仅训练一个Transformer层即可实现与全参数RL训练相当甚至更好的效果，并揭示了RL增益主要集中在模型中间层的现象。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-01</span>
+                    <a href="https://arxiv.org/pdf/2607.01232v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.01224v1" target="_blank">AutoMem: Automated Learning of Memory as a Cognitive Skill</a>
+                </div>
+                <div class="paper-authors">👥 Shengguang Wu, Hao Zhu, Yuhui Zhang</div>
+                <div class="paper-summary">记忆专长是一种习得的技能：知道何时编码、何时检索以及如何组织知识——这在认知科学中被称为元记忆能力。我们通过将记忆管理视为一种可训练的技能，将这一视角引入大语言模型（LLMs）。我们将文件系统操作提升为与任务操作同等重要的“一级记忆动作”，使模型本身能够决定如何管理其记忆。这种记忆技能沿两个维度得到提升：一是支持它的结构（如提示、文件模式和动作词汇），二是模型执行该技能的熟练程度。这两个维度都难以通过手动优化来实现：长视野任务中的情节可能持续数千步，而一次记忆错误可能在很久之后才显现出来，使得对完整轨迹的人工审查变得不切实际。我们提出了 AutoMem，一个自动化处理这两个维度的框架。在第一阶段循环中，一个强大的 LLM 会回顾完整的智能体轨迹，并迭代地修订塑造智能体与其记忆文件交互方式的记忆结构；在第二阶段循环中，从多个情节中识别出智能体做出的良好记忆决策，并将其作为训练信号，直接提升模型的记忆能力。在三个程序生成的长视野游戏（Crafter、MiniHack 和 NetHack）中，仅优化记忆管理而不改变模型的任务行为，就能使基础智能体的性能提高约 2 到 4 倍，使一个 32B 的开源模型在性能上接近前沿系统，如 Claude Opus 4.5 和 Gemini 3.1 Pro Thinking。
+
+核心贡献：AutoMem 提出了一种自动学习记忆管理技能的框架，证明了记忆管理可以作为一种独立且高效的技能进行学习，在长视野任务中带来显著性能提升。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-01</span>
+                    <a href="https://arxiv.org/pdf/2607.01224v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.01223v1" target="_blank">Theoria: Rewrite-Acceptability Verification over Informal Reasoning States</a>
+                </div>
+                <div class="paper-authors">👥 Ben Slivinski, Michael Saldivar</div>
+                <div class="paper-summary">在什么情况下可以信任人工智能系统的答案？形式化证明助手提供了确定性，但无法覆盖大部分问题分布；标量LLM评分器虽然具有广泛覆盖性，但其生成的不透明分数事后无法审计，并且同样受到与任何LLM相同的连贯性问题的影响。我们提出了Theoria，一种填补这一差距的验证架构。候选解决方案被重写为一系列带类型的态转移序列，每个转移都有明确的理由（如引用、计算或问题给定的事实）授权，并且每一步都可以独立审查。其基础不变量是变更的完整性：连续证明状态之间的所有差异都必须有解释，因此隐藏的前提会以未授权的突变形式浮现，而不是无声地通过。在HLE-Verified Gold数据集（185个仅文本的专家问题）中，Theoria在91.4%的严格精度下认证了105个问题（Wilson 95%置信区间[84.5%, 95.4%]）。每一次认证都会生成一个可读的证明轨迹，其中每一步都可以单独质疑。整体LLM评分器在匹配覆盖率下可以达到类似的精度，但它们失败于不同的问题（Jaccard系数0.14-0.36），使得这两种方法具有互补性。在15个领域中的95个对抗性污染证明中，结构化评分器检测到94.7%，而整体评分器为83.2%（p=0.0017）。总体11.5个百分点的差距集中在隐藏前提（90.6% vs. 62.5%，差28个百分点）和伪造引用（100% vs. 90%）这两个错误类别上，而形式分析预测这些类别应该具备优势；在算术和定理误用错误上，两种方法性能相同，这正是没有预测优势的地方。在GPQA Diamond数据集（n=65）中，认证精度为97.1%（Wilson置信区间[85.1%, 99.5%]）。
+
+核心贡献：Theoria提出了一种基于结构化验证的AI回答可信度评估框架，通过强制要求每一步推理都有明确理由并保持变更完整性，显著提升了对隐藏前提和伪造引用等关键错误的检测能力，实现了比现有方法更高的可靠性和可审计性。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-01</span>
+                    <a href="https://arxiv.org/pdf/2607.01223v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.01218v1" target="_blank">The State-Prediction Separation Hypothesis</a>
+                </div>
+                <div class="paper-authors">👥 Giovanni Monea, Nathan Godey, Kianté Brantley</div>
+                <div class="paper-summary">Transformer 使用相同的前向计算流来预测下一个 token 并存储对后续 token 预测有用的状态。我们提出了 **状态-预测分离假设**：将这两个角色解耦可以提升语言模型的性能。我们设计了一种 Transformer 变体，使用两个计算流来分别处理这两种功能，并在不同规模上进行了预训练实验。我们的实验表明，状态-预测分离能够持续提供更好的数据和计算效率，提升了验证损失，并在下游任务中平均比标准 Transformer 高出 2-3 个百分点。我们还进行了广泛的实证分析，排除了潜在的混淆因素，并展示了我们设计所蕴含的梯度的根本差异。
+
+核心贡献：提出并验证了状态-预测分离假设，通过解耦预测与状态存储功能，显著提升了语言模型的效率和性能。</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-01</span>
+                    <a href="https://arxiv.org/pdf/2607.01218v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.01208v1" target="_blank">Distill to Detect: Exposing Stealth Biases in LLMs through Cartridge Distillation</a>
+                </div>
+                <div class="paper-authors">👥 Shayan Talaei, Abhinav Chinta, Devvrit Khatri</div>
+                <div class="paper-summary">Language models deployed in high-stakes roles can potentially favor certain entities, brands, or viewpoints, steering user decisions at scale. Such preferential biases can be introduced by any actor in the model's supply chain and are most dangerous when the model reveals its preference only on the relevant topic while behaving identically to its unmodified base on all other inputs. Recent work has shown that these biases can transfer through context distillation on semantically unrelated data, with the signal residing entirely in the soft logit distribution and remaining invisible to text-based inspection. However, the defender faces a fundamental asymmetry: without knowing the bias topic, no detection method can reliably surface a stealth preferential bias, regardless of whether it examines generated text, internal representations, or model weights. Here we introduce Distill to Detect (D2D), a method that surfaces hidden biases by distilling the distributional shift between a suspected model and its base into a cartridge (a KV-cache prefix adapter), concentrating the dominant divergence and amplifying the bias signal into generated text. We show that D2D successfully amplifies the hidden biases of stealth models to the extent that they can be reliably detected across multiple bias types. We also propose a theoretical framework that explains the efficacy of D2D through the lens of Fisher-weighted projection of the logit distribution shift, supported by empirical observations. By turning the capacity bottleneck of prefix-tuning adapters into a detection tool, D2D provides a practical building block for auditing hidden behaviors in deployed language models.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-01</span>
+                    <a href="https://arxiv.org/pdf/2607.01208v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/android-enterprise/b3-android-enterprise/" target="_blank">Why B3 chose Android for secure AI-enabled productivity</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-june-2026/" target="_blank">The latest AI news we announced in June 2026</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/maps/te-reo-maori/" target="_blank">Maps has an authentic new voice in New Zealand</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/07/01/data-infrastructure/metas-ai-storage-blueprint-at-scale/" target="_blank">Meta’s AI Storage Blueprint at Scale</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/education/nyc-ai-summit/" target="_blank">New York City educators and industry leaders gathered at Google’s offices to shape the future of AI in classrooms.</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-spark-updates-june-2026/" target="_blank">Gemini Spark updates: macOS launch, connected apps and more</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/sustainability/2026-environmental-report/" target="_blank">Read our 11th annual Environmental Report</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/06/30/open-source/10-years-of-metas-commitment-to-python/" target="_blank">10 Years of Meta’s Commitment to Python</a></div>
+                <div class="feed-date">06-30</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/01/apple-is-reportedly-planning-new-ipad-pro-and-macbook-pro-releases-early-next-year/" target="_blank">Apple is reportedly planning new iPad Pro and MacBook Pro releases early next year</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/01/bending-spoons-defies-saas-slump-surges-40-on-first-day-of-trading/" target="_blank">Bending Spoons defies SaaS slump, surges 40% on first day of trading</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/news/960541/apple-macbook-pro-entry-level-redesign-ipad-pro-update" target="_blank">Apple’s entry-level MacBook Pro could be up for a redesign</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/01/after-18b-ipo-bending-spoons-founder-says-success-comes-from-minimizing-luck/" target="_blank">After $18B IPO, Bending Spoons founder says success comes from minimizing luck</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/960476/playstation-physical-games-discs-stop-production-preservation-retail-stores" target="_blank">The funeral for PlayStation discs has begun</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/01/whatsapp-usernames-are-already-raising-impersonation-red-flags/" target="_blank">WhatsApp usernames are already raising impersonation red flags</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/information-technology/2026/07/t-mobile-moving-tens-of-thousands-of-virtual-machines-off-vmware-amid-lawsuit/" target="_blank">T-Mobile moving tens of thousands of virtual machines off VMware amid lawsuit</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/959900/xbox-reset-layoffs-studio-closures" target="_blank">Xbox’s ‘reset’: all the news about Microsoft&#8217;s looming layoffs and studio closures</a></div>
+                <div class="feed-date">07-01</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=D_1j5dVWNYI" target="_blank">🎥 JUST RECORDED: Elon Musk Announces SPACEX Plans</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">I've launched a private community for people responsible for significant personal, family, or busine...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oJSOUyaJeV4" target="_blank">🎥 Did Musk and Trump Rig the 2024 Election?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Political analyst and commentator Nathan Taylor joins Wajahat Ali to examine claims, allegations, an...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=q_umfWm8J28" target="_blank">🎥 Nvidia GTC Taipei 2026: Jensen Huang Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">nvidia #ai #jensenhuang #artificialintelligence #technology #stocks #yahoofinance #semiconductors #i...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wSp6AiNIrsY" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=d_5e-U3MPqY" target="_blank">🎥 Сэм Альтман — удивительная история создателя ChatGPT</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Он управляет, возможно, самой влиятельной технологической компанией нашего времени — но не владеет в...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=SEy3GNigGL0" target="_blank">🎥 博弈论#24：AI末日</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">当OpenAI核心科学家谈论“被提”与“地堡”时，AI已不再是科技，而是神秘学造神运动——蒋教授在本次课程中依据记者Karen Hao ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #6366f1; padding-bottom: 10px; color: #4338ca;">🐙 开源社区动态</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/ggml-org/llama.cpp/issues/24181" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                [llama.cpp] Eval bug: Step 3.7 Flash gets stuck in reasoning trying to make tool calls (autoparser)
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该问题涉及 llama.cpp 在推理过程中调用工具时的卡顿，对模型推理性能优化具有重要参考价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/Kulaxyz/self-learning-skills" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Kulaxyz/self-learning-skills
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目展示了AI编码代理的自我学习能力，对提升AI在编程任务中的自主性具有重要研究价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/aquace/CVE-2026-41940-PoC" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                aquace/CVE-2026-41940-PoC
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该项目提供了针对认证绕过漏洞的PoC代码，有助于安全研究人员理解和防御此类攻击。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://github.com/mekos2772/ios-location-spoofer" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                mekos2772/ios-location-spoofer
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 该工具实现了iOS设备GPS位置欺骗功能，对于测试基于地理位置的应用场景有实用价值。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48754713" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Meta caps internal AI token spending
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Meta 内部对 AI token 使用进行限制，可能影响模型训练和开发策略。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48742514" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Matrix Orthogonalization Improves Memory in Recurrent Models
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 矩阵正交化技术提升循环模型的内存表现，具有重要的研究价值。
+                        </div>
+                    </div>
+                    
+
+                    <div style="padding: 12px; border-left: 3px solid #4299e1; margin: 10px 0; background: #f7fafc;">
+                        <div style="font-weight: 600;">
+                            <a href="https://news.ycombinator.com/item?id=48751978" target="_blank" style="color: #2b6cb0; text-decoration: none;">
+                                Claude Fable 5 Promotional Access
+                            </a>
+                        </div>
+                        <div style="font-size: 13px; color: #718096; margin-top: 5px;">
+                            💡 Claude Fable 5 的推广访问为开发者提供了体验和测试新模型的机会。
+                        </div>
+                    </div>
+                    
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 6<br>
+                    Input Tokens: 2132<br>
+                    Output Tokens: 1825
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年07月02日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
