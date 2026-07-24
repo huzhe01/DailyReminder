@@ -1,0 +1,515 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年07月24日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>无法生成今日简报，请直接阅读下方详细内容。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.21577v1" target="_blank">Synthetic data generation framework for quality control automation in gravure printing</a>
+                </div>
+                <div class="paper-authors">👥 Korota Arsène Coulibaly, Mohamed Hamlich, Khalid Hmali</div>
+                <div class="paper-summary">Quality control in printing, particularly in rotogravure printing, still depends on slow, costly, and subjective manual inspection. Automated surface defect detection is critical for maintaining high-quality standards in rotogravure printing. Deep learning models give prospects for automation. However, training robust deep learning models, such as YOLO or Vision Transformers, is heavily hindered by the extreme scarcity of real-world industrial defects images. To overcome this limitation, this paper introduces a novel synthetic data generation framework tailored for rotogravure printing quality control. The proposed pipeline automatically generates high-fidelity images of specific printing defects (creases, streaks, misregistration, etc.) and outputs corresponding bounding boxes and annotations. To validate the framework, a synthetic dataset of 7533 images was generated and used to train the state-of-the-art object-detection model RFDETR. Experimental results demonstrate that the model trained on our synthetic data achieves a Mean Average Precision (mAP) of 80.9\% on real industrial testing samples. This framework provides a zero-cost, rapid-deployment solution for automating defect inspection in printing lines without requiring massive manual data collection.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-23</span>
+                    <a href="https://arxiv.org/pdf/2607.21577v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.21561v1" target="_blank">Graph Learning on Ensembles of Cyclic Peptides: An Investigation of Molecular Ensemble Modeling</a>
+                </div>
+                <div class="paper-authors">👥 Aaron Feller, Kris Deibler, Maxim Secor</div>
+                <div class="paper-summary">Molecular property prediction from structure often uses a single representative conformation, even though many molecules exist as conformational ensembles in solution. We introduce EnsembleEGNN, a molecular ensemble foundation model that encodes an ensemble by first encoding each conformer with shared Equivariant Graph Neural Network (EGNN) layers, then pooling the resulting conformer representations with a Set Attention Block. We pretrain the model on CREMP, a cyclic peptide ensemble dataset, using a multi-task self-supervised objective combining masked token recovery, noisy-coordinate reconstruction, and pairwise distance reconstruction. On the CREMP-CycPeptMPDB dataset, training EnsembleEGNN from scratch fails entirely ($R^2=0.005$). However, the pretrained model reaches $R^2=0.477$ and Pearson $r=0.699$, outperforming the sequence-only BERT baseline ($R^2=0.439$, Pearson $r=0.667$). When EnsembleEGNN is co-trained end-to-end with the BERT sequence encoder, the hybrid model improves further to $R^2=0.538$ and Pearson $r=0.737$. These results demonstrate that encoding conformational ensembles into a single thermodynamically informed embedding improves cyclic-peptide property prediction.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-23</span>
+                    <a href="https://arxiv.org/pdf/2607.21561v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.21552v1" target="_blank">MIRROR: Learning from the Other View for Multi-Modal Reasoning</a>
+                </div>
+                <div class="paper-authors">👥 Wen Ye, Yuxiao Qu, Aviral Kumar</div>
+                <div class="paper-summary">Unlike large language models (LLMs) that exhibit strong reasoning capabilities, vision-language models (VLMs) struggle with visual reasoning, even on geometry problems that admit equivalent text, diagram, and combined diagram+text views. We show that these views often elicit different behaviors: a model may solve a problem from text but fail on the corresponding diagram, or succeed visually while failing textually. This inconsistency suggests that different views expose complementary reasoning paths and failure modes that standard multimodal post-training does not fully exploit. To study and exploit this phenomenon, we construct ODA-Data, a high-quality paired multimodal geometry dataset with text-dominant, image-dominant, and combined image+text views of the same problems, together with splits for training and evaluating modality-dependent reasoning behaviors. We then develop Modality-Informed Reciprocal Reasoning Optimization (MIRROR), a reinforcement learning approach for improving multimodal reasoning via self supervision. For each problem, MIRROR evaluates the model under all views, selects the best-performing view as a teacher, and trains other views with a reverse-KL objective towards the teacher. Across reasoning benchmarks that evaluate on geometry problems, MIRROR improves over standard RL and yields more accurate and consistent behavior across modalities</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-23</span>
+                    <a href="https://arxiv.org/pdf/2607.21552v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.21550v1" target="_blank">X$^3$-OPD: Distilling Reasoning into Large Audio-Language Models via On-Policy Alignment</a>
+                </div>
+                <div class="paper-authors">👥 Dongjie Fu, Di Cao, Xize Cheng</div>
+                <div class="paper-summary">While large audio-language models have achieved remarkable progress in auditory perception, they still lag behind text-based large language models in deep logical reasoning, primarily due to the scarcity of high-quality audio reasoning data. To bridge this gap, we propose X$^3$-OPD, a cross-modal on-policy distillation framework that transfers reasoning capabilities from a powerful text teacher to an audio-language student. During training, the student generates reasoning trajectories conditioned on its own acoustic perception, while the teacher provides token-level guidance using matched textual inputs and verified answers. We further construct a three-tier symmetric corpus covering textual reasoning rendered into speech, audio-event reasoning grounded in complex acoustic scenes, and spoken-dialogue reasoning involving paralinguistic cues. This design extends cross-modal distillation beyond textually recoverable content to reasoning grounded in non-linguistic events, prosody, and conversational context. Experiments on MMSU, MMAU, BIG Bench Audio, and MMAR demonstrate that X$^3$-OPD substantially improves audio-grounded reasoning and chain-of-thought quality while largely preserving the model's existing capabilities under domain shift.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-23</span>
+                    <a href="https://arxiv.org/pdf/2607.21550v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.21496v1" target="_blank">Toward Generalizable Cognitive Impairment Detection with Speech-Based Multimodal Large Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Yingchao Huang, Xin Wang, Yuhan Su</div>
+                <div class="paper-summary">Cognitive impairment (CI) is a growing public health concern. Early and accurate diagnosis is critical for enabling timely intervention and improving patient outcomes. Speech-based CI detection has emerged as a promising non-invasive approach, as speech signals encode both linguistic and acoustic markers associated with cognitive decline. Recent advances in large language models (LLMs) further strengthen the potential of speech-based assessment by enabling more expressive representation learning and improved generalization across diverse speakers, recording devices, and clinical environments. Moreover, multimodal learning by jointly modeling linguistic and acoustic features allows for a more comprehensive characterization of cognitive and behavioral changes related to CI, leading to more reliable detection. In this work, we propose a multimodal CI detection framework based on open-source LLMs that integrates speech audio and corresponding transcripts while preserving patient privacy. Acoustic embeddings are extracted directly from speech signals, while textual embeddings are generated from automatically transcribed speech. These modality-specific embeddings are then concatenated to create a combined feature vector and used for downstream classification, without requiring access to raw or sensitive patient data. The proposed approach is evaluated on the ADReSS20 and ADReSSo21 benchmark datasets. Experimental results show that the proposed multimodal framework achieves an CI classification accuracy of 92.4% and consistently outperforms single-modality baselines. Our work establishes a new state-of-the-art for CI identification, with the proposed method demonstrating superior cross-dataset generalization. This advance highlights the power of an LLM-based multimodal framework that fuses linguistic and acoustic data to enable robust, scalable, and non-invasive screening.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-23</span>
+                    <a href="https://arxiv.org/pdf/2607.21496v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2607.21453v1" target="_blank">Test-Time Scaling via Error Localization</a>
+                </div>
+                <div class="paper-authors">👥 Rajiv Shailesh Chitale, Rahul Madhavan, Taneesh Gupta</div>
+                <div class="paper-summary">Scaling inference-time computation has emerged as a reliable method to improve the performance of large language models on complex reasoning and programming tasks. However, standard approaches such as independent sampling and sequential multi-turn refinement operate without token-level credit assignment, resulting in computational inefficiency, since valid reasoning prefixes are frequently discarded. In this work, we introduce Test-Time Scaling via Error Localization (TTEL), an inference-time algorithm that utilizes fixed or environment feedback to perform token-level error localization. By comparing conditional probabilities under informed feedback against a null-context baseline, TTEL isolates the step at which an error occurred. The algorithm then truncates the trajectory and branches a new generation, maximally reusing the valid prefix. Extensive evaluations demonstrate that TTEL establishes strictly dominating Pareto frontiers across sequential reasoning domains, measured by pass-at-k vs. generated-token cost. With Qwen3-8B on LiveCodeBench, TTEL attains a pass@64 of 71.0% while generating approximately half as many tokens as independent sampling (360.4k vs. 735.0k). Generalizing to math benchmarks AIME-2025 and HMMT-2025, TTEL cleanly outperforms competing test-time baselines across both Qwen3-8B and Qwen3-4B-Thinking-2507.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-07-23</span>
+                    <a href="https://arxiv.org/pdf/2607.21453v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/platforms/google-play/comic-con-san-diego/" target="_blank">Play Points members and comic book fans can score exclusive rewards with Google Play</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/entrepreneurs/gemini-startup-forum-winter-2026/" target="_blank">Apply now for the Google for Startups Gemini Startup Forum.</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/research/understanding-the-ai-economy/" target="_blank">Understanding the AI economy</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/safety-security/selfie-video-sign-in/" target="_blank">Introducing selfie for sign-in: a new, easy way to access your Google Account</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/health-in-chatgpt" target="_blank">Launching Health in ChatGPT</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/inside-google/message-ceo/alphabet-earnings-q2-2026/" target="_blank">Q2 2026 earnings call: Remarks from our CEO</a></div>
+                <div class="feed-date">07-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/products/gemini/gemini-live-camera-how-to/" target="_blank">Here’s how to ask Gemini Live for help with anything you see.</a></div>
+                <div class="feed-date">07-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/building-ai-infrastructure-with-the-effingham-county-community" target="_blank">Building AI infrastructure with the Effingham County community</a></div>
+                <div class="feed-date">07-22</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Sequoia Capital</div>
+                <div class="feed-title"><a href="https://sequoiacap.com/article/partnering-with-etched-building-the-inference-machine/" target="_blank">Partnering with Etched: Building the Inference Machine</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/23/how-ai-guardrails-are-impeding-the-work-of-offensive-cybersecurity-researchers/" target="_blank">How AI guardrails are impeding the work of offensive cybersecurity researchers</a></div>
+                <div class="feed-date">07-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/23/how-ai-guardrails-are-impeding-the-work-of-offensive-cybersecurity-researchers/" target="_blank">How AI guardrails are impeding the work of offensive cybersecurity researchers</a></div>
+                <div class="feed-date">07-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/23/meet-the-judges-who-will-crown-australias-next-breakout-startup/" target="_blank">Meet the judges who will crown Australia’s next breakout startup</a></div>
+                <div class="feed-date">07-24</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/23/mobileye-ceo-amnon-shashua-to-step-aside-as-company-pushes-into-robotaxis-robotics/" target="_blank">Mobileye CEO Amnon Shashua to step aside as company pushes into robotaxis, robotics</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/970399/amazon-alexa-plus-ai-update-smart-home-devices" target="_blank">Alexa Plus is getting an AI update to handle more complicated instructions</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/gadgets/2026/07/microsoft-responds-to-lg-monitors-installing-mcafee-ads-on-windows/" target="_blank">Microsoft responds to LG monitors installing McAfee ads on Windows</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/970254/amazon-echo-show-21-deal-sale" target="_blank">The Echo Show 21 is a great smart home hub that’s $80 off</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/07/23/amd-takes-on-nvidia-with-its-helios-ai-rack-scale-system/" target="_blank">AMD takes on Nvidia with its Helios AI rack-scale system</a></div>
+                <div class="feed-date">07-23</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=D_1j5dVWNYI" target="_blank">🎥 JUST RECORDED: Elon Musk Announces SPACEX Plans</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">I've launched a private community for people responsible for significant personal, family, or busine...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=oJSOUyaJeV4" target="_blank">🎥 Did Musk and Trump Rig the 2024 Election?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Political analyst and commentator Nathan Taylor joins Wajahat Ali to examine claims, allegations, an...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=q_umfWm8J28" target="_blank">🎥 Nvidia GTC Taipei 2026: Jensen Huang Full Keynote</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">nvidia #ai #jensenhuang #artificialintelligence #technology #stocks #yahoofinance #semiconductors #i...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=wSp6AiNIrsY" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=XwS8T2Ru4MI" target="_blank">🎥 OpenAI AI Agents Hacked HuggingFace - Sam Altman Commits Felony with &quot;Partner&quot;</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Spotify - https://open.spotify.com/show/1KkKuQe82tf1bW78ReQ0wM Apple Podcasts ......</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=J1rEu5ZAutE" target="_blank">🎥 구글 vs 오픈AI: 20년 검색 제국을 무너뜨릴 9,000조 원짜리 전쟁 (ft. 일론 머스크의 배신)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">00:00 05:17 구글의 레드코드 발령과 창업자 복귀 06:28 오픈AI의 탄생과 구글과의 관계 10:26 일론 머스크와 샘 올트먼의 관계 ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/andrewyng/openworker" target="_blank" style="color: #2b6cb0;">
+                        andrewyng/openworker
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/pireel/pireel" target="_blank" style="color: #2b6cb0;">
+                        pireel/pireel
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/gnipbao/story-to-handdrawn-video" target="_blank" style="color: #2b6cb0;">
+                        gnipbao/story-to-handdrawn-video
+                    </a>
+                </div>
+                
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=49022152" target="_blank" style="color: #2b6cb0;">
+                        Writing by hand is good for your brain
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=49026810" target="_blank" style="color: #2b6cb0;">
+                        Show HN: Echo – Fable-level results at 1/3 the cost using open-weight models
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=49023016" target="_blank" style="color: #2b6cb0;">
+                        Startup founders urge U.S. government not to shut off Chinese open weight AI
+                    </a>
+                </div>
+                
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 0<br>
+                    Input Tokens: 0<br>
+                    Output Tokens: 0
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年07月24日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
