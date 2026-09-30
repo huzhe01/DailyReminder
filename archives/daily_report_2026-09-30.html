@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年09月30日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>无法生成今日简报，请直接阅读下方详细内容。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.38177v1" target="_blank">Imagine3D-LLM: Teaching MLLMs to Imagine 3D Scenes Before Answering</a>
+                </div>
+                <div class="paper-authors">👥 Jaewoo Jung, Hyeonseo Yu, Honggyu An</div>
+                <div class="paper-summary">Reasoning about the 3D world from multi-view images remains a fundamental challenge for Multimodal Large Language Models (MLLMs). While modern MLLMs handle single-image inputs effectively, they struggle to integrate evidence across viewpoints into a coherent 3D understanding. A growing body of work attempts to close this gap by injecting 3D awareness into MLLMs, either by boosting fine-grained pixel-level cross-view correspondence or by fusing features from 3D geometry foundation models, yet a substantial gap to human reasoning persists. In this work, we revisit human spatial reasoning, which suggests that rather than relying on fine-grained geometry cues, humans roughly identify common objects across views, infer the relative geometry between viewpoints, and assemble a coarse 3D layout of the scene. Inspired by this process, we introduce Imagine3D-LLM, an MLLM that learns to assemble a similar compact 3D representation of the scene and conditions its answer on this representation. Concretely, we append a small set of learnable summary tokens after the image tokens, decode them into a compact 3D Gaussian Splatting representation supervised by a photometric reconstruction loss, and train jointly with the standard next-token prediction objective. Notably, although only the summary tokens receive direct reconstruction supervision, this objective also induces stronger cross-frame correspondence within the LLM's underlying image features, suggesting that learning to reconstruct propagates 3D-aware signals throughout the model. As a result, Imagine3D-LLM consistently outperforms prior approaches across multiple spatial reasoning and 3D understanding benchmarks, suggesting that imagining the scene can be more effective than being told its pixel-wise geometry.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-29</span>
+                    <a href="https://arxiv.org/pdf/2609.38177v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.38149v1" target="_blank">Pretraining Latent Information Feedback Transformers with Teacher Supervision</a>
+                </div>
+                <div class="paper-authors">👥 Dor Tirosh, Ido Amos, Mor Geva</div>
+                <div class="paper-summary">Transformer language models (LMs) are feed-forward: deep-layer representations are never fed back to shallower layers, and the only pathway for information to flow downward across generation steps is the decoded token. This narrow channel forces models to recompute intermediate results and to discard alternative continuations. In this work, we remove this bottleneck during pretraining, introducing the LIFT (Latent Information Feedback Transformer) architecture and training method which enable LMs to propagate state across generation. We achieve this by turning recurrent-state learning into a teacher-forced prediction problem: each input token is paired with an information-dense state, derived from the next-token distribution of an off-the-shelf pretrained LM. The model, extended with a small number of additional parameters, is then trained to predict both the next token and the next state. As the input states are precomputed, pretraining remains fully parallel across positions. At inference, the model's own predicted states are fed back, with a minor computational overhead that decreases with model size. Experiments with pretrained models ranging from 135M to 1B parameters show that LIFT consistently outperforms standard Transformers and baselines on language modeling, downstream reasoning tasks, and procedural tasks under token-matched budget, while being on par with or ahead of compute-matched Transformers. Moreover, a controlled study on a state-tracking task shows that a tiny LIFT outperforms same-size Transformers trained on 8x more data, even when trained with the states of a Transformer that fails the task. Overall, we show that LMs can learn to exploit deep-to-shallow feedback during pretraining via scalable teacher supervision.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-29</span>
+                    <a href="https://arxiv.org/pdf/2609.38149v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.38142v1" target="_blank">AdviSD: Learning to Advise Frontier LLMs via Targeted Multi-Turn Self-Distillation</a>
+                </div>
+                <div class="paper-authors">👥 Rishabh Agrawal, Hejie Cui, Shasha Li</div>
+                <div class="paper-summary">A small trainable advisor can steer a frozen language-model executor using natural-language advice. In addition to learning from task rewards, the advisor can use feedback from completed interactions to improve its advice. However, a plausible correction need not change execution, yet learning from such corrections can still affect the advisor's future decisions in other contexts. In a shared-parameter model, we prove that such corrections can limit learning if their targets favor useful advice less strongly than those of other corrections. Keeping them less often than the rest improves the model's eventual performance compared to learning from every correction. Motivated by this, our method, Advisor Self-Distillation (AdviSD), pairs outcome-based reinforcement learning with self-distillation from a feedback-conditioned copy of the advisor selectively. Reflection proposes corrections, and the advisor scores the same recorded executor response with and without its issued advice, using the magnitude of the difference to select decisions for supervision. This approach does not require executor likelihoods or additional executor rollouts. Experiments with Qwen3-8B advisors for Gemini and Claude show that AdviSD outperforms advisor-GRPO by 4.2-6.4 percentage points on BFCL-v3 and by 3.9-5.1 score points on EnvScaler. The trained advisors generalize to out-of-domain tasks and transfer across different executor versions and model families. AdviSD also beats matched-count random selection, supporting the value of its selection rule.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-29</span>
+                    <a href="https://arxiv.org/pdf/2609.38142v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.38109v1" target="_blank">How Local Mixing Encodes Relative Position in Global NoPE Attention</a>
+                </div>
+                <div class="paper-authors">👥 Cutter Dawes, Nick Alonso, Tom Figliolia</div>
+                <div class="paper-summary">The attention operation is naively position invariant. However, positional information is fundamental to natural language, and therefore a variety of explicit position encodings have been developed in transformer-based models, such as rotary position encoding (RoPE). Although explicit position encodings have long been assumed to be required, recent methods that interleave local mixing layers, such as sliding window attention (SWA) and gated linear attention, while not encoding position (NoPE) in global attention layers has recently been shown to be successful at scale. How and why this approach works is not well-understood. In this paper, we develop an explanation of how hybrid models of this sort can implicitly encode position at global NoPE layers. Supported by both theoretical and empirical evidence, our central argument is that SWA and gated linear attention induce a recency bias in the residual stream that propagates to, and is selected by, the global attention logits. Moreover, in contrast to the implicit position encodings found in models with only global NoPE attention, in which positional information arises solely from the causal mask, the recency bias in hybrid models can be maintained across long sequences. In addition to deepening our understanding of how hybrid models encode position, these findings may provide insights for how to encode position in a way that can extrapolate to longer sequence lengths indefinitely.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-29</span>
+                    <a href="https://arxiv.org/pdf/2609.38109v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.38106v1" target="_blank">Pruning for Efficiency, Paying in Fairness: Demographic Disparities in Pruned Speech-LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Ganesh Pavan Kartikeya Bharadwaj Kolluri, Michael Kampouridis, Ravi Shekhar</div>
+                <div class="paper-summary">Speech-LLMs are expensive to run, making compression important for real-world deployment. However, compressed models are usually selected using aggregate word error rate (WER), which can hide how pruning affects different demographic groups. In this work, we systematically study the effect of audio encoder pruning on SLAM-ASR for different demographic groups. Using the Fair-Speech and Common Voice datasets, we found that the pruning does not affect all demographic groups equally; the gap between best- and worst-performing groups increases in fold. These disparities appear across all three encoder scales, but only the largest model initially hides them behind aggregate WER. LoRA adaptation improves WER for every group, but benefits groups already performing well more strongly and widens for certain groups. On Common Voice English, Danish, and Dutch, accent gaps persist but do not clearly widen, showing that the fairness effects of pruning vary across datasets and must be measured directly. Our findings suggest that for pruned models, deployment decisions should include per-group WER, with the worst-performing group's error rate as an explicit criterion.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-29</span>
+                    <a href="https://arxiv.org/pdf/2609.38106v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.38099v1" target="_blank">Effective Dense Retrieval using Only In-Context Examples</a>
+                </div>
+                <div class="paper-authors">👥 Nour Jedidi, Abdul Basit Ali, Hang Li</div>
+                <div class="paper-summary">Turning decoder-only large language models (LLMs) into strong dense retrievers typically requires some form of retriever training. In this paper, we ask whether LLMs can instead be prompted to produce effective representations for dense retrieval given only a few in-context examples. To answer this, we introduce RICE (Representations from In-Context Examples), a simple "training-free" approach that extracts high-quality dense representations from LLMs. To do so, RICE conditions the LLM on examples that provide a shared context for query and document encoding. Our results demonstrate that RICE embeddings can substantially improve the accuracy of prompt-based LLM embeddings, establishing it as a simple method to build LLM-based dense retrievers that do not require training. We release our code at https://github.com/nourj98/RICE.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-29</span>
+                    <a href="https://arxiv.org/pdf/2609.38099v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.34552v1" target="_blank">EvoSkillRec: Skill-Genome Evolution for Recommender Architecture Discovery</a>
+                </div>
+                <div class="paper-authors">👥 Xiaopeng Li, Kuo Cai, Bo Chen</div>
+                <div class="paper-summary">Modern recommender systems advance not only by scaling data and parameters, but also by encoding task-specific inductive biases through architecture, including sparse feature interactions for click-through rate (CTR) prediction, temporal attention for sequential recommendation, and expert routing for multi-task learning. However, these biases are typically human expert designed or searched within predefined operator spaces. Although Recent LLM-driven code evolution expands this space, unconstrained edits often produce invalid or ineffective architectures, underuse established architecture design knowledge, and fail to preserve successful innovations for reuse. We introduce EvoSkillRec, a promotion-and-reuse framework for cumulative recommender architecture evolution. It first decomposes recommenders into atomic executable skills and represents architectures as typed skill genomes, with each skill equipped with input--output types, semantic annotations, and implementation code. We then evolve models with different tasks through two coupled spaces: a constrained skill--space that mutates, recombines, specializes, and reuses validated skills, and an open-ended code--space in which LLM planners and synthesizers invent new skill modules using prior evolution traces and accumulated experience. An autoresearch controller evaluates candidates, diagnoses failures, retrieves relevant skills, promotes validated innovations into the skill library, and adaptively allocates the proposal budget between the two spaces. Extensive experiments on CTR prediction, multi-task learning, and multi-domain learning, including resource-constrained co-optimization of predictive quality and model FLOPs utilization in generative ranking models, consistently demonstrate the effectiveness of our proposed EvoSkillRec.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-28</span>
+                    <a href="https://arxiv.org/pdf/2609.34552v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.31890v1" target="_blank">FARE: Deep Reinforcement Learning For Fair Exposure Constrained Uncertainty Aware Financial Content Personalization</a>
+                </div>
+                <div class="paper-authors">👥 Arundeep Chinta, Lucas Vinh Tran, Jay Katukuri</div>
+                <div class="paper-summary">Content personalization systems in financial services must ensure fair exposure across diverse offerings-a requirement driven by contractual obligations and the need to prevent "rich-get-richer" dynamics where content with high click-through rate (CTR) dominates while other relevant products receive minimal visibility. Share of Voice (SOV) constraints, which guarantee each content category a target fraction of top-position exposure, address this by promoting product diversity and balanced user discovery. While re-ranking layers atop CTR models are common in practice, we propose two key novelties: (1) framing SOV-constrained ranking as a deep reinforcement learning problem analogous to constrained trade execution in algorithmic finance, and (2) explicitly incorporating CTR prediction uncertainty into the agent's state space and policy design-enabling larger ranking adjustments for high-uncertainty predictions where deviation from CTR-optimal ordering is less costly. We introduce FARE (Fair Ranking Executor), a modular uncertainty-aware execution layer that translates any black-box CTR model's predictions into SOV-fair rankings without retraining the underlying model. Our uncertainty-weighted proportional control policy (FARE-PC) and learned neural policies (FARE-ES, FARE-PPO) demonstrate that uncertainty-aware approaches can substantially reduce SOV deviation from fairness targets while minimizing engagement loss, with gradient-free evolution strategies outperforming policy gradient methods on synthetic data and the ordering reversing on KuaiRand-Pure.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-25</span>
+                    <a href="https://arxiv.org/pdf/2609.31890v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.29182v1" target="_blank">ScalarLens: Numerical Embeddings with Stable Coordinates and Contextual Responses for CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Heng Yao, Tianying Liu, Yulou Shu</div>
+                <div class="paper-summary">Numerical embeddings for click-through rate (CTR) prediction are built on a convenient but restrictive premise: a scalar has one representation. This premise conflates where a value lies with what it means for the current sample. On the Criteo validation split, the same numerical interval carries residual click evidence with opposite signs across categorical and numerical contexts, even after additive main effects are removed. Production pipelines compound this mismatch because externally normalized features require transformations and statistics to remain synchronized between training and serving. We introduce ScalarLens, a numerical embedding that preserves what a value is while adapting how it should be interpreted. A monotone local mesh constructs a stable coordinate from the focal scalar alone; bounded low-rank dynamics then produce a contextual response without moving that coordinate or replacing categorical tokens and the CTR backbone. In a 1,539-run primary evaluation covering 19 representations, three datasets, nine backbones, and three seeds, ScalarLens ranks first in 25 of 27 settings on original numerical scales and second in the remaining two. Matched ablations show that scale correction, additional local capacity, and generic conditioning do not reproduce the gain. A controlled study further recovers categorical, numerical, and mixed response mechanisms under context shift while the focal coordinate remains exactly invariant. A complete rerun under shared standardization retains significant advantages over DEER, DAES, and NaryDis, showing that the result is not explained by tolerance to raw scales alone. ScalarLens therefore recasts numerical embedding as a measurement problem: coordinates belong to values, while predictive responses belong to values in context.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-24</span>
+                    <a href="https://arxiv.org/pdf/2609.29182v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2609.37905v1" target="_blank">Beyond Interaction Capacity: Estimator Scaling with Recursive Models for CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Shivang Chopra, Fotis Iliopoulos, Zsolt Kira</div>
+                <div class="paper-summary">Click-Through Rate prediction, a core task in recommendation and advertising systems, relies on modeling interactions among sparse categorical features. Explicit cross networks are a central paradigm for CTR prediction, and recent progress has largely come from increasing the interaction capacity of a single predictor through deeper cross networks and more expressive cross operators. We revisit whether continually increasing interaction capacity remains the most effective way to improve predictive performance, and find that its benefits quickly exhibit diminishing returns even as capacity continues to grow. This motivates a complementary scaling direction that we call estimator scaling, where additional resources are used to incorporate multiple related estimators rather than only enlarging a single predictor. Through theoretical analysis, we show that the gains from estimator scaling are governed by the amount of non-shared predictive variation available across estimators. However, exploiting this variation naively can be expensive: independently trained models provide substantial estimator diversity but require deployment cost to grow with ensemble size. This motivates a parameter-efficient realization of estimator scaling that can incorporate diversity from multiple estimator sources without maintaining multiple full models. Building on this view, we introduce RECursive Averaged Predictor (RECAP), a parameter-efficient recursive CTR model that operationalizes estimator scaling at three levels: distillation across independently trained models, exponential moving averaging over training trajectories, and aggregation over inference-time routes within a weight-shared recursive backbone. Experiments across multiple benchmarks establish new state-of-the-art predictive performance on standard benchmarks, while placing the RECAP on a favorable performance-parameter Pareto frontier.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-09-29</span>
+                    <a href="https://arxiv.org/pdf/2609.37905v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/devices/googlebook/henry-cavill-googlebook-video-game/" target="_blank">Game on: Henry Cavill is putting Googlebook to the test</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/arts-culture/las-art-foundation-ai-residency/" target="_blank">Experience two artists’ perspectives on philosophy, science, and AI</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/public-policy/america-gov-google-public-sector/" target="_blank">Google is a technology partner for the launch of America.gov.</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-gpt-6-1-sol" target="_blank">Introducing GPT-6.1 Sol</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/devday-2026-recap" target="_blank">DevDay 2026 Recap</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/introducing-dots" target="_blank">Introducing dots</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/towards-safety-cases-for-frontier-ai-training" target="_blank">Towards safety cases for frontier AI training</a></div>
+                <div class="feed-date">09-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/how-we-will-do-better-for-australia" target="_blank">How we will do better for Australia</a></div>
+                <div class="feed-date">09-28</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/09/29/apple-pay-set-to-launch-in-india-with-axis-bank-today-sources-say/" target="_blank">Apple Pay finally launches in India after years on the sidelines</a></div>
+                <div class="feed-date">09-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/ai-artificial-intelligence/1002505/sam-altman-openai-ipo-devday-ai-safety" target="_blank">Sam Altman says OpenAI won’t go public until its models are safe</a></div>
+                <div class="feed-date">09-30</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/09/29/america-gov-gets-really-weird-when-you-ask-it-about-minecraft-but-its-not-a-glitch/" target="_blank">America.gov gets really weird when you ask it about Minecraft, but it’s not a glitch</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/09/29/america-gov-gets-really-weird-when-you-ask-it-about-minecraft-but-its-not-a-glitch/" target="_blank">America.gov gets really weird when you ask it about Minecraft, but it’s not a glitch</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/09/most-powerful-obesity-drug-yet-people-lost-up-to-25-of-weight-in-trial/" target="_blank">Most powerful obesity drug yet: People lost up to 25% of weight in trial</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/policy/1002468/trump-ai-superintelligence-executive-order-ai" target="_blank">Trump orders US government to call AI ‘Super Intelligence’</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/09/29/the-internet-is-convinced-elon-musks-xai-trolled-openais-dots-launch/" target="_blank">The internet is convinced Elon Musk’s xAI trolled OpenAI’s ‘Dots’ launch</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/09/29/the-internet-is-convinced-elon-musks-xai-trolled-openais-dots-launch/" target="_blank">The internet is convinced Elon Musk’s xAI trolled OpenAI’s ‘Dots’ launch</a></div>
+                <div class="feed-date">09-29</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Faat6RWBld8" target="_blank">🎥 Elon Musk&#39;s Ex SHOCKS Don With Inside Info | Part 2</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">If you thought Part One was explosive, just wait. In Part Two, Ashley St. Clair drops even more bomb...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=TzmYDIVaelM" target="_blank">🎥 They Warn About AI. So Why Are They Racing to Build It?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Elon Musk, Sam Altman, Dario Amodei and Demis Hassabis warn about AI's risks while their companies r...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=S7CrlFLAmEA" target="_blank">🎥 Jensen Huang: The Doomer Hoax, Superintelligence is Here, and The Future of AI (ft. President Trump)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">(0:00) Jensen Huang joins The Besties! (1:39) Thoughts on Dario's blog, Frontier Labs calling to slo...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=JQ1webdC0yg" target="_blank">🎥 NVIDIA GTC Taipei 2026 Keynote | Full Replay</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">NVIDIA GTC Taipei 2026 keynote with Founder and CEO Jensen Huang unveils the company's latest platfo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Bh5bJrrJ6xs" target="_blank">🎥 Marc Benioff &amp; Sam Altman | Dreamforce 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Marc Benioff and Sam Altman explore how @OpenAI is advancing the AI frontier and partnering with Sal...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=TzmYDIVaelM" target="_blank">🎥 They Warn About AI. So Why Are They Racing to Build It?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Elon Musk, Sam Altman, Dario Amodei and Demis Hassabis warn about AI's risks while their companies r...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/shihabal3amri/DiPlay" target="_blank" style="color: #2b6cb0;">
+                        shihabal3amri/DiPlay
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/firelex/jeff" target="_blank" style="color: #2b6cb0;">
+                        firelex/jeff
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/feitangyuan/onetake" target="_blank" style="color: #2b6cb0;">
+                        feitangyuan/onetake
+                    </a>
+                </div>
+                
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=49896604" target="_blank" style="color: #2b6cb0;">
+                        Dots: Always-on agents
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=49903993" target="_blank" style="color: #2b6cb0;">
+                        PSSA: A non-transformer language model written from scratch in Rust
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=49896586" target="_blank" style="color: #2b6cb0;">
+                        GPT 6.1 Sol: Near-Astra intelligence for a fifth of the price
+                    </a>
+                </div>
+                
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 0<br>
+                    Input Tokens: 0<br>
+                    Output Tokens: 0
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年09月30日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
