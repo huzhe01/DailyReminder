@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年10月14日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>无法生成今日简报，请直接阅读下方详细内容。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.18874v1" target="_blank">ChunkAct: Action Chunking for Agentic Robotics</a>
+                </div>
+                <div class="paper-authors">👥 Bingxin Xu, Wenrui Bao, Xinxin Liu</div>
+                <div class="paper-summary">Agentic robotics places a large language model (LLM) agent in the robot control loop, where it composes perception, motion, and vision-language-action (VLA) tools under the guidance of a memory and thereby generalizes to new tasks without retraining. This generality comes at a steep price in efficiency. Every primitive requires a round of LLM reasoning over the full interaction history, so the cost of an episode grows with the number of primitives. We find this reasoning largely redundant: once a sub-goal is chosen, its primitives follow a routine already prescribed by memory. We present ChunkAct, which introduces action chunking to agentic robotics. Online, a single call launches a chunk of chained primitives, which executes autonomously and returns control only upon failure. Offline, ChunkAct compiles the memory into these chunks, so execution is memory-free at test time and the planner is reserved for decisions that require reasoning. LLM computation therefore scales with the number of decisions rather than the number of primitives. On LIBERO-Pro, ChunkAct improves task success by 5.0 points over the state of the art in agentic robotics while requiring 2.9x fewer LLM calls, 4.4x fewer input tokens, and 2.3x fewer output tokens.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-13</span>
+                    <a href="https://arxiv.org/pdf/2610.18874v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.18868v1" target="_blank">Tev: Scaling Long-Horizon Agentic Environments with Dense Progress Rewards</a>
+                </div>
+                <div class="paper-authors">👥 Wenbo Hu, Shraman Pramanick, Krishna Kumar Singh</div>
+                <div class="paper-summary">Long-horizon agents have drawn growing attention for their ability to work autonomously -- from hours to days -- on economically valuable tasks, a capability essential to automated discovery and recursive self-improvement (RSI). Yet open-source models still struggle on long-horizon tasks, largely for lack of both training data and a working recipe, and scaling both is hard: long, complex tasks are difficult to curate and verify, and their rewards are sparse. We address both. First, we introduce Tev-Gym, the first long-horizon agent training dataset with verifiable, dense, progressive rewards -- 1,170 verified task environments across 7 domains. It is built on a latent-world-first approach that first constructs a latent world: a complete and correct hidden specification of the task domain, workflow, and expected state after each step. Each task is then progressively rendered from this specification into an agent-facing environment, enabling controllable complexity and a natural progress metric. Second, we turn this metric into a training recipe: via progress-potential reward shaping (PPRS), we convert progress into a dense per-step reward that improves training efficiency and makes otherwise-intractable tasks trainable. Training with this recipe yields Tev-27B, which achieves substantial gains on the Agents' Last Exam computing and math sciences domains (ALE-CM), matching GPT-6 Astra and Claude Opus 5 at Pass@5. Despite training only on ALE-related data, it generalizes to the Terminal-Bench (TB) 3.0 and 4.0 subsets, surpassing GLM 5.2 and Gemini 3.7 Flash, and reaches Claude Opus 4.8-level performance on middle-horizon tasks such as TB 2.1.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-13</span>
+                    <a href="https://arxiv.org/pdf/2610.18868v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.18861v1" target="_blank">Hybrid Reasoning Agents</a>
+                </div>
+                <div class="paper-authors">👥 Jiaru Zou, Yunzhe Qi, Sirui Chen</div>
+                <div class="paper-summary">How can we build an agent that thinks beyond human language, yet still acts through it in the external environment? Modern LLM agents still reason and interact through text, while latent reasoning offers an efficient internal medium but lacks native tool access and reasoning transparency. We bridge these two directions with Hybrid Reasoning Agents (HybridAgents), which dynamically navigate between latent reasoning and text-based interaction throughout a unified generation process. Architecturally, a lightweight HybridLink enables seamless transitions between text and latent modes, while the agent's continuous working memory preserves lossless hybrid context across multiple turns. These designs preserve tool-integrated agentic capabilities while making latent thoughts directly inspectable. Building on this architecture, we further develop dedicated post-training algorithms for hybrid reasoning: HybridSFT stabilizes tool-integrated hybrid generation by teaching the backbone to coordinate with HybridLink, then HybridRL scales reasoning by learning when to think in latent space and when to act through text. We evaluate HybridAgent at 3 model scales across 11 benchmarks covering mathematics, science, medicine, search, and agentic reasoning. Compared with frontier LLM Agents and agentic frameworks spanning both text-based and latent methods, HybridAgent consistently improves performance by 10.4%, while delivering 35.5%-54.7% token reduction, 1.8x-2.6x faster inference, and 2.7x-3.7x cost savings. Code and data are available at https://github.com/togethercomputer/HybridAgent.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-13</span>
+                    <a href="https://arxiv.org/pdf/2610.18861v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.18829v1" target="_blank">OmniCompass: A Holistic Benchmark for Omni-Modal Video Grounding and Understanding</a>
+                </div>
+                <div class="paper-authors">👥 Xuyang Liu, Shihao Wang, Xinyu Wei</div>
+                <div class="paper-summary">With the rapid development of multimodal large language models (MLLMs), evaluating their video understanding capabilities has become increasingly important. Existing video understanding benchmarks cover only part of the evaluation dimensions, limiting systematic diagnosis of omni-modal video understanding. We introduce OmniCompass, a holistic benchmark for omni-modal video grounding and understanding. OmniCompass defines two evaluation tracks: OmniCompass-VL assesses vision-language models on tasks requiring visual evidence, while OmniCompass-AV assesses omni-modal models on tasks requiring joint audio-visual evidence. Each track includes three complementary tasks: temporal grounding (TG), spatial grounding (SG), and question answering (QA), assessing when a referenced target appears, where it is, and what happens. QA covers five perception and three reasoning categories in OmniCompass-VL, and three perception and two reasoning categories in OmniCompass-AV. OmniCompass-VL contains 820 videos and 2,460 instances across domains and three duration types: short, medium, and long. A narrative- and audio-rich subset forms OmniCompass-AV with 240 videos and 720 instances. Each instance is evaluated under two paired settings: text-only and text+image, specifying the same target through text and visual-language guidance. All instances are manually annotated with multi-round quality verification. Evaluations of 50 MLLMs show that open-source models still lag behind proprietary counterparts, particularly in audio-visual understanding. Precise temporal and spatial grounding remains challenging even for leading models, and their predictions still exhibit inconsistencies across the paired target specifications.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-13</span>
+                    <a href="https://arxiv.org/pdf/2610.18829v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.18820v1" target="_blank">Read the Room Before Your Model Generates</a>
+                </div>
+                <div class="paper-authors">👥 Muyao Kong, Zhihao Lin</div>
+                <div class="paper-summary">Large language models (LLMs) generally rely on sampling temperature to regulate the amount of randomness in their outputs. Mainstream methods for selecting temperature typically involve fixed, heuristic global settings and context or token-level calibration, rather than a geometrically interpretable representation of the communicative scenario. In this work, we introduce a simple and interpretable temperature selection framework, the \textbf{Scenario-Actor}, which adapts decoding to the inferred situational characteristics. Scenario-Actor extracts scenario-relevant structures from Transformer hidden states and determines the temperature from scenario embedding, a structured geometric representation of the communicative setting. Empirical results show that on Llama-3.1-8B-Instruct, Scenario-Actor achieves strong goal-completion performance in interactive social scenarios, significant gains on open-ended instruction following, and competitive performance on multi-turn conversation compared to multiple baselines.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-13</span>
+                    <a href="https://arxiv.org/pdf/2610.18820v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.18818v1" target="_blank">Back-Translation Still Matters: Leveraging Monolingual Data for Low-Resource Machine Translation with LLMs</a>
+                </div>
+                <div class="paper-authors">👥 Divyanshu Bathla, Parag Singla, Jitin Singla</div>
+                <div class="paper-summary">Pre-trained Large Language Model (LLMs) are effective on many tasks in zero-shot and few-shot settings. For machine translation of low-resource languages, the obvious options are few-shot prompting and fine-tuning on a small parallel set. We ask: what if moderate amounts of low-resource monolingual data are also available? We argue that, rather than continued pretraining, a more effective use of this data is the pre-LLM era technique of back-translation (BT). The current fine-tuned LLM translates monolingual sentences in each language, and the resulting pairs train it in the reverse direction. Updates on the parallel set are interleaved for stable learning. With 1K parallel pairs on Odia and Swahili, BT beats continued pretraining into the low-resource language by 7.7 to 16.4 XCOMET-XXL points in domain. With beam-decoded intermediate translations, it also beats a model with 10 time more parallel data. In-context examples retrieved from the parallel data further improve BT. We also analyze the source, quality and amount of monolingual text. Across five low-resource languages, with Hindi as a high-resource control, and two 3B backbones, BT improves translation into the low-resource language by 16 to 173% XCOMET-XXL over parallel-only fine-tuning. Blind human evaluation on Odia and Sanskrit agrees with the automatic metrics.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-13</span>
+                    <a href="https://arxiv.org/pdf/2610.18818v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            <p style="color: #718096; font-style: italic;">今日无更新</p>
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/safety-security/gemini-4-model-safety-security/" target="_blank">Developing Gemini 4 Argon responsibly and safely</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/platforms/google-play/google-play-updates-october-2026/" target="_blank">New on Google Play: More ways to create, discover, and play</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products-and-platforms/platforms/android/cars-with-google-built-in-google-play-updates/" target="_blank">A new app experience is coming to cars with Google built-in</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Meta Engineering</div>
+                <div class="feed-title"><a href="https://engineering.fb.com/2026/10/13/ml-applications/generative-ads-model-gem-scaling-frontier-ads-ai/" target="_blank">Meta’s Generative Ads Model (GEM): Scaling the Central Model and Compute Engine for Frontier Ads AI</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-4-argon-availability/" target="_blank">Gemini 4 Argon comes to the Gemini app.</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-argon/" target="_blank">Gemini 4 Argon is now available for developers.</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/ads-commerce/demand-gen-drop-october-2026/" target="_blank">Build your data strength with October’s Demand Gen drop.</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/indiana-energy-imact-program/" target="_blank">We're helping Indiana communities save with clean energy investments.</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/13/justice-department-says-north-koreans-have-infiltrated-dozens-of-u-s-companies/" target="_blank">Justice Department says North Koreans have infiltrated dozens of U.S. companies</a></div>
+                <div class="feed-date">10-14</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/13/science-corporation-implants-its-vision-restoring-chip-in-its-first-stargardt-disease-patient/" target="_blank">Science Corporation implants its vision-restoring chip in its first Stargardt disease patient</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/13/science-corporation-implants-its-vision-restoring-chip-in-its-first-stargardt-disease-patient/" target="_blank">Science Corporation implants its vision-restoring chip in its first Stargardt disease patient</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/13/cerebras-ceo-says-were-nearing-a-future-where-everyone-has-a-personal-ai-assistant-at-home/" target="_blank">Cerebras CEO says we’re nearing a future where everyone has a personal AI assistant at home</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/13/cerebras-ceo-says-were-nearing-a-future-where-everyone-has-a-personal-ai-assistant-at-home/" target="_blank">Cerebras CEO says we’re nearing a future where everyone has a personal AI assistant at home</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/13/industrial-next-wants-factory-robots-to-switch-tasks-in-minutes-not-weeks/" target="_blank">Industrial Next wants factory robots to switch tasks in minutes, not weeks</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/13/industrial-next-wants-factory-robots-to-switch-tasks-in-minutes-not-weeks/" target="_blank">Industrial Next wants factory robots to switch tasks in minutes, not weeks</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Ars Technica</div>
+                <div class="feed-title"><a href="https://arstechnica.com/health/2026/10/martin-shkreli-livestreamed-himself-violating-lifetime-pharma-ban-ftc-says/" target="_blank">Martin Shkreli livestreamed himself violating lifetime pharma ban, FTC says</a></div>
+                <div class="feed-date">10-13</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=u6df05xAYf4" target="_blank">🎥 How Elon Musk Cuts Through Doubt and Makes a Decision</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Grow your YouTube channel with BrandLytics at: https://brandlytics.ai ✎ Get free access to our vault...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Faat6RWBld8" target="_blank">🎥 Elon Musk&#39;s Ex SHOCKS Don With Inside Info | Part 2</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">If you thought Part One was explosive, just wait. In Part Two, Ashley St. Clair drops even more bomb...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=4YUEWqAtOD8" target="_blank">🎥 The Top 1% Mindset Behind The First $5 Trillion Company | Jensen Huang (Nvidia)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Grow your YouTube channel with BrandLytics at: https://brandlytics.ai ✎ Get free access to our vault...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=S7CrlFLAmEA" target="_blank">🎥 Jensen Huang: The Doomer Hoax, Superintelligence is Here, and The Future of AI (ft. President Trump)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">(0:00) Jensen Huang joins The Besties! (1:39) Thoughts on Dario's blog, Frontier Labs calling to slo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Bh5bJrrJ6xs" target="_blank">🎥 Marc Benioff &amp; Sam Altman | Dreamforce 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Marc Benioff and Sam Altman explore how @OpenAI is advancing the AI frontier and partnering with Sal...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=TzmYDIVaelM" target="_blank">🎥 They Warn About AI. So Why Are They Racing to Build It?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Elon Musk, Sam Altman, Dario Amodei and Demis Hassabis warn about AI's risks while their companies r...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/ARahim3/DigUp" target="_blank" style="color: #2b6cb0;">
+                        ARahim3/DigUp
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/storytold/craft-launcher" target="_blank" style="color: #2b6cb0;">
+                        storytold/craft-launcher
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/liseami/CCBaga" target="_blank" style="color: #2b6cb0;">
+                        liseami/CCBaga
+                    </a>
+                </div>
+                
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50073879" target="_blank" style="color: #2b6cb0;">
+                        Gemini 4 Argon
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50081151" target="_blank" style="color: #2b6cb0;">
+                        I built a tool to track what AI leaders say and how their views change on video
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50073633" target="_blank" style="color: #2b6cb0;">
+                        Redesigning source control at Anthropic
+                    </a>
+                </div>
+                
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 0<br>
+                    Input Tokens: 0<br>
+                    Output Tokens: 0
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年10月14日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
