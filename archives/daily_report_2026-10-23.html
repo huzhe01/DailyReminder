@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年10月23日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>无法生成今日简报，请直接阅读下方详细内容。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.31657v1" target="_blank">Cost-Aware Abstention for LLM-Based IT Ticket Classification</a>
+                </div>
+                <div class="paper-authors">👥 Sachin Gupta</div>
+                <div class="paper-summary">Wrong automatic routing of an IT support ticket can cost more than human triage. We evaluate cost-aware abstention as an offline, cost-conditional readiness assessment: select a routing policy on calibration data under explicit costs, then evaluate that frozen policy once on held-out test data. On a public 47,837-ticket, eight-class corpus, we compare four trained non-LLM classifiers with four large language models under zero- and few-shot prompting. Under the illustrative cost model (c_ok, c_triage, c_wrong) = (0, 1, 5), TF-IDF with logistic regression and a threshold of 0.60 selected on calibration reduces test cost from 0.763 to 0.472, a 38.1% relative reduction (paired ratio-bootstrap 95% CI [35.7%, 40.4%]), while lowering wrong routes from 15.3% to 3.5%. Frozen calibration-selected policies also beat both always-route and always-defer on held-out test data in 14 of 16 settings in a post-hoc cost-parameter analysis. The strongest prompted configuration reaches 0.477 accuracy on a stratified 1,000-ticket test subset, versus 0.879 for fine-tuned DistilBERT on the same tickets. Isotonic lowers expected calibration error without reliably improving discrimination: GPT-4o-mini few-shot has one confidence value before and after recalibration and correctness AUROC 0.500. We therefore report correctness AUROC and tie-aware risk-coverage area alongside ECE. At the analytically derived break-even probability 0.80, seven prompted configurations defer all tickets; Haiku few-shot routes only 19/1,000. An LLM-only agreement control and margin/entropy rejection baselines further separate calibration from discrimination. The findings are scoped to this dataset, prompt design, model endpoints, and illustrative costs; the work is an evaluation framework, not a new abstention algorithm or universal deployment certification.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-22</span>
+                    <a href="https://arxiv.org/pdf/2610.31657v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.31646v1" target="_blank">Low-Bit N-Gram Embeddings for Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Stephen Chung, Wenyu Du</div>
+                <div class="paper-summary">Many recent open-weight language models use n-gram embedding tables to improve performance. These tables store learned representations of short token sequences, such as pairs or triples of consecutive tokens, which the model retrieves during processing. However, they can require substantial memory: DeepSeek-V4.1-Flash, for example, allocates 196 billion parameters to its Engram n-gram memory. We therefore investigate whether this memory cost can be reduced while preserving the performance improvement that the tables provide. We propose storing n-gram embeddings at low precision and systematically investigate different quantization methods and bit allocations across tables. Across nanochat-, Llama-, and GPT-2-family models trained from scratch, four-bit tables save approximately 75% of table memory while preserving more than 99% of the validation-loss improvement from adding the tables. Using fewer bits leads to a larger drop in performance, although we find that a short fine-tuning phase recovers a significant part of this loss. In addition, reinvesting the saved memory in larger tables can improve performance beyond that of the original full-precision tables while still using less memory. These table memory savings also extend to large existing models: on DeepSeek-V4.1-Flash and Qwen3.8-Flash-Next, low-bit tables save 47-55% of table memory, with perplexity increases of less than 1.2% and largely preserved downstream task performance. These findings establish low-bit precision as a practical way to reduce the memory requirements of n-gram embeddings and use the saved capacity to improve model performance.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-22</span>
+                    <a href="https://arxiv.org/pdf/2610.31646v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.31636v1" target="_blank">Can an Agent Debug a Web Corpus? Agentic Auditing of Slovak FineWeb2</a>
+                </div>
+                <div class="paper-authors">👥 Marek Šuppa, Ivan Vykopal, Jaroslav Kopčan</div>
+                <div class="paper-summary">Multilingual pipelines such as FineWeb2 apply one recipe across a thousand languages, leaving the failure modes of individual languages unanticipated. We use an LLM once, as a corpus debugger rather than a classifier: a tool-using agent explores the corpus through a read-only, budgeted API and compiles each finding into an executable test, which a native speaker then validates. On the 26.5M-document Slovak portion of FineWeb2, three runs costing \$2.21-\$2.84 each found seven findings over four phenomena. The largest is a machine-generated content farm of 1,408,437 documents (5.32%) that passed the pipeline's filters, 86.6% of it passing even stricter thresholds. Blinded labels support 6 of the 7 findings (defect rates .53-1.00 against .08 in a random control) and do not support one. The compiled suite scans the full corpus in 0.7 s of wall-clock time without a GPU, against \$12k-\$90k per LLM classification pass. The best static sampling baseline validates more selectors than any agent run, at under half the cost. The agent contributes exact prevalence, a precision estimate checked against sampled documents, an account of why the pipeline missed each slice, and a reusable test. We release the framework, Slovak test suite, validation data and agent trajectories.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-22</span>
+                    <a href="https://arxiv.org/pdf/2610.31636v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.31606v1" target="_blank">How Ground Truth Shapes Retrieval Scores: Evidence-Aware Evaluation of a Retrieval-Augmented Generation System for Breast Lesions</a>
+                </div>
+                <div class="paper-authors">👥 Miguel Mochizuki Silva, Samuel Ismael, Mateus C. Dias</div>
+                <div class="paper-summary">Purpose: To describe an evidence-aware retrieval evaluation protocol for a clinical retrieval-augmented generation (RAG) system over breast lesion management literature, addressing the dependence of retrieval scores on annotation coverage. Methods: An 18-document corpus and an 18-query development benchmark, with one Yes/No or WH-question per document, were used. Retrieval combined dense embeddings, BM25, and cross-encoder reranking. Chunk sizes of 128 to 1024 tokens, overlaps of 0 to 20%, and four retriever configurations were evaluated. Relevance was defined by evidence spans mapped to all containing chunks, treating overlapping chunks with equivalent evidence as relevant. Retrieval was evaluated using R-Precision, Recall@K, MRR, and nDCG@K. Separately, generation was assessed on a 512-token index at K=1 to 5 using DeepEval claim-level metrics, with deepseek-v4-pro as the LLM judge, and BLEU/ROUGE metrics. Results: The selected hybrid retriever, using 384-token chunks and 20% overlap, retrieved accepted evidence in the top three results for 17 of 18 queries. Recall@3, R-Precision, MRR@3, and nDCG@3 each reached 0.94. Ground-truth curation increased evidence spans from 25 to 37 and accepted chunk targets from 36 to 51 without changing retrieval rankings. Conclusion: Cross-encoder reranking achieved the highest retrieval scores. Expanded relevance annotations increased recognized evidence without changing rankings, highlighting annotation sensitivity. The small development set and retrieval-informed curation require independent validation, including radiologist assessment of evidence sufficiency.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-22</span>
+                    <a href="https://arxiv.org/pdf/2610.31606v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.31586v1" target="_blank">Would an LLM Match into a Residency? Uncertainty, Reasoning and Image Use of Open Language Models on the Spanish MIR Examination</a>
+                </div>
+                <div class="paper-authors">👥 Miguel Fernandez-de-Retana, Unai Zulaika, Ruben Sanchez-Corcuera</div>
+                <div class="paper-summary">Accuracy on medical examinations is common evidence offered for the clinical use of language models, yet a health system that intends to run an open model on its own hardware needs to know considerably more: whether the model recognizes when it is likely to be wrong, whether medical fine-tuning improves this ability, whether its correct answers rest on sound clinical reasoning, or whether it actually uses the images it is given. We examine these questions for four open models of 8 to 27 billion parameters on the Spanish MIR residency examination, scoring 1,552 questions from eight editions under the exam's own rules. Answering every question, the three larger models would rank among roughly the first 600 to 3,000 candidates, with 41 to 43 specialties still open to them. Abstention, however, never pays, because even their least confident answers are right more often than the 25% break-even. Medical fine-tuning reduced overconfidence at the cost of accuracy, without improving how well confidence separates right from wrong answers. Moreover, 13-38% of correct answers rejected a distractor for a clinically unsound reason that confidence did not reflect, and removing or swapping the provided contextual images left accuracy unchanged.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-22</span>
+                    <a href="https://arxiv.org/pdf/2610.31586v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.31558v1" target="_blank">Diffusion Language Models for Perplexity-Aware Black-Box Attacks</a>
+                </div>
+                <div class="paper-authors">👥 Ali Al-Lawati, Elsayed Eshra, Dongwon Lee</div>
+                <div class="paper-summary">\emph{Continuous-space} attacks find prompts that trigger malicious behaviors, such as overthinking, in black-box LLMs by sampling or optimizing over a low-dimensional Gaussian latent space and decoding it to text through a \emph{random mapping} and nearest-token lookup. Because the random mapping is not learned from language, its prompts can be highly unnatural, and as such easily detectable through input guardrails, and the risk estimates they yield are not grounded in natural prompts. In this paper, we demonstrate that the same continuous latent-space framework can be coupled directly to a learned generative distribution over language, a continuous diffusion language model (dLLM), which removes the artificial random mapping while preserving the standard-Gaussian latent formulation and the downstream sampling or optimization procedure. We evaluate this approach under two settings: sampling-based estimation using \emph{RareTrap} and optimization-based search using \emph{ThinkTrap}. We find that character-level perplexity drops from $10^3$--$10^7$ to 3--5 in RareTrap and from 20--28 to 4.3--5.4 in ThinkTrap. We also find that model risk estimates can differ by an order of magnitude across the two mappings.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-22</span>
+                    <a href="https://arxiv.org/pdf/2610.31558v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.29138v1" target="_blank">Progressive Learning from Content to Relevance to Personalization for CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Zhiguang Yang, Yulin Yang, Fuyu Lv</div>
+                <div class="paper-summary">Multimodal click-through rate (CTR) prediction is central to search systems, where ranking depends on item content, query relevance, and user preference. Existing approaches incorporate content through dense embeddings or coarse discrete IDs, yet effectively integrating fine-grained heterogeneous content with ID-based predictors remains challenging. We propose FineSID, a progressive learning framework that unifies content tokenization, query--item semantic pretraining, and personalized post-training via a shared fine-grained discrete representation. Each stage optimizes an explicit objective while preserving token-level access to content. First, a pretrained multi-scale visual tokenizer and text tokenizers convert heterogeneous content into fine-grained Semantic IDs (SIDs), explicitly aligning them with the ID features. Second, full-parameter semantic pretraining under query--item relevance supervision establishes a robust matching prior, jointly optimizing the interactions of multimodal SIDs and conventional fields within a shared predictor. Third, this initialized predictor is directly fine-tuned with user click supervision to capture implicit personalized preferences. Extensive offline and online evaluations demonstrate substantial gains in both standard CTR prediction and core business metrics. Furthermore, FineSID improves within-product creative discrimination, demonstrating its semantic generalization beyond conventional ID memorization.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-21</span>
+                    <a href="https://arxiv.org/pdf/2610.29138v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.26143v1" target="_blank">FLMNet: Self-Ensemble Distillation from Masks to Seeds for Single-Tower CTR Prediction</a>
+                </div>
+                <div class="paper-authors">👥 Yifan Wang, Yifei Du</div>
+                <div class="paper-summary">Click-through rate (CTR) prediction underpins recommender systems and online advertising, where high-dimensional categorical features interact in combinatorially many ways. Several recent CTR models, such as FinalNet and QNN, report higher accuracy when a network also learns from its own averaged predictions, for example by running the same network under different dropout patterns and training each run toward the average. Why this self-distillation helps, and whether its random sampling is needed, remains unclear. This work shows that as the number of dropout patterns grows without bound, the objective reduces exactly to the label loss of the logit-averaged prediction plus a penalty on how much the dropout copies of the network disagree. When dropout does not affect how a network gates its features, this penalty can be approximated in closed form, and FLMNet is designed on this principle and trains without sampling. Networks trained from different seeds disagree in the same form, and distilling several of them into one network recovers part of their ensemble gain. On five benchmarks against seventeen baselines, the resulting models take the top two places in accuracy with a single network at inference, and the gains of the penalty and of distillation, where measurable, largely add up.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-19</span>
+                    <a href="https://arxiv.org/pdf/2610.26143v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2610.28798v1" target="_blank">An Explicit Feedback Contract for Iterative ML-Agent Harnesses</a>
+                </div>
+                <div class="paper-authors">👥 Kehui Yao, Chuanbo Hu, Jiao Chen</div>
+                <div class="paper-summary">Iterative ML agents develop models by editing code, running experiments, reading a validation score, and choosing what to try next. In current harnesses this loop is served by an exact validation score returned after every attempt, which leaves the validation split open to adaptive selection. In this work, we introduce an explicit feedback contract for ML-agent harnesses, which specifies what an agent may observe, when iteration should stop, and when the test split may be touched. The contract releases a validation score only when a submission clears a noise threshold computed from the paired standard error, so no margin has to be tuned. We ran experiments on click-through-rate prediction, learning to rank, and a control task with no signal to find. The control is the sharpest case, because the true gain there is zero by construction: an agent reading exact scores ended by reporting a gain of 0.0157, while under the contract it reported 0.0033. On both real tasks the contract narrows the validation-test gap, and test performance is slightly higher rather than lower. The largest difference is in when the agents stop. Exact feedback used its entire budget of thirty submissions on two of the three tasks, including the one where nothing can be learned, while the contract halted after four to twelve. A run that exhausts its budget is usually read as diligence. It is better read as a symptom: when the feedback channel is unbounded, noise keeps supplying improvements to chase.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-10-20</span>
+                    <a href="https://arxiv.org/pdf/2610.28798v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/decisions-api" target="_blank">Build more responsive apps with the Decisions API</a></div>
+                <div class="feed-date">10-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/products/marketingplatform/360/google-marketing-platform-drop-october/" target="_blank">Explore new ways to drive your best ROI with the first Google Marketing Platform Drop.</a></div>
+                <div class="feed-date">10-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/innovation-and-ai/infrastructure-and-cloud/global-network/virtual-power-plant-1-gigawatt/" target="_blank">We are working with Voltus to build a 1-gigawatt virtual power plant.</a></div>
+                <div class="feed-date">10-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/forward-deployed-engineering-means" target="_blank">What FDE means at OpenAI</a></div>
+                <div class="feed-date">10-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/uber-chatgpt-work-rollout" target="_blank">Uber brings ChatGPT Work to all employees with OpenAI</a></div>
+                <div class="feed-date">10-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/broad-access-through-consistent-standards" target="_blank">Broad access through consistent standards</a></div>
+                <div class="feed-date">10-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">OpenAI</div>
+                <div class="feed-title"><a href="https://openai.com/index/att-legal" target="_blank">How AT&T is rethinking in-house legal work with OpenAI</a></div>
+                <div class="feed-date">10-21</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/arts-culture/visionaries-petit-palais-art-basel-paris-prune-nourry/" target="_blank">Recreating the lost studios of women sculptors with Prune Nourry</a></div>
+                <div class="feed-date">10-21</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/22/oura-sues-rival-ultrahuman-again-threatening-its-u-s-smart-ring-comeback/" target="_blank">Oura sues rival Ultrahuman again, threatening its U.S. smart ring comeback</a></div>
+                <div class="feed-date">10-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/22/uber-rival-indrive-eyes-2027-robotaxi-tests-in-central-asia-with-pony-ai-and-nvidia/" target="_blank">Uber rival inDrive eyes 2027 robotaxi tests in Central Asia with Pony.ai and Nvidia</a></div>
+                <div class="feed-date">10-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/22/uber-rival-indrive-eyes-2027-robotaxi-tests-in-central-asia-with-pony-ai-and-nvidia/" target="_blank">Uber rival inDrive eyes 2027 robotaxi tests in Central Asia with Pony.ai and Nvidia</a></div>
+                <div class="feed-date">10-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing/" target="_blank">Left alone with nothing to do, AI agents started playing</a></div>
+                <div class="feed-date">10-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch AI</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/22/left-alone-with-nothing-to-do-ai-agents-started-playing/" target="_blank">Left alone with nothing to do, AI agents started playing</a></div>
+                <div class="feed-date">10-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/tech/1017261/etsy-ai-rules-policies-restrictions-listing" target="_blank">Etsy is cracking down on AI slop listings</a></div>
+                <div class="feed-date">10-23</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/22/mark-zuckerbergs-creative-plan-to-pay-californias-proposed-billionaire-tax-without-losing-control-of-meta/" target="_blank">Mark Zuckerberg’s creative plan to pay California’s proposed billionaire tax without losing control of Meta</a></div>
+                <div class="feed-date">10-22</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">TechCrunch</div>
+                <div class="feed-title"><a href="https://techcrunch.com/2026/10/22/ben-lamm-raises-200m-for-warhound-to-engineer-war-dogs-and-arm-them-with-anduril-gear/" target="_blank">Warhound raises $200M to engineer war dogs and arm them with Anduril gear</a></div>
+                <div class="feed-date">10-22</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=AGCxuN5ORMA" target="_blank">🎥 Elon Musk’s ex on the ‘nuclear’ blowback after leaving Musk &amp; MAGA</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Ashley St. Clair, former MAGA influencer and mother to one of Elon Musk's children, tells CNN's Doni...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=0lsasYuzhL4" target="_blank">🎥 Nobel Economist: Where He Sees the Real Money in AI</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Bring marketing, sales, customer service, and content together on one AI-powered platform: Try HubSp...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=4YUEWqAtOD8" target="_blank">🎥 Jensen Huang’s Journey From Denny’s to a $5 Trillion Company</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Grow your YouTube channel with BrandLytics at: https://brandlytics.ai ✎ Get free access to our vault...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=S7CrlFLAmEA" target="_blank">🎥 Jensen Huang: The Doomer Hoax, Superintelligence is Here, and The Future of AI (ft. President Trump)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">(0:00) Jensen Huang joins The Besties! (1:39) Thoughts on Dario's blog, Frontier Labs calling to slo...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Bh5bJrrJ6xs" target="_blank">🎥 Marc Benioff &amp; Sam Altman | Dreamforce 2026</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Marc Benioff and Sam Altman explore how @OpenAI is advancing the AI frontier and partnering with Sal...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=TzmYDIVaelM" target="_blank">🎥 They Warn About AI. So Why Are They Racing to Build It?</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Elon Musk, Sam Altman, Dario Amodei and Demis Hassabis warn about AI's risks while their companies r...</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/tek-sys-hub/Rubix-lang" target="_blank" style="color: #2b6cb0;">
+                        tek-sys-hub/Rubix-lang
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/ikow/php2shell-poc" target="_blank" style="color: #2b6cb0;">
+                        ikow/php2shell-poc
+                    </a>
+                </div>
+                
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50202217" target="_blank" style="color: #2b6cb0;">
+                        LLMs are making formal software verification feasible at a much larger scale
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50198675" target="_blank" style="color: #2b6cb0;">
+                        OpenShell – A safe, private runtime for fleets of autonomous AI agents
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50197313" target="_blank" style="color: #2b6cb0;">
+                        Every AI model has the same "controversial" take on humans
+                    </a>
+                </div>
+                
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 0<br>
+                    Input Tokens: 0<br>
+                    Output Tokens: 0
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年10月23日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
