@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 3px solid #667eea;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2d3748;
+            margin: 0;
+            font-size: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .date {
+            color: #718096;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .briefing-box {
+            background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-left: 5px solid #38b2ac;
+        }
+        .briefing-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .section-icon {
+            font-size: 28px;
+            margin-right: 15px;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #2d3748;
+            margin: 0;
+        }
+        .section-subtitle {
+            font-size: 14px;
+            color: #718096;
+            margin-left: auto;
+        }
+        /* Paper Cards */
+        .paper-card {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .paper-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        .paper-card.ad { border-left-color: #48bb78; }
+        .paper-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .paper-title a { color: #2d3748; text-decoration: none; }
+        .paper-title a:hover { color: #667eea; }
+        .paper-authors { font-size: 13px; color: #718096; margin-bottom: 10px; }
+        .paper-summary { font-size: 14px; color: #4a5568; line-height: 1.7; }
+        .paper-meta { display: flex; gap: 15px; margin-top: 12px; font-size: 12px; }
+        .paper-tag { display: inline-block; padding: 3px 10px; background: #edf2f7; border-radius: 12px; color: #4a5568; }
+        
+        /* Feed Cards */
+        .feed-list { list-style: none; padding: 0; }
+        .feed-item {
+            padding: 15px;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-source { 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            color: #718096; 
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .feed-title { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .feed-title a { color: #2b6cb0; text-decoration: none; }
+        .feed-title a:hover { text-decoration: underline; }
+        .feed-date { font-size: 12px; color: #a0aec0; }
+
+        .video-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+        }
+        .video-title a { color: #ff6b6b; text-decoration: none; }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #718096;
+            font-size: 14px;
+        }
+        .stats-box {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 30px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔬 AI 研究周报</h1>
+            <div class="date">2026年11月28日</div>
+        </div>
+        
+        <!-- AI Daily Briefing -->
+        <div class="briefing-box">
+            <div class="briefing-title">☕️ 今日 AI 简报</div>
+            <div style="color: #2c7a7b; font-size: 15px; line-height: 1.8;">
+                <p>无法生成今日简报，请直接阅读下方详细内容。</p>
+            </div>
+        </div>
+        
+        <!-- arXiv Papers -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
+                <h2 class="section-title">核心论文 (ArXiv)</h2>
+            </div>
+            <h3 style="color: #4a5568; margin-top:20px;">🔥 大模型前沿</h3>
+            
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2611.34770v1" target="_blank">Make the Adversary Spend More: Stateful Deception as a Cost-Exchange Primitive for AI-Era Cyber Defense</a>
+                </div>
+                <div class="paper-authors">👥 Alessandro Cantelli-Forti, Isabella Marasco, Hosam Alamleh</div>
+                <div class="paper-summary">Large language models (LLMs) are transforming the economics of intrusion by reducing the attacker's cost to scan and adapt, while tempting defenders into unbounded compute. We argue that cyber deception should be judged by the cost exchange it imposes, not by realism or detection, and that the primitive making that exchange favorable is adversary-specific persistent state. Rather than a honeypot that resets or merges sessions, each recognized adversary re-enters the world it believes it has compromised, kept coherent with its own past actions and isolated from every other adversary, while the language model acts only as a constrained renderer of explicit state, never as its store. We formalize the trade-off as a Deception Exchange Rate (DER), relating mission-weighted adversary effort burned to defender resources spent, and instantiate it in an SSH honeypot pairing Cowrie with a local LLM. In this paper, we focus on the defender-side evaluation of that exchange, while specifying, but not yet measuring, per-adversary state and the adversary side of the DER. Across five open-weight models, deterministic-layer and prompt optimizations cut per-session defender cost by around 63% against a naive all-LLM decoy.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-11-25</span>
+                    <a href="https://arxiv.org/pdf/2611.34770v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2611.34928v1" target="_blank">Diverse Alternative Reasoning Traces for Hard Math Problems</a>
+                </div>
+                <div class="paper-authors">👥 Lukas Aichberger, Adam Golinski, Arno Blaas</div>
+                <div class="paper-summary">Post-training large language models (LLMs) for mathematical reasoning often relies on accepted traces whose final answers pass a verifier. For hard math problems, however, such traces can be rare under independent Monte Carlo (MC) sampling. To address this, we propose Diverse Alternative Reasoning Traces (DART), a trace-mining method that starts from a rejected trace, decomposes it into reasoning steps, and ranks them by position-weighted uncertainty. It then generates deliberately distinct alternative candidates for highly ranked steps using reference-answer guidance and a meta-thought before completing the resulting traces. On greedy-unsolved DeepMath-103K problems, DART recovers 37% more problems than MC sampling at a matched number of generated traces. Its estimated generation cost per recovered problem is nearly identical, while its cost per accepted trace is 30% lower. Post-training Llama-3.1-8B-Instruct on traces mined by DART achieves the highest point estimate in five of six evaluations across MATH-500 and AIME benchmarks. These results demonstrate that revisiting rejected traces with DART can expand problem coverage and provide effective post-training data.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-11-25</span>
+                    <a href="https://arxiv.org/pdf/2611.34928v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2611.34923v1" target="_blank">Mixture-of-Loops Transformer</a>
+                </div>
+                <div class="paper-authors">👥 Lianghui Zhu, Shijie Wang, Xinggang Wang</div>
+                <div class="paper-summary">Looped Transformers boost expressivity by reusing shared layers across loops, yet at the cost of efficiency. Pushing their expressivity-efficiency frontier requires rethinking the core mechanism connecting adjacent loops: What should be passed as a Transformer loops? We introduce Mixture-of-Loops Transformer (MoLT), whose Mixture-of-Loops Attention (MoLA) uses keys and values (KV) as memory for selective reuse across depths and loops. Under loop residual, MoLT-R retains the residual stream and reads local KV across loops for expressivity. Under loop KV, MoLT-KV instead restarts from embeddings and reads current-loop local KV with preceding-loop memory KV at earlier positions for efficiency. MoLT-KV eliminates same-position cross-loop dependence and, paired with loop forcing for parallel training, unlocks single-traversal Mixture-of-Loops (MoL) decoding beyond the training loop horizon. To balance efficiency and quality, we introduce U-shaped MoLT (U-MoLT), which separates memory construction from prediction readout and skips unused decoder traversals without changing predictions. In 400B-token pretraining, U-MoLT outperforms OLMo3 across 700M/1.5B dense and 3B MoE models, achieving 1.7x validation cross-entropy (CE) token efficiency at 700M while improving 3B MoE 10-domain perplexity by 0.75 and 10-task accuracy by 2.1 percentage points. In 100B-token continued pretraining of Qwen3.5-0.8B-Base, our U-MoLT adaptation lowers CE on all 11 domains over the matched baseline with 1.4x mean token efficiency. At inference, U-MoLT with MoL-Hybrid-2 matches non-looped OLMo3 latency at 996.6 vs. 1,000.6 ms on S-size (~113M) models. Code is available at https://github.com/hustvl/MoLT</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-11-25</span>
+                    <a href="https://arxiv.org/pdf/2611.34923v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2611.34832v1" target="_blank">Proverbs As A Window On Collective Prescriptions</a>
+                </div>
+                <div class="paper-authors">👥 Tomás Lejarraga, Dirk U. Wulff, Ralph Hertwig</div>
+                <div class="paper-summary">Proverbs, as repositories of traditional wisdom, have informed human reasoning for millennia. Yet the collective prescriptions they encode have remained largely unquantified. We introduce a computational framework to analyze nearly 50,000 English-language proverbs. Using large language models, validated against human judgments, we map the topical landscape of proverbs, assess their prescriptive power, and quantify their recommendations on key dimensions of human judgment and behavior. We find that most proverbs are prescriptive, offering guidance in domains under individual control, such as preparation and prudent action, whereas proverbs about uncontrollable circumstances, such as fate and mortality, tend to describe rather than prescribe. When prescriptive proverbs take a consistent stance, they favor caution over risk, long-term over short-term outcomes, honesty over deception, and kindness over malice, and show a moderate tendency toward suspicion over trust. On dimensions involving genuine trade-offs, especially autonomy versus compliance, proverbs provide contradicting advice rather than a single recommendation. This analysis provides a quantitative map of the collective prescriptions in a culture's proverbial wisdom, revealing a core of prudent, honest, and forward-looking guidance alongside varied advice where circumstances dictate the best course of action.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-11-25</span>
+                    <a href="https://arxiv.org/pdf/2611.34832v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2611.34831v1" target="_blank">Repairing the Trustworthiness of Distilled Language Models</a>
+                </div>
+                <div class="paper-authors">👥 Kumar Shubham, Devendra Vyas, Vidushi Agarwal</div>
+                <div class="paper-summary">Knowledge distillation enables the deployment of large language models through smaller student models, but the compression process can introduce regressions in trustworthiness even when downstream performance is preserved. Repairing such failures is challenging because the original distillation corpus is often unavailable, while direct preference optimization may alter capabilities inherited from the teacher. We propose a targeted repair framework based on the proximal Bregman response function (PBRF) that addresses both limitations. We estimate the curvature required for PBRF using a surrogate proxy dataset, removing dependence on the original transfer corpus, and extend the framework to preference-based supervision through an odds-ratio objective. This enables the use of preferred and dispreferred response pairs while constraining changes to the distilled model. Our results show that the proposed approach improves targeted trustworthiness behaviors for both pre-training and post-training models while largely preserving downstream performance, providing a practical alternative to re-distillation or unconstrained preference optimization. Our experiment results show that across different distilled models, the trustworthy regression can be improved by up to 8% with less than 1% decrement in perplexity.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-11-25</span>
+                    <a href="https://arxiv.org/pdf/2611.34831v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+
+            <div class="paper-card">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2611.34823v1" target="_blank">The Linguistic Knowledge Benchmark: Do Language Models Know the Foundations of Early-Grade Literacy?</a>
+                </div>
+                <div class="paper-authors">👥 Maxime Lelièvre, Alasdair Mackintosh, Dominic Andrews</div>
+                <div class="paper-summary">Many languages of instruction in low- and middle-income countries (LMICs) are poorly represented in the data used to train language models. Before these models can support early-grade literacy in such languages, we need to know whether they hold the linguistic knowledge of each language that literacy teaching relies on. To test this, we present the Linguistic Knowledge Benchmark and the reproducible, largely automated pipeline that turns curriculum documents, teacher guides and pupil books into a vetted question set organised on a fixed grid of nine linguistic domains and seven grade levels. The pipeline combines LLM-driven source survey, feature consolidation, item generation and quality control with an item-selection step inspired by item response theory and a final expert review. We instantiate it for Kiswahili (Kenya; 135 items) and English (United Kingdom; 137 items) and evaluate 121 and 119 models respectively. Frontier models exceed 90% accuracy in both languages, but accuracy falls steeply for smaller and cheaper models, and more so in Kiswahili. The two best models under 10 billion parameters reach 91.7% and 73.0% in English but only 51.9% and 40.7% in Kiswahili, and the mean accuracy of models deployable on mobile and tablet hardware is 47% in English against 24% in Kiswahili. The models most practical for low-resource classrooms are therefore the least capable in the languages they would serve. We release a 20-item sample per language, all pipeline prompts, open-source code, and a public leaderboard. This is the first rung of a three-level evaluation ladder for measuring and generating decodable text to support foundational literacy.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-11-25</span>
+                    <a href="https://arxiv.org/pdf/2611.34823v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+            
+            <h3 style="color: #4a5568; margin-top:30px;">📊 广告与推荐算法</h3>
+            
+            <div class="paper-card ad">
+                <div class="paper-title">
+                    <a href="https://arxiv.org/abs/2611.30648v1" target="_blank">MTL-MHOL: Predicting Online Conversions under Delayed Feedback and Data Sparsity</a>
+                </div>
+                <div class="paper-authors">👥 Mario Tejera Vicente, Eva Hagen, Emma van Breukelen</div>
+                <div class="paper-summary">This paper proposes the model-agnostic Multi-Task Learning Multi-Head Online Learning (MTL-MHOL) framework for conversion rate (CVR) prediction. Existing approaches typically address key challenges in CVR prediction, such as delayed feedback and data sparsity, in isolation or lack flexibility and practical applicability. MTL-MHOL adopts a time bucketing approach to account for delayed feedback and combines it with multi-task learning of an auxiliary task to mitigate data sparsity. We evaluate the framework on proprietary datasets from a private company and on a public dataset from Criteo. MTL-MHOL matches or outperforms all benchmark models in terms of Negative Log-Likelihood (NLL) and Relative Cross Entropy (RCE), and it correctly captures temporal trends in the data using an MLP backbone, while maintaining strong performance with a DeepFM backbone. In particular, MTL-MHOL matches the performance of the advanced delayed-feedback method FSIW, outperforms the entire-space approach ESMM by 21.5% in RCE, and achieves up to 81% lift in RCE compared to the best-performing classical benchmark.</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">📅 2026-11-23</span>
+                    <a href="https://arxiv.org/pdf/2611.30648v1" class="paper-link" target="_blank">📄 PDF</a>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- RSS Feeds -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">📡</span>
+                <h2 class="section-title">业界动态</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="border-bottom: 2px solid #ed8936; padding-bottom: 10px; color: #c05621;">🏢 AI Labs 更新</h3>
+                    <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">Google The Keyword</div>
+                <div class="feed-title"><a href="https://blog.google/company-news/outreach-and-initiatives/google-org/15-years-investing-colombia-talent-future/" target="_blank">15 years of investing in Colombia’s talent and future</a></div>
+                <div class="feed-date">11-26</div>
+            </div>
+            </div>
+                </div>
+                <div>
+                    <h3 style="border-bottom: 2px solid #48bb78; padding-bottom: 10px; color: #2f855a;">💰 顶级风投观点</h3>
+                    <p style="color: #cbd5e0;">暂无动态</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 40px;">
+                 <h3 style="border-bottom: 2px solid #4299e1; padding-bottom: 10px; color: #2b6cb0;">📰 科技新闻精选</h3>
+                 <div class="feed-list">
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/1044771/m5-macbook-air-black-friday-2026-deal-sale" target="_blank">The M5 MacBook Air just got its biggest discount since Apple raised the price</a></div>
+                <div class="feed-date">11-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/1039190/best-black-friday-2026-deals-tech-gadgets-gift-ideas" target="_blank">The absolute best Black Friday deals you can still get</a></div>
+                <div class="feed-date">11-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/1043445/black-friday-best-cheap-tech-deals-under-100-2026" target="_blank">We found 60-odd Black Friday deals we love for $100 or less</a></div>
+                <div class="feed-date">11-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/transportation/1044706/this-purple-electric-chinese-minivan-can-go-up-to-559-miles-on-a-charge" target="_blank">This purple electric Chinese minivan can go up to 559 miles on a charge</a></div>
+                <div class="feed-date">11-28</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/1043935/best-black-friday-apple-deals-2026" target="_blank">The best Black Friday deals you can still get on AirPods, Macs, and other Apple gear</a></div>
+                <div class="feed-date">11-27</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/1044487/best-black-friday-robot-vacuum-mop-deals-2026" target="_blank">The best robot vacuums we’ve tested are up to 60 percent off for Black Friday</a></div>
+                <div class="feed-date">11-27</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/gadgets/1043976/sony-wh1000xm4c-noise-canceling-headphones-black-friday-2026-deal-sale" target="_blank">Sony’s 1000XM4C headphones are a Black Friday bargain at $198</a></div>
+                <div class="feed-date">11-27</div>
+            </div>
+            
+            <div class="feed-item">
+                <div class="feed-source">The Verge</div>
+                <div class="feed-title"><a href="https://www.theverge.com/games/1044715/yooka-laylees-free-upgrade-is-skipping-xbox" target="_blank">Yooka-Laylee’s free upgrade is skipping Xbox</a></div>
+                <div class="feed-date">11-27</div>
+            </div>
+            </div>
+            </div>
+        </div>
+        
+        <!-- YouTube Videos -->
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon">🎬</span>
+                <h2 class="section-title">科技领袖访谈</h2>
+            </div>
+            <h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Elon Musk</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=zWeT91uH7LI" target="_blank">🎥 Elon Musk Says He’s ‘Not MAGA’</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Follow live commentary here: https://www.nytimes.com/live/2026/11/18/business/dealbook-summit-news D...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=kuq1qEKKvzM" target="_blank">🎥 イーロン・マスク「人型ロボットの市場は100億台。人間の数より多い」X Takeover 2024 インタビュー スターシップ・自動運転・オプティマス【日本語吹き替え・63分】</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">【非公式】イーロン・マスク本人やテスラの公式チャンネルではありません。主催者 Tesla Owners of Silicon Valley（TOSV）の ......</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Jensen Huang</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=-32YoDwcnO8" target="_blank">🎥 Jensen Huang&#39;s Paranoia, Flat Management, and AI Monopoly | The Nvidia Way by Tae Kim</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Almost every successful technology giant eventually slows down, grows layers of middle management, a...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=Y334D183ofE" target="_blank">🎥 Jensen Huang: The Man Behind NVIDIA (April 2026)</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Jensen Huang spent 33 years building Nvidia into one of the most valuable companies of all time. But...</div>
+                </div>
+                
+<h4 style="margin: 20px 0 10px 0; color: #553c9a;">👤 Sam Altman</h4>
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=J5EA7QeBm8k" target="_blank">🎥 Why Sam Altman and Greg Brockman Say Humans Must Stay in Control of AI</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">Follow live commentary here: https://www.nytimes.com/live/2026/11/18/business/dealbook-summit-news D...</div>
+                </div>
+                
+
+                <div class="video-card">
+                    <div class="video-title"><a href="https://www.youtube.com/watch?v=TjPPIf-M6KE" target="_blank">🎥 Sam Altman On AI Revolution, Superintelligence &amp; Future Of Humanity | FO583 Raj Shamani</a></div>
+                    <div style="font-size: 12px; color: #a0aec0; margin-top:5px;">To know more about our Styling Partner Levi's, Checkout:- ......</div>
+                </div>
+                
+        </div>
+        
+        <!-- New Sources: GitHub, Reddit, HN -->
+        
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🌐</span>
+                    <h2 class="section-title">社区精选 (AI Curated)</h2>
+                </div>
+                
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f59e0b; padding-bottom: 10px; color: #d97706;">🔥 GitHub 趋势项目</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/trustno1-coder/VIctory-NVIDIA" target="_blank" style="color: #2b6cb0;">
+                        trustno1-coder/VIctory-NVIDIA
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/ProjectLeonida/mandy" target="_blank" style="color: #2b6cb0;">
+                        ProjectLeonida/mandy
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://github.com/nexu-io/opengame" target="_blank" style="color: #2b6cb0;">
+                        nexu-io/opengame
+                    </a>
+                </div>
+                
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="border-bottom: 2px solid #f97316; padding-bottom: 10px; color: #ea580c;">🟠 Hacker News 精选</h3>
+                
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50632052" target="_blank" style="color: #2b6cb0;">
+                        Loom seamlessly combines weaving, knitting and braiding
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50672565" target="_blank" style="color: #2b6cb0;">
+                        Google's DeepCrossAttention achieves comparable model quality up to 3x faster
+                    </a>
+                </div>
+                
+
+                <div style="padding: 10px; border-left: 3px solid #cbd5e0; margin: 8px 0;">
+                    <a href="https://news.ycombinator.com/item?id=50643158" target="_blank" style="color: #2b6cb0;">
+                        GPT 6.2 Astra Solves a Historical Mystery
+                    </a>
+                </div>
+                
+            </div>
+            
+            </div>
+            
+        
+        
+        <div class="stats-box">
+            <h4 style="margin:0 0 10px 0; color:#4a5568;">⚙️ 系统运行统计</h4>
+            <div style="display:flex; justify-content:space-between; font-size:12px; color:#718096;">
+                <div>
+                    <strong>🤖 AI 模型 (Qwen-72B)</strong><br>
+                    调用次数: 0<br>
+                    Input Tokens: 0<br>
+                    Output Tokens: 0
+                </div>
+                <div>
+                    <strong>🎬 YouTube API</strong><br>
+                    API 调用: 18<br>
+                    Quota 消耗: 909 units
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="footer">
+            <p>📅 2026年11月28日 | Daily Info System</p>
+            <p>💡 Stay Hungry, Stay Foolish</p>
+        </div>
+    </div>
+</body>
+</html>
